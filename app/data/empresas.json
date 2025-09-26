@@ -1,0 +1,12 @@
+﻿[
+  {"ticker": "MSFT",  "nombre": "Microsoft",           "sector": "Tecnología"},
+  {"ticker": "AAPL",  "nombre": "Apple",               "sector": "Tecnología"},
+  {"ticker": "GOOGL", "nombre": "Alphabet",            "sector": "Tecnología"},
+  {"ticker": "AMZN",  "nombre": "Amazon",              "sector": "Consumo"},
+  {"ticker": "JNJ",   "nombre": "Johnson & Johnson",   "sector": "Salud"},
+  {"ticker": "NVDA",  "nombre": "NVIDIA",              "sector": "Tecnología"},
+  {"ticker": "KO",    "nombre": "Coca-Cola",           "sector": "Consumo"},
+  {"ticker": "PG",    "nombre": "Procter & Gamble",    "sector": "Consumo"},
+  {"ticker": "TSLA",  "nombre": "Tesla",               "sector": "Automoción"},
+  {"ticker": "BABA",  "nombre": "Alibaba",             "sector": "Tecnología"}
+]

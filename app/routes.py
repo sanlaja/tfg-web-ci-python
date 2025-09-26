@@ -1,4 +1,6 @@
 from flask import Blueprint, jsonify
+from pathlib import Path
+import json
 
 bp = Blueprint("main", __name__)
 
@@ -8,22 +10,23 @@ def health():
     return jsonify(status="ok")
 
 
-# --- Datos mínimos (MVP). Luego lo pasaremos a fichero/BD ---
-EMPRESAS = [
-    {"ticker": "MSFT", "nombre": "Microsoft", "sector": "Tecnología"},
-    {"ticker": "AAPL", "nombre": "Apple", "sector": "Tecnología"},
-    {"ticker": "GOOGL", "nombre": "Alphabet", "sector": "Tecnología"},
-    {"ticker": "AMZN", "nombre": "Amazon", "sector": "Consumo"},
-    {"ticker": "JNJ", "nombre": "Johnson & Johnson", "sector": "Salud"},
-]
+# --- Carga de datos desde JSON ---
+DATA_PATH = Path(__file__).resolve().parent / "data" / "empresas.json"
+
+
+def _cargar_empresas():
+    with DATA_PATH.open("r", encoding="utf-8-sig") as f:
+        data = json.load(f)
+    # Validación mínima de estructura
+    for e in data:
+        assert {"ticker", "nombre", "sector"} <= set(e.keys())
+    return data
+
+
+EMPRESAS = _cargar_empresas()
 
 
 @bp.get("/empresas")
 def listar_empresas():
-    """
-    Devuelve lista de empresas en formato JSON.
-    Más adelante:
-      - leeremos de un CSV/BD
-      - añadiremos filtros (sector, año, etc.)
-    """
+    """Devuelve lista de empresas en formato JSON."""
     return jsonify(EMPRESAS)
