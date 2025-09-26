@@ -8,16 +8,6 @@ def health():
     return jsonify(status="ok")
 
 
-from flask import Blueprint, jsonify
-
-bp = Blueprint("main", __name__)
-
-
-@bp.get("/health")
-def health():
-    return jsonify(status="ok")
-
-
 # --- Datos mínimos (MVP). Luego lo pasaremos a fichero/BD ---
 EMPRESAS = [
     {"ticker": "MSFT", "nombre": "Microsoft", "sector": "Tecnología"},
