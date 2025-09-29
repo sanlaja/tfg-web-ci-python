@@ -1,16 +1,24 @@
 from flask import Blueprint, jsonify, request
 from pathlib import Path
+from datetime import datetime
 import json
 import unicodedata
+import uuid
 
 bp = Blueprint("main", __name__)
 
 
+# ----------------------
+#   Health
+# ----------------------
 @bp.get("/health")
 def health():
     return jsonify(status="ok")
 
 
+# ----------------------
+#   Datos de empresas
+# ----------------------
 DATA_PATH = Path(__file__).resolve().parent / "data" / "empresas.json"
 
 
@@ -37,8 +45,8 @@ def listar_empresas():
     """
     Devuelve lista de empresas.
     Filtros opcionales:
-      - ?sector=...     → igualdad exacta (normalizada)
-      - ?q=...          → búsqueda contiene en ticker o nombre (normalizada)
+      - ?sector=...  → igualdad exacta (normalizada)
+      - ?q=...       → búsqueda contiene en ticker o nombre (normalizada)
     """
     sector = request.args.get("sector")
     q = request.args.get("q")
@@ -62,11 +70,9 @@ def listar_empresas():
     return jsonify(resultado)
 
 
-# ===========================
-#   POST /analisis (MVP)
-# ===========================
-
-
+# ----------------------
+#   Motor de análisis
+# ----------------------
 def _validar_payload(p):
     errores = []
 
@@ -88,7 +94,7 @@ def _validar_payload(p):
         errores.append("'supuestos' debe ser un objeto con porcentajes.")
         sup = {}
 
-    # rangos y plausibilidad (solo para registrar errores de rango)
+    # Rangos (solo registran error si están fuera de rango)
     def pct_ok(k, minimo=0, maximo=100):
         v = sup.get(k)
         if not isinstance(v, (int, float)) or v < minimo or v > maximo:
@@ -104,7 +110,7 @@ def _validar_payload(p):
     if not isinstance(just, str) or len(just.strip()) < 20:
         errores.append("La 'justificacion' debe tener al menos 20 caracteres.")
 
-    # check de plausibilidad adicional (usa 'crec' definido aquí)
+    # Plausibilidad adicional
     crec = sup.get("crecimiento_anual_pct")
     if isinstance(crec, (int, float)) and crec > 25:
         errores.append("Crecimiento anual > 25% sostenido es probablemente irrealista.")
@@ -215,6 +221,29 @@ def _puntuar_y_observar(p):
     return score, obs, resumen
 
 
+# ----------------------
+#   Persistencia análisis
+# ----------------------
+DATA_DIR = Path(__file__).resolve().parent / "data"
+ANALISIS_PATH = DATA_DIR / "analisis.json"
+
+
+def _cargar_lista(path: Path):
+    if not path.exists():
+        return []
+    with path.open("r", encoding="utf-8-sig") as f:
+        try:
+            return json.load(f)
+        except json.JSONDecodeError:
+            return []
+
+
+def _guardar_lista(path: Path, lista):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8") as f:
+        json.dump(lista, f, ensure_ascii=False, indent=2)
+
+
 @bp.post("/analisis")
 def crear_analisis():
     datos = request.get_json(silent=True) or {}
@@ -223,6 +252,24 @@ def crear_analisis():
         return jsonify({"valido": False, "errores": errores}), 400
 
     puntuacion, observaciones, resumen = _puntuar_y_observar(datos)
+
+    registro = {
+        "id": str(uuid.uuid4()),
+        "timestamp": datetime.utcnow().isoformat() + "Z",
+        "ticker": datos.get("ticker"),
+        "importe_inicial": datos.get("importe_inicial"),
+        "horizonte_anios": datos.get("horizonte_anios"),
+        "supuestos": datos.get("supuestos", {}),
+        "justificacion": datos.get("justificacion", ""),
+        "puntuacion": puntuacion,
+        "observaciones": observaciones,
+        "resumen": resumen,
+    }
+
+    historial = _cargar_lista(ANALISIS_PATH)
+    historial.insert(0, registro)  # más reciente primero
+    _guardar_lista(ANALISIS_PATH, historial)
+
     return jsonify(
         {
             "valido": True,
@@ -231,3 +278,10 @@ def crear_analisis():
             "resumen": resumen,
         }
     )
+
+
+@bp.get("/analisis")
+def listar_analisis():
+    """Devuelve el historial de análisis (más recientes primero)."""
+    historial = _cargar_lista(ANALISIS_PATH)
+    return jsonify(historial)
