@@ -88,23 +88,24 @@ def _validar_payload(p):
         errores.append("'supuestos' debe ser un objeto con porcentajes.")
         sup = {}
 
-    # rangos y plausibilidad
+    # rangos y plausibilidad (solo para registrar errores de rango)
     def pct_ok(k, minimo=0, maximo=100):
         v = sup.get(k)
         if not isinstance(v, (int, float)) or v < minimo or v > maximo:
             errores.append(f"'{k}' debe estar entre {minimo} y {maximo}.")
         return v if isinstance(v, (int, float)) else None
 
-    crec = pct_ok("crecimiento_anual_pct", 0, 60)  # >60% sostenido: irrealista
-    margen = pct_ok("margen_seguridad_pct", 0, 100)
-    roe = pct_ok("roe_pct", 0, 100)
-    deuda = pct_ok("deuda_sobre_activos_pct", 0, 100)
+    pct_ok("crecimiento_anual_pct", 0, 60)  # >60% sostenido: irrealista
+    pct_ok("margen_seguridad_pct", 0, 100)
+    pct_ok("roe_pct", 0, 100)
+    pct_ok("deuda_sobre_activos_pct", 0, 100)
 
     just = p.get("justificacion", "")
     if not isinstance(just, str) or len(just.strip()) < 20:
         errores.append("La 'justificacion' debe tener al menos 20 caracteres.")
 
-    # checks adicionales de plausibilidad
+    # check de plausibilidad adicional (usa 'crec' definido aquí)
+    crec = sup.get("crecimiento_anual_pct")
     if isinstance(crec, (int, float)) and crec > 25:
         errores.append("Crecimiento anual > 25% sostenido es probablemente irrealista.")
 
