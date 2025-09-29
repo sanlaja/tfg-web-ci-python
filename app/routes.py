@@ -43,15 +43,12 @@ def listar_empresas():
     sector = request.args.get("sector")
     q = request.args.get("q")
 
-    # Sin filtros → todo
     resultado = EMPRESAS
 
-    # Filtro por sector (igualdad)
     if sector:
         target = _norm(sector)
         resultado = [e for e in resultado if _norm(e.get("sector", "")) == target]
 
-    # Filtro por texto (contiene en ticker o nombre)
     if q:
         needle = _norm(q)
 
@@ -63,3 +60,173 @@ def listar_empresas():
         resultado = [e for e in resultado if coincide(e)]
 
     return jsonify(resultado)
+
+
+# ===========================
+#   POST /analisis (MVP)
+# ===========================
+
+
+def _validar_payload(p):
+    errores = []
+
+    # Obligatorios
+    ticker = p.get("ticker")
+    if not ticker or not isinstance(ticker, str):
+        errores.append("Falta 'ticker' (string).")
+
+    importe = p.get("importe_inicial")
+    if not isinstance(importe, (int, float)) or importe <= 0:
+        errores.append("'importe_inicial' debe ser numérico > 0.")
+
+    horizonte = p.get("horizonte_anios")
+    if not isinstance(horizonte, int) or horizonte < 5:
+        errores.append("'horizonte_anios' debe ser un entero ≥ 5.")
+
+    sup = p.get("supuestos") or {}
+    if not isinstance(sup, dict):
+        errores.append("'supuestos' debe ser un objeto con porcentajes.")
+        sup = {}
+
+    # rangos y plausibilidad
+    def pct_ok(k, minimo=0, maximo=100):
+        v = sup.get(k)
+        if not isinstance(v, (int, float)) or v < minimo or v > maximo:
+            errores.append(f"'{k}' debe estar entre {minimo} y {maximo}.")
+        return v if isinstance(v, (int, float)) else None
+
+    crec = pct_ok("crecimiento_anual_pct", 0, 60)  # >60% sostenido: irrealista
+    margen = pct_ok("margen_seguridad_pct", 0, 100)
+    roe = pct_ok("roe_pct", 0, 100)
+    deuda = pct_ok("deuda_sobre_activos_pct", 0, 100)
+
+    just = p.get("justificacion", "")
+    if not isinstance(just, str) or len(just.strip()) < 20:
+        errores.append("La 'justificacion' debe tener al menos 20 caracteres.")
+
+    # checks adicionales de plausibilidad
+    if isinstance(crec, (int, float)) and crec > 25:
+        errores.append("Crecimiento anual > 25% sostenido es probablemente irrealista.")
+
+    return errores
+
+
+def _puntuar_y_observar(p):
+    """Heurística muy simple para MVP: 0–100."""
+    sup = p["supuestos"]
+    horizon = p["horizonte_anios"]
+
+    score = 50
+    obs = []
+
+    # Horizonte
+    if horizon >= 10:
+        score += 10
+        obs.append({"tipo": "ok", "msg": "Horizonte largo (≥10 años)."})
+    elif horizon >= 5:
+        score += 5
+        obs.append({"tipo": "ok", "msg": "Horizonte adecuado (≥5 años)."})
+
+    # ROE
+    roe = sup.get("roe_pct", 0)
+    if roe >= 15:
+        score += 10
+        obs.append({"tipo": "ok", "msg": "ROE alto (≥15%)."})
+    elif roe >= 8:
+        score += 5
+        obs.append({"tipo": "ok", "msg": "ROE razonable (≥8%)."})
+    else:
+        obs.append(
+            {"tipo": "mejora", "msg": "ROE bajo: revisa rentabilidad del negocio."}
+        )
+
+    # Deuda
+    deuda = sup.get("deuda_sobre_activos_pct", 0)
+    if deuda <= 30:
+        score += 10
+        obs.append({"tipo": "ok", "msg": "Deuda moderada (≤30%)."})
+    elif deuda <= 60:
+        score += 3
+        obs.append(
+            {"tipo": "mejora", "msg": "Deuda medio-alta: vigila el apalancamiento."}
+        )
+    else:
+        score -= 5
+        obs.append(
+            {"tipo": "alerta", "msg": "Deuda elevada (>60%): riesgo financiero."}
+        )
+
+    # Margen de seguridad
+    margen = sup.get("margen_seguridad_pct", 0)
+    if margen >= 20:
+        score += 10
+        obs.append({"tipo": "ok", "msg": "Margen de seguridad sólido (≥20%)."})
+    elif margen >= 10:
+        score += 3
+        obs.append(
+            {"tipo": "mejora", "msg": "Margen de seguridad algo justo (10–20%)."}
+        )
+    else:
+        score -= 5
+        obs.append({"tipo": "alerta", "msg": "Margen de seguridad bajo (<10%)."})
+
+    # Crecimiento
+    crec = sup.get("crecimiento_anual_pct", 0)
+    if crec > 25:
+        score -= 10
+        obs.append(
+            {
+                "tipo": "alerta",
+                "msg": "Supuesto de crecimiento >25% parece optimista/irrealista.",
+            }
+        )
+    elif crec >= 5:
+        score += 5
+        obs.append({"tipo": "ok", "msg": "Crecimiento razonable (5–25%)."})
+    else:
+        obs.append(
+            {"tipo": "mejora", "msg": "Crecimiento bajo: compénsalo con precio/margen."}
+        )
+
+    # Justificación
+    if len((p.get("justificacion") or "").strip()) >= 60:
+        score += 5
+        obs.append({"tipo": "ok", "msg": "Buena justificación (detallada)."})
+    else:
+        obs.append(
+            {
+                "tipo": "mejora",
+                "msg": "Amplía la justificación: riesgos, sensibilidad, comparables.",
+            }
+        )
+
+    # Bounded score
+    score = max(0, min(100, int(round(score))))
+
+    # Resumen simple
+    if score >= 80:
+        resumen = "Análisis sólido."
+    elif score >= 60:
+        resumen = "Análisis razonable con áreas de mejora."
+    else:
+        resumen = "Análisis débil: revisa supuestos, riesgos y valoración."
+
+    return score, obs, resumen
+
+
+@bp.post("/analisis")
+def crear_analisis():
+    datos = request.get_json(silent=True) or {}
+    errores = _validar_payload(datos)
+    if errores:
+        return jsonify({"valido": False, "errores": errores}), 400
+
+    puntuacion, observaciones, resumen = _puntuar_y_observar(datos)
+    return jsonify(
+        {
+            "valido": True,
+            "puntuacion": puntuacion,
+            "observaciones": observaciones,
+            "resumen": resumen,
+        }
+    )
