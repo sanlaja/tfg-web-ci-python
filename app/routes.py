@@ -47,6 +47,7 @@ def listar_empresas():
     Filtros opcionales:
       - ?sector=...  → igualdad exacta (normalizada)
       - ?q=...       → búsqueda contiene en ticker o nombre (normalizada)
+      - ?page&per_page → (opcional) si se envían, responde paginado
     """
     sector = request.args.get("sector")
     q = request.args.get("q")
@@ -67,6 +68,11 @@ def listar_empresas():
 
         resultado = [e for e in resultado if coincide(e)]
 
+    # Solo paginar si el cliente lo pide
+    page = request.args.get("page")
+    per_page = request.args.get("per_page")
+    if page or per_page:
+        return jsonify(_paginate(resultado, page, per_page))
     return jsonify(resultado)
 
 
@@ -282,6 +288,27 @@ def crear_analisis():
 
 @bp.get("/analisis")
 def listar_analisis():
-    """Devuelve el historial de análisis (más recientes primero)."""
+    """Devuelve el historial de análisis. Si se envían ?page/&per_page, responde paginado."""
     historial = _cargar_lista(ANALISIS_PATH)
+    page = request.args.get("page")
+    per_page = request.args.get("per_page")
+    if page or per_page:
+        return jsonify(_paginate(historial, page, per_page))
     return jsonify(historial)
+
+
+def _paginate(lista, page: str | None, per_page: str | None):
+    p = int(page) if page and page.isdigit() and int(page) > 0 else 1
+    pp = int(per_page) if per_page and per_page.isdigit() and int(per_page) > 0 else 10
+    total = len(lista)
+    start = (p - 1) * pp
+    end = start + pp
+    items = lista[start:end]
+    has_next = end < total
+    return {
+        "items": items,
+        "page": p,
+        "per_page": pp,
+        "total": total,
+        "has_next": has_next,
+    }
