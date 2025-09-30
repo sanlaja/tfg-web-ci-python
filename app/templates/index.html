@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TFG • Análisis de Empresas</title>
+  <style>
+    :root { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+    body { margin: 20px; background:#f8fafc; color:#0f172a; }
+    h1 { margin: 0 0 16px; font-size: 22px; }
+    h2 { margin: 24px 0 12px; font-size: 18px; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .card { background: white; border-radius: 12px; padding: 16px; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+    .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    input, select, button { padding: 8px 10px; border-radius: 8px; border: 1px solid #cbd5e1; background:white; }
+    input[type="number"] { width: 120px; }
+    button { cursor: pointer; border: 1px solid #0ea5e9; background:#0ea5e9; color:white; }
+    button.secondary { background: white; color:#0ea5e9; }
+    table { width: 100%; border-collapse: collapse; background:white; }
+    th, td { padding: 8px; border-bottom: 1px solid #e2e8f0; text-align: left; }
+    .muted { color:#64748b; }
+    .pagination { display:flex; gap:8px; align-items:center; margin-top:8px; }
+    .pill { background:#eef2ff; color:#3730a3; padding:2px 8px; border-radius:999px; font-size:12px; }
+    .danger { color:#b91c1c; }
+    .ok { color:#166534; }
+    .mejora { color:#92400e; }
+    .alerta { color:#b91c1c; }
+    .chips { display:flex; gap:6px; flex-wrap: wrap; }
+  </style>
+</head>
+<body>
+  <h1>TFG • Simulador de análisis y feedback</h1>
+
+  <div class="grid">
+    <!-- EMPRESAS -->
+    <section class="card">
+      <h2>Empresas</h2>
+      <div class="row">
+        <input id="emp-q" type="search" placeholder="Buscar (nombre o ticker)" />
+        <select id="emp-sector">
+          <option value="">Todos los sectores</option>
+          <option>Tecnología</option>
+          <option>Consumo</option>
+          <option>Salud</option>
+          <!-- añade más según tu dataset -->
+        </select>
+        <button id="emp-buscar">Buscar</button>
+        <span class="muted" id="emp-total"></span>
+      </div>
+
+      <div id="emp-list" style="margin-top:8px;"></div>
+
+      <div class="pagination">
+        <button id="emp-prev" class="secondary">← Anterior</button>
+        <span id="emp-page" class="pill">p. 1</span>
+        <button id="emp-next" class="secondary">Siguiente →</button>
+      </div>
+    </section>
+
+    <!-- FORMULARIO ANALISIS -->
+    <section class="card">
+      <h2>Nuevo análisis</h2>
+      <div class="row">
+        <input id="anl-ticker" placeholder="Ticker (p.ej. MSFT)" />
+        <input id="anl-importe" type="number" min="1" step="1" placeholder="Importe inicial (€)" />
+        <input id="anl-horizonte" type="number" min="1" step="1" placeholder="Horizonte (años)" />
+      </div>
+      <div class="row" style="margin-top:8px;">
+        <input id="anl-crec" type="number" min="0" max="100" step="1" placeholder="Crecimiento % anual" />
+        <input id="anl-margen" type="number" min="0" max="100" step="1" placeholder="Margen seguridad %" />
+        <input id="anl-roe" type="number" min="0" max="100" step="1" placeholder="ROE %" />
+        <input id="anl-deuda" type="number" min="0" max="100" step="1" placeholder="Deuda/Activos %" />
+      </div>
+      <div style="margin-top:8px;">
+        <textarea id="anl-just" rows="4" style="width:100%; padding:8px; border-radius:8px; border:1px solid #cbd5e1;" placeholder="Justificación (min. 20 caracteres)"></textarea>
+      </div>
+      <div class="row" style="margin-top:10px;">
+        <button id="anl-enviar">Analizar</button>
+        <span id="anl-resultado" class="muted"></span>
+      </div>
+      <div id="anl-observaciones" class="chips" style="margin-top:8px;"></div>
+    </section>
+  </div>
+
+  <!-- HISTORIAL -->
+  <section class="card" style="margin-top:16px;">
+    <h2>Historial</h2>
+    <div class="row">
+      <input id="his-ticker" placeholder="Filtrar por ticker" />
+      <input id="his-desde" type="date" />
+      <input id="his-hasta" type="date" />
+      <button id="his-filtrar">Aplicar filtros</button>
+      <button id="his-export" class="secondary">Exportar CSV</button>
+      <span id="his-total" class="muted"></span>
+    </div>
+
+    <div style="overflow:auto; margin-top:8px;">
+      <table>
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Ticker</th>
+            <th>Importe (€)</th>
+            <th>Horizonte</th>
+            <th>Puntuación</th>
+            <th>Resumen</th>
+          </tr>
+        </thead>
+        <tbody id="his-tbody"></tbody>
+      </table>
+    </div>
+
+    <div class="pagination">
+      <button id="his-prev" class="secondary">← Anterior</button>
+      <span id="his-page" class="pill">p. 1</span>
+      <button id="his-next" class="secondary">Siguiente →</button>
+    </div>
+  </section>
+
+  <script defer src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request, Response
+from flask import Blueprint, jsonify, request, Response, render_template
 from pathlib import Path
 from datetime import datetime
 import json
@@ -9,6 +9,11 @@ import io
 
 
 bp = Blueprint("main", __name__)
+
+
+@bp.get("/")
+def index():
+    return render_template("index.html")
 
 
 # ----------------------
