@@ -1,9 +1,12 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, Response
 from pathlib import Path
 from datetime import datetime
 import json
 import unicodedata
 import uuid
+import csv
+import io
+
 
 bp = Blueprint("main", __name__)
 
@@ -230,6 +233,7 @@ def _puntuar_y_observar(p):
 # ----------------------
 #   Persistencia análisis
 # ----------------------
+
 DATA_DIR = Path(__file__).resolve().parent / "data"
 ANALISIS_PATH = DATA_DIR / "analisis.json"
 
@@ -303,6 +307,7 @@ def listar_analisis():
     ticker = request.args.get("ticker")
     desde = request.args.get("desde")
     hasta = request.args.get("hasta")
+    historial = _filtrar_analisis(historial, ticker, desde, hasta)
 
     if ticker:
         tnorm = _norm(ticker)
@@ -323,6 +328,56 @@ def listar_analisis():
     if page or per_page:
         return jsonify(_paginate(historial, page, per_page))
     return jsonify(historial)
+
+
+@bp.get("/analisis.csv")
+def exportar_analisis_csv():
+    """
+    Exporta el historial de análisis en CSV.
+    Acepta los mismos filtros que GET /analisis: ?ticker, ?desde, ?hasta
+    (No pagina: exporta el conjunto filtrado completo)
+    """
+    historial = _cargar_lista(ANALISIS_PATH)
+    ticker = request.args.get("ticker")
+    desde = request.args.get("desde")
+    hasta = request.args.get("hasta")
+    historial = _filtrar_analisis(historial, ticker, desde, hasta)
+
+    # CSV con columnas principales
+    headers = [
+        "id",
+        "timestamp",
+        "ticker",
+        "importe_inicial",
+        "horizonte_anios",
+        "puntuacion",
+        "resumen",
+    ]
+    output = io.StringIO()
+    writer = csv.writer(output, lineterminator="\n")
+    writer.writerow(headers)
+    for h in historial:
+        writer.writerow(
+            [
+                h.get("id", ""),
+                h.get("timestamp", ""),
+                h.get("ticker", ""),
+                h.get("importe_inicial", ""),
+                h.get("horizonte_anios", ""),
+                h.get("puntuacion", ""),
+                h.get("resumen", "").replace("\n", " ").strip(),
+            ]
+        )
+
+    csv_bytes = output.getvalue().encode("utf-8")
+    return Response(
+        csv_bytes,
+        headers={
+            "Content-Disposition": 'attachment; filename="analisis.csv"',
+            "Content-Type": "text/csv; charset=utf-8",
+        },
+        status=200,
+    )
 
 
 # ----------------------
@@ -357,3 +412,16 @@ def _parse_date_yyyy_mm_dd(s: str | None):
         return datetime.fromisoformat(s)
     except Exception:
         return None
+
+
+def _filtrar_analisis(
+    historial, ticker: str | None, desde: str | None, hasta: str | None
+):
+    if ticker:
+        tnorm = _norm(ticker)
+        historial = [h for h in historial if _norm(h.get("ticker", "")) == tnorm]
+    if desde:
+        historial = [h for h in historial if h.get("timestamp", "")[:10] >= desde]
+    if hasta:
+        historial = [h for h in historial if h.get("timestamp", "")[:10] < hasta]
+    return historial
