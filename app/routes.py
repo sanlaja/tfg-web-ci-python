@@ -48,6 +48,14 @@ def _norm(s: str) -> str:
     return "".join(ch for ch in nfkd if not unicodedata.combining(ch)).lower()
 
 
+@bp.get("/empresas/sectores")
+def listar_sectores():
+    sectores = sorted(
+        {(e.get("sector") or "").strip() for e in EMPRESAS if e.get("sector")}
+    )
+    return jsonify(sectores)
+
+
 @bp.get("/empresas")
 def listar_empresas():
     """
@@ -338,9 +346,8 @@ def listar_analisis():
 @bp.get("/analisis.csv")
 def exportar_analisis_csv():
     """
-    Exporta el historial de análisis en CSV.
+    Exporta el historial de análisis en CSV (UTF-8 con BOM para Excel).
     Acepta los mismos filtros que GET /analisis: ?ticker, ?desde, ?hasta
-    (No pagina: exporta el conjunto filtrado completo)
     """
     historial = _cargar_lista(ANALISIS_PATH)
     ticker = request.args.get("ticker")
@@ -348,7 +355,6 @@ def exportar_analisis_csv():
     hasta = request.args.get("hasta")
     historial = _filtrar_analisis(historial, ticker, desde, hasta)
 
-    # CSV con columnas principales
     headers = [
         "id",
         "timestamp",
@@ -358,11 +364,12 @@ def exportar_analisis_csv():
         "puntuacion",
         "resumen",
     ]
-    output = io.StringIO()
-    writer = csv.writer(output, lineterminator="\n")
-    writer.writerow(headers)
+
+    out = io.StringIO()
+    w = csv.writer(out, lineterminator="\n")
+    w.writerow(headers)
     for h in historial:
-        writer.writerow(
+        w.writerow(
             [
                 h.get("id", ""),
                 h.get("timestamp", ""),
@@ -370,13 +377,15 @@ def exportar_analisis_csv():
                 h.get("importe_inicial", ""),
                 h.get("horizonte_anios", ""),
                 h.get("puntuacion", ""),
-                h.get("resumen", "").replace("\n", " ").strip(),
+                (h.get("resumen", "") or "").replace("\n", " ").strip(),
             ]
         )
 
-    csv_bytes = output.getvalue().encode("utf-8")
+    # 👇 Añadimos BOM para que Excel detecte UTF-8 automáticamente
+    csv_text = "\ufeff" + out.getvalue()
+
     return Response(
-        csv_bytes,
+        csv_text,
         headers={
             "Content-Disposition": 'attachment; filename="analisis.csv"',
             "Content-Type": "text/csv; charset=utf-8",

@@ -59,27 +59,54 @@
 
     <!-- FORMULARIO ANALISIS -->
     <section class="card">
-      <h2>Nuevo análisis</h2>
-      <div class="row">
+    <h2>Nuevo análisis</h2>
+
+    <div class="row">
+        <div>
         <input id="anl-ticker" placeholder="Ticker (p.ej. MSFT)" />
+        <small class="err" id="err-ticker"></small>
+        </div>
+        <div>
         <input id="anl-importe" type="number" min="1" step="1" placeholder="Importe inicial (€)" />
-        <input id="anl-horizonte" type="number" min="1" step="1" placeholder="Horizonte (años)" />
-      </div>
-      <div class="row" style="margin-top:8px;">
+        <small class="err" id="err-importe"></small>
+        </div>
+        <div>
+        <input id="anl-horizonte" type="number" min="1" step="1" placeholder="Horizonte (años, ≥5)" />
+        <small class="err" id="err-horizonte"></small>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top:8px;">
+        <div>
         <input id="anl-crec" type="number" min="0" max="100" step="1" placeholder="Crecimiento % anual" />
+        <small class="err" id="err-crec"></small>
+        </div>
+        <div>
         <input id="anl-margen" type="number" min="0" max="100" step="1" placeholder="Margen seguridad %" />
+        <small class="err" id="err-margen"></small>
+        </div>
+        <div>
         <input id="anl-roe" type="number" min="0" max="100" step="1" placeholder="ROE %" />
+        <small class="err" id="err-roe"></small>
+        </div>
+        <div>
         <input id="anl-deuda" type="number" min="0" max="100" step="1" placeholder="Deuda/Activos %" />
-      </div>
-      <div style="margin-top:8px;">
+        <small class="err" id="err-deuda"></small>
+        </div>
+    </div>
+
+    <div style="margin-top:8px;">
         <textarea id="anl-just" rows="4" style="width:100%; padding:8px; border-radius:8px; border:1px solid #cbd5e1;" placeholder="Justificación (min. 20 caracteres)"></textarea>
-      </div>
-      <div class="row" style="margin-top:10px;">
+        <small class="err" id="err-just"></small>
+    </div>
+
+    <div class="row" style="margin-top:10px;">
         <button id="anl-enviar">Analizar</button>
         <span id="anl-resultado" class="muted"></span>
-      </div>
-      <div id="anl-observaciones" class="chips" style="margin-top:8px;"></div>
+    </div>
+    <div id="anl-observaciones" class="chips" style="margin-top:8px;"></div>
     </section>
+
   </div>
 
   <!-- HISTORIAL -->
@@ -116,6 +143,14 @@
       <button id="his-next" class="secondary">Siguiente →</button>
     </div>
   </section>
+
+  <div class="modal-backdrop" id="modal">
+    <div class="modal">
+        <button class="close" id="modal-close">Cerrar</button>
+        <h3>Observaciones</h3>
+        <div id="modal-body"></div>
+    </div>
+  </div>
 
   <script defer src="{{ url_for('static', filename='app.js') }}"></script>
 </body>

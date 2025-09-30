@@ -114,11 +114,16 @@ function renderObservaciones(list) {
 function bindAnalisisForm() {
   $("#anl-enviar").addEventListener("click", async () => {
     try {
+      clearErrors();
       const p = payloadAnalisis();
+      const errs = validateForm(p);
+      if (Object.keys(errs).length) {
+        showErrors(errs);
+        return;
+      }
       const r = await jsonPost("/analisis", p);
       $("#anl-resultado").textContent = `Puntuación: ${r.puntuacion} — ${r.resumen}`;
       renderObservaciones(r.observaciones);
-      // refresca historial tras crear
       state.his.page = 1;
       await loadHistorial();
     } catch (e) {
@@ -128,6 +133,7 @@ function bindAnalisisForm() {
     }
   });
 }
+
 
 // --- Historial (lista + filtros + paginado + CSV) ---
 async function loadHistorial() {
@@ -139,22 +145,34 @@ async function loadHistorial() {
   const hasNext = Array.isArray(data) ? false : data.has_next;
 
   $("#his-tbody").innerHTML = (items || [])
-    .map(
-      (h) => `<tr>
-        <td class="muted">${fmtDate(h.timestamp)}</td>
-        <td><strong>${h.ticker || ""}</strong></td>
-        <td>${h.importe_inicial ?? ""}</td>
-        <td>${h.horizonte_anios ?? ""} años</td>
-        <td><strong>${h.puntuacion ?? ""}</strong></td>
-        <td>${(h.resumen || "").replace(/\n/g, " ")}</td>
-      </tr>`
-    )
-    .join("");
+  .map((h, idx) => {
+    const obs = JSON.stringify(h.observaciones || []);
+    return `<tr>
+      <td class="muted">${fmtDate(h.timestamp)}</td>
+      <td><strong>${h.ticker || ""}</strong></td>
+      <td>${h.importe_inicial ?? ""}</td>
+      <td>${h.horizonte_anios ?? ""} años</td>
+      <td><strong>${h.puntuacion ?? ""}</strong></td>
+      <td>
+        ${(h.resumen || "").replace(/\n/g, " ")}
+        <button class="secondary" data-obs='${obs.replaceAll("'", "&apos;")}' style="margin-left:6px;">Ver</button>
+      </td>
+    </tr>`;
+  })
+  .join("");
+// Enlaza botones "Ver"
+document.querySelectorAll('#his-tbody button[data-obs]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const list = JSON.parse(btn.getAttribute('data-obs') || "[]");
+    const html = (list || []).map(o => {
+      const cls = o.tipo === "ok" ? "ok" : o.tipo === "alerta" ? "alerta" : "mejora";
+      return `<div class="pill ${cls}" style="display:inline-block;margin:4px 6px 0 0;">${o.msg}</div>`;
+    }).join("") || "<span class='muted'>Sin observaciones</span>";
+    $("#modal-body").innerHTML = html;
+    $("#modal").style.display = "flex";
+  });
+});
 
-  $("#his-total").textContent = `${total} análisis`;
-  $("#his-page").textContent = `p. ${state.his.page}`;
-  $("#his-prev").disabled = state.his.page <= 1;
-  $("#his-next").disabled = !hasNext;
 }
 
 function exportCSV() {
@@ -186,11 +204,63 @@ function bindHistorial() {
   $("#his-export").addEventListener("click", exportCSV);
 }
 
+function clearErrors() {
+  ["ticker","importe","horizonte","crec","margen","roe","deuda","just"].forEach(
+    id => { $(`#err-${id}`).textContent = ""; }
+  );
+}
+
+function validateForm(p) {
+  const errs = {};
+  if (!p.ticker) errs.ticker = "Obligatorio.";
+  if (!(p.importe_inicial > 0)) errs.importe = "Debe ser > 0.";
+  if (!(Number.isInteger(p.horizonte_anios) && p.horizonte_anios >= 5)) errs.horizonte = "Debe ser entero ≥ 5.";
+
+  const sup = p.supuestos || {};
+  const within = (v) => Number.isFinite(v) && v >= 0 && v <= 100;
+  if (!within(sup.crecimiento_anual_pct)) errs.crec = "0–100.";
+  if (!within(sup.margen_seguridad_pct)) errs.margen = "0–100.";
+  if (!within(sup.roe_pct)) errs.roe = "0–100.";
+  if (!within(sup.deuda_sobre_activos_pct)) errs.deuda = "0–100.";
+
+  if (!p.justificacion || p.justificacion.trim().length < 20) errs.just = "Mínimo 20 caracteres.";
+  return errs;
+}
+
+function showErrors(errs) {
+  Object.entries(errs).forEach(([k, msg]) => {
+    const el = $(`#err-${k}`);
+    if (el) el.textContent = msg;
+  });
+}
+
+async function loadSectores() {
+  const sectores = await jsonGet("/empresas/sectores");
+  const sel = $("#emp-sector");
+  // Mantén la opción "Todos los sectores"
+  sel.innerHTML = `<option value="">Todos los sectores</option>` +
+    sectores.map(s => `<option value="${s}">${s}</option>`).join("");
+}
+
+
+
 // --- Boot ---
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   bindEmpresas();
   bindAnalisisForm();
   bindHistorial();
+ try {
+    await loadSectores();
+  } catch (e) {
+    console.warn("No se pudieron cargar sectores:", e);
+  }
   loadEmpresas().catch((e) => alert(e.message));
   loadHistorial().catch((e) => alert(e.message));
+
+    $("#modal-close").addEventListener("click", () => { $("#modal").style.display = "none"; });
+$("#modal").addEventListener("click", (e) => {
+  if (e.target.id === "modal") $("#modal").style.display = "none";
+});
+
+
 });
