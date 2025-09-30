@@ -288,13 +288,46 @@ def crear_analisis():
 
 @bp.get("/analisis")
 def listar_analisis():
-    """Devuelve el historial de análisis. Si se envían ?page/&per_page, responde paginado."""
+    """
+    Devuelve el historial de análisis (más recientes primero).
+    Filtros opcionales (se aplican ANTES del paginado):
+      - ?ticker=MSFT      (case-insensitive, igualdad exacta)
+      - ?desde=YYYY-MM-DD (inclusive por fecha de timestamp)
+      - ?hasta=YYYY-MM-DD (exclusivo del día siguiente; simplificamos usando prefijos)
+    Paginado opcional:
+      - ?page, ?per_page
+    """
     historial = _cargar_lista(ANALISIS_PATH)
+
+    # --- Filtros ---
+    ticker = request.args.get("ticker")
+    desde = request.args.get("desde")
+    hasta = request.args.get("hasta")
+
+    if ticker:
+        tnorm = _norm(ticker)
+        historial = [h for h in historial if _norm(h.get("ticker", "")) == tnorm]
+
+    # Para fechas, usamos comparación por prefijo de fecha (YYYY-MM-DD)
+    # porque timestamp está en ISO completo (YYYY-MM-DDTHH:MM:SSZ)
+    if desde:
+        # mantenemos items cuya fecha >= desde
+        historial = [h for h in historial if h.get("timestamp", "")[:10] >= desde]
+    if hasta:
+        # mantenemos items cuya fecha < hasta (exclusivo)
+        historial = [h for h in historial if h.get("timestamp", "")[:10] < hasta]
+
+    # --- Respuesta: lista o paginado ---
     page = request.args.get("page")
     per_page = request.args.get("per_page")
     if page or per_page:
         return jsonify(_paginate(historial, page, per_page))
     return jsonify(historial)
+
+
+# ----------------------
+#   Helpers generales
+# ----------------------
 
 
 def _paginate(lista, page: str | None, per_page: str | None):
@@ -312,3 +345,15 @@ def _paginate(lista, page: str | None, per_page: str | None):
         "total": total,
         "has_next": has_next,
     }
+
+
+def _parse_date_yyyy_mm_dd(s: str | None):
+    if not s:
+        return None
+    try:
+        from datetime import datetime
+
+        # interpretamos fecha en UTC a medianoche
+        return datetime.fromisoformat(s)
+    except Exception:
+        return None
