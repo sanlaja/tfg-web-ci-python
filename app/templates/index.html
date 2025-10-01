@@ -29,6 +29,11 @@
     .err { display:block; min-height:16px; color:#b91c1c; font-size:12px; margin-top:4px; }
     input.invalid, textarea.invalid { border-color:#b91c1c !important; outline-color:#b91c1c; }
     button[disabled] { opacity:.6; cursor:not-allowed; }
+    .modal-backdrop { position:fixed; inset:0; background:rgba(0,0,0,.35); display:none; align-items:center; justify-content:center; z-index:9999; }
+    .modal { background:white; padding:16px; border-radius:12px; max-width:660px; width:90%; box-shadow:0 12px 32px rgba(0,0,0,.2); }
+    .modal h3 { margin:0 0 10px; }
+    .modal .close { background:#e2e8f0; color:#0f172a; border:1px solid #cbd5e1; border-radius:8px; padding:6px 10px; cursor:pointer; }
+
 
   </style>
 </head>
@@ -164,6 +169,18 @@
         <div id="modal-body"></div>
     </div>
   </div>
+
+  <!-- Modal de Observaciones -->
+<div class="modal-backdrop" id="modal" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
+      <h3 id="modal-title" style="margin:0;">Observaciones</h3>
+      <button class="close" id="modal-close" aria-label="Cerrar">Cerrar</button>
+    </div>
+    <div id="modal-body" style="margin-top:10px;"></div>
+  </div>
+</div>
+
 
   <script defer src="{{ url_for('static', filename='app.js') }}"></script>
 </body>
