@@ -407,6 +407,45 @@ function showErrors(errs) {
   }
 }
 
+function readParams() {
+  const p = new URLSearchParams(location.search);
+
+  // Empresas
+  state.emp.q = p.get("emp_q") ?? "";
+  state.emp.sector = p.get("emp_sector") ?? "";
+  state.emp.page = Number(p.get("emp_page") ?? 1) || 1;
+  state.emp.per_page = Number(p.get("emp_per_page") ?? state.emp.per_page) || 10;
+
+  // Historial
+  state.his.ticker = p.get("his_ticker") ?? "";
+  state.his.desde = p.get("his_desde") ?? "";
+  state.his.hasta = p.get("his_hasta") ?? "";
+  state.his.page = Number(p.get("his_page") ?? 1) || 1;
+  state.his.per_page = Number(p.get("his_per_page") ?? state.his.per_page) || 10;
+}
+
+function writeParams(replace = true) {
+  const p = new URLSearchParams(location.search);
+
+  // Empresas
+  state.emp.q ? p.set("emp_q", state.emp.q) : p.delete("emp_q");
+  state.emp.sector ? p.set("emp_sector", state.emp.sector) : p.delete("emp_sector");
+  state.emp.page > 1 ? p.set("emp_page", String(state.emp.page)) : p.delete("emp_page");
+  state.emp.per_page !== 10 ? p.set("emp_per_page", String(state.emp.per_page)) : p.delete("emp_per_page");
+
+  // Historial
+  state.his.ticker ? p.set("his_ticker", state.his.ticker) : p.delete("his_ticker");
+  state.his.desde ? p.set("his_desde", state.his.desde) : p.delete("his_desde");
+  state.his.hasta ? p.set("his_hasta", state.his.hasta) : p.delete("his_hasta");
+  state.his.page > 1 ? p.set("his_page", String(state.his.page)) : p.delete("his_page");
+  state.his.per_page !== 10 ? p.set("his_per_page", String(state.his.per_page)) : p.delete("his_per_page");
+
+  const url = `${location.pathname}?${p.toString()}`;
+  if (replace) history.replaceState(null, "", url);
+  else history.pushState(null, "", url);
+}
+
+
 /* ============================================================================
  * Observaciones (modal accesible)
  * ==========================================================================*/
@@ -472,30 +511,60 @@ function closeObservacionesModal() {
  * ==========================================================================*/
 
 document.addEventListener("DOMContentLoaded", async () => {
-  // Enlaces de UI
+  // 1) Estado inicial desde la URL
+  readParams();
+
+  // 2) Enlazar handlers
   bindEmpresas();
   bindAnalisisForm();
   bindHistorial();
 
-  // Carga inicial de sectores (no bloqueante)
+  // 3) Volcar valores iniciales a los inputs
+  $("#emp-q").value = state.emp.q || "";
+  $("#emp-sector").value = state.emp.sector || "";
+
+  $("#his-ticker").value = state.his.ticker || "";
+  $("#his-desde").value = state.his.desde || "";
+  $("#his-hasta").value = state.his.hasta || "";
+
+  // 4) Cargar sectores (no bloqueante)
   try {
     await loadSectores();
   } catch (e) {
     console.warn("No se pudieron cargar sectores:", e);
   }
 
-  // Cargas iniciales
+  // 5) Cargar datos iniciales
   loadEmpresas().catch((e) => alert(e.message));
   loadHistorial().catch((e) => alert(e.message));
 
-  // Modal: cerrar con botón
+  // 6) Modal: cerrar con botón
   document.getElementById("modal-close").addEventListener("click", closeObservacionesModal);
 
-  // Modal: cerrar al hacer click fuera del cuadro
+  // 7) Modal: cerrar al hacer click fuera del cuadro
   document.getElementById("modal").addEventListener("click", (e) => {
     if (e.target.id === "modal") closeObservacionesModal();
   });
+
+  // 8) Navegación con atrás/adelante
+  window.addEventListener("popstate", async () => {
+    readParams();
+
+    // Refrescar inputs para que coincidan con la URL
+    $("#emp-q").value = state.emp.q || "";
+    $("#emp-sector").value = state.emp.sector || "";
+
+    $("#his-ticker").value = state.his.ticker || "";
+    $("#his-desde").value = state.his.desde || "";
+    $("#his-hasta").value = state.his.hasta || "";
+
+    await Promise.all([
+      loadEmpresas().catch((e) => console.error(e)),
+      loadHistorial().catch((e) => console.error(e)),
+    ]);
+  });
 });
+
 
 /* ============================================================================
  * Auxiliares de datos (sectores)
