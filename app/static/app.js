@@ -84,16 +84,16 @@ function bindEmpresas() {
 // --- Enviar análisis ---
 function payloadAnalisis() {
   return {
-    ticker: $("#anl-ticker").value.trim(),
-    importe_inicial: Number($("#anl-importe").value),
-    horizonte_anios: Number($("#anl-horizonte").value),
+    ticker: document.getElementById("anl-ticker").value.trim(),
+    importe_inicial: Number(document.getElementById("anl-importe").value),
+    horizonte_anios: Number(document.getElementById("anl-horizonte").value),
     supuestos: {
-      crecimiento_anual_pct: Number($("#anl-crec").value),
-      margen_seguridad_pct: Number($("#anl-margen").value),
-      roe_pct: Number($("#anl-roe").value),
-      deuda_sobre_activos_pct: Number($("#anl-deuda").value),
+      crecimiento_anual_pct: Number(document.getElementById("anl-crec").value),
+      margen_seguridad_pct: Number(document.getElementById("anl-margen").value),
+      roe_pct: Number(document.getElementById("anl-roe").value),
+      deuda_sobre_activos_pct: Number(document.getElementById("anl-deuda").value),
     },
-    justificacion: $("#anl-just").value.trim(),
+    justificacion: document.getElementById("anl-just").value,
   };
 }
 
@@ -112,27 +112,50 @@ function renderObservaciones(list) {
 }
 
 function bindAnalisisForm() {
-  $("#anl-enviar").addEventListener("click", async () => {
+  const btn = document.getElementById("anl-enviar");
+  ["anl-ticker","anl-importe","anl-horizonte","anl-crec","anl-margen","anl-roe","anl-deuda","anl-just"].forEach(id => {
+    const el = document.getElementById(id);
+    el?.addEventListener("input", () => {
+      // al modificar, limpia error de ese campo
+      const map = {
+        "anl-ticker":"ticker","anl-importe":"importe","anl-horizonte":"horizonte",
+        "anl-crec":"crec","anl-margen":"margen","anl-roe":"roe","anl-deuda":"deuda","anl-just":"just"
+      };
+      const k = map[id];
+      const err = document.getElementById(`err-${k}`);
+      if (err) err.textContent = "";
+      el.classList.remove("invalid");
+    });
+  });
+
+  btn.addEventListener("click", async () => {
+    clearErrors();
+    const p = payloadAnalisis();
+    const errs = validateForm(p);
+    if (Object.keys(errs).length) {
+      showErrors(errs);
+      return;
+    }
+
     try {
-      clearErrors();
-      const p = payloadAnalisis();
-      const errs = validateForm(p);
-      if (Object.keys(errs).length) {
-        showErrors(errs);
-        return;
-      }
+      btn.disabled = true;
+      btn.textContent = "Analizando…";
       const r = await jsonPost("/analisis", p);
-      $("#anl-resultado").textContent = `Puntuación: ${r.puntuacion} — ${r.resumen}`;
-      renderObservaciones(r.observaciones);
+      document.getElementById("anl-resultado").textContent =
+        `Puntuación: ${r.puntuacion} — ${r.resumen}`;
+      renderObservaciones(r.observaciones);     // ya lo tienes
+      // refresca historial
       state.his.page = 1;
       await loadHistorial();
     } catch (e) {
-      $("#anl-resultado").textContent = "";
-      $("#anl-observaciones").innerHTML = "";
       alert(`No se pudo analizar:\n${e.message}`);
+    } finally {
+      btn.disabled = false;
+      btn.textContent = "Analizar";
     }
   });
 }
+
 
 
 // --- Historial (lista + filtros + paginado + CSV) ---
@@ -205,9 +228,12 @@ function bindHistorial() {
 }
 
 function clearErrors() {
-  ["ticker","importe","horizonte","crec","margen","roe","deuda","just"].forEach(
-    id => { $(`#err-${id}`).textContent = ""; }
-  );
+  ["ticker","importe","horizonte","crec","margen","roe","deuda","just"].forEach((k) => {
+    const el = document.getElementById(`err-${k}`);
+    if (el) el.textContent = "";
+  });
+  ["anl-ticker","anl-importe","anl-horizonte","anl-crec","anl-margen","anl-roe","anl-deuda","anl-just"]
+    .forEach(id => document.getElementById(id)?.classList.remove("invalid"));
 }
 
 function validateForm(p) {
@@ -218,20 +244,37 @@ function validateForm(p) {
 
   const sup = p.supuestos || {};
   const within = (v) => Number.isFinite(v) && v >= 0 && v <= 100;
-  if (!within(sup.crecimiento_anual_pct)) errs.crec = "0–100.";
-  if (!within(sup.margen_seguridad_pct)) errs.margen = "0–100.";
-  if (!within(sup.roe_pct)) errs.roe = "0–100.";
-  if (!within(sup.deuda_sobre_activos_pct)) errs.deuda = "0–100.";
+  if (!within(sup.crecimiento_anual_pct)) errs.crec = "Debe estar entre 0 y 100.";
+  if (!within(sup.margen_seguridad_pct)) errs.margen = "Debe estar entre 0 y 100.";
+  if (!within(sup.roe_pct)) errs.roe = "Debe estar entre 0 y 100.";
+  if (!within(sup.deuda_sobre_activos_pct)) errs.deuda = "Debe estar entre 0 y 100.";
 
   if (!p.justificacion || p.justificacion.trim().length < 20) errs.just = "Mínimo 20 caracteres.";
   return errs;
 }
 
 function showErrors(errs) {
+  const map = {
+    ticker: "anl-ticker",
+    importe: "anl-importe",
+    horizonte: "anl-horizonte",
+    crec: "anl-crec",
+    margen: "anl-margen",
+    roe: "anl-roe",
+    deuda: "anl-deuda",
+    just: "anl-just",
+  };
+  let firstInvalid = null;
   Object.entries(errs).forEach(([k, msg]) => {
-    const el = $(`#err-${k}`);
-    if (el) el.textContent = msg;
+    const errEl = document.getElementById(`err-${k}`);
+    if (errEl) errEl.textContent = msg;
+    const input = document.getElementById(map[k]);
+    if (input) {
+      input.classList.add("invalid");
+      if (!firstInvalid) firstInvalid = input;
+    }
   });
+  if (firstInvalid) firstInvalid.scrollIntoView({ behavior: "smooth", block: "center" });
 }
 
 async function loadSectores() {

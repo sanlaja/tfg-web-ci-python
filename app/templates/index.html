@@ -26,6 +26,10 @@
     .mejora { color:#92400e; }
     .alerta { color:#b91c1c; }
     .chips { display:flex; gap:6px; flex-wrap: wrap; }
+    .err { display:block; min-height:16px; color:#b91c1c; font-size:12px; margin-top:4px; }
+    input.invalid, textarea.invalid { border-color:#b91c1c !important; outline-color:#b91c1c; }
+    button[disabled] { opacity:.6; cursor:not-allowed; }
+
   </style>
 </head>
 <body>
@@ -59,53 +63,62 @@
 
     <!-- FORMULARIO ANALISIS -->
     <section class="card">
-    <h2>Nuevo análisis</h2>
+  <h2>Nuevo análisis</h2>
 
-    <div class="row">
-        <div>
-        <input id="anl-ticker" placeholder="Ticker (p.ej. MSFT)" />
-        <small class="err" id="err-ticker"></small>
-        </div>
-        <div>
-        <input id="anl-importe" type="number" min="1" step="1" placeholder="Importe inicial (€)" />
-        <small class="err" id="err-importe"></small>
-        </div>
-        <div>
-        <input id="anl-horizonte" type="number" min="1" step="1" placeholder="Horizonte (años, ≥5)" />
-        <small class="err" id="err-horizonte"></small>
-        </div>
+  <div class="row">
+    <div>
+      <label for="anl-ticker" class="muted">Ticker</label>
+      <input id="anl-ticker" placeholder="p. ej., MSFT" />
+      <small class="err" id="err-ticker" aria-live="polite"></small>
     </div>
+    <div>
+      <label for="anl-importe" class="muted">Importe inicial (€)</label>
+      <input id="anl-importe" type="number" min="1" step="1" />
+      <small class="err" id="err-importe" aria-live="polite"></small>
+    </div>
+    <div>
+      <label for="anl-horizonte" class="muted">Horizonte (años, ≥5)</label>
+      <input id="anl-horizonte" type="number" min="1" step="1" />
+      <small class="err" id="err-horizonte" aria-live="polite"></small>
+    </div>
+  </div>
 
-    <div class="row" style="margin-top:8px;">
-        <div>
-        <input id="anl-crec" type="number" min="0" max="100" step="1" placeholder="Crecimiento % anual" />
-        <small class="err" id="err-crec"></small>
-        </div>
-        <div>
-        <input id="anl-margen" type="number" min="0" max="100" step="1" placeholder="Margen seguridad %" />
-        <small class="err" id="err-margen"></small>
-        </div>
-        <div>
-        <input id="anl-roe" type="number" min="0" max="100" step="1" placeholder="ROE %" />
-        <small class="err" id="err-roe"></small>
-        </div>
-        <div>
-        <input id="anl-deuda" type="number" min="0" max="100" step="1" placeholder="Deuda/Activos %" />
-        <small class="err" id="err-deuda"></small>
-        </div>
+  <div class="row" style="margin-top:8px;">
+    <div>
+      <label for="anl-crec" class="muted">Crecimiento anual %</label>
+      <input id="anl-crec" type="number" min="0" max="100" step="1" />
+      <small class="err" id="err-crec" aria-live="polite"></small>
     </div>
+    <div>
+      <label for="anl-margen" class="muted">Margen seguridad %</label>
+      <input id="anl-margen" type="number" min="0" max="100" step="1" />
+      <small class="err" id="err-margen" aria-live="polite"></small>
+    </div>
+    <div>
+      <label for="anl-roe" class="muted">ROE %</label>
+      <input id="anl-roe" type="number" min="0" max="100" step="1" />
+      <small class="err" id="err-roe" aria-live="polite"></small>
+    </div>
+    <div>
+      <label for="anl-deuda" class="muted">Deuda/Activos %</label>
+      <input id="anl-deuda" type="number" min="0" max="100" step="1" />
+      <small class="err" id="err-deuda" aria-live="polite"></small>
+    </div>
+  </div>
 
-    <div style="margin-top:8px;">
-        <textarea id="anl-just" rows="4" style="width:100%; padding:8px; border-radius:8px; border:1px solid #cbd5e1;" placeholder="Justificación (min. 20 caracteres)"></textarea>
-        <small class="err" id="err-just"></small>
-    </div>
+  <div style="margin-top:8px;">
+    <label for="anl-just" class="muted">Justificación (≥ 20 chars)</label>
+    <textarea id="anl-just" rows="4" style="width:100%; padding:8px; border-radius:8px; border:1px solid #cbd5e1;"></textarea>
+    <small class="err" id="err-just" aria-live="polite"></small>
+  </div>
 
-    <div class="row" style="margin-top:10px;">
-        <button id="anl-enviar">Analizar</button>
-        <span id="anl-resultado" class="muted"></span>
-    </div>
-    <div id="anl-observaciones" class="chips" style="margin-top:8px;"></div>
-    </section>
+  <div class="row" style="margin-top:10px;">
+    <button id="anl-enviar">Analizar</button>
+    <span id="anl-resultado" class="muted" style="margin-left:8px;"></span>
+  </div>
+
+  <div id="anl-observaciones" class="chips" style="margin-top:8px;"></div>
+</section>
 
   </div>
 
