@@ -457,43 +457,84 @@ function showErrors(errs) {
   }
 }
 
+/**
+ * Lee parámetros desde la URL o, si no hay querystring,
+ * restaura el último estado válido guardado en localStorage (<24 h).
+ */
 function readParams() {
   const p = new URLSearchParams(location.search);
 
-  // Empresas
-  state.emp.q = p.get("emp_q") ?? "";
-  state.emp.sector = p.get("emp_sector") ?? "";
-  state.emp.page = Number(p.get("emp_page") ?? 1) || 1;
+  // Si no hay parámetros en la URL, intentamos restaurar desde localStorage
+  if (![...p.keys()].length) {
+    const saved = localStorage.getItem("tfg_state");
+    if (saved) {
+      try {
+        const obj = JSON.parse(saved);
+        const ts = obj?._ts; // marca temporal
+        const now = Date.now();
+        const maxAge = 24 * 60 * 60 * 1000; // 24 h
+
+        if (ts && now - ts < maxAge && obj?.emp && obj?.his) {
+          Object.assign(state, obj);
+          console.info("🔁 Estado restaurado desde localStorage.");
+        } else {
+          localStorage.removeItem("tfg_state"); // caducado o corrupto
+        }
+      } catch (_) {
+        localStorage.removeItem("tfg_state");
+      }
+    }
+  }
+
+  // --- Empresas ---
+  state.emp.q = p.get("emp_q") ?? state.emp.q;
+  state.emp.sector = p.get("emp_sector") ?? state.emp.sector;
+  state.emp.page = Number(p.get("emp_page") ?? state.emp.page) || 1;
   state.emp.per_page = Number(p.get("emp_per_page") ?? state.emp.per_page) || 10;
 
-  // Historial
-  state.his.ticker = p.get("his_ticker") ?? "";
-  state.his.desde = p.get("his_desde") ?? "";
-  state.his.hasta = p.get("his_hasta") ?? "";
-  state.his.page = Number(p.get("his_page") ?? 1) || 1;
+  // --- Historial ---
+  state.his.ticker = p.get("his_ticker") ?? state.his.ticker;
+  state.his.desde = p.get("his_desde") ?? state.his.desde;
+  state.his.hasta = p.get("his_hasta") ?? state.his.hasta;
+  state.his.page = Number(p.get("his_page") ?? state.his.page) || 1;
   state.his.per_page = Number(p.get("his_per_page") ?? state.his.per_page) || 10;
 }
 
+/**
+ * Escribe el estado actual en la URL (querystring)
+ * y guarda una copia persistente en localStorage (con timestamp).
+ */
 function writeParams(replace = true) {
   const p = new URLSearchParams(location.search);
 
-  // Empresas
+  // --- Empresas ---
   state.emp.q ? p.set("emp_q", state.emp.q) : p.delete("emp_q");
   state.emp.sector ? p.set("emp_sector", state.emp.sector) : p.delete("emp_sector");
   state.emp.page > 1 ? p.set("emp_page", String(state.emp.page)) : p.delete("emp_page");
-  state.emp.per_page !== 10 ? p.set("emp_per_page", String(state.emp.per_page)) : p.delete("emp_per_page");
+  state.emp.per_page !== 10
+    ? p.set("emp_per_page", String(state.emp.per_page))
+    : p.delete("emp_per_page");
 
-  // Historial
+  // --- Historial ---
   state.his.ticker ? p.set("his_ticker", state.his.ticker) : p.delete("his_ticker");
   state.his.desde ? p.set("his_desde", state.his.desde) : p.delete("his_desde");
   state.his.hasta ? p.set("his_hasta", state.his.hasta) : p.delete("his_hasta");
   state.his.page > 1 ? p.set("his_page", String(state.his.page)) : p.delete("his_page");
-  state.his.per_page !== 10 ? p.set("his_per_page", String(state.his.per_page)) : p.delete("his_per_page");
+  state.his.per_page !== 10
+    ? p.set("his_per_page", String(state.his.per_page))
+    : p.delete("his_per_page");
 
   const url = `${location.pathname}?${p.toString()}`;
   if (replace) history.replaceState(null, "", url);
   else history.pushState(null, "", url);
+
+  // 👇 Guarda el estado en localStorage con timestamp
+  localStorage.setItem(
+    "tfg_state",
+    JSON.stringify({ ...state, _ts: Date.now() })
+  );
 }
+
 
 /* ============================================================================
  * Observaciones (modal accesible)
