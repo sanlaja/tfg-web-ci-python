@@ -88,9 +88,10 @@ async function loadEmpresas() {
   const data = await jsonGet(`/empresas?${query}`);
 
   // La API puede devolver array directo o estructura paginada
-  const items = Array.isArray(data) ? data : data.items;
-  const total = Array.isArray(data) ? items.length : data.total;
-  const hasNext = Array.isArray(data) ? false : data.has_next;
+  const arrayMode = Array.isArray(data);
+  const items = arrayMode ? data : data.items;
+  const total = arrayMode ? (items || []).length : data.total;
+  const hasNext = arrayMode ? false : data.has_next;
 
   // Render de filas
   $("#emp-list").innerHTML = (items || [])
@@ -103,9 +104,20 @@ async function loadEmpresas() {
     )
     .join("");
 
-  // Render de metadatos/paginación
-  $("#emp-total").textContent = `${total} resultados`;
-  $("#emp-page").textContent = `p. ${state.emp.page}`;
+  // Texto informativo (sustituye emp-total/emp-page por emp-info)
+  const infoEl = $("#emp-info");
+  if (arrayMode) {
+    infoEl.textContent = `${total} resultados`;
+  } else {
+    const start = total === 0 ? 0 : (page - 1) * per_page + 1;
+    const end = total === 0 ? 0 : Math.min(start + (items?.length || 0) - 1, total);
+    infoEl.textContent =
+      total === 0
+        ? "0 resultados"
+        : `Mostrando ${start}–${end} de ${total} · p. ${page} · ${per_page}/pág`;
+  }
+
+  // Botones
   $("#emp-prev").disabled = state.emp.page <= 1;
   $("#emp-next").disabled = !hasNext;
 }
@@ -114,22 +126,36 @@ async function loadEmpresas() {
  * Enlaza eventos de búsqueda y paginado del bloque de empresas.
  */
 function bindEmpresas() {
+  // Buscar
   $("#emp-buscar").addEventListener("click", () => {
     state.emp.q = $("#emp-q").value.trim();
     state.emp.sector = $("#emp-sector").value.trim();
     state.emp.page = 1;
+    writeParams();
     loadEmpresas().catch((e) => alert(e.message));
   });
 
+  // Por página
+  const perSel = $("#emp-per-page");
+  perSel.addEventListener("change", () => {
+    state.emp.per_page = Number(perSel.value) || 10;
+    state.emp.page = 1;
+    writeParams();
+    loadEmpresas().catch((e) => alert(e.message));
+  });
+
+  // Prev / Next
   $("#emp-prev").addEventListener("click", () => {
     if (state.emp.page > 1) {
       state.emp.page--;
+      writeParams();
       loadEmpresas().catch((e) => alert(e.message));
     }
   });
 
   $("#emp-next").addEventListener("click", () => {
     state.emp.page++;
+    writeParams();
     loadEmpresas().catch((e) => alert(e.message));
   });
 }
@@ -221,8 +247,9 @@ function bindAnalisisForm() {
 
       renderObservaciones(r.observaciones);
 
-      // Refresca historial
+      // Refresca historial al principio
       state.his.page = 1;
+      writeParams();
       await loadHistorial();
     } catch (e) {
       alert(`No se pudo analizar:\n${e.message}`);
@@ -245,9 +272,10 @@ async function loadHistorial() {
   const query = qs({ page, per_page, ticker, desde, hasta });
   const data = await jsonGet(`/analisis?${query}`);
 
-  const items = Array.isArray(data) ? data : data.items;
-  const total = Array.isArray(data) ? items.length : data.total;
-  const hasNext = Array.isArray(data) ? false : data.has_next;
+  const arrayMode = Array.isArray(data);
+  const items = arrayMode ? data : data.items;
+  const total = arrayMode ? (items || []).length : data.total;
+  const hasNext = arrayMode ? false : data.has_next;
 
   // Render de filas
   $("#his-tbody").innerHTML = (items || [])
@@ -282,9 +310,20 @@ async function loadHistorial() {
     });
   });
 
+  // Info de paginación (sustituye his-total/his-page por his-info)
+  const infoEl = $("#his-info");
+  if (arrayMode) {
+    infoEl.textContent = `${total} resultados`;
+  } else {
+    const start = total === 0 ? 0 : (page - 1) * per_page + 1;
+    const end = total === 0 ? 0 : Math.min(start + (items?.length || 0) - 1, total);
+    infoEl.textContent =
+      total === 0
+        ? "0 resultados"
+        : `Mostrando ${start}–${end} de ${total} · p. ${page} · ${per_page}/pág`;
+  }
+
   // Controles de paginación del historial
-  $("#his-total").textContent = `${total} resultados`;
-  $("#his-page").textContent = `p. ${state.his.page}`;
   $("#his-prev").disabled = state.his.page <= 1;
   $("#his-next").disabled = !hasNext;
 }
@@ -308,18 +347,29 @@ function bindHistorial() {
     state.his.desde = $("#his-desde").value || "";
     state.his.hasta = $("#his-hasta").value || "";
     state.his.page = 1;
+    writeParams();
+    loadHistorial().catch((e) => alert(e.message));
+  });
+
+  const perSel = $("#his-per-page");
+  perSel.addEventListener("change", () => {
+    state.his.per_page = Number(perSel.value) || 10;
+    state.his.page = 1;
+    writeParams();
     loadHistorial().catch((e) => alert(e.message));
   });
 
   $("#his-prev").addEventListener("click", () => {
     if (state.his.page > 1) {
       state.his.page--;
+      writeParams();
       loadHistorial().catch((e) => alert(e.message));
     }
   });
 
   $("#his-next").addEventListener("click", () => {
     state.his.page++;
+    writeParams();
     loadHistorial().catch((e) => alert(e.message));
   });
 
@@ -445,7 +495,6 @@ function writeParams(replace = true) {
   else history.pushState(null, "", url);
 }
 
-
 /* ============================================================================
  * Observaciones (modal accesible)
  * ==========================================================================*/
@@ -522,10 +571,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   // 3) Volcar valores iniciales a los inputs
   $("#emp-q").value = state.emp.q || "";
   $("#emp-sector").value = state.emp.sector || "";
+  $("#emp-per-page").value = String(state.emp.per_page);
 
   $("#his-ticker").value = state.his.ticker || "";
   $("#his-desde").value = state.his.desde || "";
   $("#his-hasta").value = state.his.hasta || "";
+  $("#his-per-page").value = String(state.his.per_page);
 
   // 4) Cargar sectores (no bloqueante)
   try {
@@ -553,10 +604,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Refrescar inputs para que coincidan con la URL
     $("#emp-q").value = state.emp.q || "";
     $("#emp-sector").value = state.emp.sector || "";
+    $("#emp-per-page").value = String(state.emp.per_page);
 
     $("#his-ticker").value = state.his.ticker || "";
     $("#his-desde").value = state.his.desde || "";
     $("#his-hasta").value = state.his.hasta || "";
+    $("#his-per-page").value = String(state.his.per_page);
 
     await Promise.all([
       loadEmpresas().catch((e) => console.error(e)),
@@ -564,7 +617,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     ]);
   });
 });
-
 
 /* ============================================================================
  * Auxiliares de datos (sectores)
