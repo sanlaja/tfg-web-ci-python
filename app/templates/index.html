@@ -32,6 +32,25 @@
     .modal { background:white; padding:16px; border-radius:12px; max-width:660px; width:90%; box-shadow:0 12px 32px rgba(0,0,0,.2); }
     .modal h3 { margin:0 0 10px; }
     .modal .close { background:#e2e8f0; color:#0f172a; border:1px solid #cbd5e1; border-radius:8px; padding:6px 10px; cursor:pointer; }
+    .empty { padding:14px; border:1px dashed #cbd5e1; border-radius:10px; color:#475569; background:#f8fafc; text-align:center; }
+    .skel { background:linear-gradient(90deg,#e5e7eb 25%,#f3f4f6 37%,#e5e7eb 63%); background-size:400% 100%; animation:sh 1.2s ease-in-out infinite; border-radius:6px; }
+    @keyframes sh { 0%{background-position:100% 0} 100%{background-position:-100% 0} }
+
+    .badge { display:inline-block; padding:2px 8px; border-radius:999px; font-size:12px; border:1px solid #cbd5e1; background:#eef2ff; color:#1e293b; }
+    .badge.sector { background:#ebf8ff; }
+    .badge.score-high { background:#dcfce7; }
+    .badge.score-mid { background:#fef9c3; }
+    .badge.score-low { background:#fee2e2; }
+
+    mark.hl { background:#fde68a; padding:0 2px; border-radius:3px; }
+    .btn-icon { border:1px solid #cbd5e1; border-radius:8px; padding:6px 10px; background:#f8fafc; cursor:pointer; }
+
+    .badge{display:inline-block; padding:2px 8px; border-radius:999px; font-size:12px;}
+    .score-high{ background:#dcfce7; color:#166534;}
+    .score-mid{  background:#f1f5f9; color:#334155;}
+    .score-low{  background:#fee2e2; color:#991b1b;}
+
+
   </style>
 </head>
 <body>
@@ -61,6 +80,7 @@
         <button id="emp-buscar">Buscar</button>
         <button id="emp-prev" class="secondary">Anterior</button>
         <button id="emp-next" class="secondary">Siguiente</button>
+        <button id="emp-share" class="btn-icon" title="Copiar URL con filtros">Copiar URL</button>
         <span class="muted" id="emp-info"></span>
       </div>
 
@@ -97,6 +117,7 @@
       <button id="his-prev" class="secondary">Anterior</button>
       <button id="his-next" class="secondary">Siguiente</button>
       <button id="his-export" class="secondary">Exportar CSV</button>
+      <button id="his-share" class="btn-icon" title="Copiar URL con filtros">Copiar URL</button>
       <span class="muted" id="his-info"></span>
     </div>
 

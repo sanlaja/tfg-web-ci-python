@@ -65,6 +65,32 @@ async function jsonPost(url, body) {
   return data;
 }
 
+// --- Utilidad: copiar URL actual al portapapeles ---
+async function copyCurrentUrl() {
+  try {
+    await navigator.clipboard.writeText(location.href);
+    alert("URL copiada al portapapeles ✅");
+  } catch {
+    // Fallback clásico
+    const ta = document.createElement("textarea");
+    ta.value = location.href;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand("copy");
+    document.body.removeChild(ta);
+    alert("URL copiada (fallback) ✅");
+  }
+}
+
+// --- Utilidad: resaltar coincidencias en texto (para Empresas) ---
+function highlight(text, needle) {
+  if (!needle) return String(text ?? "");
+  const esc = String(needle).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const re = new RegExp(`(${esc})`, "ig");
+  return String(text ?? "").replace(re, "<mark class='hl'>$1</mark>");
+}
+
+
 /* ============================================================================
  * Estado (filtros/paginación)
  * ==========================================================================*/
@@ -83,28 +109,52 @@ const state = {
  * y pinta la lista y controles.
  */
 async function loadEmpresas() {
+  // Skeletons (5 “filas”) mientras carga
+  $("#emp-list").innerHTML = Array.from({ length: 5 })
+    .map(
+      () => `
+      <div class="row" style="justify-content:space-between; border-bottom:1px solid #e2e8f0; padding:6px 0;">
+        <div>
+          <div class="skel" style="height:14px; width:90px; border-radius:6px;"></div>
+        </div>
+        <div class="skel" style="height:14px; width:120px; border-radius:6px;"></div>
+      </div>`
+    )
+    .join("");
+
   const { page, per_page, q, sector } = state.emp;
   const query = qs({ page, per_page, q, sector });
   const data = await jsonGet(`/empresas?${query}`);
 
-  // La API puede devolver array directo o estructura paginada
   const arrayMode = Array.isArray(data);
   const items = arrayMode ? data : data.items;
   const total = arrayMode ? (items || []).length : data.total;
   const hasNext = arrayMode ? false : data.has_next;
 
-  // Render de filas
-  $("#emp-list").innerHTML = (items || [])
-    .map(
-      (e) => `
-        <div class="row" style="justify-content:space-between;border-bottom:1px solid #e2e8f0;padding:6px 0;">
-          <div><strong>${e.ticker}</strong> — ${e.nombre}</div>
-          <span class="muted">${e.sector}</span>
-        </div>`
-    )
-    .join("");
+  const needle = state.emp.q || "";
 
-  // Texto informativo (sustituye emp-total/emp-page por emp-info)
+  if (!items || !items.length) {
+    // Empty state
+    $("#emp-list").innerHTML = `
+      <div class="empty" style="padding:8px 0; color:#64748b;">
+        No hay resultados para tu búsqueda.
+      </div>`;
+  } else {
+    // Render de “filas” (divs) con highlight en nombre y ticker
+    $("#emp-list").innerHTML = items
+      .map((e) => {
+        const nombre = highlight(e.nombre, needle);
+        const ticker = highlight(e.ticker, needle);
+        return `
+          <div class="row" style="justify-content:space-between; border-bottom:1px solid #e2e8f0; padding:6px 0;">
+            <div><strong>${ticker}</strong> — <span>${nombre}</span></div>
+            <span class="muted">${e.sector}</span>
+          </div>`;
+      })
+      .join("");
+  }
+
+  // Info de paginación
   const infoEl = $("#emp-info");
   if (arrayMode) {
     infoEl.textContent = `${total} resultados`;
@@ -121,6 +171,7 @@ async function loadEmpresas() {
   $("#emp-prev").disabled = state.emp.page <= 1;
   $("#emp-next").disabled = !hasNext;
 }
+
 
 /**
  * Enlaza eventos de búsqueda y paginado del bloque de empresas.
@@ -158,6 +209,16 @@ function bindEmpresas() {
     writeParams();
     loadEmpresas().catch((e) => alert(e.message));
   });
+
+    // Share URL (Empresas) — solo si existe el botón
+    const empShareBtn = $("#emp-share");
+    if (empShareBtn) {
+    empShareBtn.addEventListener("click", async () => {
+        writeParams();        // asegura que la URL refleja el estado actual
+        await copyCurrentUrl();
+    });
+    }
+
 }
 
 /* ============================================================================
@@ -277,23 +338,26 @@ async function loadHistorial() {
   const total = arrayMode ? (items || []).length : data.total;
   const hasNext = arrayMode ? false : data.has_next;
 
-  // Render de filas
-  $("#his-tbody").innerHTML = (items || [])
+  // Render de filas con badge de puntuación + empty-state
+  const rows = (items || [])
     .map((h) => {
-      // guardamos observaciones serializadas para el botón "Ver"
-      const obs = JSON.stringify(h.observaciones || []);
+      let scoreClass = "score-mid";
+      const sc = Number(h.puntuacion ?? 0);
+      if (sc >= 80) scoreClass = "score-high";
+      else if (sc < 60) scoreClass = "score-low";
+
       return `
         <tr>
           <td class="muted">${fmtDate(h.timestamp)}</td>
           <td><strong>${h.ticker || ""}</strong></td>
           <td>${h.importe_inicial ?? ""}</td>
           <td>${h.horizonte_anios ?? ""} años</td>
-          <td><strong>${h.puntuacion ?? ""}</strong></td>
+          <td><span class="badge ${scoreClass}">${h.puntuacion ?? ""}</span></td>
           <td>
             ${(h.resumen || "").replace(/\n/g, " ")}
             <button
               class="secondary btn-obs"
-              data-obs='${obs.replaceAll("'", "&apos;")}'
+              data-obs='${JSON.stringify(h.observaciones || []).replaceAll("'", "&apos;")}'
               style="margin-left:6px;">
               Ver
             </button>
@@ -301,6 +365,14 @@ async function loadHistorial() {
         </tr>`;
     })
     .join("");
+
+  $("#his-tbody").innerHTML =
+    rows ||
+    `<tr><td colspan="6">
+       <div class="empty" style="padding:8px 0; color:#64748b;">
+         Todavía no hay análisis en el historial.
+       </div>
+     </td></tr>`;
 
   // Enlaza botones "Ver" de esta página
   document.querySelectorAll("#his-tbody .btn-obs").forEach((btn) => {
@@ -327,6 +399,7 @@ async function loadHistorial() {
   $("#his-prev").disabled = state.his.page <= 1;
   $("#his-next").disabled = !hasNext;
 }
+
 
 /**
  * Descarga CSV del historial según filtros actuales (sin paginado).
@@ -374,6 +447,16 @@ function bindHistorial() {
   });
 
   $("#his-export").addEventListener("click", exportCSV);
+
+  // Share URL (Historial) — solo si existe el botón
+const hisShareBtn = $("#his-share");
+if (hisShareBtn) {
+  hisShareBtn.addEventListener("click", async () => {
+    writeParams();
+    await copyCurrentUrl();
+  });
+}
+
 }
 
 /* ============================================================================
