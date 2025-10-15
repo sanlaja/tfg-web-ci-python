@@ -50,7 +50,6 @@
     .score-mid{  background:#f1f5f9; color:#334155;}
     .score-low{  background:#fee2e2; color:#991b1b;}
 
-
   </style>
 </head>
 <body>
@@ -84,15 +83,84 @@
         <span class="muted" id="emp-info"></span>
       </div>
 
-      <div id="emp-list" style="margin-top:8px;"></div>
+      <div style="overflow:auto; margin-top:8px;">
+  <table>
+    <thead>
+      <tr>
+        <th data-sort-emp="ticker" style="cursor:pointer">Ticker</th>
+        <th data-sort-emp="nombre" style="cursor:pointer">Nombre</th>
+        <th data-sort-emp="sector" style="cursor:pointer">Sector</th>
+      </tr>
+    </thead>
+    <tbody id="emp-tbody"></tbody>
+  </table>
+</div>
     </section>
 
     <!-- FORMULARIO ANALISIS -->
     <section class="card">
-      <h2>Nuevo análisis</h2>
-      <!-- (todo el bloque del formulario se mantiene igual) -->
-      ...
-    </section>
+  <h2>Nuevo análisis</h2>
+
+  <div class="row">
+    <div>
+      <label for="anl-ticker" class="muted">Ticker</label>
+      <input id="anl-ticker" name="ticker" placeholder="p. ej., MSFT" autocomplete="off" />
+      <small class="err" id="err-ticker" aria-live="polite"></small>
+    </div>
+
+    <div>
+      <label for="anl-importe" class="muted">Importe inicial (€)</label>
+      <input id="anl-importe" name="importe" type="number" min="1" step="1" inputmode="numeric" />
+      <small class="err" id="err-importe" aria-live="polite"></small>
+    </div>
+
+    <div>
+      <label for="anl-horizonte" class="muted">Horizonte (años, ≥5)</label>
+      <input id="anl-horizonte" name="horizonte" type="number" min="1" step="1" inputmode="numeric" />
+      <small class="err" id="err-horizonte" aria-live="polite"></small>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top:8px;">
+    <div>
+      <label for="anl-crec" class="muted">Crecimiento anual %</label>
+      <input id="anl-crec" name="crecimiento" type="number" min="0" max="100" step="1" />
+      <small class="err" id="err-crec" aria-live="polite"></small>
+    </div>
+
+    <div>
+      <label for="anl-margen" class="muted">Margen seguridad %</label>
+      <input id="anl-margen" name="margen" type="number" min="0" max="100" step="1" />
+      <small class="err" id="err-margen" aria-live="polite"></small>
+    </div>
+
+    <div>
+      <label for="anl-roe" class="muted">ROE %</label>
+      <input id="anl-roe" name="roe" type="number" min="0" max="100" step="1" />
+      <small class="err" id="err-roe" aria-live="polite"></small>
+    </div>
+
+    <div>
+      <label for="anl-deuda" class="muted">Deuda/Activos %</label>
+      <input id="anl-deuda" name="deuda" type="number" min="0" max="100" step="1" />
+      <small class="err" id="err-deuda" aria-live="polite"></small>
+    </div>
+  </div>
+
+  <div style="margin-top:8px;">
+    <label for="anl-just" class="muted">Justificación (≥ 20 chars)</label>
+    <textarea id="anl-just" name="justificacion" rows="4" style="width:100%;"></textarea>
+    <small class="err" id="err-just" aria-live="polite"></small>
+  </div>
+
+  <div class="row" style="margin-top:10px;">
+    <button id="anl-enviar">Analizar</button>
+    <span id="anl-resultado" class="muted" style="margin-left:8px;" aria-live="polite"></span>
+  </div>
+
+  <div id="anl-observaciones" class="chips" style="margin-top:8px;" aria-live="polite"></div>
+</section>
+
   </div>
 
   <!-- HISTORIAL -->
@@ -124,15 +192,16 @@
     <div style="overflow:auto; margin-top:8px;">
       <table>
         <thead>
-          <tr>
-            <th>Fecha</th>
-            <th>Ticker</th>
-            <th>Importe (€)</th>
-            <th>Horizonte</th>
-            <th>Puntuación</th>
-            <th>Resumen</th>
-          </tr>
-        </thead>
+  <tr>
+    <th data-sort-his="timestamp" style="cursor:pointer">Fecha</th>
+    <th data-sort-his="ticker" style="cursor:pointer">Ticker</th>
+    <th data-sort-his="importe_inicial" style="cursor:pointer">Importe</th>
+    <th data-sort-his="horizonte_anios" style="cursor:pointer">Horizonte</th>
+    <th data-sort-his="puntuacion" style="cursor:pointer">Puntuación</th>
+    <th>Resumen</th>
+  </tr>
+</thead>
+
         <tbody id="his-tbody"></tbody>
       </table>
     </div>

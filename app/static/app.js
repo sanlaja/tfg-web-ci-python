@@ -65,6 +65,43 @@ async function jsonPost(url, body) {
   return data;
 }
 
+// --- Utilidad: ordenar arrays de objetos por clave y dirección ---
+function sortItems(items, key, dir = "asc") {
+  const d = dir === "desc" ? -1 : 1;
+  const toNum = (v) => (v === null || v === undefined || v === "" ? NaN : Number(v));
+  const isDateKey = (k) => k.toLowerCase().includes("time") || k.toLowerCase().includes("date");
+  const isNumericKey = (k, sample) => Number.isFinite(toNum(sample?.[k]));
+
+  return [...(items || [])].sort((a, b) => {
+    const va = a?.[key], vb = b?.[key];
+
+    // Fecha ISO
+    if (isDateKey(key) || key === "timestamp") {
+      const na = va ? Date.parse(va) : 0;
+      const nb = vb ? Date.parse(vb) : 0;
+      if (na < nb) return -1 * d;
+      if (na > nb) return 1 * d;
+      return 0;
+    }
+
+    // Números
+    if (isNumericKey(key, a) || isNumericKey(key, b)) {
+      const na = toNum(va), nb = toNum(vb);
+      if (isNaN(na) && isNaN(nb)) return 0;
+      if (isNaN(na)) return 1;
+      if (isNaN(nb)) return -1;
+      if (na < nb) return -1 * d;
+      if (na > nb) return 1 * d;
+      return 0;
+    }
+
+    // Texto (localeCompare insensible a mayúsculas)
+    const sa = String(va ?? "").toLocaleLowerCase();
+    const sb = String(vb ?? "").toLocaleLowerCase();
+    return sa.localeCompare(sb) * d;
+  });
+}
+
 // --- Utilidad: copiar URL actual al portapapeles ---
 async function copyCurrentUrl() {
   try {
@@ -90,68 +127,69 @@ function highlight(text, needle) {
   return String(text ?? "").replace(re, "<mark class='hl'>$1</mark>");
 }
 
-
 /* ============================================================================
- * Estado (filtros/paginación)
+ * Estado (filtros/paginación/orden)
  * ==========================================================================*/
 
 const state = {
-  emp: { page: 1, per_page: 10, q: "", sector: "" },
-  his: { page: 1, per_page: 10, ticker: "", desde: "", hasta: "" },
+  emp: { page: 1, per_page: 10, q: "", sector: "", sort: "ticker", dir: "asc" },
+  his: { page: 1, per_page: 10, ticker: "", desde: "", hasta: "", sort: "timestamp", dir: "desc" },
 };
 
 /* ============================================================================
- * Empresas (listado + paginado)
+ * Empresas (listado + paginado + orden)
  * ==========================================================================*/
 
 /**
  * Carga empresas desde /empresas con filtros/paginación de state.emp
- * y pinta la lista y controles.
+ * y pinta la tabla (usa #emp-tbody).
  */
 async function loadEmpresas() {
-  // Skeletons (5 “filas”) mientras carga
-  $("#emp-list").innerHTML = Array.from({ length: 5 })
-    .map(
-      () => `
-      <div class="row" style="justify-content:space-between; border-bottom:1px solid #e2e8f0; padding:6px 0;">
-        <div>
-          <div class="skel" style="height:14px; width:90px; border-radius:6px;"></div>
-        </div>
-        <div class="skel" style="height:14px; width:120px; border-radius:6px;"></div>
-      </div>`
-    )
-    .join("");
+  // Skeletons (5 filas) mientras carga
+  const empTbody = document.getElementById("emp-tbody");
+  if (empTbody) {
+    empTbody.innerHTML = Array.from({ length: 5 })
+      .map(
+        () => `
+        <tr>
+          <td><div class="skel" style="height:14px; width:80px;"></div></td>
+          <td><div class="skel" style="height:14px; width:180px;"></div></td>
+          <td><div class="skel" style="height:14px; width:100px;"></div></td>
+        </tr>`
+      )
+      .join("");
+  }
 
   const { page, per_page, q, sector } = state.emp;
   const query = qs({ page, per_page, q, sector });
   const data = await jsonGet(`/empresas?${query}`);
 
+  // La API puede devolver array directo o estructura paginada
   const arrayMode = Array.isArray(data);
   const items = arrayMode ? data : data.items;
   const total = arrayMode ? (items || []).length : data.total;
   const hasNext = arrayMode ? false : data.has_next;
 
+  // Ordenación cliente (sobre la página actual)
+  const itemsSorted = sortItems(items || [], state.emp.sort, state.emp.dir);
   const needle = state.emp.q || "";
 
-  if (!items || !items.length) {
-    // Empty state
-    $("#emp-list").innerHTML = `
-      <div class="empty" style="padding:8px 0; color:#64748b;">
-        No hay resultados para tu búsqueda.
-      </div>`;
-  } else {
-    // Render de “filas” (divs) con highlight en nombre y ticker
-    $("#emp-list").innerHTML = items
-      .map((e) => {
-        const nombre = highlight(e.nombre, needle);
-        const ticker = highlight(e.ticker, needle);
-        return `
-          <div class="row" style="justify-content:space-between; border-bottom:1px solid #e2e8f0; padding:6px 0;">
-            <div><strong>${ticker}</strong> — <span>${nombre}</span></div>
-            <span class="muted">${e.sector}</span>
-          </div>`;
-      })
-      .join("");
+  // Render de filas
+  if (empTbody) {
+    empTbody.innerHTML = (itemsSorted || []).length
+      ? itemsSorted
+          .map((e) => {
+            const nombre = highlight(e.nombre, needle);
+            const ticker = highlight(e.ticker, needle);
+            return `
+              <tr>
+                <td><strong>${ticker}</strong></td>
+                <td>${nombre}</td>
+                <td><span class="badge sector">${e.sector}</span></td>
+              </tr>`;
+          })
+          .join("")
+      : `<tr><td colspan="3"><div class="empty">No hay resultados para tu búsqueda.</div></td></tr>`;
   }
 
   // Info de paginación
@@ -172,9 +210,8 @@ async function loadEmpresas() {
   $("#emp-next").disabled = !hasNext;
 }
 
-
 /**
- * Enlaza eventos de búsqueda y paginado del bloque de empresas.
+ * Enlaza eventos de búsqueda, paginado y "compartir" en Empresas.
  */
 function bindEmpresas() {
   // Buscar
@@ -210,15 +247,14 @@ function bindEmpresas() {
     loadEmpresas().catch((e) => alert(e.message));
   });
 
-    // Share URL (Empresas) — solo si existe el botón
-    const empShareBtn = $("#emp-share");
-    if (empShareBtn) {
+  // Share URL (Empresas) — solo si existe el botón
+  const empShareBtn = $("#emp-share");
+  if (empShareBtn) {
     empShareBtn.addEventListener("click", async () => {
-        writeParams();        // asegura que la URL refleja el estado actual
-        await copyCurrentUrl();
+      writeParams();        // asegura que la URL refleja el estado actual
+      await copyCurrentUrl();
     });
-    }
-
+  }
 }
 
 /* ============================================================================
@@ -322,7 +358,7 @@ function bindAnalisisForm() {
 }
 
 /* ============================================================================
- * Historial (lista + filtros + paginado + CSV)
+ * Historial (lista + filtros + paginado + CSV + orden)
  * ==========================================================================*/
 
 /**
@@ -338,8 +374,11 @@ async function loadHistorial() {
   const total = arrayMode ? (items || []).length : data.total;
   const hasNext = arrayMode ? false : data.has_next;
 
+  // Ordenación cliente (sobre la página actual)
+  const itemsSorted = sortItems(items || [], state.his.sort, state.his.dir);
+
   // Render de filas con badge de puntuación + empty-state
-  const rows = (items || [])
+  const rows = (itemsSorted || [])
     .map((h) => {
       let scoreClass = "score-mid";
       const sc = Number(h.puntuacion ?? 0);
@@ -400,7 +439,6 @@ async function loadHistorial() {
   $("#his-next").disabled = !hasNext;
 }
 
-
 /**
  * Descarga CSV del historial según filtros actuales (sin paginado).
  */
@@ -449,14 +487,13 @@ function bindHistorial() {
   $("#his-export").addEventListener("click", exportCSV);
 
   // Share URL (Historial) — solo si existe el botón
-const hisShareBtn = $("#his-share");
-if (hisShareBtn) {
-  hisShareBtn.addEventListener("click", async () => {
-    writeParams();
-    await copyCurrentUrl();
-  });
-}
-
+  const hisShareBtn = $("#his-share");
+  if (hisShareBtn) {
+    hisShareBtn.addEventListener("click", async () => {
+      writeParams();
+      await copyCurrentUrl();
+    });
+  }
 }
 
 /* ============================================================================
@@ -540,40 +577,24 @@ function showErrors(errs) {
   }
 }
 
+/* ============================================================================
+ * URL <-> Estado
+ * ==========================================================================*/
+
 /**
- * Lee parámetros desde la URL o, si no hay querystring,
- * restaura el último estado válido guardado en localStorage (<24 h).
+ * Lee parámetros desde la URL.
+ * (Si quieres restaurar desde localStorage 24h, avísame y lo reañadimos aquí.)
  */
 function readParams() {
   const p = new URLSearchParams(location.search);
-
-  // Si no hay parámetros en la URL, intentamos restaurar desde localStorage
-  if (![...p.keys()].length) {
-    const saved = localStorage.getItem("tfg_state");
-    if (saved) {
-      try {
-        const obj = JSON.parse(saved);
-        const ts = obj?._ts; // marca temporal
-        const now = Date.now();
-        const maxAge = 24 * 60 * 60 * 1000; // 24 h
-
-        if (ts && now - ts < maxAge && obj?.emp && obj?.his) {
-          Object.assign(state, obj);
-          console.info("🔁 Estado restaurado desde localStorage.");
-        } else {
-          localStorage.removeItem("tfg_state"); // caducado o corrupto
-        }
-      } catch (_) {
-        localStorage.removeItem("tfg_state");
-      }
-    }
-  }
 
   // --- Empresas ---
   state.emp.q = p.get("emp_q") ?? state.emp.q;
   state.emp.sector = p.get("emp_sector") ?? state.emp.sector;
   state.emp.page = Number(p.get("emp_page") ?? state.emp.page) || 1;
   state.emp.per_page = Number(p.get("emp_per_page") ?? state.emp.per_page) || 10;
+  state.emp.sort = p.get("emp_sort") ?? state.emp.sort;
+  state.emp.dir  = p.get("emp_dir")  ?? state.emp.dir;
 
   // --- Historial ---
   state.his.ticker = p.get("his_ticker") ?? state.his.ticker;
@@ -581,11 +602,12 @@ function readParams() {
   state.his.hasta = p.get("his_hasta") ?? state.his.hasta;
   state.his.page = Number(p.get("his_page") ?? state.his.page) || 1;
   state.his.per_page = Number(p.get("his_per_page") ?? state.his.per_page) || 10;
+  state.his.sort = p.get("his_sort") ?? state.his.sort;
+  state.his.dir  = p.get("his_dir")  ?? state.his.dir;
 }
 
 /**
- * Escribe el estado actual en la URL (querystring)
- * y guarda una copia persistente en localStorage (con timestamp).
+ * Escribe el estado actual en la URL (querystring).
  */
 function writeParams(replace = true) {
   const p = new URLSearchParams(location.search);
@@ -597,6 +619,8 @@ function writeParams(replace = true) {
   state.emp.per_page !== 10
     ? p.set("emp_per_page", String(state.emp.per_page))
     : p.delete("emp_per_page");
+  state.emp.sort ? p.set("emp_sort", state.emp.sort) : p.delete("emp_sort");
+  state.emp.dir  ? p.set("emp_dir",  state.emp.dir)  : p.delete("emp_dir");
 
   // --- Historial ---
   state.his.ticker ? p.set("his_ticker", state.his.ticker) : p.delete("his_ticker");
@@ -606,18 +630,13 @@ function writeParams(replace = true) {
   state.his.per_page !== 10
     ? p.set("his_per_page", String(state.his.per_page))
     : p.delete("his_per_page");
+  state.his.sort ? p.set("his_sort", state.his.sort) : p.delete("his_sort");
+  state.his.dir  ? p.set("his_dir",  state.his.dir)  : p.delete("his_dir");
 
   const url = `${location.pathname}?${p.toString()}`;
   if (replace) history.replaceState(null, "", url);
   else history.pushState(null, "", url);
-
-  // 👇 Guarda el estado en localStorage con timestamp
-  localStorage.setItem(
-    "tfg_state",
-    JSON.stringify({ ...state, _ts: Date.now() })
-  );
 }
-
 
 /* ============================================================================
  * Observaciones (modal accesible)
@@ -680,6 +699,44 @@ function closeObservacionesModal() {
 }
 
 /* ============================================================================
+ * Ordenación (click en encabezados)
+ * ==========================================================================*/
+
+function bindSorting() {
+  // Empresas
+  document.querySelectorAll("[data-sort-emp]").forEach((th) => {
+    th.addEventListener("click", () => {
+      const key = th.getAttribute("data-sort-emp");
+      if (!key) return;
+      if (state.emp.sort === key) {
+        state.emp.dir = state.emp.dir === "asc" ? "desc" : "asc";
+      } else {
+        state.emp.sort = key;
+        state.emp.dir = "asc";
+      }
+      writeParams();
+      loadEmpresas().catch((e) => alert(e.message));
+    });
+  });
+
+  // Historial
+  document.querySelectorAll("[data-sort-his]").forEach((th) => {
+    th.addEventListener("click", () => {
+      const key = th.getAttribute("data-sort-his");
+      if (!key) return;
+      if (state.his.sort === key) {
+        state.his.dir = state.his.dir === "asc" ? "desc" : "asc";
+      } else {
+        state.his.sort = key;
+        state.his.dir = "asc";
+      }
+      writeParams();
+      loadHistorial().catch((e) => alert(e.message));
+    });
+  });
+}
+
+/* ============================================================================
  * Boot (DOMContentLoaded)
  * ==========================================================================*/
 
@@ -691,6 +748,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   bindEmpresas();
   bindAnalisisForm();
   bindHistorial();
+  bindSorting();
 
   // 3) Volcar valores iniciales a los inputs
   $("#emp-q").value = state.emp.q || "";
