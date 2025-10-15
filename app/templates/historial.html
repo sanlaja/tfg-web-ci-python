@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}Historial · Simulador{% endblock %}
+
+{% block content %}
+<section class="page-header">
+  <h1>Historial de an&aacute;lisis</h1>
+  <p class="muted">
+    Consulta an&aacute;lisis anteriores, filtra por fecha o ticker y exporta los resultados en CSV.
+  </p>
+</section>
+
+<section class="card">
+  <div class="card-section">
+    <div class="form-grid">
+      <div class="field">
+        <label class="muted" for="his-ticker">Ticker</label>
+        <input id="his-ticker" placeholder="Ticker" />
+      </div>
+
+      <div class="field">
+        <label class="muted" for="his-desde">Desde</label>
+        <input id="his-desde" type="date" />
+      </div>
+
+      <div class="field">
+        <label class="muted" for="his-hasta">Hasta</label>
+        <input id="his-hasta" type="date" />
+      </div>
+
+      <div class="field">
+        <label class="muted" for="his-per-page">Por p&aacute;gina</label>
+        <select id="his-per-page">
+          <option value="10">10</option>
+          <option value="25">25</option>
+          <option value="50">50</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="actions-row">
+      <div class="actions-row__left">
+        <button id="his-filtrar" class="btn btn-primary">Filtrar</button>
+        <button id="his-prev" class="btn btn-outline">Anterior</button>
+        <button id="his-next" class="btn btn-outline">Siguiente</button>
+        <button id="his-export" class="btn btn-ghost">Exportar CSV</button>
+        <button id="his-share" class="btn btn-ghost" title="Copiar URL con filtros">Copiar URL</button>
+      </div>
+      <span id="his-info" class="muted"></span>
+    </div>
+  </div>
+
+  <div class="card-section table-wrapper">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th data-sort-his="timestamp">Fecha</th>
+          <th data-sort-his="ticker">Ticker</th>
+          <th data-sort-his="importe_inicial">Importe</th>
+          <th data-sort-his="horizonte_anios">Horizonte</th>
+          <th data-sort-his="puntuacion">Puntuaci&oacute;n</th>
+          <th>Resumen</th>
+        </tr>
+      </thead>
+      <tbody id="his-tbody"></tbody>
+    </table>
+  </div>
+</section>
+
+<div class="modal-backdrop" id="modal" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal__header">
+      <h2 id="modal-title">Observaciones</h2>
+      <button class="btn btn-ghost" id="modal-close" aria-label="Cerrar">Cerrar</button>
+    </div>
+    <div id="modal-body" class="modal__body"></div>
+  </div>
+</div>
+{% endblock %}
+

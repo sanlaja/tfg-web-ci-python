@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}Nuevo an&aacute;lisis · Simulador{% endblock %}
+
+{% block content %}
+<section class="page-header">
+  <h1>Nuevo an&aacute;lisis</h1>
+  <p class="muted">
+    Completa el formulario para obtener una puntuaci&oacute;n autom&aacute;tica con observaciones accionables.
+  </p>
+</section>
+
+<section class="card">
+  <div class="card-section">
+    <div class="form-grid">
+      <div class="field">
+        <label class="muted" for="anl-ticker">Ticker</label>
+        <input id="anl-ticker" name="ticker" placeholder="Ej. MSFT" autocomplete="off" />
+        <small class="err" id="err-ticker" aria-live="polite"></small>
+      </div>
+
+      <div class="field">
+        <label class="muted" for="anl-importe">Importe inicial (&euro;)</label>
+        <input id="anl-importe" name="importe" type="number" min="1" step="1" inputmode="numeric" />
+        <small class="err" id="err-importe" aria-live="polite"></small>
+      </div>
+
+      <div class="field">
+        <label class="muted" for="anl-horizonte">Horizonte (a&ntilde;os, &ge;5)</label>
+        <input id="anl-horizonte" name="horizonte" type="number" min="1" step="1" inputmode="numeric" />
+        <small class="err" id="err-horizonte" aria-live="polite"></small>
+      </div>
+
+      <div class="field">
+        <label class="muted" for="anl-crec">Crecimiento anual %</label>
+        <input id="anl-crec" name="crecimiento" type="number" min="0" max="100" step="1" />
+        <small class="err" id="err-crec" aria-live="polite"></small>
+      </div>
+
+      <div class="field">
+        <label class="muted" for="anl-margen">Margen seguridad %</label>
+        <input id="anl-margen" name="margen" type="number" min="0" max="100" step="1" />
+        <small class="err" id="err-margen" aria-live="polite"></small>
+      </div>
+
+      <div class="field">
+        <label class="muted" for="anl-roe">ROE %</label>
+        <input id="anl-roe" name="roe" type="number" min="0" max="100" step="1" />
+        <small class="err" id="err-roe" aria-live="polite"></small>
+      </div>
+
+      <div class="field">
+        <label class="muted" for="anl-deuda">Deuda/Activos %</label>
+        <input id="anl-deuda" name="deuda" type="number" min="0" max="100" step="1" />
+        <small class="err" id="err-deuda" aria-live="polite"></small>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="muted" for="anl-just">Justificaci&oacute;n (&ge; 20 caracteres)</label>
+      <textarea id="anl-just" name="justificacion" rows="5"></textarea>
+      <small class="err" id="err-just" aria-live="polite"></small>
+    </div>
+
+    <div class="actions-row">
+      <div class="actions-row__left">
+        <button id="anl-enviar" class="btn btn-primary">Analizar</button>
+        <span id="anl-resultado" class="muted" aria-live="polite"></span>
+      </div>
+    </div>
+
+    <div id="anl-observaciones" class="chips" aria-live="polite"></div>
+  </div>
+</section>
+{% endblock %}
+

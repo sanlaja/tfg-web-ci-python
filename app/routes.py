@@ -11,9 +11,39 @@ import io
 bp = Blueprint("main", __name__)
 
 
+# ----------------------
+#   Vistas HTML
+# ----------------------
 @bp.get("/")
-def index():
-    return render_template("index.html")
+def inicio():
+    return render_template("inicio.html", active="inicio")
+
+
+@bp.get("/inicio")
+def inicio_alias():
+    return render_template("inicio.html", active="inicio")
+
+
+@bp.get("/empresas")
+def empresas_page():
+    accept = request.accept_mimetypes
+    wants_json = request.args.get("format") == "json" or (
+        accept.best == "application/json"
+        or accept["application/json"] >= accept["text/html"]
+    )
+    if wants_json and request.args.get("format") != "html":
+        return listar_empresas()
+    return render_template("empresas.html", active="empresas")
+
+
+@bp.get("/nuevo-analisis")
+def analisis_page():
+    return render_template("analisis.html", active="analisis")
+
+
+@bp.get("/historial")
+def historial_page():
+    return render_template("historial.html", active="historial")
 
 
 # ----------------------
@@ -56,7 +86,7 @@ def listar_sectores():
     return jsonify(sectores)
 
 
-@bp.get("/empresas")
+@bp.get("/empresas-data")
 def listar_empresas():
     """
     Devuelve lista de empresas.

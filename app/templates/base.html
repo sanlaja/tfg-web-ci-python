@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{% block title %}Simulador de an&aacute;lisis y feedback{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='estilos.css') }}" />
+</head>
+<body>
+  <header class="top-nav">
+    <div class="brand">
+      <a href="{{ url_for('main.inicio') }}">Simulador</a>
+    </div>
+    <nav class="top-nav__links" aria-label="Principal">
+      <a class="nav-link {% if active == 'inicio' %}active{% endif %}" href="{{ url_for('main.inicio') }}">Inicio</a>
+      <a class="nav-link {% if active == 'empresas' %}active{% endif %}" href="{{ url_for('main.empresas_page') }}">Empresas</a>
+      <a class="nav-link {% if active == 'analisis' %}active{% endif %}" href="{{ url_for('main.analisis_page') }}">Nuevo an&aacute;lisis</a>
+      <a class="nav-link {% if active == 'historial' %}active{% endif %}" href="{{ url_for('main.historial_page') }}">Historial</a>
+    </nav>
+  </header>
+
+  <main class="main-content">
+    <div class="container">
+      {% block content %}{% endblock %}
+    </div>
+  </main>
+
+  <script defer src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

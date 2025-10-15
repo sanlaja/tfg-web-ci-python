@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Empresas · Simulador{% endblock %}
+
+{% block content %}
+<section class="page-header">
+  <h1>Empresas</h1>
+  <p class="muted">
+    Explora el universo de empresas y filtra r&aacute;pidamente por nombre, ticker o sector.
+  </p>
+</section>
+
+<section class="card">
+  <div class="card-section">
+    <div class="form-grid">
+      <div class="field">
+        <label class="muted" for="emp-q">Buscar</label>
+        <input id="emp-q" placeholder="Buscar por nombre o ticker" />
+      </div>
+
+      <div class="field">
+        <label class="muted" for="emp-sector">Sector</label>
+        <select id="emp-sector">
+          <option value="">Todos los sectores</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label class="muted" for="emp-per-page">Por p&aacute;gina</label>
+        <select id="emp-per-page">
+          <option value="10">10</option>
+          <option value="25">25</option>
+          <option value="50">50</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="actions-row">
+      <div class="actions-row__left">
+        <button id="emp-buscar" class="btn btn-primary">Buscar</button>
+        <button id="emp-prev" class="btn btn-outline">Anterior</button>
+        <button id="emp-next" class="btn btn-outline">Siguiente</button>
+        <button id="emp-share" class="btn btn-ghost" title="Copiar URL con filtros">Copiar URL</button>
+      </div>
+      <span id="emp-info" class="muted"></span>
+    </div>
+  </div>
+
+  <div class="card-section table-wrapper">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th data-sort-emp="ticker">Ticker</th>
+          <th data-sort-emp="nombre">Nombre</th>
+          <th data-sort-emp="sector">Sector</th>
+        </tr>
+      </thead>
+      <tbody id="emp-tbody"></tbody>
+    </table>
+  </div>
+</section>
+{% endblock %}
+

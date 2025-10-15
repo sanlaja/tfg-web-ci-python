@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Inicio · Simulador de an&aacute;lisis{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <div class="hero__content">
+    <p class="eyebrow">Bienvenido</p>
+    <h1>Simulador de an&aacute;lisis y feedback</h1>
+    <p class="lead">
+      Gestiona tus empresas, crea nuevos an&aacute;lisis y revisa el historial en un flujo claro y organizado.
+    </p>
+    <a class="btn btn-primary btn-large" href="{{ url_for('main.analisis_page') }}">
+      Nuevo an&aacute;lisis
+    </a>
+  </div>
+</section>
+{% endblock %}
+

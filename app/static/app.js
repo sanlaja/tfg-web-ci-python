@@ -162,7 +162,7 @@ async function loadEmpresas() {
 
   const { page, per_page, q, sector } = state.emp;
   const query = qs({ page, per_page, q, sector });
-  const data = await jsonGet(`/empresas?${query}`);
+  const data = await jsonGet(`/empresas-data?${query}`);
 
   // La API puede devolver array directo o estructura paginada
   const arrayMode = Array.isArray(data);
@@ -741,63 +741,103 @@ function bindSorting() {
  * ==========================================================================*/
 
 document.addEventListener("DOMContentLoaded", async () => {
-  // 1) Estado inicial desde la URL
   readParams();
 
-  // 2) Enlazar handlers
-  bindEmpresas();
-  bindAnalisisForm();
-  bindHistorial();
-  bindSorting();
+  const hasEmpresas = Boolean(document.getElementById("emp-tbody"));
+  const hasAnalisis = Boolean(document.getElementById("anl-enviar"));
+  const hasHistorial = Boolean(document.getElementById("his-tbody"));
 
-  // 3) Volcar valores iniciales a los inputs
-  $("#emp-q").value = state.emp.q || "";
-  $("#emp-sector").value = state.emp.sector || "";
-  $("#emp-per-page").value = String(state.emp.per_page);
-
-  $("#his-ticker").value = state.his.ticker || "";
-  $("#his-desde").value = state.his.desde || "";
-  $("#his-hasta").value = state.his.hasta || "";
-  $("#his-per-page").value = String(state.his.per_page);
-
-  // 4) Cargar sectores (no bloqueante)
-  try {
-    await loadSectores();
-  } catch (e) {
-    console.warn("No se pudieron cargar sectores:", e);
+  if (hasEmpresas) {
+    bindEmpresas();
+  }
+  if (hasAnalisis) {
+    bindAnalisisForm();
+  }
+  if (hasHistorial) {
+    bindHistorial();
+  }
+  if (hasEmpresas || hasHistorial) {
+    bindSorting();
   }
 
-  // 5) Cargar datos iniciales
-  loadEmpresas().catch((e) => alert(e.message));
-  loadHistorial().catch((e) => alert(e.message));
+  if (hasEmpresas) {
+    const empQ = $("#emp-q");
+    if (empQ) empQ.value = state.emp.q || "";
+    const empSector = $("#emp-sector");
+    if (empSector) empSector.value = state.emp.sector || "";
+    const empPer = $("#emp-per-page");
+    if (empPer) empPer.value = String(state.emp.per_page);
 
-  // 6) Modal: cerrar con botón
-  document.getElementById("modal-close").addEventListener("click", closeObservacionesModal);
+    try {
+      await loadSectores();
+    } catch (e) {
+      console.warn("No se pudieron cargar sectores:", e);
+    }
 
-  // 7) Modal: cerrar al hacer click fuera del cuadro
-  document.getElementById("modal").addEventListener("click", (e) => {
-    if (e.target.id === "modal") closeObservacionesModal();
-  });
+    loadEmpresas().catch((e) => alert(e.message));
+  }
 
-  // 8) Navegación con atrás/adelante
-  window.addEventListener("popstate", async () => {
-    readParams();
+  if (hasHistorial) {
+    const hisTicker = $("#his-ticker");
+    if (hisTicker) hisTicker.value = state.his.ticker || "";
+    const hisDesde = $("#his-desde");
+    if (hisDesde) hisDesde.value = state.his.desde || "";
+    const hisHasta = $("#his-hasta");
+    if (hisHasta) hisHasta.value = state.his.hasta || "";
+    const hisPer = $("#his-per-page");
+    if (hisPer) hisPer.value = String(state.his.per_page);
 
-    // Refrescar inputs para que coincidan con la URL
-    $("#emp-q").value = state.emp.q || "";
-    $("#emp-sector").value = state.emp.sector || "";
-    $("#emp-per-page").value = String(state.emp.per_page);
+    loadHistorial().catch((e) => alert(e.message));
+  }
 
-    $("#his-ticker").value = state.his.ticker || "";
-    $("#his-desde").value = state.his.desde || "";
-    $("#his-hasta").value = state.his.hasta || "";
-    $("#his-per-page").value = String(state.his.per_page);
+  if (hasHistorial) {
+    const modalClose = document.getElementById("modal-close");
+    if (modalClose) {
+      modalClose.addEventListener("click", closeObservacionesModal);
+    }
 
-    await Promise.all([
-      loadEmpresas().catch((e) => console.error(e)),
-      loadHistorial().catch((e) => console.error(e)),
-    ]);
-  });
+    const modalBackdrop = document.getElementById("modal");
+    if (modalBackdrop) {
+      modalBackdrop.addEventListener("click", (e) => {
+        if (e.target.id === "modal") closeObservacionesModal();
+      });
+    }
+  }
+
+  if (hasEmpresas || hasHistorial) {
+    window.addEventListener("popstate", async () => {
+      readParams();
+
+      if (hasEmpresas) {
+        const empQEl = $("#emp-q");
+        if (empQEl) empQEl.value = state.emp.q || "";
+        const empSectorEl = $("#emp-sector");
+        if (empSectorEl) empSectorEl.value = state.emp.sector || "";
+        const empPerEl = $("#emp-per-page");
+        if (empPerEl) empPerEl.value = String(state.emp.per_page);
+      }
+
+      if (hasHistorial) {
+        const hisTickerEl = $("#his-ticker");
+        if (hisTickerEl) hisTickerEl.value = state.his.ticker || "";
+        const hisDesdeEl = $("#his-desde");
+        if (hisDesdeEl) hisDesdeEl.value = state.his.desde || "";
+        const hisHastaEl = $("#his-hasta");
+        if (hisHastaEl) hisHastaEl.value = state.his.hasta || "";
+        const hisPerEl = $("#his-per-page");
+        if (hisPerEl) hisPerEl.value = String(state.his.per_page);
+      }
+
+      await Promise.all([
+        hasEmpresas
+          ? loadEmpresas().catch((e) => console.error(e))
+          : Promise.resolve(),
+        hasHistorial
+          ? loadHistorial().catch((e) => console.error(e))
+          : Promise.resolve(),
+      ]);
+    });
+  }
 });
 
 /* ============================================================================
