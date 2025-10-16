@@ -46,6 +46,11 @@ def historial_page():
     return render_template("historial.html", active="historial")
 
 
+@bp.get("/aprende")
+def aprende_page():
+    return render_template("aprende.html", active="aprende")
+
+
 # ----------------------
 #   Health
 # ----------------------
