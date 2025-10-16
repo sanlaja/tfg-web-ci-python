@@ -1,5 +1,1181 @@
 [
   {
+    "id": "c3e5504a-79df-45dd-8b64-b76c29ee0607",
+    "timestamp": "2025-10-16T15:50:30.270648Z",
+    "ticker": "MSFT",
+    "importe_inicial": 500,
+    "horizonte_anios": 10,
+    "supuestos": {
+      "crecimiento_anual_pct": 8,
+      "deuda_sobre_activos_pct": 25,
+      "margen_seguridad_pct": 20,
+      "roe_pct": 18
+    },
+    "justificacion": "Caso de prueba persistencia.",
+    "puntuacion": 95,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Horizonte largo (≥10 años)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "ROE alto (≥15%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Deuda moderada (≤30%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Margen de seguridad sólido (≥20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "mejora",
+        "msg": "Amplía la justificación: riesgos, sensibilidad, comparables."
+      }
+    ],
+    "resumen": "Análisis sólido."
+  },
+  {
+    "id": "4fb64eb4-8a50-4400-b0a9-4e400afe6b53",
+    "timestamp": "2025-10-16T15:50:29.509421Z",
+    "ticker": "AAPL",
+    "importe_inicial": 100,
+    "horizonte_anios": 5,
+    "supuestos": {
+      "crecimiento_anual_pct": 15,
+      "deuda_sobre_activos_pct": 60,
+      "margen_seguridad_pct": 10,
+      "roe_pct": 10
+    },
+    "justificacion": "Caso razonable pero con margen bajo y deuda elevada.",
+    "puntuacion": 71,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Horizonte adecuado (≥5 años)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "ROE razonable (≥8%)."
+      },
+      {
+        "tipo": "mejora",
+        "msg": "Deuda medio-alta: vigila el apalancamiento."
+      },
+      {
+        "tipo": "mejora",
+        "msg": "Margen de seguridad algo justo (10–20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "mejora",
+        "msg": "Amplía la justificación: riesgos, sensibilidad, comparables."
+      }
+    ],
+    "resumen": "Análisis razonable con áreas de mejora."
+  },
+  {
+    "id": "a968a649-ccde-4b7e-b395-ba127a0b06f2",
+    "timestamp": "2025-10-16T15:50:29.452624Z",
+    "ticker": "MSFT",
+    "importe_inicial": 500,
+    "horizonte_anios": 10,
+    "supuestos": {
+      "crecimiento_anual_pct": 8,
+      "deuda_sobre_activos_pct": 25,
+      "margen_seguridad_pct": 20,
+      "roe_pct": 18
+    },
+    "justificacion": "Ventajas competitivas claras, crecimiento cloud y buena rentabilidad.",
+    "puntuacion": 100,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Horizonte largo (≥10 años)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "ROE alto (≥15%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Deuda moderada (≤30%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Margen de seguridad sólido (≥20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Buena justificación (detallada)."
+      }
+    ],
+    "resumen": "Análisis sólido."
+  },
+  {
+    "id": "c7b019ce-f3d6-4e85-91a8-db53f9e0ec26",
+    "timestamp": "2025-10-15T16:37:28.176622Z",
+    "ticker": "MSFT",
+    "importe_inicial": 500,
+    "horizonte_anios": 10,
+    "supuestos": {
+      "crecimiento_anual_pct": 8,
+      "deuda_sobre_activos_pct": 25,
+      "margen_seguridad_pct": 20,
+      "roe_pct": 18
+    },
+    "justificacion": "Caso de prueba persistencia.",
+    "puntuacion": 95,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Horizonte largo (≥10 años)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "ROE alto (≥15%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Deuda moderada (≤30%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Margen de seguridad sólido (≥20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "mejora",
+        "msg": "Amplía la justificación: riesgos, sensibilidad, comparables."
+      }
+    ],
+    "resumen": "Análisis sólido."
+  },
+  {
+    "id": "96afeb6e-1fd5-4985-882d-e5cb1d2ffd4d",
+    "timestamp": "2025-10-15T16:37:27.530971Z",
+    "ticker": "AAPL",
+    "importe_inicial": 100,
+    "horizonte_anios": 5,
+    "supuestos": {
+      "crecimiento_anual_pct": 15,
+      "deuda_sobre_activos_pct": 60,
+      "margen_seguridad_pct": 10,
+      "roe_pct": 10
+    },
+    "justificacion": "Caso razonable pero con margen bajo y deuda elevada.",
+    "puntuacion": 71,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Horizonte adecuado (≥5 años)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "ROE razonable (≥8%)."
+      },
+      {
+        "tipo": "mejora",
+        "msg": "Deuda medio-alta: vigila el apalancamiento."
+      },
+      {
+        "tipo": "mejora",
+        "msg": "Margen de seguridad algo justo (10–20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "mejora",
+        "msg": "Amplía la justificación: riesgos, sensibilidad, comparables."
+      }
+    ],
+    "resumen": "Análisis razonable con áreas de mejora."
+  },
+  {
+    "id": "6f62725c-0fbc-4158-901c-e450b6a2862a",
+    "timestamp": "2025-10-15T16:37:27.506474Z",
+    "ticker": "MSFT",
+    "importe_inicial": 500,
+    "horizonte_anios": 10,
+    "supuestos": {
+      "crecimiento_anual_pct": 8,
+      "deuda_sobre_activos_pct": 25,
+      "margen_seguridad_pct": 20,
+      "roe_pct": 18
+    },
+    "justificacion": "Ventajas competitivas claras, crecimiento cloud y buena rentabilidad.",
+    "puntuacion": 100,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Horizonte largo (≥10 años)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "ROE alto (≥15%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Deuda moderada (≤30%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Margen de seguridad sólido (≥20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Buena justificación (detallada)."
+      }
+    ],
+    "resumen": "Análisis sólido."
+  },
+  {
+    "id": "9ee7319e-dee2-4b93-abc6-73fa46b16f01",
+    "timestamp": "2025-10-15T16:28:05.481023Z",
+    "ticker": "MSFT",
+    "importe_inicial": 500,
+    "horizonte_anios": 10,
+    "supuestos": {
+      "crecimiento_anual_pct": 8,
+      "deuda_sobre_activos_pct": 25,
+      "margen_seguridad_pct": 20,
+      "roe_pct": 18
+    },
+    "justificacion": "Caso de prueba persistencia.",
+    "puntuacion": 95,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Horizonte largo (≥10 años)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "ROE alto (≥15%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Deuda moderada (≤30%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Margen de seguridad sólido (≥20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "mejora",
+        "msg": "Amplía la justificación: riesgos, sensibilidad, comparables."
+      }
+    ],
+    "resumen": "Análisis sólido."
+  },
+  {
+    "id": "13a19316-71b5-4d3a-8727-444c0b4f2169",
+    "timestamp": "2025-10-15T16:28:04.751945Z",
+    "ticker": "AAPL",
+    "importe_inicial": 100,
+    "horizonte_anios": 5,
+    "supuestos": {
+      "crecimiento_anual_pct": 15,
+      "deuda_sobre_activos_pct": 60,
+      "margen_seguridad_pct": 10,
+      "roe_pct": 10
+    },
+    "justificacion": "Caso razonable pero con margen bajo y deuda elevada.",
+    "puntuacion": 71,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Horizonte adecuado (≥5 años)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "ROE razonable (≥8%)."
+      },
+      {
+        "tipo": "mejora",
+        "msg": "Deuda medio-alta: vigila el apalancamiento."
+      },
+      {
+        "tipo": "mejora",
+        "msg": "Margen de seguridad algo justo (10–20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "mejora",
+        "msg": "Amplía la justificación: riesgos, sensibilidad, comparables."
+      }
+    ],
+    "resumen": "Análisis razonable con áreas de mejora."
+  },
+  {
+    "id": "8d161ea9-90c4-449d-aadc-25f330ff9729",
+    "timestamp": "2025-10-15T16:28:04.719677Z",
+    "ticker": "MSFT",
+    "importe_inicial": 500,
+    "horizonte_anios": 10,
+    "supuestos": {
+      "crecimiento_anual_pct": 8,
+      "deuda_sobre_activos_pct": 25,
+      "margen_seguridad_pct": 20,
+      "roe_pct": 18
+    },
+    "justificacion": "Ventajas competitivas claras, crecimiento cloud y buena rentabilidad.",
+    "puntuacion": 100,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Horizonte largo (≥10 años)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "ROE alto (≥15%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Deuda moderada (≤30%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Margen de seguridad sólido (≥20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Buena justificación (detallada)."
+      }
+    ],
+    "resumen": "Análisis sólido."
+  },
+  {
+    "id": "4badf865-9553-4242-b736-079e90625a24",
+    "timestamp": "2025-10-15T16:25:06.181391Z",
+    "ticker": "MSFT",
+    "importe_inicial": 500,
+    "horizonte_anios": 10,
+    "supuestos": {
+      "crecimiento_anual_pct": 8,
+      "deuda_sobre_activos_pct": 25,
+      "margen_seguridad_pct": 20,
+      "roe_pct": 18
+    },
+    "justificacion": "Caso de prueba persistencia.",
+    "puntuacion": 95,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Horizonte largo (≥10 años)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "ROE alto (≥15%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Deuda moderada (≤30%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Margen de seguridad sólido (≥20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "mejora",
+        "msg": "Amplía la justificación: riesgos, sensibilidad, comparables."
+      }
+    ],
+    "resumen": "Análisis sólido."
+  },
+  {
+    "id": "d00e208c-f66f-4d5b-99fe-6b25977dfc2f",
+    "timestamp": "2025-10-15T16:25:05.443321Z",
+    "ticker": "AAPL",
+    "importe_inicial": 100,
+    "horizonte_anios": 5,
+    "supuestos": {
+      "crecimiento_anual_pct": 15,
+      "deuda_sobre_activos_pct": 60,
+      "margen_seguridad_pct": 10,
+      "roe_pct": 10
+    },
+    "justificacion": "Caso razonable pero con margen bajo y deuda elevada.",
+    "puntuacion": 71,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Horizonte adecuado (≥5 años)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "ROE razonable (≥8%)."
+      },
+      {
+        "tipo": "mejora",
+        "msg": "Deuda medio-alta: vigila el apalancamiento."
+      },
+      {
+        "tipo": "mejora",
+        "msg": "Margen de seguridad algo justo (10–20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "mejora",
+        "msg": "Amplía la justificación: riesgos, sensibilidad, comparables."
+      }
+    ],
+    "resumen": "Análisis razonable con áreas de mejora."
+  },
+  {
+    "id": "9cc17f66-1c38-469d-b62f-cea6cc18123e",
+    "timestamp": "2025-10-15T16:25:05.412358Z",
+    "ticker": "MSFT",
+    "importe_inicial": 500,
+    "horizonte_anios": 10,
+    "supuestos": {
+      "crecimiento_anual_pct": 8,
+      "deuda_sobre_activos_pct": 25,
+      "margen_seguridad_pct": 20,
+      "roe_pct": 18
+    },
+    "justificacion": "Ventajas competitivas claras, crecimiento cloud y buena rentabilidad.",
+    "puntuacion": 100,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Horizonte largo (≥10 años)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "ROE alto (≥15%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Deuda moderada (≤30%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Margen de seguridad sólido (≥20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Buena justificación (detallada)."
+      }
+    ],
+    "resumen": "Análisis sólido."
+  },
+  {
+    "id": "386a943f-7a8e-463a-b1a9-1062c738f6b4",
+    "timestamp": "2025-10-15T15:11:15.513527Z",
+    "ticker": "MSFT",
+    "importe_inicial": 500,
+    "horizonte_anios": 10,
+    "supuestos": {
+      "crecimiento_anual_pct": 8,
+      "deuda_sobre_activos_pct": 25,
+      "margen_seguridad_pct": 20,
+      "roe_pct": 18
+    },
+    "justificacion": "Caso de prueba persistencia.",
+    "puntuacion": 95,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Horizonte largo (≥10 años)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "ROE alto (≥15%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Deuda moderada (≤30%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Margen de seguridad sólido (≥20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "mejora",
+        "msg": "Amplía la justificación: riesgos, sensibilidad, comparables."
+      }
+    ],
+    "resumen": "Análisis sólido."
+  },
+  {
+    "id": "a8bbeda2-b4eb-4056-969a-4240aaedf687",
+    "timestamp": "2025-10-15T15:11:15.039220Z",
+    "ticker": "AAPL",
+    "importe_inicial": 100,
+    "horizonte_anios": 5,
+    "supuestos": {
+      "crecimiento_anual_pct": 15,
+      "deuda_sobre_activos_pct": 60,
+      "margen_seguridad_pct": 10,
+      "roe_pct": 10
+    },
+    "justificacion": "Caso razonable pero con margen bajo y deuda elevada.",
+    "puntuacion": 71,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Horizonte adecuado (≥5 años)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "ROE razonable (≥8%)."
+      },
+      {
+        "tipo": "mejora",
+        "msg": "Deuda medio-alta: vigila el apalancamiento."
+      },
+      {
+        "tipo": "mejora",
+        "msg": "Margen de seguridad algo justo (10–20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "mejora",
+        "msg": "Amplía la justificación: riesgos, sensibilidad, comparables."
+      }
+    ],
+    "resumen": "Análisis razonable con áreas de mejora."
+  },
+  {
+    "id": "523c153f-1f73-42f3-8144-5de546d3b294",
+    "timestamp": "2025-10-15T15:11:15.021598Z",
+    "ticker": "MSFT",
+    "importe_inicial": 500,
+    "horizonte_anios": 10,
+    "supuestos": {
+      "crecimiento_anual_pct": 8,
+      "deuda_sobre_activos_pct": 25,
+      "margen_seguridad_pct": 20,
+      "roe_pct": 18
+    },
+    "justificacion": "Ventajas competitivas claras, crecimiento cloud y buena rentabilidad.",
+    "puntuacion": 100,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Horizonte largo (≥10 años)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "ROE alto (≥15%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Deuda moderada (≤30%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Margen de seguridad sólido (≥20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Buena justificación (detallada)."
+      }
+    ],
+    "resumen": "Análisis sólido."
+  },
+  {
+    "id": "80a87493-4617-4997-a8a4-e19a846c846c",
+    "timestamp": "2025-10-13T16:50:25.154647Z",
+    "ticker": "MSFT",
+    "importe_inicial": 500,
+    "horizonte_anios": 10,
+    "supuestos": {
+      "crecimiento_anual_pct": 8,
+      "deuda_sobre_activos_pct": 25,
+      "margen_seguridad_pct": 20,
+      "roe_pct": 18
+    },
+    "justificacion": "Caso de prueba persistencia.",
+    "puntuacion": 95,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Horizonte largo (≥10 años)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "ROE alto (≥15%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Deuda moderada (≤30%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Margen de seguridad sólido (≥20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "mejora",
+        "msg": "Amplía la justificación: riesgos, sensibilidad, comparables."
+      }
+    ],
+    "resumen": "Análisis sólido."
+  },
+  {
+    "id": "52f1f3d1-6bf5-4ba8-af97-f83180a479fc",
+    "timestamp": "2025-10-13T16:50:24.669243Z",
+    "ticker": "AAPL",
+    "importe_inicial": 100,
+    "horizonte_anios": 5,
+    "supuestos": {
+      "crecimiento_anual_pct": 15,
+      "deuda_sobre_activos_pct": 60,
+      "margen_seguridad_pct": 10,
+      "roe_pct": 10
+    },
+    "justificacion": "Caso razonable pero con margen bajo y deuda elevada.",
+    "puntuacion": 71,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Horizonte adecuado (≥5 años)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "ROE razonable (≥8%)."
+      },
+      {
+        "tipo": "mejora",
+        "msg": "Deuda medio-alta: vigila el apalancamiento."
+      },
+      {
+        "tipo": "mejora",
+        "msg": "Margen de seguridad algo justo (10–20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "mejora",
+        "msg": "Amplía la justificación: riesgos, sensibilidad, comparables."
+      }
+    ],
+    "resumen": "Análisis razonable con áreas de mejora."
+  },
+  {
+    "id": "6847c16b-1c5b-4549-8aca-1059d42ab496",
+    "timestamp": "2025-10-13T16:50:24.636841Z",
+    "ticker": "MSFT",
+    "importe_inicial": 500,
+    "horizonte_anios": 10,
+    "supuestos": {
+      "crecimiento_anual_pct": 8,
+      "deuda_sobre_activos_pct": 25,
+      "margen_seguridad_pct": 20,
+      "roe_pct": 18
+    },
+    "justificacion": "Ventajas competitivas claras, crecimiento cloud y buena rentabilidad.",
+    "puntuacion": 100,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Horizonte largo (≥10 años)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "ROE alto (≥15%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Deuda moderada (≤30%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Margen de seguridad sólido (≥20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Buena justificación (detallada)."
+      }
+    ],
+    "resumen": "Análisis sólido."
+  },
+  {
+    "id": "36171aa1-a6b0-4754-9933-aa537e1de5ab",
+    "timestamp": "2025-10-13T16:16:46.433553Z",
+    "ticker": "MSFT",
+    "importe_inicial": 500,
+    "horizonte_anios": 10,
+    "supuestos": {
+      "crecimiento_anual_pct": 8,
+      "deuda_sobre_activos_pct": 25,
+      "margen_seguridad_pct": 20,
+      "roe_pct": 18
+    },
+    "justificacion": "Caso de prueba persistencia.",
+    "puntuacion": 95,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Horizonte largo (≥10 años)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "ROE alto (≥15%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Deuda moderada (≤30%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Margen de seguridad sólido (≥20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "mejora",
+        "msg": "Amplía la justificación: riesgos, sensibilidad, comparables."
+      }
+    ],
+    "resumen": "Análisis sólido."
+  },
+  {
+    "id": "bc3bd591-fe9f-45d4-b8e2-e8147e23f06b",
+    "timestamp": "2025-10-13T16:16:45.578829Z",
+    "ticker": "AAPL",
+    "importe_inicial": 100,
+    "horizonte_anios": 5,
+    "supuestos": {
+      "crecimiento_anual_pct": 15,
+      "deuda_sobre_activos_pct": 60,
+      "margen_seguridad_pct": 10,
+      "roe_pct": 10
+    },
+    "justificacion": "Caso razonable pero con margen bajo y deuda elevada.",
+    "puntuacion": 71,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Horizonte adecuado (≥5 años)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "ROE razonable (≥8%)."
+      },
+      {
+        "tipo": "mejora",
+        "msg": "Deuda medio-alta: vigila el apalancamiento."
+      },
+      {
+        "tipo": "mejora",
+        "msg": "Margen de seguridad algo justo (10–20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "mejora",
+        "msg": "Amplía la justificación: riesgos, sensibilidad, comparables."
+      }
+    ],
+    "resumen": "Análisis razonable con áreas de mejora."
+  },
+  {
+    "id": "0b5e10a1-d302-4fd0-a546-266cafa7b9b1",
+    "timestamp": "2025-10-13T16:16:45.529793Z",
+    "ticker": "MSFT",
+    "importe_inicial": 500,
+    "horizonte_anios": 10,
+    "supuestos": {
+      "crecimiento_anual_pct": 8,
+      "deuda_sobre_activos_pct": 25,
+      "margen_seguridad_pct": 20,
+      "roe_pct": 18
+    },
+    "justificacion": "Ventajas competitivas claras, crecimiento cloud y buena rentabilidad.",
+    "puntuacion": 100,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Horizonte largo (≥10 años)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "ROE alto (≥15%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Deuda moderada (≤30%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Margen de seguridad sólido (≥20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Buena justificación (detallada)."
+      }
+    ],
+    "resumen": "Análisis sólido."
+  },
+  {
+    "id": "58797216-1489-4fbc-b6a7-394ff9edc94c",
+    "timestamp": "2025-10-13T16:03:53.200073Z",
+    "ticker": "MSFT",
+    "importe_inicial": 500,
+    "horizonte_anios": 10,
+    "supuestos": {
+      "crecimiento_anual_pct": 8,
+      "deuda_sobre_activos_pct": 25,
+      "margen_seguridad_pct": 20,
+      "roe_pct": 18
+    },
+    "justificacion": "Caso de prueba persistencia.",
+    "puntuacion": 95,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Horizonte largo (≥10 años)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "ROE alto (≥15%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Deuda moderada (≤30%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Margen de seguridad sólido (≥20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "mejora",
+        "msg": "Amplía la justificación: riesgos, sensibilidad, comparables."
+      }
+    ],
+    "resumen": "Análisis sólido."
+  },
+  {
+    "id": "7b315dbf-79e2-455a-8423-0a249fffb74b",
+    "timestamp": "2025-10-13T16:03:52.358482Z",
+    "ticker": "AAPL",
+    "importe_inicial": 100,
+    "horizonte_anios": 5,
+    "supuestos": {
+      "crecimiento_anual_pct": 15,
+      "deuda_sobre_activos_pct": 60,
+      "margen_seguridad_pct": 10,
+      "roe_pct": 10
+    },
+    "justificacion": "Caso razonable pero con margen bajo y deuda elevada.",
+    "puntuacion": 71,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Horizonte adecuado (≥5 años)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "ROE razonable (≥8%)."
+      },
+      {
+        "tipo": "mejora",
+        "msg": "Deuda medio-alta: vigila el apalancamiento."
+      },
+      {
+        "tipo": "mejora",
+        "msg": "Margen de seguridad algo justo (10–20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "mejora",
+        "msg": "Amplía la justificación: riesgos, sensibilidad, comparables."
+      }
+    ],
+    "resumen": "Análisis razonable con áreas de mejora."
+  },
+  {
+    "id": "fba79613-50e7-4cdc-8c23-6efb05aab4b0",
+    "timestamp": "2025-10-13T16:03:52.317064Z",
+    "ticker": "MSFT",
+    "importe_inicial": 500,
+    "horizonte_anios": 10,
+    "supuestos": {
+      "crecimiento_anual_pct": 8,
+      "deuda_sobre_activos_pct": 25,
+      "margen_seguridad_pct": 20,
+      "roe_pct": 18
+    },
+    "justificacion": "Ventajas competitivas claras, crecimiento cloud y buena rentabilidad.",
+    "puntuacion": 100,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Horizonte largo (≥10 años)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "ROE alto (≥15%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Deuda moderada (≤30%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Margen de seguridad sólido (≥20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Buena justificación (detallada)."
+      }
+    ],
+    "resumen": "Análisis sólido."
+  },
+  {
+    "id": "2dc1d293-c22b-4fbb-800b-539c4fee533a",
+    "timestamp": "2025-10-13T15:28:52.156001Z",
+    "ticker": "MSFT",
+    "importe_inicial": 500,
+    "horizonte_anios": 10,
+    "supuestos": {
+      "crecimiento_anual_pct": 8,
+      "deuda_sobre_activos_pct": 25,
+      "margen_seguridad_pct": 20,
+      "roe_pct": 18
+    },
+    "justificacion": "Caso de prueba persistencia.",
+    "puntuacion": 95,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Horizonte largo (≥10 años)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "ROE alto (≥15%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Deuda moderada (≤30%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Margen de seguridad sólido (≥20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "mejora",
+        "msg": "Amplía la justificación: riesgos, sensibilidad, comparables."
+      }
+    ],
+    "resumen": "Análisis sólido."
+  },
+  {
+    "id": "1b14d429-ebb2-4ddf-a95a-c26e8d4214e3",
+    "timestamp": "2025-10-13T15:28:51.423924Z",
+    "ticker": "AAPL",
+    "importe_inicial": 100,
+    "horizonte_anios": 5,
+    "supuestos": {
+      "crecimiento_anual_pct": 15,
+      "deuda_sobre_activos_pct": 60,
+      "margen_seguridad_pct": 10,
+      "roe_pct": 10
+    },
+    "justificacion": "Caso razonable pero con margen bajo y deuda elevada.",
+    "puntuacion": 71,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Horizonte adecuado (≥5 años)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "ROE razonable (≥8%)."
+      },
+      {
+        "tipo": "mejora",
+        "msg": "Deuda medio-alta: vigila el apalancamiento."
+      },
+      {
+        "tipo": "mejora",
+        "msg": "Margen de seguridad algo justo (10–20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "mejora",
+        "msg": "Amplía la justificación: riesgos, sensibilidad, comparables."
+      }
+    ],
+    "resumen": "Análisis razonable con áreas de mejora."
+  },
+  {
+    "id": "d1ba6437-50b5-4ce7-bb8f-f40ee755c5b0",
+    "timestamp": "2025-10-13T15:28:51.390754Z",
+    "ticker": "MSFT",
+    "importe_inicial": 500,
+    "horizonte_anios": 10,
+    "supuestos": {
+      "crecimiento_anual_pct": 8,
+      "deuda_sobre_activos_pct": 25,
+      "margen_seguridad_pct": 20,
+      "roe_pct": 18
+    },
+    "justificacion": "Ventajas competitivas claras, crecimiento cloud y buena rentabilidad.",
+    "puntuacion": 100,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Horizonte largo (≥10 años)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "ROE alto (≥15%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Deuda moderada (≤30%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Margen de seguridad sólido (≥20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Buena justificación (detallada)."
+      }
+    ],
+    "resumen": "Análisis sólido."
+  },
+  {
+    "id": "da23f815-97c8-417c-af7b-95d141a1baab",
+    "timestamp": "2025-10-01T14:19:19.236307Z",
+    "ticker": "GOOGL",
+    "importe_inicial": 100,
+    "horizonte_anios": 5,
+    "supuestos": {
+      "crecimiento_anual_pct": 8,
+      "margen_seguridad_pct": 30,
+      "roe_pct": 20,
+      "deuda_sobre_activos_pct": 50
+    },
+    "justificacion": "pienso que google ha demostrado toods estos años ser una propuesta interesante porqeu vende mcuhas drogas",
+    "puntuacion": 88,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Horizonte adecuado (≥5 años)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "ROE alto (≥15%)."
+      },
+      {
+        "tipo": "mejora",
+        "msg": "Deuda medio-alta: vigila el apalancamiento."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Margen de seguridad sólido (≥20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Buena justificación (detallada)."
+      }
+    ],
+    "resumen": "Análisis sólido."
+  },
+  {
     "id": "8048cfc0-932c-431f-ab64-9d7c78748ecc",
     "timestamp": "2025-09-30T16:31:10.107807Z",
     "ticker": "MSFT",
