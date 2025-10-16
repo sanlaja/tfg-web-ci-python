@@ -409,6 +409,11 @@ mark.hl {
   margin: 20px 0;
 }
 
+.edu-section .card {
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
 .edu-grid {
   display: grid;
   grid-template-columns: 1.2fr 0.8fr;
