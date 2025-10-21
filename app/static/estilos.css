@@ -442,6 +442,59 @@ mark.hl {
   }
 }
 
+/* === Precheck Yahoo Finance (solo /nuevo-analisis) === */
+.precheck-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9998;
+}
+
+.precheck-backdrop[aria-hidden="false"] {
+  display: flex;
+}
+
+.precheck-dialog {
+  background: #fff;
+  width: min(640px, 92%);
+  border-radius: 14px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+  padding: 18px;
+  position: relative;
+  border: 1px solid #e5e7eb;
+}
+
+.precheck-close {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  border: none;
+  background: transparent;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  color: #475569;
+}
+
+.precheck-text {
+  color: var(--muted);
+  margin: 8px 0 12px;
+}
+
+.precheck-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+#precheck-q {
+  flex: 1 1 auto;
+  padding: 10px 12px;
+}
+
 .modal-backdrop {
   position: fixed;
   inset: 0;

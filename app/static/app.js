@@ -293,6 +293,44 @@ function renderObservaciones(list) {
     .join("");
 }
 
+// === Precheck Yahoo Finance: helpers ===
+function precheckYahooUrl(q) {
+  const val = (q || "").trim();
+  if (!val) return null;
+  const isTicker = /^[A-Za-z.\-]{1,10}$/.test(val);
+  return isTicker
+    ? `https://finance.yahoo.com/quote/${encodeURIComponent(val.toUpperCase())}`
+    : `https://finance.yahoo.com/lookup?s=${encodeURIComponent(val)}`;
+}
+
+function openYahooFor(q) {
+  const url = precheckYahooUrl(q);
+  if (!url) return;
+  window.open(url, "_blank", "noopener");
+}
+
+function bindPrecheckModal() {
+  const modal = document.getElementById("precheck-modal");
+  const closeBtn = document.getElementById("precheck-close");
+  const openBtn = document.getElementById("precheck-open");
+  const input = document.getElementById("precheck-q");
+  if (!modal || !closeBtn || !openBtn || !input) return;
+
+  modal.setAttribute("aria-hidden", "false");
+  setTimeout(() => input.focus(), 50);
+
+  closeBtn.addEventListener("click", () => modal.setAttribute("aria-hidden", "true"));
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) modal.setAttribute("aria-hidden", "true");
+  });
+
+  openBtn.addEventListener("click", () => openYahooFor(input.value));
+
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") openYahooFor(input.value);
+  });
+}
+
 /**
  * Enlaza el formulario de análisis: validación, envío y render de resultado.
  */
@@ -752,6 +790,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
   if (hasAnalisis) {
     bindAnalisisForm();
+    // 👇 Mostrar y enlazar el popup de Yahoo Finance
+    bindPrecheckModal();
   }
   if (hasHistorial) {
     bindHistorial();

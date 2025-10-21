@@ -72,5 +72,20 @@
     <div id="anl-observaciones" class="chips" aria-live="polite"></div>
   </div>
 </section>
-{% endblock %}
 
+<!-- Popup Precheck Yahoo Finance -->
+<div class="precheck-backdrop" id="precheck-modal" aria-hidden="true">
+  <div class="precheck-dialog" role="dialog" aria-modal="true" aria-labelledby="precheck-title">
+    <button class="precheck-close" id="precheck-close" aria-label="Cerrar">&times;</button>
+    <h3 id="precheck-title">Antes de analizar…</h3>
+    <p class="precheck-text">
+      Hey, ¿por qué no le echas un vistazo a los datos más recientes antes de hacer tu análisis?
+      Estoy seguro de que te serán de mucha utilidad 😉
+    </p>
+    <div class="precheck-row">
+      <input id="precheck-q" type="text" placeholder="Introduce el ticker o nombre de la empresa…" />
+      <button id="precheck-open" class="btn btn-primary">Abrir en Yahoo Finance</button>
+    </div>
+  </div>
+</div>
+{% endblock %}
