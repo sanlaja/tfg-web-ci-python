@@ -159,6 +159,20 @@ img {
   grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
 }
 
+.field-group {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.field-group label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+}
+
 .field {
   display: flex;
   flex-direction: column;
@@ -434,6 +448,37 @@ mark.hl {
 .cta-center {
   text-align: center;
   margin-top: 18px;
+}
+
+#toast-container {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 10000;
+  pointer-events: none;
+}
+
+.toast {
+  pointer-events: auto;
+  background: #0f172a;
+  color: #fff;
+  padding: 12px 16px;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  font-weight: 500;
+  line-height: 1.4;
+  max-width: clamp(220px, 28vw, 340px);
+}
+
+.toast-ok {
+  background: #15803d;
+}
+
+.toast-error {
+  background: #b91c1c;
 }
 
 @media (max-width: 900px) {

@@ -12,66 +12,132 @@
 
 <section class="card">
   <div class="card-section">
+    <div class="field">
+      <label class="muted" for="anl-ticker">Ticker</label>
+      <input id="anl-ticker" name="ticker" placeholder="Ej. MSFT" autocomplete="off" />
+    </div>
+  </div>
+</section>
+
+<section id="modo-inversion" class="card">
+  <div class="card-section">
+    <h3>Modo de inversi&oacute;n</h3>
+    <div class="field-group">
+      <label>
+        <input type="radio" name="modo" value="DCA" id="modo-dca" checked />
+        DCA
+      </label>
+      <label>
+        <input type="radio" name="modo" value="SIN_DCA" id="modo-sin-dca" />
+        Sin DCA
+      </label>
+    </div>
+  </div>
+</section>
+
+<section id="form-comun" class="card">
+  <div class="card-section">
     <div class="form-grid">
       <div class="field">
-        <label class="muted" for="anl-ticker">Ticker</label>
-        <input id="anl-ticker" name="ticker" placeholder="Ej. MSFT" autocomplete="off" />
-        <small class="err" id="err-ticker" aria-live="polite"></small>
+        <label for="importe-inicial" class="muted">Importe inicial (&euro;)</label>
+        <input
+          type="number"
+          id="importe-inicial"
+          min="0"
+          step="0.01"
+          required
+          inputmode="decimal"
+        />
       </div>
 
       <div class="field">
-        <label class="muted" for="anl-importe">Importe inicial (&euro;)</label>
-        <input id="anl-importe" name="importe" type="number" min="1" step="1" inputmode="numeric" />
-        <small class="err" id="err-importe" aria-live="polite"></small>
+        <label for="horizonte-anios" class="muted">Horizonte (a&ntilde;os, &ge;5)</label>
+        <input
+          type="number"
+          id="horizonte-anios"
+          min="5"
+          step="1"
+          required
+          inputmode="numeric"
+        />
       </div>
 
       <div class="field">
-        <label class="muted" for="anl-horizonte">Horizonte (a&ntilde;os, &ge;5)</label>
-        <input id="anl-horizonte" name="horizonte" type="number" min="1" step="1" inputmode="numeric" />
-        <small class="err" id="err-horizonte" aria-live="polite"></small>
+        <label for="crecimiento-estimado" class="muted">Crecimiento anual estimado (% opcional)</label>
+        <input
+          type="number"
+          id="crecimiento-estimado"
+          min="-100"
+          max="100"
+          step="0.01"
+          placeholder="p. ej. 7.5"
+          inputmode="decimal"
+        />
       </div>
 
       <div class="field">
-        <label class="muted" for="anl-crec">Crecimiento anual %</label>
-        <input id="anl-crec" name="crecimiento" type="number" min="0" max="100" step="1" />
-        <small class="err" id="err-crec" aria-live="polite"></small>
-      </div>
-
-      <div class="field">
-        <label class="muted" for="anl-margen">Margen seguridad %</label>
-        <input id="anl-margen" name="margen" type="number" min="0" max="100" step="1" />
-        <small class="err" id="err-margen" aria-live="polite"></small>
-      </div>
-
-      <div class="field">
-        <label class="muted" for="anl-roe">ROE %</label>
-        <input id="anl-roe" name="roe" type="number" min="0" max="100" step="1" />
-        <small class="err" id="err-roe" aria-live="polite"></small>
-      </div>
-
-      <div class="field">
-        <label class="muted" for="anl-deuda">Deuda/Activos %</label>
-        <input id="anl-deuda" name="deuda" type="number" min="0" max="100" step="1" />
-        <small class="err" id="err-deuda" aria-live="polite"></small>
+        <label for="margen-seguridad" class="muted">Margen de seguridad (% opcional)</label>
+        <input
+          type="number"
+          id="margen-seguridad"
+          min="0"
+          max="100"
+          step="0.01"
+          placeholder="p. ej. 15"
+          inputmode="decimal"
+        />
       </div>
     </div>
 
     <div class="field">
-      <label class="muted" for="anl-just">Justificaci&oacute;n (&ge; 20 caracteres)</label>
-      <textarea id="anl-just" name="justificacion" rows="5"></textarea>
-      <small class="err" id="err-just" aria-live="polite"></small>
+      <label for="justificacion" class="muted">Justificaci&oacute;n</label>
+      <textarea
+        id="justificacion"
+        rows="4"
+        placeholder="Explica tu propuesta&hellip;"
+      ></textarea>
     </div>
-
-    <div class="actions-row">
-      <div class="actions-row__left">
-        <button id="anl-enviar" class="btn btn-primary">Analizar</button>
-        <span id="anl-resultado" class="muted" aria-live="polite"></span>
-      </div>
-    </div>
-
-    <div id="anl-observaciones" class="chips" aria-live="polite"></div>
   </div>
 </section>
+
+<section id="form-dca" class="card">
+  <div class="card-section">
+    <h4>Par&aacute;metros DCA</h4>
+    <div class="form-grid">
+      <div class="field">
+        <label for="dca-aporte" class="muted">Aportaci&oacute;n peri&oacute;dica (&euro;)</label>
+        <input type="number" id="dca-aporte" min="0" step="0.01" inputmode="decimal" />
+      </div>
+      <div class="field">
+        <label for="dca-frecuencia" class="muted">Frecuencia</label>
+        <select id="dca-frecuencia">
+          <option value="MONTHLY" selected>Mensual</option>
+          <option value="WEEKLY">Semanal</option>
+          <option value="QUARTERLY">Trimestral</option>
+          <option value="ANNUAL">Anual</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="form-sin-dca" class="card" style="display:none">
+  <div class="card-section">
+    <p class="muted">
+      Sin aportaciones peri&oacute;dicas. Solo se considera el importe inicial.
+    </p>
+  </div>
+</section>
+
+<section class="card">
+  <div class="card-section">
+    <div class="actions">
+      <button id="btn-enviar-propuesta" class="btn btn-primary">Enviar propuesta</button>
+    </div>
+  </div>
+</section>
+
+<div id="toast-container" aria-live="polite" aria-atomic="true"></div>
 
 <!-- Popup Precheck Yahoo Finance -->
 <div class="precheck-backdrop" id="precheck-modal" aria-hidden="true">

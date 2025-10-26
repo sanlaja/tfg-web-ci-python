@@ -60,7 +60,11 @@ async function jsonPost(url, body) {
       data?.errores?.join?.("; ") ||
       data?.message ||
       `Error ${res.status}`;
-    throw new Error(msg);
+    const error = new Error(msg);
+    error.status = res.status;
+    error.body = data;
+    error.url = url;
+    throw error;
   }
   return data;
 }
@@ -265,32 +269,120 @@ function bindEmpresas() {
  * Construye el payload de análisis a partir de los inputs del formulario.
  * @returns {object}
  */
-function payloadAnalisis() {
+function campoNumericoNullable(sel) {
+  const el = $(sel);
+  if (!el) return null;
+  const v = el.value;
+  if (v === "" || v === null || v === undefined) return null;
+  return Number(v);
+}
+
+function construirPayloadPropuesta() {
+  const isDca = document.getElementById("modo-dca")?.checked ?? true;
+
+  const payload = {
+    ticker: (document.getElementById("anl-ticker")?.value || "").trim().toUpperCase(),
+    importe_inicial: Number(document.getElementById("importe-inicial")?.value || 0),
+    horizonte_anios: Number(document.getElementById("horizonte-anios")?.value || 0),
+    crecimiento_anual_estimado: campoNumericoNullable("#crecimiento-estimado"),
+    margen_seguridad_pct: campoNumericoNullable("#margen-seguridad"),
+    justificacion: (document.getElementById("justificacion")?.value || "").trim(),
+    modo: isDca ? "DCA" : "SIN_DCA",
+  };
+
+  if (payload.modo === "DCA") {
+    payload.dca = {
+      aporte: Number(document.getElementById("dca-aporte")?.value || 0),
+      frecuencia: document.getElementById("dca-frecuencia")?.value || "MONTHLY",
+    };
+  } else {
+    payload.dca = null;
+  }
+
+  return payload;
+}
+
+function validarPropuesta(p) {
+  if (!p.ticker) {
+    throw new Error("Indica un ticker.");
+  }
+  if (!p.importe_inicial || p.importe_inicial <= 0) {
+    throw new Error("Indica un importe inicial v\u00e1lido.");
+  }
+  if (!p.horizonte_anios || p.horizonte_anios < 5) {
+    throw new Error("Indica un horizonte en a\u00f1os (\u2265 5).");
+  }
+  if (p.modo === "DCA") {
+    if (!p.dca || p.dca.aporte < 0) {
+      throw new Error("El aporte DCA no puede ser negativo.");
+    }
+    const freqOk = ["WEEKLY", "MONTHLY", "QUARTERLY", "ANNUAL"].includes(p.dca.frecuencia);
+    if (!freqOk) throw new Error("Frecuencia DCA inv\u00e1lida.");
+  }
+}
+
+function traducirPayloadLegacy(p) {
+  const justificacion =
+    (p.justificacion && p.justificacion.trim()) ||
+    "Propuesta sin justificaci\u00f3n detallada.";
+  const legacyJust = justificacion.length >= 20
+    ? justificacion
+    : `${justificacion} ${".".repeat(20 - justificacion.length)}`;
+
   return {
-    ticker: document.getElementById("anl-ticker").value.trim(),
-    importe_inicial: Number(document.getElementById("anl-importe").value),
-    horizonte_anios: Number(document.getElementById("anl-horizonte").value),
+    ticker: p.ticker,
+    importe_inicial: Math.max(0, Number(p.importe_inicial || 0)),
+    horizonte_anios: Math.max(5, Math.round(Number(p.horizonte_anios || 0))),
     supuestos: {
-      crecimiento_anual_pct: Number(document.getElementById("anl-crec").value),
-      margen_seguridad_pct: Number(document.getElementById("anl-margen").value),
-      roe_pct: Number(document.getElementById("anl-roe").value),
-      deuda_sobre_activos_pct: Number(document.getElementById("anl-deuda").value),
+      crecimiento_anual_pct: Number.isFinite(p.crecimiento_anual_estimado)
+        ? p.crecimiento_anual_estimado
+        : 0,
+      margen_seguridad_pct: Number.isFinite(p.margen_seguridad_pct)
+        ? p.margen_seguridad_pct
+        : 0,
+      roe_pct: 0,
+      deuda_sobre_activos_pct: 0,
     },
-    justificacion: document.getElementById("anl-just").value,
+    justificacion: legacyJust,
+    modo: p.modo,
+    dca: p.dca,
   };
 }
 
-/**
- * Pinta las observaciones como chips/pills.
- * @param {{tipo:'ok'|'alerta'|'mejora', msg:string}[]} list
- */
-function renderObservaciones(list) {
-  $("#anl-observaciones").innerHTML = (list || [])
-    .map((o) => {
-      const cls = o.tipo === "ok" ? "ok" : o.tipo === "alerta" ? "alerta" : "mejora";
-      return `<span class="pill ${cls}">${o.msg}</span>`;
-    })
-    .join("");
+async function enviarPropuesta(payload) {
+  try {
+    return await jsonPost("/api/propuestas", payload);
+  } catch (err) {
+    if (err?.status !== 404 && err?.status !== 405) throw err;
+    console.warn("Fallo /api/propuestas (status %s). Probando /analisis...", err?.status);
+  }
+  const fallbackPayload = traducirPayloadLegacy(payload);
+  return jsonPost("/analisis", fallbackPayload);
+}
+
+function mostrarToast(tipo, msg, ttl) {
+  const container = document.getElementById("toast-container");
+  if (!container) {
+    alert(msg);
+    return;
+  }
+
+  const el = document.createElement("div");
+  el.className = `toast ${tipo === "ok" ? "toast-ok" : "toast-error"}`;
+  el.textContent = msg;
+  container.appendChild(el);
+
+  setTimeout(() => {
+    el.remove();
+  }, ttl);
+}
+
+function mostrarToastOk(msg) {
+  mostrarToast("ok", msg, 4000);
+}
+
+function mostrarToastError(msg) {
+  mostrarToast("error", msg, 5000);
 }
 
 // === Precheck Yahoo Finance: helpers ===
@@ -335,64 +427,104 @@ function bindPrecheckModal() {
  * Enlaza el formulario de análisis: validación, envío y render de resultado.
  */
 function bindAnalisisForm() {
-  const btn = document.getElementById("anl-enviar");
 
-  // Limpieza de errores por campo al teclear
-  [
-    "anl-ticker", "anl-importe", "anl-horizonte", "anl-crec",
-    "anl-margen", "anl-roe", "anl-deuda", "anl-just",
-  ].forEach((id) => {
-    const el = document.getElementById(id);
-    el?.addEventListener("input", () => {
-      const map = {
-        "anl-ticker": "ticker",
-        "anl-importe": "importe",
-        "anl-horizonte": "horizonte",
-        "anl-crec": "crec",
-        "anl-margen": "margen",
-        "anl-roe": "roe",
-        "anl-deuda": "deuda",
-        "anl-just": "just",
-      };
-      const k = map[id];
-      const err = document.getElementById(`err-${k}`);
-      if (err) err.textContent = "";
-      el.classList.remove("invalid");
-    });
-  });
+  const btn = document.getElementById("btn-enviar-propuesta");
 
-  // Envío
+  if (!btn) return;
+
+
+
+  const modoDca = document.getElementById("modo-dca");
+
+  const modoSinDca = document.getElementById("modo-sin-dca");
+
+  const formDca = document.getElementById("form-dca");
+
+  const formSinDca = document.getElementById("form-sin-dca");
+
+
+
+  const actualizarModo = () => {
+
+    const isDca = modoDca?.checked ?? true;
+
+    if (formDca) formDca.style.display = isDca ? "" : "none";
+
+    if (formSinDca) formSinDca.style.display = isDca ? "none" : "";
+
+  };
+
+
+
+  modoDca?.addEventListener("change", actualizarModo);
+
+  modoSinDca?.addEventListener("change", actualizarModo);
+
+  actualizarModo();
+
+
+
+  const originalText = btn.textContent;
+
+
+
   btn.addEventListener("click", async () => {
-    clearErrors();
-    const p = payloadAnalisis();
-    const errs = validateForm(p);
-    if (Object.keys(errs).length) {
-      showErrors(errs);
-      return;
-    }
+
+    btn.disabled = true;
+
+    btn.textContent = "Enviando...";
+
+
 
     try {
-      btn.disabled = true;
-      btn.textContent = "Analizando…";
 
-      const r = await jsonPost("/analisis", p);
+      const payload = construirPayloadPropuesta();
 
-      document.getElementById("anl-resultado").textContent =
-        `Puntuación: ${r.puntuacion} — ${r.resumen}`;
+      validarPropuesta(payload);
 
-      renderObservaciones(r.observaciones);
 
-      // Refresca historial al principio
-      state.his.page = 1;
-      writeParams();
-      await loadHistorial();
+
+      await enviarPropuesta(payload);
+
+
+
+      mostrarToastOk("\u2705 \u00a1Propuesta registrada! Estamos calculando tu resultado hist\u00f3rico.");
+
+
+
+      try {
+
+        await refrescarHistorial();
+
+      } catch (err) {
+
+        console.warn("No se pudo refrescar el historial:", err);
+
+      }
+
     } catch (e) {
-      alert(`No se pudo analizar:\n${e.message}`);
+
+      const msg = e?.message || e || "Error desconocido";
+
+      mostrarToastError(`No se pudo registrar la propuesta: ${msg}`);
+
     } finally {
+
       btn.disabled = false;
-      btn.textContent = "Analizar";
+
+      btn.textContent = originalText;
+
     }
+
   });
+
+}
+
+async function refrescarHistorial() {
+  if (!document.getElementById("his-tbody")) return;
+  state.his.page = 1;
+  writeParams();
+  await loadHistorial();
 }
 
 /* ============================================================================
@@ -541,79 +673,6 @@ function bindHistorial() {
 /**
  * Limpia mensajes de error y estilos "invalid".
  */
-function clearErrors() {
-  ["ticker", "importe", "horizonte", "crec", "margen", "roe", "deuda", "just"].forEach((k) => {
-    const el = document.getElementById(`err-${k}`);
-    if (el) el.textContent = "";
-  });
-
-  [
-    "anl-ticker", "anl-importe", "anl-horizonte", "anl-crec",
-    "anl-margen", "anl-roe", "anl-deuda", "anl-just",
-  ].forEach((id) => document.getElementById(id)?.classList.remove("invalid"));
-}
-
-/**
- * Devuelve diccionario de errores por campo si hay validaciones incumplidas.
- * @param {ReturnType<typeof payloadAnalisis>} p
- */
-function validateForm(p) {
-  const errs = {};
-
-  if (!p.ticker) errs.ticker = "Obligatorio.";
-  if (!(p.importe_inicial > 0)) errs.importe = "Debe ser > 0.";
-  if (!(Number.isInteger(p.horizonte_anios) && p.horizonte_anios >= 5)) {
-    errs.horizonte = "Debe ser entero ≥ 5.";
-  }
-
-  const sup = p.supuestos || {};
-  const within = (v) => Number.isFinite(v) && v >= 0 && v <= 100;
-  if (!within(sup.crecimiento_anual_pct)) errs.crec = "Debe estar entre 0 y 100.";
-  if (!within(sup.margen_seguridad_pct)) errs.margen = "Debe estar entre 0 y 100.";
-  if (!within(sup.roe_pct)) errs.roe = "Debe estar entre 0 y 100.";
-  if (!within(sup.deuda_sobre_activos_pct)) errs.deuda = "Debe estar entre 0 y 100.";
-
-  if (!p.justificacion || p.justificacion.trim().length < 20) {
-    errs.just = "Mínimo 20 caracteres.";
-  }
-
-  return errs;
-}
-
-/**
- * Muestra los errores en su <span id="err-..."> y marca inputs como invalid.
- * Hace scroll al primero inválido.
- * @param {Record<string,string>} errs
- */
-function showErrors(errs) {
-  const map = {
-    ticker: "anl-ticker",
-    importe: "anl-importe",
-    horizonte: "anl-horizonte",
-    crec: "anl-crec",
-    margen: "anl-margen",
-    roe: "anl-roe",
-    deuda: "anl-deuda",
-    just: "anl-just",
-  };
-
-  let firstInvalid = null;
-
-  Object.entries(errs).forEach(([k, msg]) => {
-    const errEl = document.getElementById(`err-${k}`);
-    if (errEl) errEl.textContent = msg;
-
-    const input = document.getElementById(map[k]);
-    if (input) {
-      input.classList.add("invalid");
-      if (!firstInvalid) firstInvalid = input;
-    }
-  });
-
-  if (firstInvalid) {
-    firstInvalid.scrollIntoView({ behavior: "smooth", block: "center" });
-  }
-}
 
 /* ============================================================================
  * URL <-> Estado
@@ -782,7 +841,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   readParams();
 
   const hasEmpresas = Boolean(document.getElementById("emp-tbody"));
-  const hasAnalisis = Boolean(document.getElementById("anl-enviar"));
+  const hasAnalisis = Boolean(document.getElementById("btn-enviar-propuesta"));
   const hasHistorial = Boolean(document.getElementById("his-tbody"));
 
   if (hasEmpresas) {

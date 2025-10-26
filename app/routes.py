@@ -133,46 +133,162 @@ def listar_empresas():
 def _validar_payload(p):
     errores = []
 
-    # Obligatorios
     ticker = p.get("ticker")
     if not ticker or not isinstance(ticker, str):
         errores.append("Falta 'ticker' (string).")
 
     importe = p.get("importe_inicial")
     if not isinstance(importe, (int, float)) or importe <= 0:
-        errores.append("'importe_inicial' debe ser numérico > 0.")
+        errores.append("'importe_inicial' debe ser numerico > 0.")
 
     horizonte = p.get("horizonte_anios")
     if not isinstance(horizonte, int) or horizonte < 5:
-        errores.append("'horizonte_anios' debe ser un entero ≥ 5.")
+        errores.append("'horizonte_anios' debe ser un entero >= 5.")
 
     sup = p.get("supuestos") or {}
     if not isinstance(sup, dict):
         errores.append("'supuestos' debe ser un objeto con porcentajes.")
         sup = {}
+    else:
+        p["supuestos"] = sup
 
-    # Rangos (solo registran error si están fuera de rango)
-    def pct_ok(k, minimo=0, maximo=100):
-        v = sup.get(k)
-        if not isinstance(v, (int, float)) or v < minimo or v > maximo:
-            errores.append(f"'{k}' debe estar entre {minimo} y {maximo}.")
-        return v if isinstance(v, (int, float)) else None
+    def pct_ok(clave, minimo, maximo):
+        if clave not in sup:
+            return None
+        valor = sup.get(clave)
+        if valor is None:
+            return None
+        if not isinstance(valor, (int, float)):
+            errores.append(f"'{clave}' debe ser numerico.")
+            return None
+        if valor < minimo or valor > maximo:
+            errores.append(f"'{clave}' debe estar entre {minimo} y {maximo}.")
+        return valor
 
-    pct_ok("crecimiento_anual_pct", 0, 60)  # >60% sostenido: irrealista
+    pct_ok("crecimiento_anual_pct", 0, 100)
     pct_ok("margen_seguridad_pct", 0, 100)
     pct_ok("roe_pct", 0, 100)
     pct_ok("deuda_sobre_activos_pct", 0, 100)
 
-    just = p.get("justificacion", "")
-    if not isinstance(just, str) or len(just.strip()) < 20:
+    just = p.get("justificacion")
+    if just is not None and not isinstance(just, str):
+        errores.append("'justificacion' debe ser texto.")
+    elif isinstance(just, str) and len(just.strip()) < 20:
         errores.append("La 'justificacion' debe tener al menos 20 caracteres.")
 
-    # Plausibilidad adicional
+    modo = p.get("modo") or "SIN_DCA"
+    if modo not in {"DCA", "SIN_DCA"}:
+        errores.append("'modo' debe ser 'DCA' o 'SIN_DCA'.")
+    elif modo == "DCA":
+        dca = p.get("dca") or {}
+        if not isinstance(dca, dict):
+            errores.append("'dca' debe ser un objeto con aporte y frecuencia.")
+            dca = {}
+        aporte = dca.get("aporte")
+        if aporte is None or not isinstance(aporte, (int, float)) or aporte < 0:
+            errores.append("'dca.aporte' no puede ser negativo.")
+        frecuencia = (dca.get("frecuencia") or "").upper()
+        if frecuencia not in {"WEEKLY", "MONTHLY", "QUARTERLY", "ANNUAL"}:
+            errores.append("'dca.frecuencia' no es valida.")
+    else:
+        p["dca"] = None
+
     crec = sup.get("crecimiento_anual_pct")
     if isinstance(crec, (int, float)) and crec > 25:
         errores.append("Crecimiento anual > 25% sostenido es probablemente irrealista.")
 
     return errores
+
+
+def _normalizar_payload(datos):
+    datos = dict(datos or {})
+
+    ticker = datos.get("ticker")
+    if isinstance(ticker, str):
+        datos["ticker"] = ticker.strip().upper()
+
+    def to_float(value):
+        if value in (None, ""):
+            return None
+        try:
+            return float(value)
+        except (TypeError, ValueError):
+            return None
+
+    if "importe_inicial" in datos:
+        imp = to_float(datos.get("importe_inicial"))
+        if imp is not None:
+            datos["importe_inicial"] = imp if not imp.is_integer() else int(imp)
+
+    if "horizonte_anios" in datos:
+        try:
+            datos["horizonte_anios"] = int(round(float(datos["horizonte_anios"])))
+        except (TypeError, ValueError):
+            pass
+
+    sup_in = datos.get("supuestos")
+    sup = dict(sup_in) if isinstance(sup_in, dict) else {}
+
+    mapping = {
+        "crecimiento_anual_estimado": "crecimiento_anual_pct",
+        "margen_seguridad_pct": "margen_seguridad_pct",
+        "roe_pct": "roe_pct",
+        "deuda_sobre_activos_pct": "deuda_sobre_activos_pct",
+    }
+    for origen, destino in mapping.items():
+        if origen in datos and destino not in sup:
+            sup[destino] = datos[origen]
+
+    for clave in (
+        "crecimiento_anual_pct",
+        "margen_seguridad_pct",
+        "roe_pct",
+        "deuda_sobre_activos_pct",
+    ):
+        val = to_float(sup.get(clave))
+        sup[clave] = 0.0 if val is None else val
+
+    datos["supuestos"] = sup
+
+    modo = datos.get("modo")
+    if modo not in {"DCA", "SIN_DCA"}:
+        modo = "SIN_DCA"
+    datos["modo"] = modo
+
+    if modo == "DCA":
+        dca = datos.get("dca")
+        if not isinstance(dca, dict):
+            dca = {}
+        aporte = to_float(dca.get("aporte"))
+        aporte_norm = 0.0 if aporte is None else aporte
+        if isinstance(aporte_norm, float) and aporte_norm.is_integer():
+            aporte_norm = int(aporte_norm)
+        frecuencia = (dca.get("frecuencia") or "MONTHLY").upper()
+        datos["dca"] = {"aporte": aporte_norm, "frecuencia": frecuencia}
+    else:
+        datos["dca"] = None
+
+    just = datos.get("justificacion")
+    if just is not None and not isinstance(just, str):
+        datos["justificacion"] = str(just)
+
+    if "crecimiento_anual_estimado" in datos:
+        ce = to_float(datos["crecimiento_anual_estimado"])
+        datos["crecimiento_anual_estimado"] = (
+            ce if ce is not None else sup.get("crecimiento_anual_pct")
+        )
+    else:
+        datos["crecimiento_anual_estimado"] = sup.get("crecimiento_anual_pct")
+
+    if "margen_seguridad_pct" in datos:
+        ms = to_float(datos["margen_seguridad_pct"])
+        datos["margen_seguridad_pct"] = (
+            ms if ms is not None else sup.get("margen_seguridad_pct")
+        )
+    else:
+        datos["margen_seguridad_pct"] = sup.get("margen_seguridad_pct")
+
+    return datos
 
 
 def _puntuar_y_observar(p):
@@ -302,9 +418,7 @@ def _guardar_lista(path: Path, lista):
         json.dump(lista, f, ensure_ascii=False, indent=2)
 
 
-@bp.post("/analisis")
-def crear_analisis():
-    datos = request.get_json(silent=True) or {}
+def _registrar_analisis(datos):
     errores = _validar_payload(datos)
     if errores:
         return jsonify({"valido": False, "errores": errores}), 400
@@ -319,13 +433,17 @@ def crear_analisis():
         "horizonte_anios": datos.get("horizonte_anios"),
         "supuestos": datos.get("supuestos", {}),
         "justificacion": datos.get("justificacion", ""),
+        "modo": datos.get("modo"),
+        "dca": datos.get("dca"),
+        "crecimiento_anual_estimado": datos.get("crecimiento_anual_estimado"),
+        "margen_seguridad_pct": datos.get("margen_seguridad_pct"),
         "puntuacion": puntuacion,
         "observaciones": observaciones,
         "resumen": resumen,
     }
 
     historial = _cargar_lista(ANALISIS_PATH)
-    historial.insert(0, registro)  # más reciente primero
+    historial.insert(0, registro)
     _guardar_lista(ANALISIS_PATH, historial)
 
     return jsonify(
@@ -334,8 +452,31 @@ def crear_analisis():
             "puntuacion": puntuacion,
             "observaciones": observaciones,
             "resumen": resumen,
+            "registro": {
+                "id": registro["id"],
+                "timestamp": registro["timestamp"],
+                "ticker": registro["ticker"],
+                "importe_inicial": registro["importe_inicial"],
+                "horizonte_anios": registro["horizonte_anios"],
+                "modo": registro["modo"],
+                "dca": registro["dca"],
+            },
         }
     )
+
+
+@bp.post("/analisis")
+def crear_analisis():
+    datos_brutos = request.get_json(silent=True) or {}
+    datos = _normalizar_payload(datos_brutos)
+    return _registrar_analisis(datos)
+
+
+@bp.post("/api/propuestas")
+def crear_propuesta_api():
+    datos_brutos = request.get_json(silent=True) or {}
+    datos = _normalizar_payload(datos_brutos)
+    return _registrar_analisis(datos)
 
 
 @bp.get("/analisis")
