@@ -33,7 +33,7 @@ def test_analisis_falla_validacion_campos_obligatorios():
     client = _client()
     payload = {
         # falta ticker e importe_inicial
-        "horizonte_anios": 2,  # demasiado corto
+        "horizonte_anios": 0,  # demasiado corto
         "supuestos": {
             "crecimiento_anual_pct": 50,  # irrealista
             "margen_seguridad_pct": -5,  # fuera de rango
@@ -52,6 +52,26 @@ def test_analisis_falla_validacion_campos_obligatorios():
     assert any("margen" in m.lower() for m in data["errores"])  # fuera de rango
     assert any("crecimiento" in m.lower() for m in data["errores"])  # irrealista
     assert any("justificacion" in m.lower() for m in data["errores"])  # demasiado corta
+
+
+def test_analisis_horizonte_minimo_permitido():
+    client = _client()
+    payload = {
+        "ticker": "GOOG",
+        "importe_inicial": 250,
+        "horizonte_anios": 1,
+        "supuestos": {
+            "crecimiento_anual_pct": 6,
+            "margen_seguridad_pct": 15,
+            "roe_pct": 12,
+            "deuda_sobre_activos_pct": 30,
+        },
+        "justificacion": "Horizonte mínimo para probar compatibilidad de validaciones.",
+    }
+    res = client.post("/analisis", json=payload)
+    assert res.status_code == 200
+    data = res.get_json()
+    assert data["valido"] is True
 
 
 def test_analisis_limites_y_alertas():

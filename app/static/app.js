@@ -309,8 +309,8 @@ function validarPropuesta(p) {
   if (!p.importe_inicial || p.importe_inicial <= 0) {
     throw new Error("Indica un importe inicial v\u00e1lido.");
   }
-  if (!p.horizonte_anios || p.horizonte_anios < 5) {
-    throw new Error("Indica un horizonte en a\u00f1os (\u2265 5).");
+  if (!p.horizonte_anios || p.horizonte_anios < 1) {
+    throw new Error("El horizonte debe ser de al menos 1 a\u00f1o.");
   }
   if (p.modo === "DCA") {
     if (!p.dca || p.dca.aporte < 0) {
@@ -332,7 +332,7 @@ function traducirPayloadLegacy(p) {
   return {
     ticker: p.ticker,
     importe_inicial: Math.max(0, Number(p.importe_inicial || 0)),
-    horizonte_anios: Math.max(5, Math.round(Number(p.horizonte_anios || 0))),
+    horizonte_anios: Math.max(1, Math.round(Number(p.horizonte_anios || 0))),
     supuestos: {
       crecimiento_anual_pct: Number.isFinite(p.crecimiento_anual_estimado)
         ? p.crecimiento_anual_estimado

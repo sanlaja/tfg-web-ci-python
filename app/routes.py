@@ -142,8 +142,12 @@ def _validar_payload(p):
         errores.append("'importe_inicial' debe ser numerico > 0.")
 
     horizonte = p.get("horizonte_anios")
-    if not isinstance(horizonte, int) or horizonte < 5:
-        errores.append("'horizonte_anios' debe ser un entero >= 5.")
+    if horizonte is None:
+        errores.append("Falta el campo 'horizonte_anios'.")
+    elif not isinstance(horizonte, int):
+        errores.append("El campo 'horizonte_anios' debe ser un entero.")
+    elif horizonte < 1:
+        errores.append("Horizonte mínimo: 1 año (horizonte_anios >= 1).")
 
     sup = p.get("supuestos") or {}
     if not isinstance(sup, dict):
