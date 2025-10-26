@@ -1,5 +1,50 @@
 [
   {
+    "id": "d768915b-cf57-4405-9b86-166d1fe08b94",
+    "timestamp": "2025-10-26T10:40:30.902644Z",
+    "ticker": "AAPL",
+    "importe_inicial": 3000,
+    "horizonte_anios": 2,
+    "supuestos": {
+      "crecimiento_anual_pct": 8.0,
+      "margen_seguridad_pct": 25.0,
+      "roe_pct": 0.0,
+      "deuda_sobre_activos_pct": 0.0
+    },
+    "justificacion": "Invertir en Apple puede ser atractivo debido a su sólida salud financiera, innovación constante, fuerte marca y un ecosistema integrado de hardware, software y servicios. La empresa tiene un historial de crecimiento, diversificación en áreas como los servicios y una gran cantidad de efectivo que utiliza para invertir, recomprar acciones y devolver valor a los accionista",
+    "modo": "DCA",
+    "dca": {
+      "aporte": 500,
+      "frecuencia": "MONTHLY"
+    },
+    "crecimiento_anual_estimado": 8.0,
+    "margen_seguridad_pct": 25.0,
+    "puntuacion": 80,
+    "observaciones": [
+      {
+        "tipo": "mejora",
+        "msg": "ROE bajo: revisa rentabilidad del negocio."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Deuda moderada (≤30%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Margen de seguridad sólido (≥20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Buena justificación (detallada)."
+      }
+    ],
+    "resumen": "Análisis sólido."
+  },
+  {
     "id": "070bda3c-ddd5-4c10-b0af-59e608099664",
     "timestamp": "2025-10-26T10:28:55.913090Z",
     "ticker": "MSFT",
