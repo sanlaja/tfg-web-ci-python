@@ -1135,7 +1135,7 @@ def market_summary():
             400,
         )
 
-    # adjusted = _as_bool(request.args.get("adjusted"), True)
+    # adjusted = _as_bool(request.args.get("adjusted"), True) # no usado
 
     df = _download_history_df(t, start_d, end_d, include_actions=True)
     if df is None or df.empty:
