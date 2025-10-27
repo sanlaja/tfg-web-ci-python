@@ -12,11 +12,129 @@
 const $ = (sel) => document.querySelector(sel);
 
 /**
- * Formatea una fecha ISO a YYYY-MM-DD (o cadena vacía si no hay valor).
+ * Formatea una fecha ISO a YYYY-MM-DD (o cadena vacÃ­a si no hay valor).
  * @param {string} iso
  * @returns {string}
  */
 const fmtDate = (iso) => (iso ? iso.slice(0, 10) : "");
+
+const euroFmt = new Intl.NumberFormat("es-ES", {
+  style: "currency",
+  currency: "EUR",
+});
+const pctFmt = new Intl.NumberFormat("es-ES", {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+});
+const ND = "\u2014";
+
+const fmtPct = (value) => {
+  const num = Number(value);
+  if (!Number.isFinite(num)) return ND;
+  return `${pctFmt.format(num)}%`;
+};
+
+const fmtEur = (value) => {
+  const num = Number(value);
+  if (!Number.isFinite(num)) return ND;
+  return euroFmt.format(num);
+};
+
+function applySignColor(selector, value) {
+  const el = document.querySelector(selector);
+  if (!el) return;
+  el.classList.remove("text-pos", "text-neg");
+  const num = Number(value);
+  if (!Number.isFinite(num)) return;
+  el.classList.add(num >= 0 ? "text-pos" : "text-neg");
+}
+
+function showBacktestSummary(ticker, start, end, summary) {
+  const modal = document.getElementById("modalBacktest");
+  if (!modal) return;
+
+  const data = summary || {};
+  const safeStart = start || data.start || "";
+  const safeEnd = end || data.end || safeStart;
+  const notes = Array.isArray(data.notes) ? data.notes : [];
+
+  const setText = (selector, text) => {
+    const el = document.querySelector(selector);
+    if (el) el.textContent = text;
+  };
+
+  setText("#mb_ticker", ticker || data.ticker || "");
+  setText("#mb_periodo", safeEnd ? `${safeStart} \u2192 ${safeEnd}` : safeStart);
+  setText("#mb_inv_ini", fmtEur(data.invested));
+  setText("#mb_valor_final", fmtEur(data.final_value));
+  setText("#mb_pnl_abs", fmtEur(data.pnl_abs));
+  setText("#mb_pnl_pct", fmtPct(data.pnl_pct));
+  setText("#mb_p0a", fmtEur(data.start_price_adj));
+  setText("#mb_p1a", fmtEur(data.end_price_adj));
+  setText("#mb_vara", fmtPct(data.variation_adj_pct));
+  setText("#mb_p0", fmtEur(data.start_price));
+  setText("#mb_p1", fmtEur(data.end_price));
+  setText("#mb_var", fmtPct(data.variation_raw_pct));
+  setText(
+    "#mb_now",
+    data.now_price !== null && data.now_price !== undefined
+      ? fmtEur(data.now_price)
+      : "No disponible"
+  );
+  setText("#mb_div", data.has_dividends ? 'S\u00ed' : 'No');
+
+  applySignColor("#mb_pnl_abs", data.pnl_abs);
+  applySignColor("#mb_pnl_pct", data.pnl_pct);
+  applySignColor("#mb_vara", data.variation_adj_pct);
+  applySignColor("#mb_var", data.variation_raw_pct);
+
+  const notesEl = document.getElementById("mb_notes");
+  if (notesEl) {
+    notesEl.innerHTML = notes.length
+      ? `<ul>${notes.map((n) => `<li>${n}</li>`).join("")}</ul>`
+      : "";
+  }
+
+  const csvEnd = safeEnd || new Date().toISOString().slice(0, 10);
+  const base = `/market/ohlc_csv?ticker=${encodeURIComponent(
+    ticker || data.ticker || ""
+  )}&start=${encodeURIComponent(safeStart)}&end=${encodeURIComponent(csvEnd)}`;
+  const adjLink = document.getElementById("mb_csv_adj");
+  if (adjLink) adjLink.href = `${base}&adjusted=true`;
+  const rawLink = document.getElementById("mb_csv_raw");
+  if (rawLink) rawLink.href = `${base}&adjusted=false`;
+
+  modal.classList.remove("hidden");
+}
+
+function fixMojibake(str) {
+  if (typeof str !== "string") return str;
+  if (!/[\u00c3\u00c2]/.test(str)) return str;
+  try {
+    const bytes = Uint8Array.from([...str].map((ch) => ch.charCodeAt(0)));
+    return new TextDecoder("utf-8").decode(bytes);
+  } catch {
+    return str;
+  }
+}
+
+function setupBacktestModal() {
+  const modal = document.getElementById("modalBacktest");
+  if (!modal || modal.__backtestWired) return;
+
+  const closeBtn = document.getElementById("modalBacktestClose");
+  closeBtn?.addEventListener("click", () => {
+    modal.classList.add("hidden");
+  });
+
+  modal.addEventListener("click", (evt) => {
+    if (evt.target === modal) {
+      modal.classList.add("hidden");
+    }
+  });
+
+  modal.__backtestWired = true;
+}
 
 /**
  * Serializa un objeto sencillo a querystring ignorando undefined, null y "".
@@ -52,7 +170,7 @@ async function jsonPost(url, body) {
     body: JSON.stringify(body),
   });
 
-  // Intenta parsear JSON; si falla, usa objeto vacío
+  // Intenta parsear JSON; si falla, usa objeto vacÃ­o
   const data = await res.json().catch(() => ({}));
 
   if (!res.ok) {
@@ -69,7 +187,7 @@ async function jsonPost(url, body) {
   return data;
 }
 
-// --- Utilidad: ordenar arrays de objetos por clave y dirección ---
+// --- Utilidad: ordenar arrays de objetos por clave y direcciÃ³n ---
 function sortItems(items, key, dir = "asc") {
   const d = dir === "desc" ? -1 : 1;
   const toNum = (v) => (v === null || v === undefined || v === "" ? NaN : Number(v));
@@ -88,7 +206,7 @@ function sortItems(items, key, dir = "asc") {
       return 0;
     }
 
-    // Números
+    // NÃºmeros
     if (isNumericKey(key, a) || isNumericKey(key, b)) {
       const na = toNum(va), nb = toNum(vb);
       if (isNaN(na) && isNaN(nb)) return 0;
@@ -99,7 +217,7 @@ function sortItems(items, key, dir = "asc") {
       return 0;
     }
 
-    // Texto (localeCompare insensible a mayúsculas)
+    // Texto (localeCompare insensible a mayÃºsculas)
     const sa = String(va ?? "").toLocaleLowerCase();
     const sb = String(vb ?? "").toLocaleLowerCase();
     return sa.localeCompare(sb) * d;
@@ -112,7 +230,7 @@ async function copyCurrentUrl() {
     await navigator.clipboard.writeText(location.href);
     alert("URL copiada al portapapeles ✅");
   } catch {
-    // Fallback clásico
+    // Fallback clÃ¡sico
     const ta = document.createElement("textarea");
     ta.value = location.href;
     document.body.appendChild(ta);
@@ -132,7 +250,7 @@ function highlight(text, needle) {
 }
 
 /* ============================================================================
- * Estado (filtros/paginación/orden)
+ * Estado (filtros/paginaciÃ³n/orden)
  * ==========================================================================*/
 
 const state = {
@@ -145,7 +263,7 @@ const state = {
  * ==========================================================================*/
 
 /**
- * Carga empresas desde /empresas con filtros/paginación de state.emp
+ * Carga empresas desde /empresas con filtros/paginaciÃ³n de state.emp
  * y pinta la tabla (usa #emp-tbody).
  */
 async function loadEmpresas() {
@@ -174,7 +292,7 @@ async function loadEmpresas() {
   const total = arrayMode ? (items || []).length : data.total;
   const hasNext = arrayMode ? false : data.has_next;
 
-  // Ordenación cliente (sobre la página actual)
+  // OrdenaciÃ³n cliente (sobre la pÃ¡gina actual)
   const itemsSorted = sortItems(items || [], state.emp.sort, state.emp.dir);
   const needle = state.emp.q || "";
 
@@ -193,10 +311,10 @@ async function loadEmpresas() {
               </tr>`;
           })
           .join("")
-      : `<tr><td colspan="3"><div class="empty">No hay resultados para tu búsqueda.</div></td></tr>`;
+      : `<tr><td colspan="3"><div class="empty">No hay resultados para tu bÃºsqueda.</div></td></tr>`;
   }
 
-  // Info de paginación
+  // Info de paginaciÃ³n
   const infoEl = $("#emp-info");
   if (arrayMode) {
     infoEl.textContent = `${total} resultados`;
@@ -206,7 +324,7 @@ async function loadEmpresas() {
     infoEl.textContent =
       total === 0
         ? "0 resultados"
-        : `Mostrando ${start}–${end} de ${total} · p. ${page} · ${per_page}/pág`;
+        : `Mostrando ${start} – ${end} de ${total} · p. ${page} · ${per_page}/pág`;
   }
 
   // Botones
@@ -215,7 +333,7 @@ async function loadEmpresas() {
 }
 
 /**
- * Enlaza eventos de búsqueda, paginado y "compartir" en Empresas.
+ * Enlaza eventos de bÃºsqueda, paginado y "compartir" en Empresas.
  */
 function bindEmpresas() {
   // Buscar
@@ -227,7 +345,7 @@ function bindEmpresas() {
     loadEmpresas().catch((e) => alert(e.message));
   });
 
-  // Por página
+  // Por pÃ¡gina
   const perSel = $("#emp-per-page");
   perSel.addEventListener("change", () => {
     state.emp.per_page = Number(perSel.value) || 10;
@@ -262,11 +380,11 @@ function bindEmpresas() {
 }
 
 /* ============================================================================
- * Análisis (formulario + envío)
+ * AnÃ¡lisis (formulario + envÃ­o)
  * ==========================================================================*/
 
 /**
- * Construye el payload de análisis a partir de los inputs del formulario.
+ * Construye el payload de anÃ¡lisis a partir de los inputs del formulario.
  * @returns {object}
  */
 function campoNumericoNullable(sel) {
@@ -290,13 +408,19 @@ function construirPayloadPropuesta() {
     modo: isDca ? "DCA" : "SIN_DCA",
   };
 
+  const readDate = (id) => (document.getElementById(id)?.value || "").trim();
+
   if (payload.modo === "DCA") {
     payload.dca = {
       aporte: Number(document.getElementById("dca-aporte")?.value || 0),
       frecuencia: document.getElementById("dca-frecuencia")?.value || "MONTHLY",
     };
+    payload.inicio = readDate("fechaInicioDCA") || null;
+    payload.fin = readDate("fechaFinDCA") || null;
   } else {
     payload.dca = null;
+    payload.inicio = readDate("fechaCompra") || null;
+    payload.fin = null;
   }
 
   return payload;
@@ -307,17 +431,28 @@ function validarPropuesta(p) {
     throw new Error("Indica un ticker.");
   }
   if (!p.importe_inicial || p.importe_inicial <= 0) {
-    throw new Error("Indica un importe inicial v\u00e1lido.");
+    throw new Error("Indica un importe inicial válido.");
   }
   if (!p.horizonte_anios || p.horizonte_anios < 1) {
-    throw new Error("El horizonte debe ser de al menos 1 a\u00f1o.");
+    throw new Error("El horizonte debe ser de al menos 1 año.");
   }
+
   if (p.modo === "DCA") {
     if (!p.dca || p.dca.aporte < 0) {
       throw new Error("El aporte DCA no puede ser negativo.");
     }
     const freqOk = ["WEEKLY", "MONTHLY", "QUARTERLY", "ANNUAL"].includes(p.dca.frecuencia);
-    if (!freqOk) throw new Error("Frecuencia DCA inv\u00e1lida.");
+    if (!freqOk) throw new Error("Frecuencia DCA inválida.");
+    if (!p.inicio || !p.fin) {
+      throw new Error("Selecciona las fechas de inversión.");
+    }
+    if (p.inicio && p.fin && p.fin < p.inicio) {
+      throw new Error("La fecha fin debe ser posterior a la inicial.");
+    }
+  } else {
+    if (!p.inicio) {
+      throw new Error("Selecciona la fecha de compra.");
+    }
   }
 }
 
@@ -346,6 +481,8 @@ function traducirPayloadLegacy(p) {
     justificacion: legacyJust,
     modo: p.modo,
     dca: p.dca,
+    inicio: p.inicio || null,
+    fin: p.fin || null,
   };
 }
 
@@ -424,116 +561,124 @@ function bindPrecheckModal() {
 }
 
 /**
- * Enlaza el formulario de análisis: validación, envío y render de resultado.
+ * Enlaza el formulario de anÃ¡lisis: validaciÃ³n, envÃ­o y render de resultado.
  */
 function bindAnalisisForm() {
-
   const btn = document.getElementById("btn-enviar-propuesta");
-
   if (!btn) return;
 
-
-
   const modoDca = document.getElementById("modo-dca");
-
   const modoSinDca = document.getElementById("modo-sin-dca");
-
   const formDca = document.getElementById("form-dca");
-
   const formSinDca = document.getElementById("form-sin-dca");
 
-
-
   const actualizarModo = () => {
-
     const isDca = modoDca?.checked ?? true;
-
     if (formDca) formDca.style.display = isDca ? "" : "none";
-
     if (formSinDca) formSinDca.style.display = isDca ? "none" : "";
-
   };
 
-
-
   modoDca?.addEventListener("change", actualizarModo);
-
   modoSinDca?.addEventListener("change", actualizarModo);
-
   actualizarModo();
 
-
+  setupBacktestModal();
 
   const originalText = btn.textContent;
 
-
-
   btn.addEventListener("click", async () => {
-
     btn.disabled = true;
-
     btn.textContent = "Enviando...";
 
-
-
     try {
-
       const payload = construirPayloadPropuesta();
-
       validarPropuesta(payload);
-
-
 
       await enviarPropuesta(payload);
 
-
-
-      mostrarToastOk("\u2705 \u00a1Propuesta registrada! Estamos calculando tu resultado hist\u00f3rico.");
-
-
-
-      try {
-
-        await refrescarHistorial();
-
-      } catch (err) {
-
-        console.warn("No se pudo refrescar el historial:", err);
-
+      const backtestBody = {
+        ticker: payload.ticker,
+        importe_inicial: payload.importe_inicial,
+        horizonte_anios: payload.horizonte_anios,
+        modo: payload.modo,
+        dca: payload.dca,
+        inicio: payload.inicio,
+      };
+      if (payload.fin) {
+        backtestBody.fin = payload.fin;
       }
 
+      let backtestData = null;
+      try {
+        backtestData = await jsonPost("/market/backtest", backtestBody);
+        const invested = Number(backtestData.invested || 0).toFixed(2);
+        const finalValue = Number(backtestData.final_value || 0).toFixed(2);
+        const pnlPct = Number(backtestData.pnl_pct || 0).toFixed(2);
+        mostrarToastOk(`Backtest ${backtestData.ticker}: invertido €${invested}, valor final €${finalValue} (${pnlPct}%).`);
+      } catch (err) {
+        console.warn("Backtest falló:", err);
+        mostrarToastError(`Backtest falló: ${err?.message || err}`);
+      }
+
+      const summaryStart = backtestBody.inicio || payload.inicio || new Date().toISOString().slice(0, 10);
+      const summaryEnd = backtestBody.fin || payload.fin || new Date().toISOString().slice(0, 10);
+
+      let summaryData = null;
+      if (summaryStart) {
+        try {
+          summaryData = await jsonGet(
+            `/market/summary?ticker=${encodeURIComponent(backtestBody.ticker)}&start=${encodeURIComponent(summaryStart)}&end=${encodeURIComponent(summaryEnd)}&adjusted=true`
+          );
+        } catch (summaryErr) {
+          console.warn("Resumen no disponible:", summaryErr);
+          mostrarToastError(`Resumen no disponible: ${summaryErr?.message || summaryErr}`);
+        }
+      }
+
+      if (backtestData || summaryData) {
+        const merged = {
+          ...(summaryData || {}),
+          ...(backtestData || {}),
+        };
+        merged.notes = Array.isArray(summaryData?.notes)
+          ? summaryData.notes
+          : Array.isArray(backtestData?.notes)
+          ? backtestData.notes
+          : [];
+
+        const modalStart = merged.start || summaryStart;
+        const modalEnd = merged.end || summaryEnd;
+
+        showBacktestSummary(payload.ticker, modalStart, modalEnd, merged);
+      }
+
+      try {
+        await refrescarHistorial();
+      } catch (err) {
+        console.warn("No se pudo refrescar el historial:", err);
+      }
+
+      if (!backtestData) {
+        mostrarToastOk("✅ ¡Propuesta registrada! Estamos calculando tu resultado histórico.");
+      }
     } catch (e) {
-
       const msg = e?.message || e || "Error desconocido";
-
       mostrarToastError(`No se pudo registrar la propuesta: ${msg}`);
-
     } finally {
-
       btn.disabled = false;
-
       btn.textContent = originalText;
-
     }
-
   });
-
-}
-
-async function refrescarHistorial() {
-  if (!document.getElementById("his-tbody")) return;
-  state.his.page = 1;
-  writeParams();
-  await loadHistorial();
 }
 
-/* ============================================================================
- * Historial (lista + filtros + paginado + CSV + orden)
- * ==========================================================================*/
 
-/**
- * Carga entradas del historial y pinta tabla + paginación.
- */
+async function refrescarHistorial() {
+  if (!document.getElementById("his-tbody")) return;
+  state.his.page = 1;
+  writeParams();
+  await loadHistorial();
+}
+
 async function loadHistorial() {
   const { page, per_page, ticker, desde, hasta } = state.his;
   const query = qs({ page, per_page, ticker, desde, hasta });
@@ -544,46 +689,71 @@ async function loadHistorial() {
   const total = arrayMode ? (items || []).length : data.total;
   const hasNext = arrayMode ? false : data.has_next;
 
-  // Ordenación cliente (sobre la página actual)
   const itemsSorted = sortItems(items || [], state.his.sort, state.his.dir);
 
-  // Render de filas con badge de puntuación + empty-state
   const rows = (itemsSorted || [])
-    .map((h) => {
-      let scoreClass = "score-mid";
-      const sc = Number(h.puntuacion ?? 0);
-      if (sc >= 80) scoreClass = "score-high";
-      else if (sc < 60) scoreClass = "score-low";
+    .map((h, idx) => {
+      const bt = h.backtest || null;
+      const pnlValue = Number.isFinite(Number(bt?.pnl_pct))
+        ? Number(bt.pnl_pct)
+        : null;
+
+      let scoreClass;
+      if (pnlValue !== null) {
+        if (pnlValue < 0) scoreClass = "score-low";
+        else if (pnlValue < 20) scoreClass = "score-mid";
+        else scoreClass = "score-high";
+      } else {
+        scoreClass = "score-mid";
+        const sc = Number(h.puntuacion ?? 0);
+        if (sc >= 80) scoreClass = "score-high";
+        else if (sc < 60) scoreClass = "score-low";
+      }
+      const pnlChip =
+        pnlValue === null
+          ? ""
+          : `<span class=\"${pnlValue >= 0 ? 'chip-pos' : 'chip-neg'}\">${fmtPct(pnlValue)}</span>`;
+
+      const importeCell = [fmtEur(h.importe_inicial), pnlChip].filter(Boolean).join(" ");
+      const resumenText = (h.resumen || "").replace(/\n/g, " ");
+      const obsData = JSON.stringify(h.observaciones || []).replaceAll("'", "&apos;");
+      const detalleDisabled = bt ? "" : 'disabled title=\"Sin datos de backtest\"';
 
       return `
         <tr>
-          <td class="muted">${fmtDate(h.timestamp)}</td>
+          <td class=\"muted\">${fmtDate(h.timestamp)}</td>
           <td><strong>${h.ticker || ""}</strong></td>
-          <td>${h.importe_inicial ?? ""}</td>
+          <td>${importeCell}</td>
           <td>${h.horizonte_anios ?? ""} años</td>
-          <td><span class="badge ${scoreClass}">${h.puntuacion ?? ""}</span></td>
-          <td>
-            ${(h.resumen || "").replace(/\n/g, " ")}
+          <td><span class=\"badge ${scoreClass}\">${h.puntuacion ?? ""}</span></td>
+          <td>${resumenText}</td>
+          <td class=\"his-actions\">
             <button
-              class="secondary btn-obs"
-              data-obs='${JSON.stringify(h.observaciones || []).replaceAll("'", "&apos;")}'
-              style="margin-left:6px;">
-              Ver
+              class=\"secondary btn-obs\"
+              data-obs='${obsData}'
+              type=\"button\">
+              Observaciones
+            </button>
+            <button
+              class=\"btn btn-outline his-ver\"
+              data-index=\"${idx}\"
+              ${detalleDisabled}
+              type=\"button\">
+              Ver detalle
             </button>
           </td>
         </tr>`;
     })
     .join("");
 
-  $("#his-tbody").innerHTML =
+  document.getElementById("his-tbody").innerHTML =
     rows ||
-    `<tr><td colspan="6">
-       <div class="empty" style="padding:8px 0; color:#64748b;">
+    `<tr><td colspan=\"7\">
+       <div class=\"empty\" style=\"padding:8px 0; color:#64748b;\">
          Todavía no hay análisis en el historial.
        </div>
      </td></tr>`;
 
-  // Enlaza botones "Ver" de esta página
   document.querySelectorAll("#his-tbody .btn-obs").forEach((btn) => {
     btn.addEventListener("click", () => {
       const list = JSON.parse(btn.getAttribute("data-obs") || "[]");
@@ -591,8 +761,21 @@ async function loadHistorial() {
     });
   });
 
-  // Info de paginación (sustituye his-total/his-page por his-info)
-  const infoEl = $("#his-info");
+  document.querySelectorAll("#his-tbody .his-ver").forEach((btn) => {
+    if (btn.disabled) return;
+    const idx = Number(btn.getAttribute("data-index"));
+    if (!Number.isFinite(idx)) return;
+    const item = itemsSorted[idx];
+    const bt = item?.backtest;
+    if (!bt) return;
+    btn.addEventListener("click", () => {
+      const start = bt.start || item?.inicio || (item?.timestamp || "").slice(0, 10);
+      const end = bt.end || bt.hasta || bt.fin || start;
+      showBacktestSummary(item?.ticker || bt.ticker, start, end, bt);
+    });
+  });
+
+  const infoEl = document.getElementById("his-info");
   if (arrayMode) {
     infoEl.textContent = `${total} resultados`;
   } else {
@@ -604,24 +787,10 @@ async function loadHistorial() {
         : `Mostrando ${start}–${end} de ${total} · p. ${page} · ${per_page}/pág`;
   }
 
-  // Controles de paginación del historial
-  $("#his-prev").disabled = state.his.page <= 1;
-  $("#his-next").disabled = !hasNext;
+  document.getElementById("his-prev").disabled = state.his.page <= 1;
+  document.getElementById("his-next").disabled = !hasNext;
 }
 
-/**
- * Descarga CSV del historial según filtros actuales (sin paginado).
- */
-function exportCSV() {
-  const { ticker, desde, hasta } = state.his;
-  const query = qs({ ticker, desde, hasta });
-  const url = `/analisis.csv${query ? "?" + query : ""}`;
-  window.location.href = url;
-}
-
-/**
- * Enlaza filtros y paginación del historial.
- */
 function bindHistorial() {
   $("#his-filtrar").addEventListener("click", () => {
     state.his.ticker = $("#his-ticker").value.trim();
@@ -654,7 +823,7 @@ function bindHistorial() {
     loadHistorial().catch((e) => alert(e.message));
   });
 
-  $("#his-export").addEventListener("click", exportCSV);
+  //$("#his-export").addEventListener("click", exportCSV);
 
   // Share URL (Historial) — solo si existe el botón
   const hisShareBtn = $("#his-share");
@@ -667,7 +836,7 @@ function bindHistorial() {
 }
 
 /* ============================================================================
- * Validación de formulario de análisis
+ * ValidaciÃ³n de formulario de anÃ¡lisis
  * ==========================================================================*/
 
 /**
@@ -679,8 +848,8 @@ function bindHistorial() {
  * ==========================================================================*/
 
 /**
- * Lee parámetros desde la URL.
- * (Si quieres restaurar desde localStorage 24h, avísame y lo reañadimos aquí.)
+ * Lee parÃ¡metros desde la URL.
+ * (Si quieres restaurar desde localStorage 24h, avÃ­same y lo reaÃ±adimos aquÃ­.)
  */
 function readParams() {
   const p = new URLSearchParams(location.search);
@@ -743,8 +912,11 @@ function writeParams(replace = true) {
  * Renderiza lista de observaciones como chips (HTML).
  */
 function renderObsChips(list) {
+  const filtered = (list || [])
+    .filter((o) => !/roe|deuda/i.test(o?.msg || ""))
+    .map((o) => ({ ...o, msg: fixMojibake(o?.msg ?? "") }));
   return (
-    (list || [])
+    filtered
       .map((o) => {
         const cls = o.tipo === "ok" ? "ok" : o.tipo === "alerta" ? "alerta" : "mejora";
         return `<div class="pill ${cls}" style="display:inline-block;margin:4px 6px 0 0;">${o.msg}</div>`;
@@ -753,7 +925,7 @@ function renderObsChips(list) {
   );
 }
 
-// Gestión de foco para accesibilidad
+// GestiÃ³n de foco para accesibilidad
 let _lastFocused = null;
 
 /**
@@ -796,7 +968,7 @@ function closeObservacionesModal() {
 }
 
 /* ============================================================================
- * Ordenación (click en encabezados)
+ * OrdenaciÃ³n (click en encabezados)
  * ==========================================================================*/
 
 function bindSorting() {
@@ -844,12 +1016,17 @@ document.addEventListener("DOMContentLoaded", async () => {
   const hasAnalisis = Boolean(document.getElementById("btn-enviar-propuesta"));
   const hasHistorial = Boolean(document.getElementById("his-tbody"));
 
+  const hasBacktestModal = Boolean(document.getElementById("modalBacktest"));
+  if (hasBacktestModal) {
+    setupBacktestModal();
+  }
+
   if (hasEmpresas) {
     bindEmpresas();
   }
   if (hasAnalisis) {
     bindAnalisisForm();
-    // 👇 Mostrar y enlazar el popup de Yahoo Finance
+    // ðŸ‘‡ Mostrar y enlazar el popup de Yahoo Finance
     bindPrecheckModal();
   }
   if (hasHistorial) {
@@ -944,7 +1121,7 @@ document.addEventListener("DOMContentLoaded", async () => {
  * ==========================================================================*/
 
 /**
- * Carga sectores en el <select id="emp-sector"> manteniendo la opción "Todos".
+ * Carga sectores en el <select id="emp-sector"> manteniendo la opciÃ³n "Todos".
  */
 async function loadSectores() {
   const sectores = await jsonGet("/empresas/sectores");

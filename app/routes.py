@@ -1,11 +1,15 @@
-from flask import Blueprint, jsonify, request, Response, render_template
-from pathlib import Path
-from datetime import datetime
-import json
-import unicodedata
-import uuid
 import csv
 import io
+import json
+import math
+import unicodedata
+import uuid
+from datetime import date, datetime, timedelta
+from pathlib import Path
+
+from flask import Blueprint, Response, jsonify, render_template, request
+import pandas as pd
+import yfinance as yf
 
 
 bp = Blueprint("main", __name__)
@@ -96,9 +100,9 @@ def listar_empresas():
     """
     Devuelve lista de empresas.
     Filtros opcionales:
-      - ?sector=...  → igualdad exacta (normalizada)
-      - ?q=...       → búsqueda contiene en ticker o nombre (normalizada)
-      - ?page&per_page → (opcional) si se envían, responde paginado
+      - ?sector=...  ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ igualdad exacta (normalizada)
+      - ?q=...       ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ bÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Âºsqueda contiene en ticker o nombre (normalizada)
+      - ?page&per_page ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â ÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ (opcional) si se envÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â­an, responde paginado
     """
     sector = request.args.get("sector")
     q = request.args.get("q")
@@ -128,7 +132,7 @@ def listar_empresas():
 
 
 # ----------------------
-#   Motor de análisis
+#   Motor de anÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡lisis
 # ----------------------
 def _validar_payload(p):
     errores = []
@@ -147,7 +151,9 @@ def _validar_payload(p):
     elif not isinstance(horizonte, int):
         errores.append("El campo 'horizonte_anios' debe ser un entero.")
     elif horizonte < 1:
-        errores.append("Horizonte mínimo: 1 año (horizonte_anios >= 1).")
+        errores.append(
+            "Horizonte mÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â­nimo: 1 aÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â±o (horizonte_anios >= 1)."
+        )
 
     sup = p.get("supuestos") or {}
     if not isinstance(sup, dict):
@@ -292,6 +298,14 @@ def _normalizar_payload(datos):
     else:
         datos["margen_seguridad_pct"] = sup.get("margen_seguridad_pct")
 
+    for key in ("inicio", "fin"):
+        val = datos.get(key)
+        if isinstance(val, str):
+            val = val.strip()
+            datos[key] = val or None
+        elif val not in (None,):
+            datos[key] = str(val)
+
     return datos
 
 
@@ -315,30 +329,17 @@ def _puntuar_y_observar(p):
     roe = sup.get("roe_pct", 0)
     if roe >= 15:
         score += 10
-        obs.append({"tipo": "ok", "msg": "ROE alto (≥15%)."})
     elif roe >= 8:
         score += 5
-        obs.append({"tipo": "ok", "msg": "ROE razonable (≥8%)."})
-    else:
-        obs.append(
-            {"tipo": "mejora", "msg": "ROE bajo: revisa rentabilidad del negocio."}
-        )
 
     # Deuda
     deuda = sup.get("deuda_sobre_activos_pct", 0)
     if deuda <= 30:
         score += 10
-        obs.append({"tipo": "ok", "msg": "Deuda moderada (≤30%)."})
     elif deuda <= 60:
         score += 3
-        obs.append(
-            {"tipo": "mejora", "msg": "Deuda medio-alta: vigila el apalancamiento."}
-        )
     else:
         score -= 5
-        obs.append(
-            {"tipo": "alerta", "msg": "Deuda elevada (>60%): riesgo financiero."}
-        )
 
     # Margen de seguridad
     margen = sup.get("margen_seguridad_pct", 0)
@@ -384,10 +385,8 @@ def _puntuar_y_observar(p):
             }
         )
 
-    # Bounded score
     score = max(0, min(100, int(round(score))))
 
-    # Resumen simple
     if score >= 80:
         resumen = "Análisis sólido."
     elif score >= 60:
@@ -399,7 +398,38 @@ def _puntuar_y_observar(p):
 
 
 # ----------------------
-#   Persistencia análisis
+#   Persistencia anÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡lisis
+
+
+def _fix_mojibake(s):
+    if not isinstance(s, str):
+        return s
+    if "Ã" not in s and "Â" not in s:
+        return s
+    try:
+        return s.encode("latin-1").decode("utf-8")
+    except Exception:
+        return s
+
+
+def _sanear_registro(r: dict) -> dict:
+    if not isinstance(r, dict):
+        return r
+    if "resumen" in r:
+        r["resumen"] = _fix_mojibake(r["resumen"])
+    if isinstance(r.get("observaciones"), list):
+        out = []
+        for o in r["observaciones"]:
+            if not isinstance(o, dict):
+                continue
+            msg = _fix_mojibake(o.get("msg", ""))
+            if any(k in msg.lower() for k in ("roe", "deuda")):
+                continue
+            out.append({**o, "msg": msg})
+        r["observaciones"] = out
+    return r
+
+
 # ----------------------
 
 DATA_DIR = Path(__file__).resolve().parent / "data"
@@ -411,13 +441,18 @@ def _cargar_lista(path: Path):
         return []
     with path.open("r", encoding="utf-8-sig") as f:
         try:
-            return json.load(f)
+            data = json.load(f)
         except json.JSONDecodeError:
             return []
+    if isinstance(data, list):
+        data = [_sanear_registro(x) for x in data]
+    return data
 
 
 def _guardar_lista(path: Path, lista):
     path.parent.mkdir(parents=True, exist_ok=True)
+    if isinstance(lista, list):
+        lista = [_sanear_registro(x) for x in lista]
     with path.open("w", encoding="utf-8") as f:
         json.dump(lista, f, ensure_ascii=False, indent=2)
 
@@ -445,6 +480,30 @@ def _registrar_analisis(datos):
         "observaciones": observaciones,
         "resumen": resumen,
     }
+
+    registro["inicio"] = datos.get("inicio")
+    registro["fin"] = datos.get("fin")
+
+    backtest_payload = {
+        "ticker": registro.get("ticker"),
+        "importe_inicial": registro.get("importe_inicial"),
+        "horizonte_anios": registro.get("horizonte_anios"),
+        "modo": registro.get("modo"),
+        "dca": registro.get("dca"),
+        "inicio": registro.get("inicio"),
+        "fin": registro.get("fin"),
+    }
+    backtest_snapshot = None
+    try:
+        backtest_snapshot = _market_backtest_core(backtest_payload)
+    except BacktestError:
+        backtest_snapshot = None
+    except Exception:
+        backtest_snapshot = None
+
+    registro["backtest"] = backtest_snapshot
+
+    registro = _sanear_registro(registro)
 
     historial = _cargar_lista(ANALISIS_PATH)
     historial.insert(0, registro)
@@ -486,11 +545,11 @@ def crear_propuesta_api():
 @bp.get("/analisis")
 def listar_analisis():
     """
-    Devuelve el historial de análisis (más recientes primero).
+    Devuelve el historial de anÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡lisis (mÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡s recientes primero).
     Filtros opcionales (se aplican ANTES del paginado):
       - ?ticker=MSFT      (case-insensitive, igualdad exacta)
       - ?desde=YYYY-MM-DD (inclusive por fecha de timestamp)
-      - ?hasta=YYYY-MM-DD (exclusivo del día siguiente; simplificamos usando prefijos)
+      - ?hasta=YYYY-MM-DD (exclusivo del dÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â­a siguiente; simplificamos usando prefijos)
     Paginado opcional:
       - ?page, ?per_page
     """
@@ -506,8 +565,8 @@ def listar_analisis():
         tnorm = _norm(ticker)
         historial = [h for h in historial if _norm(h.get("ticker", "")) == tnorm]
 
-    # Para fechas, usamos comparación por prefijo de fecha (YYYY-MM-DD)
-    # porque timestamp está en ISO completo (YYYY-MM-DDTHH:MM:SSZ)
+    # Para fechas, usamos comparaciÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³n por prefijo de fecha (YYYY-MM-DD)
+    # porque timestamp estÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡ en ISO completo (YYYY-MM-DDTHH:MM:SSZ)
     if desde:
         # mantenemos items cuya fecha >= desde
         historial = [h for h in historial if h.get("timestamp", "")[:10] >= desde]
@@ -526,7 +585,7 @@ def listar_analisis():
 @bp.get("/analisis.csv")
 def exportar_analisis_csv():
     """
-    Exporta el historial de análisis en CSV (UTF-8 con BOM para Excel).
+    Exporta el historial de anÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡lisis en CSV (UTF-8 con BOM para Excel).
     Acepta los mismos filtros que GET /analisis: ?ticker, ?desde, ?hasta
     """
     historial = _cargar_lista(ANALISIS_PATH)
@@ -545,23 +604,37 @@ def exportar_analisis_csv():
         "resumen",
     ]
 
+    has_backtest = any(h.get("backtest") for h in historial)
+    if has_backtest:
+        headers += ["bt_start", "bt_end", "bt_invested", "bt_final", "bt_pnl_pct"]
+
     out = io.StringIO()
     w = csv.writer(out, lineterminator="\n")
     w.writerow(headers)
     for h in historial:
-        w.writerow(
-            [
-                h.get("id", ""),
-                h.get("timestamp", ""),
-                h.get("ticker", ""),
-                h.get("importe_inicial", ""),
-                h.get("horizonte_anios", ""),
-                h.get("puntuacion", ""),
-                (h.get("resumen", "") or "").replace("\n", " ").strip(),
-            ]
-        )
+        row = [
+            h.get("id", ""),
+            h.get("timestamp", ""),
+            h.get("ticker", ""),
+            h.get("importe_inicial", ""),
+            h.get("horizonte_anios", ""),
+            h.get("puntuacion", ""),
+            (h.get("resumen", "") or "").replace("\n", " ").strip(),
+        ]
+        if has_backtest:
+            bt = h.get("backtest") or {}
+            row.extend(
+                [
+                    bt.get("start") or "",
+                    bt.get("end") or "",
+                    bt.get("invested") if bt.get("invested") is not None else "",
+                    bt.get("final_value") if bt.get("final_value") is not None else "",
+                    bt.get("pnl_pct") if bt.get("pnl_pct") is not None else "",
+                ]
+            )
+        w.writerow(row)
 
-    # 👇 Añadimos BOM para que Excel detecte UTF-8 automáticamente
+    # AÃƒÆ’Ã‚Â±adimos BOM para que Excel detecte UTF-8 automÃƒÆ’Ã‚Â¡ticamente
     csv_text = "\ufeff" + out.getvalue()
 
     return Response(
@@ -619,3 +692,549 @@ def _filtrar_analisis(
     if hasta:
         historial = [h for h in historial if h.get("timestamp", "")[:10] < hasta]
     return historial
+
+
+# --- Yahoo Finance: Datos de mercado y backtest ---
+def _parse_iso_date(value: str | None) -> date | None:
+    if not value:
+        return None
+    try:
+        return pd.to_datetime(value).date()
+    except Exception:
+        return None
+
+
+def _as_bool(value: str | None, default: bool = True) -> bool:
+    if value is None:
+        return default
+    return str(value).strip().lower() in {"1", "true", "t", "yes", "y"}
+
+
+def _normalize_price_df(df: pd.DataFrame) -> pd.DataFrame:
+    if df is None or df.empty:
+        return df
+    if isinstance(df.columns, pd.MultiIndex):
+        df = df.copy()
+        df.columns = df.columns.get_level_values(0)
+    return df
+
+
+def _extract_series(df: pd.DataFrame, column: str, ticker: str) -> pd.Series:
+    if df is None or df.empty or column not in df:
+        return pd.Series(dtype=float)
+    series = df[column].copy()
+    if isinstance(series, pd.DataFrame):
+        if ticker in series.columns:
+            series = series[ticker]
+        else:
+            series = series.iloc[:, 0]
+    return series
+
+
+def _series_with_date_index(series: pd.Series) -> pd.Series:
+    series = series.copy()
+    if not series.empty:
+        series.index = pd.to_datetime(series.index).date
+    return series
+
+
+def _series_to_map(series: pd.Series) -> dict[str, float | None]:
+    return {
+        str(idx): (None if pd.isna(val) else float(val)) for idx, val in series.items()
+    }
+
+
+def _first_price_on_or_after(series: pd.Series, target: date) -> float | None:
+    if series.empty:
+        return None
+    for idx, value in series.sort_index().items():
+        if idx >= target and not pd.isna(value):
+            return float(value)
+    return None
+
+
+def _last_price_on_or_before(series: pd.Series, target: date) -> float | None:
+    if series.empty:
+        return None
+    for idx in series.sort_index().index[::-1]:
+        value = series.loc[idx]
+        if idx <= target and not pd.isna(value):
+            return float(value)
+    return None
+
+
+def _round_or_none(value: float | None, digits: int) -> float | None:
+    if value is None:
+        return None
+    return round(value, digits)
+
+
+class BacktestError(Exception):
+    def __init__(self, message: str, status_code: int = 400):
+        super().__init__(message)
+        self.status_code = status_code
+
+
+def _download_history_df(
+    ticker: str, start_d: date, end_d: date, include_actions: bool = True
+) -> pd.DataFrame:
+    df = yf.download(
+        ticker,
+        start=str(start_d),
+        end=str(end_d + timedelta(days=1)),
+        interval="1d",
+        auto_adjust=False,
+        actions=include_actions,
+        progress=False,
+    )
+    return _normalize_price_df(df)
+
+
+def _compute_price_summary(
+    ticker: str, start_d: date, end_d: date, df: pd.DataFrame
+) -> dict:
+    adj = _series_with_date_index(_extract_series(df, "Adj Close", ticker))
+    close = _series_with_date_index(_extract_series(df, "Close", ticker))
+    dividends = _series_with_date_index(_extract_series(df, "Dividends", ticker))
+
+    if adj.empty and close.empty:
+        raise BacktestError("Sin datos de precios para el rango solicitado", 404)
+
+    notes: list[str] = []
+
+    start_price_adj = _first_price_on_or_after(adj, start_d)
+    if start_price_adj is None:
+        notes.append("Precio inicial ajustado no disponible en el rango")
+
+    end_price_adj = _last_price_on_or_before(adj, end_d)
+    if end_price_adj is None:
+        notes.append("Precio final ajustado no disponible en el rango")
+
+    start_price = _first_price_on_or_after(close, start_d)
+    if start_price is None:
+        notes.append("Precio inicial sin ajustar no disponible en el rango")
+
+    end_price = _last_price_on_or_before(close, end_d)
+    if end_price is None:
+        notes.append("Precio final sin ajustar no disponible en el rango")
+
+    variation_adj_pct = None
+    if start_price_adj and end_price_adj and start_price_adj != 0:
+        variation_adj_pct = (end_price_adj / start_price_adj - 1) * 100
+
+    variation_raw_pct = None
+    if start_price and end_price and start_price != 0:
+        variation_raw_pct = (end_price / start_price - 1) * 100
+
+    has_dividends = (
+        bool(dividends.fillna(0).ne(0).any()) if not dividends.empty else False
+    )
+
+    now_price = None
+    try:
+        fast_info = yf.Ticker(ticker).fast_info
+        candidate = getattr(fast_info, "last_price", None)
+        if candidate is not None and not (
+            isinstance(candidate, float) and math.isnan(candidate)
+        ):
+            now_price = float(candidate)
+    except Exception:
+        now_price = None
+
+    if now_price is None:
+        fallback = end_price_adj if end_price_adj is not None else None
+        if fallback is None and not adj.dropna().empty:
+            fallback = float(adj.dropna().iloc[-1])
+        if fallback is not None:
+            now_price = fallback
+            notes.append("Tiempo real no disponible; se usa ultimo cierre ajustado")
+        else:
+            notes.append("Tiempo real no disponible")
+
+    return {
+        "start_price_adj": _round_or_none(start_price_adj, 4),
+        "end_price_adj": _round_or_none(end_price_adj, 4),
+        "variation_adj_pct": _round_or_none(variation_adj_pct, 2),
+        "start_price": _round_or_none(start_price, 4),
+        "end_price": _round_or_none(end_price, 4),
+        "variation_raw_pct": _round_or_none(variation_raw_pct, 2),
+        "now_price": _round_or_none(now_price, 4) if now_price is not None else None,
+        "has_dividends": has_dividends,
+        "notes": notes,
+        "adj_series": adj,
+    }
+
+
+def _iso(d):
+    if pd.isna(d):
+        return None
+    return str(pd.to_datetime(d).date())
+
+
+@bp.get("/market/ohlc/<ticker>")
+def market_ohlc(ticker):
+    """
+    Devuelve OHLCV + Adj Close para un ticker.
+    Query params:
+      - start=YYYY-MM-DD
+      - end=YYYY-MM-DD
+      - interval=1d|1wk|1mo (default 1d)
+    Respuesta: lista de objetos {date, open, high, low, close, adj_close, volume}
+    """
+    t = (ticker or "").strip()
+    if not t:
+        return jsonify({"error": "Ticker requerido"}), 400
+
+    start = request.args.get("start")
+    end = request.args.get("end")
+    interval = request.args.get("interval", "1d")
+
+    try:
+        df = yf.download(
+            t,
+            start=start,
+            end=end,
+            interval=interval,
+            auto_adjust=False,
+            progress=False,
+        )
+        if df is None or df.empty:
+            return jsonify([])
+
+        df = _normalize_price_df(df)
+
+        df = df.rename(
+            columns={
+                "Open": "open",
+                "High": "high",
+                "Low": "low",
+                "Close": "close",
+                "Adj Close": "adj_close",
+                "Volume": "volume",
+            }
+        ).reset_index()
+
+        rows = []
+        for _, r in df.iterrows():
+            rows.append(
+                {
+                    "date": _iso(r.get("Date")),
+                    "open": None if pd.isna(r.get("open")) else float(r.get("open")),
+                    "high": None if pd.isna(r.get("high")) else float(r.get("high")),
+                    "low": None if pd.isna(r.get("low")) else float(r.get("low")),
+                    "close": None if pd.isna(r.get("close")) else float(r.get("close")),
+                    "adj_close": (
+                        None
+                        if pd.isna(r.get("adj_close"))
+                        else float(r.get("adj_close"))
+                    ),
+                    "volume": (
+                        None if pd.isna(r.get("volume")) else int(r.get("volume"))
+                    ),
+                }
+            )
+        return jsonify(rows)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+def _gen_schedule(start_date: date, end_date: date, freq: str):
+    step = {"WEEKLY": 7, "MONTHLY": 30, "QUARTERLY": 91, "ANNUAL": 365}.get(
+        (freq or "").upper(), 30
+    )
+    d = start_date
+    while d <= end_date:
+        yield d
+        d = d + timedelta(days=step)
+
+
+def _nearest_trading_close(adj_close_by_day: dict, d: date):
+    # busca el primer dÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â­a con dato >= fecha objetivo (forward fill hacia adelante)
+    for i in range(0, 14):
+        k = str(d + timedelta(days=i))
+        v = adj_close_by_day.get(k)
+        if v is not None:
+            return float(v)
+    return None
+
+
+def _market_backtest_core(payload: dict) -> dict:
+    t = (payload.get("ticker") or "").strip().upper()
+    if not t:
+        raise BacktestError("Ticker requerido", 400)
+
+    try:
+        horizon = int(payload.get("horizonte_anios") or 0)
+    except (TypeError, ValueError):
+        raise BacktestError("Horizonte invalido", 400)
+    if horizon < 1:
+        raise BacktestError("Horizonte >= 1 aÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â±o", 400)
+
+    try:
+        invested_initial = float(payload.get("importe_inicial") or 0)
+    except (TypeError, ValueError):
+        invested_initial = 0.0
+    if invested_initial <= 0:
+        raise BacktestError("Importe inicial debe ser mayor a 0", 400)
+
+    modo = (payload.get("modo") or "SIN_DCA").upper()
+    if modo not in {"DCA", "SIN_DCA"}:
+        modo = "SIN_DCA"
+
+    dca = payload.get("dca") or {}
+    aporte = 0.0
+    freq = "MONTHLY"
+    if modo == "DCA" and isinstance(dca, dict):
+        try:
+            aporte = float(dca.get("aporte") or 0.0)
+        except (TypeError, ValueError):
+            aporte = 0.0
+        if aporte < 0:
+            raise BacktestError("Aporte DCA no puede ser negativo", 400)
+        freq = (dca.get("frecuencia") or "MONTHLY").upper()
+
+    today = date.today()
+    start_raw = payload.get("inicio")
+    if start_raw:
+        start_d = _parse_iso_date(start_raw)
+        if not start_d:
+            raise BacktestError("Fecha de inicio invalida", 400)
+    else:
+        try:
+            start_d = today.replace(year=today.year - horizon)
+        except ValueError:
+            start_d = today - timedelta(days=365 * horizon)
+
+    end_raw = payload.get("fin")
+    if end_raw:
+        end_d = _parse_iso_date(end_raw)
+        if not end_d:
+            raise BacktestError("Fecha de fin invalida", 400)
+    else:
+        end_d = today
+
+    if end_d < start_d:
+        raise BacktestError(
+            "La fecha de fin debe ser posterior o igual a la inicial", 400
+        )
+
+    df = _download_history_df(t, start_d, end_d, include_actions=True)
+    if df is None or df.empty:
+        raise BacktestError("Sin datos para el rango solicitado", 404)
+
+    metrics = _compute_price_summary(t, start_d, end_d, df)
+    adj = metrics.get("adj_series")
+    if adj is None or adj.empty:
+        raise BacktestError("Sin datos de precios ajustados", 404)
+
+    adj_map = _series_to_map(adj)
+
+    first_px = _nearest_trading_close(adj_map, start_d)
+    if first_px is None:
+        raise BacktestError("No hay precio inicial cercano", 404)
+
+    invested = invested_initial
+    shares = invested / first_px if first_px else 0.0
+
+    if modo == "DCA" and aporte > 0:
+        for d in _gen_schedule(start_d + timedelta(days=1), end_d, freq):
+            px = _nearest_trading_close(adj_map, d)
+            if px:
+                invested += aporte
+                shares += aporte / px
+
+    last_px = _last_price_on_or_before(adj, end_d)
+    if last_px is None and not adj.dropna().empty:
+        last_px = float(adj.dropna().iloc[-1])
+    if last_px is None:
+        raise BacktestError("No hay precio final disponible", 404)
+
+    final_value = shares * last_px
+    pnl_abs = final_value - invested
+    pnl_pct = (pnl_abs / invested) * 100 if invested > 0 else 0.0
+
+    result = {
+        "ticker": t,
+        "start": str(start_d),
+        "end": str(end_d),
+        "desde": str(start_d),
+        "hasta": str(end_d),
+        "invested": _round_or_none(invested, 2),
+        "shares": float(shares),
+        "last_price": _round_or_none(last_px, 4),
+        "final_value": _round_or_none(final_value, 2),
+        "pnl_abs": _round_or_none(pnl_abs, 2),
+        "pnl_pct": _round_or_none(pnl_pct, 2),
+        "modo": modo,
+        "start_price_adj": metrics["start_price_adj"],
+        "end_price_adj": metrics["end_price_adj"],
+        "variation_adj_pct": metrics["variation_adj_pct"],
+        "start_price": metrics["start_price"],
+        "end_price": metrics["end_price"],
+        "variation_raw_pct": metrics["variation_raw_pct"],
+        "now_price": metrics["now_price"],
+        "has_dividends": metrics["has_dividends"],
+        "notes": metrics["notes"],
+    }
+
+    metrics.pop("adj_series", None)
+    return result
+
+
+@bp.post("/market/backtest")
+def market_backtest():
+    """
+    Calcula el resultado real de una inversiÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³n dada usando precios Ajustados (Adj Close).
+    Body JSON esperado:
+    {
+      "ticker": "AAPL",
+      "importe_inicial": 1000,
+      "horizonte_anios": 3,
+      "modo": "DCA"|"SIN_DCA",
+      "dca": {"aporte": 100, "frecuencia": "MONTHLY"} | null,
+      "inicio": "YYYY-MM-DD" (opcional; por defecto hoy - horizonte_anios),
+      "fin": "YYYY-MM-DD" (opcional; por defecto hoy)
+    }
+    """
+    payload = request.get_json(silent=True) or {}
+    try:
+        result = _market_backtest_core(payload)
+        return jsonify(result)
+    except BacktestError as exc:
+        return jsonify({"error": str(exc)}), exc.status_code
+    except Exception as exc:  # noqa: BLE001
+        return jsonify({"error": str(exc)}), 500
+
+
+@bp.get("/market/summary")
+def market_summary():
+    t = (request.args.get("ticker") or "").strip().upper()
+    if not t:
+        return jsonify({"error": "Ticker requerido"}), 400
+
+    start_raw = request.args.get("start")
+    if not start_raw:
+        return jsonify({"error": "Parametro start requerido"}), 400
+    start_d = _parse_iso_date(start_raw)
+    if not start_d:
+        return jsonify({"error": "Fecha de inicio invalida"}), 400
+
+    end_raw = request.args.get("end")
+    if end_raw:
+        end_d = _parse_iso_date(end_raw)
+        if not end_d:
+            return jsonify({"error": "Fecha de fin invalida"}), 400
+    else:
+        end_d = date.today()
+
+    if end_d < start_d:
+        return (
+            jsonify(
+                {"error": "La fecha de fin debe ser posterior o igual a la inicial"}
+            ),
+            400,
+        )
+
+    # adjusted = _as_bool(request.args.get("adjusted"), True)
+
+    df = _download_history_df(t, start_d, end_d, include_actions=True)
+    if df is None or df.empty:
+        return jsonify({"error": "Sin datos para el rango solicitado"}), 404
+
+    try:
+        metrics = _compute_price_summary(t, start_d, end_d, df)
+    except BacktestError as exc:
+        return jsonify({"error": str(exc)}), exc.status_code
+
+    metrics.pop("adj_series", None)
+
+    response = {
+        "ticker": t,
+        "start": str(start_d),
+        "end": str(end_d),
+        "start_price_adj": metrics["start_price_adj"],
+        "end_price_adj": metrics["end_price_adj"],
+        "variation_adj_pct": metrics["variation_adj_pct"],
+        "start_price": metrics["start_price"],
+        "end_price": metrics["end_price"],
+        "variation_raw_pct": metrics["variation_raw_pct"],
+        "now_price": metrics["now_price"],
+        "has_dividends": metrics["has_dividends"],
+        "notes": metrics["notes"],
+    }
+    return jsonify(response)
+
+
+@bp.get("/market/ohlc_csv")
+def market_ohlc_csv():
+    t = (request.args.get("ticker") or "").strip().upper()
+    if not t:
+        return jsonify({"error": "Ticker requerido"}), 400
+
+    start_raw = request.args.get("start")
+    if not start_raw:
+        return jsonify({"error": "Parametro start requerido"}), 400
+    start_d = _parse_iso_date(start_raw)
+    if not start_d:
+        return jsonify({"error": "Fecha de inicio invalida"}), 400
+
+    end_raw = request.args.get("end")
+    if end_raw:
+        end_d = _parse_iso_date(end_raw)
+        if not end_d:
+            return jsonify({"error": "Fecha de fin invalida"}), 400
+    else:
+        end_d = date.today()
+
+    if end_d < start_d:
+        return (
+            jsonify(
+                {"error": "La fecha de fin debe ser posterior o igual a la inicial"}
+            ),
+            400,
+        )
+
+    adjusted = _as_bool(request.args.get("adjusted"), True)
+
+    df = yf.download(
+        t,
+        start=str(start_d),
+        end=str(end_d + timedelta(days=1)),
+        interval="1d",
+        auto_adjust=False if not adjusted else False,
+        actions=True,
+        progress=False,
+    )
+    df = _normalize_price_df(df)
+    if df is None or df.empty:
+        return jsonify({"error": "Sin datos para el rango solicitado"}), 404
+
+    df_out = df.reset_index().copy()
+    columns_order = [
+        "Date",
+        "Open",
+        "High",
+        "Low",
+        "Close",
+        "Adj Close",
+        "Volume",
+        "Dividends",
+        "Stock Splits",
+    ]
+    for column in columns_order:
+        if column not in df_out.columns:
+            df_out[column] = None
+    df_out = df_out[columns_order]
+    df_out = df_out.sort_values("Date")
+
+    buffer = io.StringIO()
+    df_out.to_csv(buffer, index=False)
+    filename = f"{t}_{start_d}_{end_d}{'_adj' if adjusted else ''}.csv"
+    return Response(
+        buffer.getvalue(),
+        headers={
+            "Content-Disposition": f'attachment; filename="{filename}"',
+            "Content-Type": "text/csv; charset=utf-8",
+        },
+        status=200,
+    )

@@ -1,5 +1,1063 @@
 [
   {
+    "id": "f9a44910-931d-46f6-971b-49387739e403",
+    "timestamp": "2025-10-27T17:51:06.110768Z",
+    "ticker": "UBI.PA",
+    "importe_inicial": 200,
+    "horizonte_anios": 1,
+    "supuestos": {
+      "crecimiento_anual_pct": 8.0,
+      "margen_seguridad_pct": 20.0,
+      "roe_pct": 0.0,
+      "deuda_sobre_activos_pct": 0.0
+    },
+    "justificacion": "soy un imbecil de manual u voy a inverir awui jajajajajajjajajajajajajajajajajajajajajajaja",
+    "modo": "SIN_DCA",
+    "dca": null,
+    "crecimiento_anual_estimado": 8.0,
+    "margen_seguridad_pct": 20.0,
+    "puntuacion": 80,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Margen de seguridad sólido (≥20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Buena justificación (detallada)."
+      }
+    ],
+    "resumen": "Análisis sólido.",
+    "inicio": "2017-10-10",
+    "fin": null,
+    "backtest": {
+      "ticker": "UBI.PA",
+      "start": "2017-10-10",
+      "end": "2025-10-27",
+      "desde": "2017-10-10",
+      "hasta": "2025-10-27",
+      "invested": 200.0,
+      "shares": 3.1070373072280124,
+      "last_price": 7.952,
+      "final_value": 24.71,
+      "pnl_abs": -175.29,
+      "pnl_pct": -87.65,
+      "modo": "SIN_DCA",
+      "start_price_adj": 64.37,
+      "end_price_adj": 7.952,
+      "variation_adj_pct": -87.65,
+      "start_price": 64.37,
+      "end_price": 7.952,
+      "variation_raw_pct": -87.65,
+      "now_price": 7.952,
+      "has_dividends": false,
+      "notes": []
+    }
+  },
+  {
+    "id": "882664f4-566f-45a5-8057-26b59c80ae0b",
+    "timestamp": "2025-10-27T17:50:40.478474Z",
+    "ticker": "UBI:PA",
+    "importe_inicial": 200,
+    "horizonte_anios": 1,
+    "supuestos": {
+      "crecimiento_anual_pct": 8.0,
+      "margen_seguridad_pct": 20.0,
+      "roe_pct": 0.0,
+      "deuda_sobre_activos_pct": 0.0
+    },
+    "justificacion": "soy un imbecil de manual u voy a inverir awui jajajajajajjajajajajajajajajajajajajajajajaja",
+    "modo": "SIN_DCA",
+    "dca": null,
+    "crecimiento_anual_estimado": 8.0,
+    "margen_seguridad_pct": 20.0,
+    "puntuacion": 80,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Margen de seguridad sólido (≥20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Buena justificación (detallada)."
+      }
+    ],
+    "resumen": "Análisis sólido.",
+    "inicio": "2017-10-10",
+    "fin": null,
+    "backtest": null
+  },
+  {
+    "id": "b08390fd-b54d-408e-8785-0032a09f8d16",
+    "timestamp": "2025-10-27T17:50:36.077988Z",
+    "ticker": "UBI:PA",
+    "importe_inicial": 200,
+    "horizonte_anios": 1,
+    "supuestos": {
+      "crecimiento_anual_pct": 8.0,
+      "margen_seguridad_pct": 20.0,
+      "roe_pct": 0.0,
+      "deuda_sobre_activos_pct": 0.0
+    },
+    "justificacion": "soy un imbecil de manual u voy a inverir awui jajajajajajjajajajajajajajajajajajajajajajaja",
+    "modo": "SIN_DCA",
+    "dca": null,
+    "crecimiento_anual_estimado": 8.0,
+    "margen_seguridad_pct": 20.0,
+    "puntuacion": 80,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Margen de seguridad sólido (≥20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Buena justificación (detallada)."
+      }
+    ],
+    "resumen": "Análisis sólido.",
+    "inicio": "2017-10-10",
+    "fin": null,
+    "backtest": null
+  },
+  {
+    "id": "bc6d8135-9c95-4f79-84a1-7270a401f62a",
+    "timestamp": "2025-10-27T17:50:21.094467Z",
+    "ticker": "UBI:PA",
+    "importe_inicial": 200,
+    "horizonte_anios": 1,
+    "supuestos": {
+      "crecimiento_anual_pct": 8.0,
+      "margen_seguridad_pct": 20.0,
+      "roe_pct": 0.0,
+      "deuda_sobre_activos_pct": 0.0
+    },
+    "justificacion": "soy un imbecil de manual u voy a inverir awui jajajajajaj",
+    "modo": "SIN_DCA",
+    "dca": null,
+    "crecimiento_anual_estimado": 8.0,
+    "margen_seguridad_pct": 20.0,
+    "puntuacion": 75,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Margen de seguridad sólido (≥20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "mejora",
+        "msg": "Amplía la justificación: riesgos, sensibilidad, comparables."
+      }
+    ],
+    "resumen": "Análisis razonable con áreas de mejora.",
+    "inicio": "2017-10-10",
+    "fin": null,
+    "backtest": null
+  },
+  {
+    "id": "cba48fa1-2fd3-4361-b100-06de9ebf00a1",
+    "timestamp": "2025-10-27T17:48:21.075230Z",
+    "ticker": "MSFT",
+    "importe_inicial": 100,
+    "horizonte_anios": 3,
+    "supuestos": {
+      "crecimiento_anual_pct": 8.0,
+      "margen_seguridad_pct": 20.0,
+      "roe_pct": 0.0,
+      "deuda_sobre_activos_pct": 0.0
+    },
+    "justificacion": "Qué bueno que *The Founder* sea una película que no se limite a glorificar una marca, sino que profundice en la historia real detrás de McDonald’s. Su enfoque autobiográfico, basado en las memorias de Ray Kroc y biografías no autorizadas, revela las tensiones éticas",
+    "modo": "SIN_DCA",
+    "dca": null,
+    "crecimiento_anual_estimado": 8.0,
+    "margen_seguridad_pct": 20.0,
+    "puntuacion": 80,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Margen de seguridad sólido (≥20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Buena justificación (detallada)."
+      }
+    ],
+    "resumen": "Análisis sólido.",
+    "inicio": "2020-10-10",
+    "fin": null,
+    "backtest": {
+      "ticker": "MSFT",
+      "start": "2020-10-10",
+      "end": "2025-10-27",
+      "desde": "2020-10-10",
+      "hasta": "2025-10-27",
+      "invested": 100.0,
+      "shares": 0.4710671364112269,
+      "last_price": 531.645,
+      "final_value": 250.44,
+      "pnl_abs": 150.44,
+      "pnl_pct": 150.44,
+      "modo": "SIN_DCA",
+      "start_price_adj": 212.284,
+      "end_price_adj": 531.645,
+      "variation_adj_pct": 150.44,
+      "start_price": 221.4,
+      "end_price": 531.645,
+      "variation_raw_pct": 140.13,
+      "now_price": 531.645,
+      "has_dividends": true,
+      "notes": []
+    }
+  },
+  {
+    "id": "c450f1ab-349a-4403-b530-437b8d264fd8",
+    "timestamp": "2025-10-27T15:55:08.765933Z",
+    "ticker": "MSFT",
+    "importe_inicial": 1000,
+    "horizonte_anios": 5,
+    "supuestos": {
+      "crecimiento_anual_pct": 9.0,
+      "margen_seguridad_pct": 20.0,
+      "roe_pct": 0.0,
+      "deuda_sobre_activos_pct": 0.0
+    },
+    "justificacion": "else scoreClass = \"score-high\"; + } else { + scoreClass = \"score-mid\"; + const sc = Number(h.puntuacion ?? 0); + if (sc >= 80) scoreClass = \"score-high\"; + else if (sc < 60) scoreClass = \"score-low\"; + } @@ - const pnlValue = - bt && Number.isFinite(Number(bt.pnl_pct)) ? Number(bt.pnl_pct) : null; - const pnlChip = - pnlValue === null - ? \"\" - : <span class=\"${pnlValue >= 0 ? \"chip-pos\" : \"chip-neg\"}\">${fmtPct(pnlValue)}</span",
+    "modo": "DCA",
+    "dca": {
+      "aporte": 500,
+      "frecuencia": "MONTHLY"
+    },
+    "crecimiento_anual_estimado": 9.0,
+    "margen_seguridad_pct": 20.0,
+    "puntuacion": 85,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Horizonte adecuado (ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â°Ãƒâ€šÃ‚Â¥5 aÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â±os)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Margen de seguridad sÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³lido (ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â°Ãƒâ€šÃ‚Â¥20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ25%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Buena justificaciÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³n (detallada)."
+      }
+    ],
+    "resumen": "AnÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡lisis sÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³lido.",
+    "inicio": "2015-09-10",
+    "fin": "2025-10-26",
+    "backtest": {
+      "ticker": "MSFT",
+      "start": "2015-09-10",
+      "end": "2025-10-26",
+      "desde": "2015-09-10",
+      "hasta": "2025-10-26",
+      "invested": 63000.0,
+      "shares": 536.3219221904528,
+      "last_price": 523.61,
+      "final_value": 280823.51,
+      "pnl_abs": 217823.51,
+      "pnl_pct": 345.75,
+      "modo": "DCA",
+      "start_price_adj": 37.7219,
+      "end_price_adj": 523.61,
+      "variation_adj_pct": 1288.08,
+      "start_price": 43.29,
+      "end_price": 523.61,
+      "variation_raw_pct": 1109.54,
+      "now_price": 532.515,
+      "has_dividends": true,
+      "notes": []
+    }
+  },
+  {
+    "id": "6a1a54a1-b115-4687-bc7f-89b668672211",
+    "timestamp": "2025-10-27T15:52:32.971083Z",
+    "ticker": "MSFT",
+    "importe_inicial": 1000,
+    "horizonte_anios": 5,
+    "supuestos": {
+      "crecimiento_anual_pct": 9.0,
+      "margen_seguridad_pct": 20.0,
+      "roe_pct": 0.0,
+      "deuda_sobre_activos_pct": 0.0
+    },
+    "justificacion": "else scoreClass = \"score-high\"; + } else { + scoreClass = \"score-mid\"; + const sc = Number(h.puntuacion ?? 0); + if (sc >= 80) scoreClass = \"score-high\"; + else if (sc < 60) scoreClass = \"score-low\"; + } @@ - const pnlValue = - bt && Number.isFinite(Number(bt.pnl_pct)) ? Number(bt.pnl_pct) : null; - const pnlChip = - pnlValue === null - ? \"\" - : <span class=\"${pnlValue >= 0 ? \"chip-pos\" : \"chip-neg\"}\">${fmtPct(pnlValue)}</span",
+    "modo": "SIN_DCA",
+    "dca": null,
+    "crecimiento_anual_estimado": 9.0,
+    "margen_seguridad_pct": 20.0,
+    "puntuacion": 85,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Horizonte adecuado (ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â°Ãƒâ€šÃ‚Â¥5 aÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â±os)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Margen de seguridad sÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³lido (ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â°Ãƒâ€šÃ‚Â¥20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ25%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Buena justificaciÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³n (detallada)."
+      }
+    ],
+    "resumen": "AnÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡lisis sÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³lido.",
+    "inicio": "2015-09-10",
+    "fin": null,
+    "backtest": {
+      "ticker": "MSFT",
+      "start": "2015-09-10",
+      "end": "2025-10-27",
+      "desde": "2015-09-10",
+      "hasta": "2025-10-27",
+      "invested": 1000.0,
+      "shares": 26.509822814462083,
+      "last_price": 532.4668,
+      "final_value": 14115.6,
+      "pnl_abs": 13115.6,
+      "pnl_pct": 1311.56,
+      "modo": "SIN_DCA",
+      "start_price_adj": 37.7219,
+      "end_price_adj": 532.4668,
+      "variation_adj_pct": 1311.56,
+      "start_price": 43.29,
+      "end_price": 532.4668,
+      "variation_raw_pct": 1130.0,
+      "now_price": 532.4668,
+      "has_dividends": true,
+      "notes": []
+    }
+  },
+  {
+    "id": "6847ca26-fd96-4e31-9f0a-fb9b1a04a0b8",
+    "timestamp": "2025-10-27T11:17:35.562146Z",
+    "ticker": "MSFT",
+    "importe_inicial": 200,
+    "horizonte_anios": 5,
+    "supuestos": {
+      "crecimiento_anual_pct": 8.0,
+      "margen_seguridad_pct": 20.0,
+      "roe_pct": 0.0,
+      "deuda_sobre_activos_pct": 0.0
+    },
+    "justificacion": "- al hacer un nuevo análisis si que sale el pop up, con los colores rojo o verde, pero salen unos símbolos extraños antes de los números, eso hay que solucionarlo",
+    "modo": "SIN_DCA",
+    "dca": null,
+    "crecimiento_anual_estimado": 8.0,
+    "margen_seguridad_pct": 20.0,
+    "puntuacion": 85,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Horizonte adecuado (ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â°Ãƒâ€šÃ‚Â¥5 aÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â±os)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Margen de seguridad sÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³lido (ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â°Ãƒâ€šÃ‚Â¥20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ25%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Buena justificaciÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³n (detallada)."
+      }
+    ],
+    "resumen": "AnÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡lisis sÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³lido.",
+    "inicio": "2018-08-20",
+    "fin": null,
+    "backtest": {
+      "ticker": "MSFT",
+      "start": "2018-08-20",
+      "end": "2025-10-27",
+      "desde": "2018-08-20",
+      "hasta": "2025-10-27",
+      "invested": 200.0,
+      "shares": 2.0050364547910724,
+      "last_price": 523.61,
+      "final_value": 1049.86,
+      "pnl_abs": 849.86,
+      "pnl_pct": 424.93,
+      "modo": "SIN_DCA",
+      "start_price_adj": 99.7488,
+      "end_price_adj": 523.61,
+      "variation_adj_pct": 424.93,
+      "start_price": 106.87,
+      "end_price": 523.61,
+      "variation_raw_pct": 389.95,
+      "now_price": 523.61,
+      "has_dividends": true,
+      "notes": []
+    }
+  },
+  {
+    "id": "4b63c337-212e-415b-84bf-69bbd1197784",
+    "timestamp": "2025-10-27T11:17:21.981512Z",
+    "ticker": "MSFT",
+    "importe_inicial": 200,
+    "horizonte_anios": 5,
+    "supuestos": {
+      "crecimiento_anual_pct": 8.0,
+      "margen_seguridad_pct": 20.0,
+      "roe_pct": 0.0,
+      "deuda_sobre_activos_pct": 0.0
+    },
+    "justificacion": "- al hacer un nuevo análisis si que sale el pop up, con los colores rojo o verde, pero salen unos símbolos extraños antes de los números, eso hay que solucionarlo",
+    "modo": "SIN_DCA",
+    "dca": null,
+    "crecimiento_anual_estimado": 8.0,
+    "margen_seguridad_pct": 20.0,
+    "puntuacion": 85,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Horizonte adecuado (ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â°Ãƒâ€šÃ‚Â¥5 aÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â±os)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Margen de seguridad sÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³lido (ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â°Ãƒâ€šÃ‚Â¥20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ25%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Buena justificaciÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³n (detallada)."
+      }
+    ],
+    "resumen": "AnÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡lisis sÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³lido.",
+    "inicio": "2018-08-20",
+    "fin": null,
+    "backtest": {
+      "ticker": "MSFT",
+      "start": "2018-08-20",
+      "end": "2025-10-27",
+      "desde": "2018-08-20",
+      "hasta": "2025-10-27",
+      "invested": 200.0,
+      "shares": 2.0050367615058398,
+      "last_price": 523.61,
+      "final_value": 1049.86,
+      "pnl_abs": 849.86,
+      "pnl_pct": 424.93,
+      "modo": "SIN_DCA",
+      "start_price_adj": 99.7488,
+      "end_price_adj": 523.61,
+      "variation_adj_pct": 424.93,
+      "start_price": 106.87,
+      "end_price": 523.61,
+      "variation_raw_pct": 389.95,
+      "now_price": 523.61,
+      "has_dividends": true,
+      "notes": []
+    }
+  },
+  {
+    "id": "75d19348-4bd7-4b55-9ab8-d40bf75e159a",
+    "timestamp": "2025-10-27T11:13:09.103446Z",
+    "ticker": "UBI.PA",
+    "importe_inicial": 3000,
+    "horizonte_anios": 2,
+    "supuestos": {
+      "crecimiento_anual_pct": 8.0,
+      "margen_seguridad_pct": 20.0,
+      "roe_pct": 0.0,
+      "deuda_sobre_activos_pct": 0.0
+    },
+    "justificacion": "(.venv) PS C:\\Users\\jasan\\Desktop\\TFG\\tfg-web-ci-python-copia> curl -s http://localhost:5000/market/backtest \\\n>>   -H \"Content-Type: application/json\" \\\n>>   -d '{\n>>     \"ticker\":\"MSFT\",\n>>     \"importe_inicial\":2000,\n>>     \"horizonte_anios\":3,\n>>     \"modo\":\"SIN_DCA\",\n>>     \"inicio\":\"2022-01-15\",\n>>     \"fin\":\"2024-03-10\"\n>>   }'\ncurl : No se encuentra la unidad. No existe ninguna unidad con el nombre 'http'.\nEn línea: 1 Carácter: 1\n+ curl -s http://localhost:5000/market/backtest \\\n+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : ObjectNotFound: (http:String) [Invoke-WebRequest], DriveNotFoundException\n    + FullyQualifiedErrorId : DriveNotFound,Microsoft.PowerShell.Commands.InvokeWebRequestCommand\n\n-H : El término '-H' no se reconoce como nombre de un cmdlet, función, archivo de script o programa ejecutable.\nCompruebe si escribió correctamente el nombre o, si incluyó una ruta de acceso, compruebe que dicha ruta es correcta e\ninténtelo de nuevo.\nEn línea: 2 Carácter: 3\n+   -H \"Content-Type: application/json\" \\\n+   ~~\n    + CategoryInfo          : ObjectNotFound: (-H:String) [], CommandNotFoundException\n    + FullyQualifiedErrorId : CommandNotFoundException\n\n-d : El término '-d' no se reconoce como nombre de un cmdlet, función, archivo de script o programa ejecutable.\nCompruebe si escribió correctamente el nombre o, si incluyó una ruta de acceso, compruebe que dicha ruta es correcta e\ninténtelo de nuevo.\nEn línea: 3 Carácter: 3\n+   -d '{\n+   ~~\n    + CategoryInfo          : ObjectNotFound: (-d:String) [], CommandNotFoundException\n    + FullyQualifiedErrorId : CommandNotFoundException",
+    "modo": "SIN_DCA",
+    "dca": null,
+    "crecimiento_anual_estimado": 8.0,
+    "margen_seguridad_pct": 20.0,
+    "puntuacion": 80,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Margen de seguridad sÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³lido (ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â°Ãƒâ€šÃ‚Â¥20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ25%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Buena justificaciÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³n (detallada)."
+      }
+    ],
+    "resumen": "AnÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡lisis sÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³lido.",
+    "inicio": "2016-06-20",
+    "fin": null,
+    "backtest": {
+      "ticker": "UBI.PA",
+      "start": "2016-06-20",
+      "end": "2025-10-27",
+      "desde": "2016-06-20",
+      "hasta": "2025-10-27",
+      "invested": 3000.0,
+      "shares": 89.13980415430805,
+      "last_price": 7.984,
+      "final_value": 711.69,
+      "pnl_abs": -2288.31,
+      "pnl_pct": -76.28,
+      "modo": "SIN_DCA",
+      "start_price_adj": 33.655,
+      "end_price_adj": 7.984,
+      "variation_adj_pct": -76.28,
+      "start_price": 33.655,
+      "end_price": 7.984,
+      "variation_raw_pct": -76.28,
+      "now_price": 7.984,
+      "has_dividends": false,
+      "notes": []
+    }
+  },
+  {
+    "id": "7576069d-e53d-475e-90c0-62e8a1b8ca81",
+    "timestamp": "2025-10-27T11:12:05.199352Z",
+    "ticker": "UBI.PA",
+    "importe_inicial": 3000,
+    "horizonte_anios": 4,
+    "supuestos": {
+      "crecimiento_anual_pct": 8.0,
+      "margen_seguridad_pct": 20.0,
+      "roe_pct": 0.0,
+      "deuda_sobre_activos_pct": 0.0
+    },
+    "justificacion": "Vista creada con IA\nPara invertir en Apple, puedes hacerlo de forma directa comprando acciones (símbolo AAPL) a través de una cuenta en un bróker online, o indirectamente invirtiendo en fondos o ETFs que incluyan acciones de Apple. El proceso para comprar acciones implica seleccionar y abrir una cuenta en un bróker regulado, depositar fondos, buscar el símbolo de Apple y ejecutar la orden de compra",
+    "modo": "SIN_DCA",
+    "dca": null,
+    "crecimiento_anual_estimado": 8.0,
+    "margen_seguridad_pct": 20.0,
+    "puntuacion": 80,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Margen de seguridad sÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³lido (ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â°Ãƒâ€šÃ‚Â¥20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã…â€œ25%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Buena justificaciÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³n (detallada)."
+      }
+    ],
+    "resumen": "AnÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â¡lisis sÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â³lido.",
+    "inicio": null,
+    "fin": null,
+    "backtest": {
+      "ticker": "UBI.PA",
+      "start": "2021-10-27",
+      "end": "2025-10-27",
+      "desde": "2021-10-27",
+      "hasta": "2025-10-27",
+      "invested": 3000.0,
+      "shares": 67.34006849329731,
+      "last_price": 7.984,
+      "final_value": 537.64,
+      "pnl_abs": -2462.36,
+      "pnl_pct": -82.08,
+      "modo": "SIN_DCA",
+      "start_price_adj": 44.55,
+      "end_price_adj": 7.984,
+      "variation_adj_pct": -82.08,
+      "start_price": 44.55,
+      "end_price": 7.984,
+      "variation_raw_pct": -82.08,
+      "now_price": 7.984,
+      "has_dividends": false,
+      "notes": []
+    }
+  },
+  {
+    "id": "2b3413c9-567a-4d4d-965c-e35b5f04a07f",
+    "timestamp": "2025-10-26T20:05:43.269208Z",
+    "ticker": "UBI.PA",
+    "importe_inicial": 3000,
+    "horizonte_anios": 4,
+    "supuestos": {
+      "crecimiento_anual_pct": 8.0,
+      "margen_seguridad_pct": 20.0,
+      "roe_pct": 0.0,
+      "deuda_sobre_activos_pct": 0.0
+    },
+    "justificacion": "Vista creada con IA\nPara invertir en Apple, puedes hacerlo de forma directa comprando acciones (símbolo AAPL) a través de una cuenta en un bróker online, o indirectamente invirtiendo en fondos o ETFs que incluyan acciones de Apple. El proceso para comprar acciones implica seleccionar y abrir una cuenta en un bróker regulado, depositar fondos, buscar el símbolo de Apple y ejecutar la orden de compra",
+    "modo": "SIN_DCA",
+    "dca": null,
+    "crecimiento_anual_estimado": 8.0,
+    "margen_seguridad_pct": 20.0,
+    "puntuacion": 80,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Margen de seguridad sólido (≥20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Buena justificación (detallada)."
+      }
+    ],
+    "resumen": "Análisis sólido."
+  },
+  {
+    "id": "f821e09c-c13c-4bf3-b35d-e7a752386400",
+    "timestamp": "2025-10-26T19:58:05.110828Z",
+    "ticker": "MSFT",
+    "importe_inicial": 200,
+    "horizonte_anios": 1,
+    "supuestos": {
+      "crecimiento_anual_pct": 8.0,
+      "margen_seguridad_pct": 20.0,
+      "roe_pct": 0.0,
+      "deuda_sobre_activos_pct": 0.0
+    },
+    "justificacion": "Vista creada con IA\nPara invertir en Apple, puedes hacerlo de forma directa comprando acciones (símbolo AAPL) a través de una cuenta en un bróker online, o indirectamente invirtiendo en fondos o ETFs que incluyan acciones de Apple. El proceso para comprar acciones implica seleccionar y abrir una cuenta en un bróker regulado, depositar fondos, buscar el símbolo de Apple y ejecutar la orden de compra",
+    "modo": "DCA",
+    "dca": {
+      "aporte": 100,
+      "frecuencia": "MONTHLY"
+    },
+    "crecimiento_anual_estimado": 8.0,
+    "margen_seguridad_pct": 20.0,
+    "puntuacion": 80,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Margen de seguridad sólido (≥20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Buena justificación (detallada)."
+      }
+    ],
+    "resumen": "Análisis sólido."
+  },
+  {
+    "id": "46ca9794-c609-4617-86e5-f16e486a3f07",
+    "timestamp": "2025-10-26T19:55:25.260406Z",
+    "ticker": "MSFT",
+    "importe_inicial": 1000,
+    "horizonte_anios": 1,
+    "supuestos": {
+      "crecimiento_anual_pct": 8.0,
+      "margen_seguridad_pct": 20.0,
+      "roe_pct": 0.0,
+      "deuda_sobre_activos_pct": 0.0
+    },
+    "justificacion": "Vista creada con IA\nPara invertir en Apple, puedes hacerlo de forma directa comprando acciones (símbolo AAPL) a través de una cuenta en un bróker online, o indirectamente invirtiendo en fondos o ETFs que incluyan acciones de Apple. El proceso para comprar acciones implica seleccionar y abrir una cuenta en un bróker regulado, depositar fondos, buscar el símbolo de Apple y ejecutar la orden de compra",
+    "modo": "SIN_DCA",
+    "dca": null,
+    "crecimiento_anual_estimado": 8.0,
+    "margen_seguridad_pct": 20.0,
+    "puntuacion": 80,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Margen de seguridad sólido (≥20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Buena justificación (detallada)."
+      }
+    ],
+    "resumen": "Análisis sólido."
+  },
+  {
+    "id": "c86f7046-b89f-4cf7-99c9-98b0fd57f804",
+    "timestamp": "2025-10-26T18:35:21.902499Z",
+    "ticker": "TCEHY",
+    "importe_inicial": 2000,
+    "horizonte_anios": 5,
+    "supuestos": {
+      "crecimiento_anual_pct": 8.0,
+      "margen_seguridad_pct": 20.0,
+      "roe_pct": 0.0,
+      "deuda_sobre_activos_pct": 0.0
+    },
+    "justificacion": "# Serie de Adj Close con índice date\nadj = df[\"Adj Close\"].copy()\n\n# ⚠️ yfinance a veces devuelve DataFrame (multi-index). Fuerza a Series.\nif isinstance(adj, pd.DataFrame):\n    if t in adj.columns:          # si la columna está etiquetada con el ticker\n        adj = adj[t]\n    else:\n        adj = adj.iloc[:, 0]      # o toma la primera columna\n\nadj.index = pd.to_datetime(adj.index).date\n\nadj_map = {str(k): (None if pd.isna(v) else float(v)) for k, v in adj.items()}",
+    "modo": "SIN_DCA",
+    "dca": null,
+    "crecimiento_anual_estimado": 8.0,
+    "margen_seguridad_pct": 20.0,
+    "puntuacion": 85,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Horizonte adecuado (≥5 años)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Margen de seguridad sólido (≥20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Buena justificación (detallada)."
+      }
+    ],
+    "resumen": "Análisis sólido."
+  },
+  {
+    "id": "e23d399e-573d-4fb2-9455-ce83f87c6480",
+    "timestamp": "2025-10-26T18:35:08.822321Z",
+    "ticker": "TCEHY",
+    "importe_inicial": 2000,
+    "horizonte_anios": 1,
+    "supuestos": {
+      "crecimiento_anual_pct": 8.0,
+      "margen_seguridad_pct": 20.0,
+      "roe_pct": 0.0,
+      "deuda_sobre_activos_pct": 0.0
+    },
+    "justificacion": "# Serie de Adj Close con índice date\nadj = df[\"Adj Close\"].copy()\n\n# ⚠️ yfinance a veces devuelve DataFrame (multi-index). Fuerza a Series.\nif isinstance(adj, pd.DataFrame):\n    if t in adj.columns:          # si la columna está etiquetada con el ticker\n        adj = adj[t]\n    else:\n        adj = adj.iloc[:, 0]      # o toma la primera columna\n\nadj.index = pd.to_datetime(adj.index).date\n\nadj_map = {str(k): (None if pd.isna(v) else float(v)) for k, v in adj.items()}",
+    "modo": "SIN_DCA",
+    "dca": null,
+    "crecimiento_anual_estimado": 8.0,
+    "margen_seguridad_pct": 20.0,
+    "puntuacion": 80,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Margen de seguridad sólido (≥20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Buena justificación (detallada)."
+      }
+    ],
+    "resumen": "Análisis sólido."
+  },
+  {
+    "id": "ad4df547-f5e3-41a4-bd59-9a873d84d68f",
+    "timestamp": "2025-10-26T18:34:21.045039Z",
+    "ticker": "AAPL",
+    "importe_inicial": 2000,
+    "horizonte_anios": 1,
+    "supuestos": {
+      "crecimiento_anual_pct": 8.0,
+      "margen_seguridad_pct": 20.0,
+      "roe_pct": 0.0,
+      "deuda_sobre_activos_pct": 0.0
+    },
+    "justificacion": "# Serie de Adj Close con índice date\nadj = df[\"Adj Close\"].copy()\n\n# ⚠️ yfinance a veces devuelve DataFrame (multi-index). Fuerza a Series.\nif isinstance(adj, pd.DataFrame):\n    if t in adj.columns:          # si la columna está etiquetada con el ticker\n        adj = adj[t]\n    else:\n        adj = adj.iloc[:, 0]      # o toma la primera columna\n\nadj.index = pd.to_datetime(adj.index).date\n\nadj_map = {str(k): (None if pd.isna(v) else float(v)) for k, v in adj.items()}",
+    "modo": "SIN_DCA",
+    "dca": null,
+    "crecimiento_anual_estimado": 8.0,
+    "margen_seguridad_pct": 20.0,
+    "puntuacion": 80,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Margen de seguridad sólido (≥20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Buena justificación (detallada)."
+      }
+    ],
+    "resumen": "Análisis sólido."
+  },
+  {
+    "id": "825bbc30-6578-451e-8f9a-24ba20e0fa93",
+    "timestamp": "2025-10-26T18:34:14.421153Z",
+    "ticker": "MSFT",
+    "importe_inicial": 2000,
+    "horizonte_anios": 1,
+    "supuestos": {
+      "crecimiento_anual_pct": 8.0,
+      "margen_seguridad_pct": 20.0,
+      "roe_pct": 0.0,
+      "deuda_sobre_activos_pct": 0.0
+    },
+    "justificacion": "# Serie de Adj Close con índice date\nadj = df[\"Adj Close\"].copy()\n\n# ⚠️ yfinance a veces devuelve DataFrame (multi-index). Fuerza a Series.\nif isinstance(adj, pd.DataFrame):\n    if t in adj.columns:          # si la columna está etiquetada con el ticker\n        adj = adj[t]\n    else:\n        adj = adj.iloc[:, 0]      # o toma la primera columna\n\nadj.index = pd.to_datetime(adj.index).date\n\nadj_map = {str(k): (None if pd.isna(v) else float(v)) for k, v in adj.items()}",
+    "modo": "SIN_DCA",
+    "dca": null,
+    "crecimiento_anual_estimado": 8.0,
+    "margen_seguridad_pct": 20.0,
+    "puntuacion": 80,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Margen de seguridad sólido (≥20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Buena justificación (detallada)."
+      }
+    ],
+    "resumen": "Análisis sólido."
+  },
+  {
+    "id": "5d09632f-91e4-4d36-b093-970f3fd89853",
+    "timestamp": "2025-10-26T18:27:51.651075Z",
+    "ticker": "MSFT",
+    "importe_inicial": 2000,
+    "horizonte_anios": 1,
+    "supuestos": {
+      "crecimiento_anual_pct": 8.0,
+      "margen_seguridad_pct": 20.0,
+      "roe_pct": 0.0,
+      "deuda_sobre_activos_pct": 0.0
+    },
+    "justificacion": "# Serie de Adj Close con índice date\nadj = df[\"Adj Close\"].copy()\n\n# ⚠️ yfinance a veces devuelve DataFrame (multi-index). Fuerza a Series.\nif isinstance(adj, pd.DataFrame):\n    if t in adj.columns:          # si la columna está etiquetada con el ticker\n        adj = adj[t]\n    else:\n        adj = adj.iloc[:, 0]      # o toma la primera columna\n\nadj.index = pd.to_datetime(adj.index).date\n\nadj_map = {str(k): (None if pd.isna(v) else float(v)) for k, v in adj.items()}",
+    "modo": "SIN_DCA",
+    "dca": null,
+    "crecimiento_anual_estimado": 8.0,
+    "margen_seguridad_pct": 20.0,
+    "puntuacion": 80,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Margen de seguridad sólido (≥20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Buena justificación (detallada)."
+      }
+    ],
+    "resumen": "Análisis sólido."
+  },
+  {
+    "id": "09eda4c5-f237-43dc-9963-be345fb2c741",
+    "timestamp": "2025-10-26T18:27:05.160936Z",
+    "ticker": "MSFT",
+    "importe_inicial": 2000,
+    "horizonte_anios": 1,
+    "supuestos": {
+      "crecimiento_anual_pct": 8.0,
+      "margen_seguridad_pct": 20.0,
+      "roe_pct": 0.0,
+      "deuda_sobre_activos_pct": 0.0
+    },
+    "justificacion": "# Serie de Adj Close con índice date\nadj = df[\"Adj Close\"].copy()\n\n# ⚠️ yfinance a veces devuelve DataFrame (multi-index). Fuerza a Series.\nif isinstance(adj, pd.DataFrame):\n    if t in adj.columns:          # si la columna está etiquetada con el ticker\n        adj = adj[t]\n    else:\n        adj = adj.iloc[:, 0]      # o toma la primera columna\n\nadj.index = pd.to_datetime(adj.index).date\n\nadj_map = {str(k): (None if pd.isna(v) else float(v)) for k, v in adj.items()}",
+    "modo": "SIN_DCA",
+    "dca": null,
+    "crecimiento_anual_estimado": 8.0,
+    "margen_seguridad_pct": 20.0,
+    "puntuacion": 80,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Margen de seguridad sólido (≥20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Buena justificación (detallada)."
+      }
+    ],
+    "resumen": "Análisis sólido."
+  },
+  {
+    "id": "5f3cb1e0-f03b-40bf-b8ba-e2da00e2e450",
+    "timestamp": "2025-10-26T18:25:39.567492Z",
+    "ticker": "MSFT",
+    "importe_inicial": 2000,
+    "horizonte_anios": 10,
+    "supuestos": {
+      "crecimiento_anual_pct": 8.0,
+      "margen_seguridad_pct": 20.0,
+      "roe_pct": 0.0,
+      "deuda_sobre_activos_pct": 0.0
+    },
+    "justificacion": "# Serie de Adj Close con índice date\nadj = df[\"Adj Close\"].copy()\n\n# ⚠️ yfinance a veces devuelve DataFrame (multi-index). Fuerza a Series.\nif isinstance(adj, pd.DataFrame):\n    if t in adj.columns:          # si la columna está etiquetada con el ticker\n        adj = adj[t]\n    else:\n        adj = adj.iloc[:, 0]      # o toma la primera columna\n\nadj.index = pd.to_datetime(adj.index).date\n\nadj_map = {str(k): (None if pd.isna(v) else float(v)) for k, v in adj.items()}",
+    "modo": "DCA",
+    "dca": {
+      "aporte": 150,
+      "frecuencia": "MONTHLY"
+    },
+    "crecimiento_anual_estimado": 8.0,
+    "margen_seguridad_pct": 20.0,
+    "puntuacion": 90,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Horizonte largo (≥10 años)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Margen de seguridad sólido (≥20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Buena justificación (detallada)."
+      }
+    ],
+    "resumen": "Análisis sólido."
+  },
+  {
+    "id": "0a2aec46-1842-4c2f-b154-fdfc51b03909",
+    "timestamp": "2025-10-26T18:24:45.478364Z",
+    "ticker": "AAPL",
+    "importe_inicial": 1000,
+    "horizonte_anios": 3,
+    "supuestos": {
+      "crecimiento_anual_pct": 8.0,
+      "margen_seguridad_pct": 20.0,
+      "roe_pct": 0.0,
+      "deuda_sobre_activos_pct": 0.0
+    },
+    "justificacion": "Para invertir en Apple, puedes hacerlo de forma directa comprando acciones (símbolo AAPL) a través de una cuenta en un bróker online, o indirectamente invirtiendo en fondos o ETFs que incluyan acciones de Apple. El proceso para comprar acciones implica seleccionar y abrir una cuenta en un bróker regulado, depositar fondos, buscar el símbolo de Apple y ejecutar la orden de compra.",
+    "modo": "SIN_DCA",
+    "dca": null,
+    "crecimiento_anual_estimado": 8.0,
+    "margen_seguridad_pct": 20.0,
+    "puntuacion": 80,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Margen de seguridad sólido (≥20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Buena justificación (detallada)."
+      }
+    ],
+    "resumen": "Análisis sólido."
+  },
+  {
+    "id": "454f387f-e490-4a55-938e-e9f744d15cd5",
+    "timestamp": "2025-10-26T18:16:29.551161Z",
+    "ticker": "AAPL",
+    "importe_inicial": 1000,
+    "horizonte_anios": 3,
+    "supuestos": {
+      "crecimiento_anual_pct": 8.0,
+      "margen_seguridad_pct": 20.0,
+      "roe_pct": 0.0,
+      "deuda_sobre_activos_pct": 0.0
+    },
+    "justificacion": "Para invertir en Apple, puedes hacerlo de forma directa comprando acciones (símbolo AAPL) a través de una cuenta en un bróker online, o indirectamente invirtiendo en fondos o ETFs que incluyan acciones de Apple. El proceso para comprar acciones implica seleccionar y abrir una cuenta en un bróker regulado, depositar fondos, buscar el símbolo de Apple y ejecutar la orden de compra.",
+    "modo": "SIN_DCA",
+    "dca": null,
+    "crecimiento_anual_estimado": 8.0,
+    "margen_seguridad_pct": 20.0,
+    "puntuacion": 80,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Margen de seguridad sólido (≥20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Buena justificación (detallada)."
+      }
+    ],
+    "resumen": "Análisis sólido."
+  },
+  {
+    "id": "d0e621ba-11ff-4e7f-a6f9-c1de454f730b",
+    "timestamp": "2025-10-26T18:16:14.903341Z",
+    "ticker": "AAPL",
+    "importe_inicial": 1000,
+    "horizonte_anios": 3,
+    "supuestos": {
+      "crecimiento_anual_pct": 8.0,
+      "margen_seguridad_pct": 20.0,
+      "roe_pct": 0.0,
+      "deuda_sobre_activos_pct": 0.0
+    },
+    "justificacion": "Para invertir en Apple, puedes hacerlo de forma directa comprando acciones (símbolo AAPL) a través de una cuenta en un bróker online, o indirectamente invirtiendo en fondos o ETFs que incluyan acciones de Apple. El proceso para comprar acciones implica seleccionar y abrir una cuenta en un bróker regulado, depositar fondos, buscar el símbolo de Apple y ejecutar la orden de compra.",
+    "modo": "SIN_DCA",
+    "dca": null,
+    "crecimiento_anual_estimado": 8.0,
+    "margen_seguridad_pct": 20.0,
+    "puntuacion": 80,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Margen de seguridad sólido (≥20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Buena justificación (detallada)."
+      }
+    ],
+    "resumen": "Análisis sólido."
+  },
+  {
     "id": "d768915b-cf57-4405-9b86-166d1fe08b94",
     "timestamp": "2025-10-26T10:40:30.902644Z",
     "ticker": "AAPL",
@@ -21,14 +1079,6 @@
     "margen_seguridad_pct": 25.0,
     "puntuacion": 80,
     "observaciones": [
-      {
-        "tipo": "mejora",
-        "msg": "ROE bajo: revisa rentabilidad del negocio."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
       {
         "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
@@ -69,14 +1119,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -114,14 +1156,6 @@
         "msg": "Horizonte adecuado (≥5 años)."
       },
       {
-        "tipo": "ok",
-        "msg": "ROE razonable (≥8%)."
-      },
-      {
-        "tipo": "mejora",
-        "msg": "Deuda medio-alta: vigila el apalancamiento."
-      },
-      {
         "tipo": "mejora",
         "msg": "Margen de seguridad algo justo (10–20%)."
       },
@@ -155,14 +1189,6 @@
     "margen_seguridad_pct": 15.0,
     "puntuacion": 78,
     "observaciones": [
-      {
-        "tipo": "ok",
-        "msg": "ROE razonable (≥8%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
       {
         "tipo": "mejora",
         "msg": "Margen de seguridad algo justo (10–20%)."
@@ -200,14 +1226,6 @@
       {
         "tipo": "ok",
         "msg": "Horizonte largo (≥10 años)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
       },
       {
         "tipo": "ok",
@@ -249,14 +1267,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -294,14 +1304,6 @@
         "msg": "Horizonte adecuado (≥5 años)."
       },
       {
-        "tipo": "ok",
-        "msg": "ROE razonable (≥8%)."
-      },
-      {
-        "tipo": "mejora",
-        "msg": "Deuda medio-alta: vigila el apalancamiento."
-      },
-      {
         "tipo": "mejora",
         "msg": "Margen de seguridad algo justo (10–20%)."
       },
@@ -335,14 +1337,6 @@
     "margen_seguridad_pct": 15.0,
     "puntuacion": 78,
     "observaciones": [
-      {
-        "tipo": "ok",
-        "msg": "ROE razonable (≥8%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
       {
         "tipo": "mejora",
         "msg": "Margen de seguridad algo justo (10–20%)."
@@ -380,14 +1374,6 @@
       {
         "tipo": "ok",
         "msg": "Horizonte largo (≥10 años)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
       },
       {
         "tipo": "ok",
@@ -429,14 +1415,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -472,14 +1450,6 @@
       {
         "tipo": "ok",
         "msg": "Horizonte adecuado (≥5 años)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "ROE razonable (≥8%)."
-      },
-      {
-        "tipo": "mejora",
-        "msg": "Deuda medio-alta: vigila el apalancamiento."
       },
       {
         "tipo": "mejora",
@@ -521,14 +1491,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -567,14 +1529,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -610,14 +1564,6 @@
       {
         "tipo": "ok",
         "msg": "Horizonte adecuado (≥5 años)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "ROE razonable (≥8%)."
-      },
-      {
-        "tipo": "mejora",
-        "msg": "Deuda medio-alta: vigila el apalancamiento."
       },
       {
         "tipo": "mejora",
@@ -659,14 +1605,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -702,14 +1640,6 @@
       {
         "tipo": "ok",
         "msg": "Horizonte largo (≥10 años)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
       },
       {
         "tipo": "ok",
@@ -750,14 +1680,6 @@
         "msg": "Horizonte adecuado (≥5 años)."
       },
       {
-        "tipo": "ok",
-        "msg": "ROE razonable (≥8%)."
-      },
-      {
-        "tipo": "mejora",
-        "msg": "Deuda medio-alta: vigila el apalancamiento."
-      },
-      {
         "tipo": "mejora",
         "msg": "Margen de seguridad algo justo (10–20%)."
       },
@@ -794,14 +1716,6 @@
       {
         "tipo": "ok",
         "msg": "Horizonte largo (≥10 años)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
       },
       {
         "tipo": "ok",
@@ -845,14 +1759,6 @@
         "msg": "Horizonte largo (≥10 años)."
       },
       {
-        "tipo": "mejora",
-        "msg": "ROE bajo: revisa rentabilidad del negocio."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
         "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
@@ -891,14 +1797,6 @@
         "msg": "Horizonte largo (≥10 años)."
       },
       {
-        "tipo": "mejora",
-        "msg": "ROE bajo: revisa rentabilidad del negocio."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
         "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
@@ -931,14 +1829,6 @@
       {
         "tipo": "ok",
         "msg": "Horizonte largo (≥10 años)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "mejora",
-        "msg": "Deuda medio-alta: vigila el apalancamiento."
       },
       {
         "tipo": "mejora",
@@ -976,14 +1866,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -1015,14 +1897,6 @@
       {
         "tipo": "ok",
         "msg": "Horizonte adecuado (≥5 años)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "ROE razonable (≥8%)."
-      },
-      {
-        "tipo": "mejora",
-        "msg": "Deuda medio-alta: vigila el apalancamiento."
       },
       {
         "tipo": "mejora",
@@ -1060,14 +1934,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -1102,14 +1968,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -1141,14 +1999,6 @@
       {
         "tipo": "ok",
         "msg": "Horizonte adecuado (≥5 años)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "ROE razonable (≥8%)."
-      },
-      {
-        "tipo": "mejora",
-        "msg": "Deuda medio-alta: vigila el apalancamiento."
       },
       {
         "tipo": "mejora",
@@ -1186,14 +2036,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -1228,14 +2070,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -1267,14 +2101,6 @@
       {
         "tipo": "ok",
         "msg": "Horizonte adecuado (≥5 años)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "ROE razonable (≥8%)."
-      },
-      {
-        "tipo": "mejora",
-        "msg": "Deuda medio-alta: vigila el apalancamiento."
       },
       {
         "tipo": "mejora",
@@ -1312,14 +2138,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -1354,14 +2172,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -1393,14 +2203,6 @@
       {
         "tipo": "ok",
         "msg": "Horizonte adecuado (≥5 años)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "ROE razonable (≥8%)."
-      },
-      {
-        "tipo": "mejora",
-        "msg": "Deuda medio-alta: vigila el apalancamiento."
       },
       {
         "tipo": "mejora",
@@ -1438,14 +2240,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -1480,14 +2274,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -1519,14 +2305,6 @@
       {
         "tipo": "ok",
         "msg": "Horizonte adecuado (≥5 años)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "ROE razonable (≥8%)."
-      },
-      {
-        "tipo": "mejora",
-        "msg": "Deuda medio-alta: vigila el apalancamiento."
       },
       {
         "tipo": "mejora",
@@ -1564,14 +2342,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -1606,14 +2376,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -1645,14 +2407,6 @@
       {
         "tipo": "ok",
         "msg": "Horizonte adecuado (≥5 años)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "ROE razonable (≥8%)."
-      },
-      {
-        "tipo": "mejora",
-        "msg": "Deuda medio-alta: vigila el apalancamiento."
       },
       {
         "tipo": "mejora",
@@ -1690,14 +2444,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -1732,14 +2478,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -1771,14 +2509,6 @@
       {
         "tipo": "ok",
         "msg": "Horizonte adecuado (≥5 años)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "ROE razonable (≥8%)."
-      },
-      {
-        "tipo": "mejora",
-        "msg": "Deuda medio-alta: vigila el apalancamiento."
       },
       {
         "tipo": "mejora",
@@ -1816,14 +2546,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -1858,14 +2580,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -1897,14 +2611,6 @@
       {
         "tipo": "ok",
         "msg": "Horizonte adecuado (≥5 años)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "ROE razonable (≥8%)."
-      },
-      {
-        "tipo": "mejora",
-        "msg": "Deuda medio-alta: vigila el apalancamiento."
       },
       {
         "tipo": "mejora",
@@ -1942,14 +2648,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -1984,14 +2682,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -2023,14 +2713,6 @@
       {
         "tipo": "ok",
         "msg": "Horizonte adecuado (≥5 años)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "ROE razonable (≥8%)."
-      },
-      {
-        "tipo": "mejora",
-        "msg": "Deuda medio-alta: vigila el apalancamiento."
       },
       {
         "tipo": "mejora",
@@ -2068,14 +2750,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -2110,14 +2784,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -2149,14 +2815,6 @@
       {
         "tipo": "ok",
         "msg": "Horizonte adecuado (≥5 años)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "ROE razonable (≥8%)."
-      },
-      {
-        "tipo": "mejora",
-        "msg": "Deuda medio-alta: vigila el apalancamiento."
       },
       {
         "tipo": "mejora",
@@ -2194,14 +2852,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -2236,14 +2886,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -2275,14 +2917,6 @@
       {
         "tipo": "ok",
         "msg": "Horizonte adecuado (≥5 años)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "ROE razonable (≥8%)."
-      },
-      {
-        "tipo": "mejora",
-        "msg": "Deuda medio-alta: vigila el apalancamiento."
       },
       {
         "tipo": "mejora",
@@ -2320,14 +2954,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -2362,14 +2988,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -2401,14 +3019,6 @@
       {
         "tipo": "ok",
         "msg": "Horizonte adecuado (≥5 años)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "ROE razonable (≥8%)."
-      },
-      {
-        "tipo": "mejora",
-        "msg": "Deuda medio-alta: vigila el apalancamiento."
       },
       {
         "tipo": "mejora",
@@ -2446,14 +3056,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -2488,14 +3090,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -2527,14 +3121,6 @@
       {
         "tipo": "ok",
         "msg": "Horizonte adecuado (≥5 años)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "ROE razonable (≥8%)."
-      },
-      {
-        "tipo": "mejora",
-        "msg": "Deuda medio-alta: vigila el apalancamiento."
       },
       {
         "tipo": "mejora",
@@ -2572,14 +3158,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -2611,14 +3189,6 @@
       {
         "tipo": "ok",
         "msg": "Horizonte adecuado (≥5 años)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "mejora",
-        "msg": "Deuda medio-alta: vigila el apalancamiento."
       },
       {
         "tipo": "ok",
@@ -2656,14 +3226,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -2695,14 +3257,6 @@
       {
         "tipo": "ok",
         "msg": "Horizonte adecuado (≥5 años)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "ROE razonable (≥8%)."
-      },
-      {
-        "tipo": "mejora",
-        "msg": "Deuda medio-alta: vigila el apalancamiento."
       },
       {
         "tipo": "mejora",
@@ -2740,14 +3294,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -2782,14 +3328,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -2821,14 +3359,6 @@
       {
         "tipo": "ok",
         "msg": "Horizonte adecuado (≥5 años)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "ROE razonable (≥8%)."
-      },
-      {
-        "tipo": "mejora",
-        "msg": "Deuda medio-alta: vigila el apalancamiento."
       },
       {
         "tipo": "mejora",
@@ -2866,14 +3396,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -2908,14 +3430,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -2947,14 +3461,6 @@
       {
         "tipo": "ok",
         "msg": "Horizonte adecuado (≥5 años)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "ROE razonable (≥8%)."
-      },
-      {
-        "tipo": "mejora",
-        "msg": "Deuda medio-alta: vigila el apalancamiento."
       },
       {
         "tipo": "mejora",
@@ -2992,14 +3498,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -3031,14 +3529,6 @@
       {
         "tipo": "ok",
         "msg": "Horizonte largo (≥10 años)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
       },
       {
         "tipo": "ok",
@@ -3076,14 +3566,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -3115,14 +3597,6 @@
       {
         "tipo": "ok",
         "msg": "Horizonte adecuado (≥5 años)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "ROE razonable (≥8%)."
-      },
-      {
-        "tipo": "mejora",
-        "msg": "Deuda medio-alta: vigila el apalancamiento."
       },
       {
         "tipo": "mejora",
@@ -3160,14 +3634,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -3202,14 +3668,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -3241,14 +3699,6 @@
       {
         "tipo": "ok",
         "msg": "Horizonte adecuado (≥5 años)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "ROE razonable (≥8%)."
-      },
-      {
-        "tipo": "mejora",
-        "msg": "Deuda medio-alta: vigila el apalancamiento."
       },
       {
         "tipo": "mejora",
@@ -3286,14 +3736,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -3328,14 +3770,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -3367,14 +3801,6 @@
       {
         "tipo": "ok",
         "msg": "Horizonte adecuado (≥5 años)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "ROE razonable (≥8%)."
-      },
-      {
-        "tipo": "mejora",
-        "msg": "Deuda medio-alta: vigila el apalancamiento."
       },
       {
         "tipo": "mejora",
@@ -3412,14 +3838,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -3454,14 +3872,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -3493,14 +3903,6 @@
       {
         "tipo": "ok",
         "msg": "Horizonte adecuado (≥5 años)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "ROE razonable (≥8%)."
-      },
-      {
-        "tipo": "mejora",
-        "msg": "Deuda medio-alta: vigila el apalancamiento."
       },
       {
         "tipo": "mejora",
@@ -3538,14 +3940,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -3580,14 +3974,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -3619,14 +4005,6 @@
       {
         "tipo": "ok",
         "msg": "Horizonte adecuado (≥5 años)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "ROE razonable (≥8%)."
-      },
-      {
-        "tipo": "mejora",
-        "msg": "Deuda medio-alta: vigila el apalancamiento."
       },
       {
         "tipo": "mejora",
@@ -3664,14 +4042,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -3706,14 +4076,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -3745,14 +4107,6 @@
       {
         "tipo": "ok",
         "msg": "Horizonte adecuado (≥5 años)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "ROE razonable (≥8%)."
-      },
-      {
-        "tipo": "mejora",
-        "msg": "Deuda medio-alta: vigila el apalancamiento."
       },
       {
         "tipo": "mejora",
@@ -3790,14 +4144,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -3829,14 +4175,6 @@
       {
         "tipo": "ok",
         "msg": "Horizonte largo (≥10 años)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
       },
       {
         "tipo": "ok",
@@ -3874,14 +4212,6 @@
       },
       {
         "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
-      },
-      {
-        "tipo": "ok",
         "msg": "Margen de seguridad sólido (≥20%)."
       },
       {
@@ -3913,14 +4243,6 @@
       {
         "tipo": "ok",
         "msg": "Horizonte adecuado (≥5 años)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "ROE razonable (≥8%)."
-      },
-      {
-        "tipo": "mejora",
-        "msg": "Deuda medio-alta: vigila el apalancamiento."
       },
       {
         "tipo": "mejora",
@@ -3955,14 +4277,6 @@
       {
         "tipo": "ok",
         "msg": "Horizonte largo (≥10 años)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "ROE alto (≥15%)."
-      },
-      {
-        "tipo": "ok",
-        "msg": "Deuda moderada (≤30%)."
       },
       {
         "tipo": "ok",
