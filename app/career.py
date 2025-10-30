@@ -108,6 +108,51 @@ DIFFICULTY_CONFIG = {
     },
 }
 
+EVENTS_CATALOG: list[dict[str, Any]] = [
+    {
+        "id": "macro_shock_neg",
+        "name": "Shock macro (negativo)",
+        "scope": "portfolio",
+        "impact_range": (-0.08, -0.02),
+        "duration_turns_range": (1, 2),
+        "prob": {"principiante": 0.10, "intermedio": 0.20, "experto": 0.35},
+    },
+    {
+        "id": "sector_rumor_neg",
+        "name": "Rumor sectorial (negativo)",
+        "scope": "sector",
+        "impact_range": (-0.06, -0.02),
+        "duration_turns_range": (1, 2),
+        "prob": {"principiante": 0.05, "intermedio": 0.10, "experto": 0.20},
+    },
+    {
+        "id": "ticker_news_pos",
+        "name": "Noticia específica (positivo)",
+        "scope": "ticker",
+        "impact_range": (0.02, 0.06),
+        "duration_turns_range": (1, 1),
+        "prob": {"principiante": 0.05, "intermedio": 0.10, "experto": 0.15},
+    },
+]
+
+DEFAULT_SECTOR_GUESSES = {
+    "AAPL": "TECH",
+    "MSFT": "TECH",
+    "GOOGL": "TECH",
+    "GOOG": "TECH",
+    "AMZN": "CONSUMER",
+    "META": "TECH",
+    "NVDA": "TECH",
+    "TSLA": "AUTO",
+    "^GSPC": "INDEX",
+}
+
+SECTOR_CACHE: dict[str, str] = {}
+MAX_EVENT_IMPACT = 0.5
+MIN_EVENT_IMPACT = -0.5
+MIN_EVENT_DURATION = 1
+MAX_EVENT_DURATION = 6
+
 
 def _flat_cash_series_from_index(index: Iterable[date]) -> list[list[str, float]]:
     return [[d.isoformat(), 100.0] for d in index]
@@ -123,6 +168,56 @@ def _extract_dates_from_series(series_data: list[list[str, float]]) -> list[date
         except (ValueError, TypeError):
             continue
     return dates
+
+
+def _get_sector(ticker: str) -> str | None:
+    ticker_norm = (ticker or "").strip().upper()
+    if not ticker_norm:
+        return None
+    if ticker_norm in SECTOR_CACHE:
+        return SECTOR_CACHE[ticker_norm]
+    sector = DEFAULT_SECTOR_GUESSES.get(ticker_norm)
+    if sector:
+        SECTOR_CACHE[ticker_norm] = sector
+    return sector
+
+
+def _resolve_sector(session: dict[str, Any], ticker: str) -> str | None:
+    ticker_norm = (ticker or "").strip().upper()
+    if not ticker_norm:
+        return None
+    sectors_map = session.setdefault("sectors_map", {})
+    sector = sectors_map.get(ticker_norm)
+    if sector:
+        return sector
+    candidate = _get_sector(ticker_norm)
+    if candidate:
+        sectors_map[ticker_norm] = candidate
+        return candidate
+    return None
+
+
+def _available_sectors(
+    session: dict[str, Any], alloc: list[dict[str, Any]]
+) -> list[str]:
+    sectors: list[str] = []
+    seen: set[str] = set()
+    for item in alloc:
+        ticker = item.get("ticker")
+        if not ticker or _is_cash(ticker):
+            continue
+        sector = _resolve_sector(session, ticker)
+        if sector and sector not in seen:
+            seen.add(sector)
+            sectors.append(sector)
+    return sectors
+
+
+def _random_in_range(range_tuple: tuple[float, float], rng: random.Random) -> float:
+    lo, hi = range_tuple
+    if lo > hi:
+        lo, hi = hi, lo
+    return rng.uniform(lo, hi)
 
 
 def _load_sessions_store() -> dict[str, Any]:
@@ -322,6 +417,38 @@ def _validate_universe(
     return ok, bad
 
 
+def _returns_by_ticker(
+    alloc: list[dict[str, Any]], start: date, end: date
+) -> dict[str, float]:
+    returns: dict[str, float] = {}
+    issues: list[str] = []
+    for item in alloc:
+        ticker = item["ticker"]
+        if _is_cash(ticker):
+            returns[ticker] = 0.0
+            continue
+        series = _adj_close_series(
+            ticker, start, end
+        )  # REUSE: reutiliza descarga e índice homogenizado
+        if series.empty:
+            issues.append(ticker)
+            continue
+        start_price = _first_price_on_or_after(
+            series, start
+        )  # REUSE: precio inicial existente
+        end_price = _last_price_on_or_before(
+            series, end
+        )  # REUSE: precio final existente
+        if start_price in (None, 0) or end_price is None:
+            issues.append(ticker)
+            continue
+        returns[ticker] = (end_price / start_price) - 1.0
+    if issues:
+        tickers_msg = ", ".join(sorted(set(issues)))
+        raise BadRequest(f"No hay datos suficientes para los tickers: {tickers_msg}.")
+    return returns
+
+
 def _ensure_max_assets(
     alloc: list[dict[str, Any]], max_assets: int = MAX_ASSETS
 ) -> list[dict[str, float]]:
@@ -362,54 +489,263 @@ def _parse_date(value: str | None, field: str) -> date:
         raise BadRequest(f"Fecha inválida para '{field}'.") from exc
 
 
+def _instantiate_event_from_template(
+    template: dict[str, Any],
+    session: dict[str, Any],
+    alloc: list[dict[str, Any]],
+    rng: random.Random,
+) -> dict[str, Any] | None:
+    scope = (template.get("scope") or "").lower()
+    impact_range = template.get("impact_range", (0.0, 0.0))
+    duration_range = template.get("duration_turns_range", (1, 1))
+    impact_value = round(_random_in_range(impact_range, rng), 6)
+    duration = rng.randint(
+        max(MIN_EVENT_DURATION, int(duration_range[0])),
+        min(MAX_EVENT_DURATION, int(duration_range[1])),
+    )
+    target: str | None = None
+
+    if scope == "portfolio":
+        target = None
+    elif scope == "sector":
+        sectors = _available_sectors(session, alloc)
+        if not sectors:
+            return None
+        target = rng.choice(sectors)
+    elif scope == "ticker":
+        tickers = [item["ticker"] for item in alloc if not _is_cash(item["ticker"])]
+        if not tickers:
+            return None
+        target = rng.choice(tickers)
+    else:
+        return None
+
+    if target is not None:
+        target = str(target).upper()
+
+    return {
+        "id": template.get("id"),
+        "name": template.get("name"),
+        "scope": template.get("scope"),
+        "target": target,
+        "impact_pct": impact_value,
+        "remaining_turns": int(max(MIN_EVENT_DURATION, duration)),
+    }
+
+
 def _draw_events_for_turn(
-    difficulty: str, seed: int, turn_n: int
+    difficulty: str, alloc: list[dict[str, Any]], period_ctx: dict[str, Any]
 ) -> list[dict[str, Any]]:
-    config = DIFFICULTY_CONFIG[difficulty]
-    rng = random.Random(seed + turn_n * 997)
-    events: list[dict[str, Any]] = []
-    if rng.random() <= config["shock_probability"]:
-        impact = rng.uniform(*config["shock_range"])
-        events.append(
-            {
-                "id": "shock_macro",
-                "impact_pct": round(impact, 4),
-                "scope": PORTFOLIO_SCOPE,
-                "duration": 1,
+    session: dict[str, Any] | None = period_ctx.get("session")
+    if not session:
+        return []
+    rng = period_ctx.get("rng")
+    if not isinstance(rng, random.Random):
+        seed_hint = period_ctx.get("seed")
+        rng = random.Random(seed_hint) if seed_hint is not None else random.Random()
+    drawn: list[dict[str, Any]] = []
+    for template in EVENTS_CATALOG:
+        prob = template.get("prob", {}).get(difficulty, 0.0)
+        if prob <= 0:
+            continue
+        if rng.random() > prob:
+            continue
+        event = _instantiate_event_from_template(template, session, alloc, rng)
+        if event:
+            drawn.append(event)
+    return drawn
+
+
+def _apply_active_events(
+    session: dict[str, Any],
+    alloc: list[dict[str, Any]],
+    base_return_by_ticker: dict[str, float],
+) -> tuple[float, dict[str, float], list[dict[str, Any]], list[dict[str, Any]]]:
+    active_events = session.get("active_events") or []
+    ret_portfolio_shift = 0.0
+    per_ticker_shift: dict[str, float] = {}
+    applied: list[dict[str, Any]] = []
+    updated_events: list[dict[str, Any]] = []
+    alloc_tickers = {item["ticker"] for item in alloc}
+
+    for event in active_events:
+        if not isinstance(event, dict):
+            continue
+        remaining = int(event.get("remaining_turns", 0))
+        if remaining <= 0:
+            continue
+        impact = float(event.get("impact_pct", 0.0))
+        scope = (event.get("scope") or "").lower()
+        target = event.get("target")
+        affected: list[str] = []
+
+        if scope == "portfolio":
+            ret_portfolio_shift += impact
+            affected = ["PORTFOLIO"]
+        elif scope == "ticker":
+            target_ticker = str(target or "").upper()
+            if target_ticker and target_ticker in alloc_tickers:
+                per_ticker_shift[target_ticker] = (
+                    per_ticker_shift.get(target_ticker, 0.0) + impact
+                )
+                affected = [target_ticker]
+        elif scope == "sector":
+            target_sector = str(target or "").upper()
+            if target_sector:
+                for item in alloc:
+                    ticker = item["ticker"]
+                    if ticker not in base_return_by_ticker:
+                        continue
+                    sector = _resolve_sector(session, ticker)
+                    if sector and sector.upper() == target_sector:
+                        per_ticker_shift[ticker] = (
+                            per_ticker_shift.get(ticker, 0.0) + impact
+                        )
+                        affected.append(ticker)
+
+        if affected or scope == "portfolio":
+            event_snapshot = {
+                "id": event.get("id"),
+                "name": event.get("name"),
+                "scope": event.get("scope"),
+                "target": target,
+                "impact_pct": round(impact, 6),
+                "remaining_turns": remaining,
             }
+            if affected:
+                event_snapshot["affected"] = affected
+            applied.append(event_snapshot)
+
+        remaining -= 1
+        if remaining > 0:
+            kept = deepcopy(event)
+            kept["remaining_turns"] = remaining
+            updated_events.append(kept)
+
+    return ret_portfolio_shift, per_ticker_shift, applied, updated_events
+
+
+def _reference_alloc_for_session(session: dict[str, Any]) -> list[dict[str, Any]]:
+    decisions = session.get("decisions") or []
+    if decisions:
+        last_alloc = decisions[-1].get("alloc") or []
+        if isinstance(last_alloc, list) and last_alloc:
+            return _ensure_max_assets(last_alloc, MAX_ASSETS)
+    universe = session.get("universe") or []
+    alloc = [
+        {"ticker": str(ticker).strip().upper(), "weight": 1.0}
+        for ticker in universe[:MAX_ASSETS]
+        if str(ticker).strip()
+    ]
+    return _ensure_max_assets(alloc, MAX_ASSETS)
+
+
+def _build_event_from_payload(
+    payload: dict[str, Any], session: dict[str, Any]
+) -> dict[str, Any]:
+    event_id = payload.get("id")
+    template = None
+    if event_id:
+        template = next(
+            (
+                candidate
+                for candidate in EVENTS_CATALOG
+                if candidate.get("id") == event_id
+            ),
+            None,
         )
-    return events
+
+    scope_value = payload.get("scope") or (template.get("scope") if template else None)
+    if not scope_value:
+        raise BadRequest("Debe indicar scope del evento.")
+    scope_lower = str(scope_value).lower()
+
+    rng_seed = (
+        int(session.get("seed", 0))
+        + len(session.get("events_log") or []) * 1543
+        + secrets.randbelow(10_000)
+    )
+    rng = random.Random(rng_seed)
+
+    impact_value = payload.get("impact_pct")
+    if impact_value is None:
+        if template and template.get("impact_range"):
+            impact_value = _random_in_range(template["impact_range"], rng)
+        else:
+            raise BadRequest("impact_pct es obligatorio para eventos personalizados.")
+    try:
+        impact_value = float(impact_value)
+    except (TypeError, ValueError) as exc:
+        raise BadRequest("impact_pct debe ser numérico.") from exc
+    if impact_value < MIN_EVENT_IMPACT or impact_value > MAX_EVENT_IMPACT:
+        raise BadRequest("impact_pct fuera de rango permitido [-0.5, 0.5].")
+
+    duration_value = payload.get("duration_turns")
+    if duration_value is None:
+        if template and template.get("duration_turns_range"):
+            lo, hi = template["duration_turns_range"]
+            duration_value = rng.randint(int(lo), int(hi))
+        else:
+            raise BadRequest(
+                "duration_turns es obligatorio para eventos personalizados."
+            )
+    try:
+        duration_value = int(duration_value)
+    except (TypeError, ValueError) as exc:
+        raise BadRequest("duration_turns debe ser un entero.") from exc
+    if duration_value < MIN_EVENT_DURATION or duration_value > MAX_EVENT_DURATION:
+        raise BadRequest("duration_turns fuera de rango permitido [1, 6].")
+
+    name_value = payload.get("name") or (template.get("name") if template else None)
+    target_value = payload.get("target")
+    reference_alloc = payload.get("alloc")
+    if not isinstance(reference_alloc, list) or not reference_alloc:
+        reference_alloc = _reference_alloc_for_session(session)
+
+    if scope_lower == "sector":
+        if not target_value:
+            sectors = _available_sectors(session, reference_alloc)
+            if not sectors:
+                raise BadRequest(
+                    "No se encontró un sector válido para asignar al evento sectorial."
+                )
+            target_value = rng.choice(sectors)
+    elif scope_lower == "ticker":
+        if not target_value:
+            tickers = [
+                item["ticker"]
+                for item in reference_alloc
+                if not _is_cash(item["ticker"])
+            ]
+            if not tickers:
+                raise BadRequest("No hay tickers disponibles para el evento.")
+            target_value = rng.choice(tickers)
+    elif scope_lower == "portfolio":
+        target_value = None
+    else:
+        raise BadRequest("scope no reconocido para el evento.")
+
+    target_norm = None
+    if target_value is not None:
+        target_norm = str(target_value).strip().upper()
+        if not target_norm:
+            target_norm = None
+    event = {
+        "id": event_id or f"evt_{secrets.token_hex(4)}",
+        "name": name_value or (event_id or "Evento personalizado"),
+        "scope": scope_value if template else scope_lower,
+        "target": target_norm,
+        "impact_pct": round(float(impact_value), 6),
+        "remaining_turns": int(duration_value),
+    }
+    return event
 
 
 def _calculate_turn_return(
     alloc: list[dict[str, float]], start: date, end: date
 ) -> float:
-    issues: list[str] = []
-    total_return = 0.0
-    for item in alloc:
-        ticker = item["ticker"]
-        weight = item["weight"]
-        if _is_cash(ticker):
-            total_return += weight * 0.0
-            continue
-        series = _adj_close_series(ticker, start, end)
-        if series.empty:
-            issues.append(ticker)
-            continue
-        start_price = _first_price_on_or_after(
-            series, start
-        )  # REUSE: busca precio inicial válido
-        end_price = _last_price_on_or_before(
-            series, end
-        )  # REUSE: busca precio final válido
-        if start_price in (None, 0) or end_price is None:
-            issues.append(ticker)
-            continue
-        total_return += weight * ((end_price / start_price) - 1.0)
-    if issues:
-        tickers_msg = ", ".join(sorted(set(issues)))
-        raise BadRequest(f"No hay datos suficientes para los tickers: {tickers_msg}.")
-    return total_return
+    returns = _returns_by_ticker(alloc, start, end)
+    return sum(item["weight"] * returns.get(item["ticker"], 0.0) for item in alloc)
 
 
 def _next_pending_turn(session: dict[str, Any]) -> dict[str, Any] | None:
@@ -433,6 +769,15 @@ def _ensure_session_defaults(session: dict[str, Any]) -> None:
     session.setdefault("turns_total", turns_total)
     session.setdefault("total_turns", turns_total)
     session.setdefault("contrib_so_far", 0.0)
+    if not isinstance(session.get("active_events"), list):
+        session["active_events"] = []
+    if not isinstance(session.get("events_log"), list):
+        session["events_log"] = []
+    if not isinstance(session.get("sectors_map"), dict):
+        session["sectors_map"] = {}
+    session.setdefault("active_events", session.get("active_events"))
+    session.setdefault("events_log", session.get("events_log"))
+    session.setdefault("sectors_map", session.get("sectors_map"))
     session.setdefault("decisions", [])
 
 
@@ -512,6 +857,8 @@ def create_session():
         "contrib_so_far": 0.0,
         "cum_return": 0.0,
         "events_log": [],
+        "active_events": [],
+        "sectors_map": {},
         "decisions": [],
     }
     _persist_session(session)
@@ -600,10 +947,63 @@ def close_turn():
             known_universe.update(valid_new)
             session["universe"] = sorted(known_universe)
 
-    turn_return_market = _calculate_turn_return(clean_alloc, turn_start, turn_end)
-    events = _draw_events_for_turn(session["difficulty"], int(session["seed"]), turn_n)
-    event_shift = sum(
-        evt["impact_pct"] for evt in events if evt.get("scope") == PORTFOLIO_SCOPE
+    base_returns = _returns_by_ticker(clean_alloc, turn_start, turn_end)
+    turn_return_market = sum(
+        item["weight"] * base_returns.get(item["ticker"], 0.0) for item in clean_alloc
+    )
+
+    (
+        ret_portfolio_shift,
+        per_ticker_shift,
+        events_applied,
+        active_events_remaining,
+    ) = _apply_active_events(session, clean_alloc, base_returns)
+
+    adjusted_returns = {
+        item["ticker"]: base_returns.get(item["ticker"], 0.0)
+        + per_ticker_shift.get(item["ticker"], 0.0)
+        for item in clean_alloc
+    }
+    turn_return_final = (
+        sum(
+            item["weight"] * adjusted_returns.get(item["ticker"], 0.0)
+            for item in clean_alloc
+        )
+        + ret_portfolio_shift
+    )
+
+    events_applied_snapshot = [deepcopy(evt) for evt in events_applied]
+
+    rng_seed = (
+        int(session.get("seed", 0))
+        + turn_n * 1931
+        + len(session.get("events_log") or []) * 97
+    )
+    rng = random.Random(rng_seed)
+    period_ctx = {
+        "session": session,
+        "turn_n": turn_n,
+        "rng": rng,
+        "seed": rng_seed,
+    }
+    events_new = _draw_events_for_turn(session["difficulty"], clean_alloc, period_ctx)
+    events_new_snapshot = [deepcopy(evt) for evt in events_new]
+
+    active_events_next = active_events_remaining
+    if events_new:
+        active_events_next = active_events_next + [deepcopy(evt) for evt in events_new]
+    session["active_events"] = active_events_next
+    ret_ticker_shift_map = {
+        ticker: round(shift, 6)
+        for ticker, shift in per_ticker_shift.items()
+        if abs(shift) > 1e-9
+    }
+    session.setdefault("events_log", []).append(
+        {
+            "turn_n": turn_n,
+            "applied": events_applied_snapshot,
+            "drawn": events_new_snapshot,
+        }
     )
 
     turns_total = int(session.get("turns_total") or 1)
@@ -617,7 +1017,7 @@ def close_turn():
         session["capital_current"] = capital_before
 
     capital_base = float(session["capital_current"])
-    turn_return_final = turn_return_market + event_shift
+    # 'turn_return_final' ya incluye: turn_return_market + ret_portfolio_shift + per_ticker_shift
     capital_after = capital_base * (1 + turn_return_final)
 
     portfolio_value = round(capital_after, 2)
@@ -642,8 +1042,13 @@ def close_turn():
         "turn_return": round(turn_return_final, 6),
         "turn_return_market": round(turn_return_market, 6),
         "portfolio_value": session["capital_current"],
-        "events": events,
+        "events": events_applied_snapshot,
+        "events_applied": events_applied_snapshot,
+        "events_new": events_new_snapshot,
+        "ret_portfolio_shift": round(ret_portfolio_shift, 6),
     }
+    if ret_ticker_shift_map:
+        snapshot["ret_ticker_shift"] = ret_ticker_shift_map
     snapshot.update(
         {
             "dca_in_turn": round(dca_in_turn, 2),
@@ -659,7 +1064,6 @@ def close_turn():
     session.setdefault("decisions", []).append(
         {"turn_n": turn_n, "alloc": deepcopy(clean_alloc), "use_dca": use_dca}
     )
-    session.setdefault("events_log", []).extend(events)
 
     next_turn = _next_pending_turn(session)
     if not next_turn:
@@ -773,6 +1177,47 @@ def session_series(session_id: str):
         "entered_on_turn": entered_payload,
     }
     return jsonify(response_payload), 200
+
+
+@career_bp.route("/events/<session_id>", methods=["GET"])
+def session_events(session_id: str):
+    session = _get_session(session_id)
+    if not session:
+        raise NotFound("Sesión no encontrada.")
+    _ensure_session_defaults(session)
+    return (
+        jsonify(
+            {
+                "active_events": session.get("active_events", []),
+                "events_log": session.get("events_log", []),
+            }
+        ),
+        200,
+    )
+
+
+@career_bp.route("/event", methods=["POST"])
+def inject_event():
+    payload = request.get_json(silent=True) or {}
+    session_id = payload.get("session_id")
+    if not session_id:
+        return _json_error("session_id es obligatorio.", 400)
+    session = _get_session(session_id)
+    if not session:
+        raise NotFound("Sesión no encontrada.")
+    _ensure_session_defaults(session)
+    try:
+        event = _build_event_from_payload(payload, session)
+    except BadRequest as exc:
+        message = getattr(exc, "description", str(exc))
+        status_code = exc.code if hasattr(exc, "code") else 400
+        return _json_error(message, status_code)
+    session["active_events"].append(deepcopy(event))
+    session.setdefault("events_log", []).append(
+        {"turn_n": None, "applied": [], "drawn": [deepcopy(event)], "source": "manual"}
+    )
+    _update_session(session)
+    return jsonify({"active_events": session.get("active_events", [])}), 200
 
 
 __all__ = [

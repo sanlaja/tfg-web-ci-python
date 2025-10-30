@@ -298,6 +298,249 @@
           "use_dca": true
         }
       ]
+    },
+    "car_cd532c": {
+      "session_id": "car_cd532c",
+      "player": "QA",
+      "difficulty": "intermedio",
+      "universe": [
+        "AAPL",
+        "MSFT",
+        "CASH"
+      ],
+      "rejected_universe": [],
+      "capital_initial": 50000.0,
+      "capital_current": 55516.32,
+      "period": {
+        "start": "2006-03-03",
+        "end": "2012-03-02"
+      },
+      "turns": [
+        {
+          "n": 1,
+          "start": "2006-03-03",
+          "end": "2006-09-02",
+          "status": "completed",
+          "closed_at": "2025-10-30T16:37:45.208800"
+        },
+        {
+          "n": 2,
+          "start": "2006-09-03",
+          "end": "2007-03-02",
+          "status": "pending"
+        },
+        {
+          "n": 3,
+          "start": "2007-03-03",
+          "end": "2007-09-02",
+          "status": "pending"
+        },
+        {
+          "n": 4,
+          "start": "2007-09-03",
+          "end": "2008-03-02",
+          "status": "pending"
+        },
+        {
+          "n": 5,
+          "start": "2008-03-03",
+          "end": "2008-09-02",
+          "status": "pending"
+        },
+        {
+          "n": 6,
+          "start": "2008-09-03",
+          "end": "2009-03-02",
+          "status": "pending"
+        },
+        {
+          "n": 7,
+          "start": "2009-03-03",
+          "end": "2009-09-02",
+          "status": "pending"
+        },
+        {
+          "n": 8,
+          "start": "2009-09-03",
+          "end": "2010-03-02",
+          "status": "pending"
+        },
+        {
+          "n": 9,
+          "start": "2010-03-03",
+          "end": "2010-09-02",
+          "status": "pending"
+        },
+        {
+          "n": 10,
+          "start": "2010-09-03",
+          "end": "2011-03-02",
+          "status": "pending"
+        },
+        {
+          "n": 11,
+          "start": "2011-03-03",
+          "end": "2011-09-02",
+          "status": "pending"
+        },
+        {
+          "n": 12,
+          "start": "2011-09-03",
+          "end": "2012-03-02",
+          "status": "pending"
+        }
+      ],
+      "completed_turns": [
+        {
+          "turn_n": 1,
+          "range": {
+            "start": "2006-03-03",
+            "end": "2006-09-02"
+          },
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.5
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.3
+            },
+            {
+              "ticker": "CASH",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": true,
+          "turn_return": 0.024917,
+          "turn_return_market": -0.005083,
+          "portfolio_value": 55516.32,
+          "events": [
+            {
+              "id": "evt_55e0633d",
+              "name": "Evento personalizado",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": 0.03,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "evt_55e0633d",
+              "name": "Evento personalizado",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": 0.03,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            }
+          ],
+          "events_new": [
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.06616,
+              "remaining_turns": 1
+            }
+          ],
+          "ret_portfolio_shift": 0.03,
+          "dca_in_turn": 4166.67,
+          "invested_so_far": 54166.67,
+          "pnl_abs": 1349.66,
+          "pnl_pct": 0.024917,
+          "cum_return_net": 0.024917,
+          "delta_vs_prev": 5516.32
+        }
+      ],
+      "seed": 3849721138228425813,
+      "created_at": "2025-10-30T16:37:03.671191",
+      "closed": false,
+      "total_turns": 12,
+      "turns_total": 12,
+      "contrib_so_far": 4166.666666666667,
+      "cum_return": 0.110326,
+      "events_log": [
+        {
+          "turn_n": null,
+          "applied": [],
+          "drawn": [
+            {
+              "id": "evt_55e0633d",
+              "name": "Evento personalizado",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": 0.03,
+              "remaining_turns": 1
+            }
+          ],
+          "source": "manual"
+        },
+        {
+          "turn_n": 1,
+          "applied": [
+            {
+              "id": "evt_55e0633d",
+              "name": "Evento personalizado",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": 0.03,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            }
+          ],
+          "drawn": [
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.06616,
+              "remaining_turns": 1
+            }
+          ]
+        }
+      ],
+      "active_events": [
+        {
+          "id": "macro_shock_neg",
+          "name": "Shock macro (negativo)",
+          "scope": "portfolio",
+          "target": null,
+          "impact_pct": -0.06616,
+          "remaining_turns": 1
+        }
+      ],
+      "sectors_map": {},
+      "decisions": [
+        {
+          "turn_n": 1,
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.5
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.3
+            },
+            {
+              "ticker": "CASH",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": true
+        }
+      ]
     }
   }
 }
