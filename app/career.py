@@ -326,7 +326,7 @@ def _adj_close_series(ticker: str, start: date, end: date) -> pd.Series:
     )  # REUSE: descarga histórico diario existente
     series = _extract_series(
         df, "Adj Close", ticker
-    )  # REUSE: reutiliza extractor de columnas
+    )  # REUSE:  reutiliza extractor de columnas
     normalized = _series_with_date_index(series)  # REUSE: normaliza índice de fechas
     if normalized.empty:
         SERIES_CACHE[cache_key] = normalized
@@ -419,7 +419,10 @@ def _series_list_to_series(series_list: list[list[str, float]]) -> pd.Series:
 def _pd_series_to_list(series: pd.Series) -> list[list[str, float]]:
     if series.empty:
         return []
-    return [[idx.date().isoformat(), round(float(val), 4)] for idx, val in series.sort_index().items()]
+    return [
+        [idx.date().isoformat(), round(float(val), 4)]
+        for idx, val in series.sort_index().items()
+    ]
 
 
 def _validate_universe(
@@ -485,7 +488,9 @@ def _max_drawdown_from_series(series: pd.Series) -> float:
     return float(drawdowns.min()) if not drawdowns.empty else 0.0
 
 
-def _compute_metrics_from_base100(series: pd.Series) -> tuple[dict[str, float], pd.Series]:
+def _compute_metrics_from_base100(
+    series: pd.Series,
+) -> tuple[dict[str, float], pd.Series]:
     series = series.sort_index()
     if series.empty:
         empty_metrics = {
@@ -546,15 +551,13 @@ def _tracking_summary(
             diff = joined["portfolio"] - joined["benchmark"]
             if not diff.empty:
                 tracking_error = float(diff.std(ddof=0) * math.sqrt(12))
-    information_ratio = (
-        active_return / tracking_error if tracking_error > 0 else None
-    )
+    information_ratio = active_return / tracking_error if tracking_error > 0 else None
     return {
         "active_return": round(active_return, 6),
         "tracking_error": round(tracking_error, 6),
-        "information_ratio": round(information_ratio, 6)
-        if information_ratio is not None
-        else None,
+        "information_ratio": (
+            round(information_ratio, 6) if information_ratio is not None else None
+        ),
     }
 
 
@@ -1447,7 +1450,9 @@ def session_benchmark(session_id: str):
     series_map = _build_normalized_series_map([bench_ticker], start_d, end_d)
     bench_series_pd = _series_list_to_series(series_map.get(bench_ticker, []))
     if bench_series_pd.empty:
-        return _json_error("No hay datos disponibles para el benchmark solicitado.", 400)
+        return _json_error(
+            "No hay datos disponibles para el benchmark solicitado.", 400
+        )
 
     bench_metrics, bench_monthly = _compute_metrics_from_base100(bench_series_pd)
     portfolio_series_pd = _portfolio_equity_series(session, start_d, end_d)
@@ -1521,9 +1526,7 @@ def session_theoretical(session_id: str):
     if not universe_candidates:
         return _json_error("El universo de la sesión está vacío.", 400)
 
-    normalized_map = _build_normalized_series_map(
-        universe_candidates, start_d, end_d
-    )
+    normalized_map = _build_normalized_series_map(universe_candidates, start_d, end_d)
 
     ticker_metrics: dict[str, dict[str, float]] = {}
     filtered_tickers: list[str] = []
@@ -1584,9 +1587,7 @@ def session_theoretical(session_id: str):
             for candidate in tickers_eval:
                 if candidate == base_ticker:
                     continue
-                combo = _evaluate_combo_result(
-                    [base_ticker, candidate], normalized_map
-                )
+                combo = _evaluate_combo_result([base_ticker, candidate], normalized_map)
                 if not combo:
                     continue
                 if (
@@ -1628,9 +1629,7 @@ def session_theoretical(session_id: str):
             base_combo = results.get("k2")
             if not base_combo and len(tickers_eval) >= 2:
                 tentative = tickers_eval[:2]
-                base_combo = _evaluate_combo_result(
-                    tentative, normalized_map
-                )
+                base_combo = _evaluate_combo_result(tentative, normalized_map)
                 if base_combo:
                     _record_best_combination("k2", base_combo)
                     method_map["k2"] = "greedy"
