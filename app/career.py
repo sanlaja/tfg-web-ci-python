@@ -86,6 +86,7 @@ CASH_TICKERS = {"CASH", "CASH:USD"}
 def _is_cash(ticker: str) -> bool:
     return (ticker or "").strip().upper() in CASH_TICKERS
 
+
 DIFFICULTY_CONFIG = {
     "principiante": {
         "years": (10, 15),
@@ -171,7 +172,9 @@ def _add_months(dt: date, months: int) -> date:
     return date(year, month, day)
 
 
-def _build_turn_schedule(start: date, end: date, step_months: int) -> list[dict[str, Any]]:
+def _build_turn_schedule(
+    start: date, end: date, step_months: int
+) -> list[dict[str, Any]]:
     turns: list[dict[str, Any]] = []
     turn_start = start
     idx = 1
@@ -194,7 +197,9 @@ def _build_turn_schedule(start: date, end: date, step_months: int) -> list[dict[
     return turns
 
 
-def _generate_period(config: dict[str, Any], rng: random.Random) -> tuple[date, date, list[dict[str, Any]]]:
+def _generate_period(
+    config: dict[str, Any], rng: random.Random
+) -> tuple[date, date, list[dict[str, Any]]]:
     today = date.today()
     min_years, max_years = config["years"]
     period_years = rng.randint(min_years, max_years)
@@ -218,8 +223,12 @@ def _adj_close_series(ticker: str, start: date, end: date) -> pd.Series:
     cache_key = (ticker, start.isoformat(), end.isoformat())
     if cache_key in SERIES_CACHE:
         return SERIES_CACHE[cache_key]
-    df = _download_history_df(ticker, start, end, include_actions=False)  # REUSE: descarga histórico diario existente
-    series = _extract_series(df, "Adj Close", ticker)  # REUSE: reutiliza extractor de columnas
+    df = _download_history_df(
+        ticker, start, end, include_actions=False
+    )  # REUSE: descarga histórico diario existente
+    series = _extract_series(
+        df, "Adj Close", ticker
+    )  # REUSE: reutiliza extractor de columnas
     normalized = _series_with_date_index(series)  # REUSE: normaliza índice de fechas
     if normalized.empty:
         SERIES_CACHE[cache_key] = normalized
@@ -269,7 +278,9 @@ def _build_normalized_series_map(
     anchor_dates: list[date] | None = None
 
     for ticker in non_cash:
-        data = _fetch_adj_close(ticker, start, end)  # REUSE: reutiliza descarga y normalización del histórico diario
+        data = _fetch_adj_close(
+            ticker, start, end
+        )  # REUSE: reutiliza descarga y normalización del histórico diario
         if data and anchor_dates is None:
             anchor_dates = _extract_dates_from_series(data)
         series_map[ticker] = _normalize_base100(data)
@@ -288,7 +299,9 @@ def _build_normalized_series_map(
     return series_map
 
 
-def _validate_universe(universe: Iterable[str], start: date, end: date) -> tuple[list[str], list[str]]:
+def _validate_universe(
+    universe: Iterable[str], start: date, end: date
+) -> tuple[list[str], list[str]]:
     ok: list[str] = []
     bad: list[str] = []
     for raw in universe:
@@ -309,7 +322,9 @@ def _validate_universe(universe: Iterable[str], start: date, end: date) -> tuple
     return ok, bad
 
 
-def _ensure_max_assets(alloc: list[dict[str, Any]], max_assets: int = MAX_ASSETS) -> list[dict[str, float]]:
+def _ensure_max_assets(
+    alloc: list[dict[str, Any]], max_assets: int = MAX_ASSETS
+) -> list[dict[str, float]]:
     aggregated: dict[str, float] = {}
     order: list[str] = []
     for entry in alloc or []:
@@ -330,8 +345,12 @@ def _ensure_max_assets(alloc: list[dict[str, Any]], max_assets: int = MAX_ASSETS
         else:
             aggregated[ticker] += weight
     if len(aggregated) > max_assets:
-        raise BadRequest(f"La cartera admite como máximo {max_assets} activos por turno.")
-    return [{"ticker": ticker, "weight": round(aggregated[ticker], 6)} for ticker in order]
+        raise BadRequest(
+            f"La cartera admite como máximo {max_assets} activos por turno."
+        )
+    return [
+        {"ticker": ticker, "weight": round(aggregated[ticker], 6)} for ticker in order
+    ]
 
 
 def _parse_date(value: str | None, field: str) -> date:
@@ -343,7 +362,9 @@ def _parse_date(value: str | None, field: str) -> date:
         raise BadRequest(f"Fecha inválida para '{field}'.") from exc
 
 
-def _draw_events_for_turn(difficulty: str, seed: int, turn_n: int) -> list[dict[str, Any]]:
+def _draw_events_for_turn(
+    difficulty: str, seed: int, turn_n: int
+) -> list[dict[str, Any]]:
     config = DIFFICULTY_CONFIG[difficulty]
     rng = random.Random(seed + turn_n * 997)
     events: list[dict[str, Any]] = []
@@ -360,7 +381,9 @@ def _draw_events_for_turn(difficulty: str, seed: int, turn_n: int) -> list[dict[
     return events
 
 
-def _calculate_turn_return(alloc: list[dict[str, float]], start: date, end: date) -> float:
+def _calculate_turn_return(
+    alloc: list[dict[str, float]], start: date, end: date
+) -> float:
     issues: list[str] = []
     total_return = 0.0
     for item in alloc:
@@ -373,8 +396,12 @@ def _calculate_turn_return(alloc: list[dict[str, float]], start: date, end: date
         if series.empty:
             issues.append(ticker)
             continue
-        start_price = _first_price_on_or_after(series, start)  # REUSE: busca precio inicial válido
-        end_price = _last_price_on_or_before(series, end)  # REUSE: busca precio final válido
+        start_price = _first_price_on_or_after(
+            series, start
+        )  # REUSE: busca precio inicial válido
+        end_price = _last_price_on_or_before(
+            series, end
+        )  # REUSE: busca precio final válido
         if start_price in (None, 0) or end_price is None:
             issues.append(ticker)
             continue
@@ -398,7 +425,9 @@ def _json_error(message: str, status: int):
 
 def _ensure_session_defaults(session: dict[str, Any]) -> None:
     turns_list = session.get("turns") or []
-    turns_total = session.get("turns_total") or session.get("total_turns") or len(turns_list)
+    turns_total = (
+        session.get("turns_total") or session.get("total_turns") or len(turns_list)
+    )
     if not turns_total:
         turns_total = len(turns_list) or 1
     session.setdefault("turns_total", turns_total)
@@ -433,7 +462,9 @@ def create_session():
     player = str(payload.get("player", "")).strip()
     difficulty = str(payload.get("difficulty", "")).strip().lower()
     if difficulty not in DIFFICULTY_CONFIG:
-        return _json_error("Dificultad inválida. Usa principiante, intermedio o experto.", 400)
+        return _json_error(
+            "Dificultad inválida. Usa principiante, intermedio o experto.", 400
+        )
     universe = payload.get("universe") or []
     capital = payload.get("capital", 50000)
     try:
@@ -553,19 +584,27 @@ def close_turn():
     period_end = date.fromisoformat(session["period"]["end"])
 
     known_universe = set(session.get("universe", []))
-    candidates = [item["ticker"] for item in clean_alloc if item["ticker"] not in known_universe]
+    candidates = [
+        item["ticker"] for item in clean_alloc if item["ticker"] not in known_universe
+    ]
     if candidates:
-        valid_new, rejected_new = _validate_universe(candidates, period_start, period_end)
+        valid_new, rejected_new = _validate_universe(
+            candidates, period_start, period_end
+        )
         if rejected_new:
             msg = ", ".join(rejected_new)
-            return _json_error(f"Tickers no válidos para el periodo del turno: {msg}.", 400)
+            return _json_error(
+                f"Tickers no válidos para el periodo del turno: {msg}.", 400
+            )
         if valid_new:
             known_universe.update(valid_new)
             session["universe"] = sorted(known_universe)
 
     turn_return_market = _calculate_turn_return(clean_alloc, turn_start, turn_end)
     events = _draw_events_for_turn(session["difficulty"], int(session["seed"]), turn_n)
-    event_shift = sum(evt["impact_pct"] for evt in events if evt.get("scope") == PORTFOLIO_SCOPE)
+    event_shift = sum(
+        evt["impact_pct"] for evt in events if evt.get("scope") == PORTFOLIO_SCOPE
+    )
 
     turns_total = int(session.get("turns_total") or 1)
     capital_before = float(session["capital_current"])
@@ -689,7 +728,9 @@ def session_series(session_id: str):
         return _json_error("La sesión no dispone de turnos configurados.", 400)
 
     completed_turns = session.get("completed_turns") or []
-    turn_lookup = {turn.get("n"): turn for turn in turns if isinstance(turn.get("n"), int)}
+    turn_lookup = {
+        turn.get("n"): turn for turn in turns if isinstance(turn.get("n"), int)
+    }
     turn_info: dict[str, Any]
     if completed_turns:
         closed_numbers = [
@@ -720,7 +761,9 @@ def session_series(session_id: str):
 
     entered_map = _entered_on_turn_map(session)
     entered_payload = {
-        ticker: entered_map[ticker] for ticker in unique_tickers if ticker in entered_map
+        ticker: entered_map[ticker]
+        for ticker in unique_tickers
+        if ticker in entered_map
     }
 
     response_payload = {

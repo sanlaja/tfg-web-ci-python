@@ -1,5 +1,253 @@
 [
   {
+    "id": "ebecec94-9fad-41d7-b172-cd96800d5867",
+    "timestamp": "2025-10-30T16:15:58.070882Z",
+    "ticker": "MSFT",
+    "importe_inicial": 500,
+    "horizonte_anios": 10,
+    "supuestos": {
+      "crecimiento_anual_pct": 8.0,
+      "deuda_sobre_activos_pct": 25.0,
+      "margen_seguridad_pct": 20.0,
+      "roe_pct": 18.0
+    },
+    "justificacion": "Caso de prueba persistencia.",
+    "modo": "SIN_DCA",
+    "dca": null,
+    "crecimiento_anual_estimado": 8.0,
+    "margen_seguridad_pct": 20.0,
+    "puntuacion": 95,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Horizonte largo (≥10 años)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Margen de seguridad sólido (≥20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "mejora",
+        "msg": "Amplía la justificación: riesgos, sensibilidad, comparables."
+      }
+    ],
+    "resumen": "Análisis sólido.",
+    "inicio": null,
+    "fin": null,
+    "backtest": {
+      "ticker": "MSFT",
+      "start": "2015-10-30",
+      "end": "2025-10-30",
+      "desde": "2015-10-30",
+      "hasta": "2025-10-30",
+      "invested": 500.0,
+      "shares": 10.90055307798912,
+      "last_price": 527.235,
+      "final_value": 5747.15,
+      "pnl_abs": 5247.15,
+      "pnl_pct": 1049.43,
+      "modo": "SIN_DCA",
+      "start_price_adj": 45.8692,
+      "end_price_adj": 527.235,
+      "variation_adj_pct": 1049.43,
+      "start_price": 52.64,
+      "end_price": 527.235,
+      "variation_raw_pct": 901.59,
+      "now_price": 527.2367,
+      "has_dividends": true,
+      "notes": []
+    }
+  },
+  {
+    "id": "1f874f8b-d1e0-4958-9ba9-d61cb64b1779",
+    "timestamp": "2025-10-30T16:15:48.406233Z",
+    "ticker": "AAPL",
+    "importe_inicial": 100,
+    "horizonte_anios": 5,
+    "supuestos": {
+      "crecimiento_anual_pct": 15.0,
+      "deuda_sobre_activos_pct": 60.0,
+      "margen_seguridad_pct": 10.0,
+      "roe_pct": 10.0
+    },
+    "justificacion": "Caso razonable pero con margen bajo y deuda elevada.",
+    "modo": "SIN_DCA",
+    "dca": null,
+    "crecimiento_anual_estimado": 15.0,
+    "margen_seguridad_pct": 10.0,
+    "puntuacion": 71,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Horizonte adecuado (≥5 años)."
+      },
+      {
+        "tipo": "mejora",
+        "msg": "Margen de seguridad algo justo (10–20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "mejora",
+        "msg": "Amplía la justificación: riesgos, sensibilidad, comparables."
+      }
+    ],
+    "resumen": "Análisis razonable con áreas de mejora.",
+    "inicio": null,
+    "fin": null,
+    "backtest": {
+      "ticker": "AAPL",
+      "start": "2020-10-30",
+      "end": "2025-10-30",
+      "desde": "2020-10-30",
+      "hasta": "2025-10-30",
+      "invested": 100.0,
+      "shares": 0.9443757686400411,
+      "last_price": 271.9205,
+      "final_value": 256.8,
+      "pnl_abs": 156.8,
+      "pnl_pct": 156.8,
+      "modo": "SIN_DCA",
+      "start_price_adj": 105.8901,
+      "end_price_adj": 271.9205,
+      "variation_adj_pct": 156.8,
+      "start_price": 108.86,
+      "end_price": 271.9205,
+      "variation_raw_pct": 149.79,
+      "now_price": 271.9205,
+      "has_dividends": true,
+      "notes": []
+    }
+  },
+  {
+    "id": "4cce216c-1be4-44e1-9edd-9f358b25acfb",
+    "timestamp": "2025-10-30T16:15:47.872192Z",
+    "ticker": "GOOG",
+    "importe_inicial": 250,
+    "horizonte_anios": 1,
+    "supuestos": {
+      "crecimiento_anual_pct": 6.0,
+      "deuda_sobre_activos_pct": 30.0,
+      "margen_seguridad_pct": 15.0,
+      "roe_pct": 12.0
+    },
+    "justificacion": "Horizonte mínimo para probar compatibilidad de validaciones.",
+    "modo": "SIN_DCA",
+    "dca": null,
+    "crecimiento_anual_estimado": 6.0,
+    "margen_seguridad_pct": 15.0,
+    "puntuacion": 78,
+    "observaciones": [
+      {
+        "tipo": "mejora",
+        "msg": "Margen de seguridad algo justo (10–20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Buena justificación (detallada)."
+      }
+    ],
+    "resumen": "Análisis razonable con áreas de mejora.",
+    "inicio": null,
+    "fin": null,
+    "backtest": {
+      "ticker": "GOOG",
+      "start": "2024-10-30",
+      "end": "2025-10-30",
+      "desde": "2024-10-30",
+      "hasta": "2025-10-30",
+      "invested": 250.0,
+      "shares": 1.4255374630357804,
+      "last_price": 288.2183,
+      "final_value": 410.87,
+      "pnl_abs": 160.87,
+      "pnl_pct": 64.35,
+      "modo": "SIN_DCA",
+      "start_price_adj": 175.3725,
+      "end_price_adj": 288.2183,
+      "variation_adj_pct": 64.35,
+      "start_price": 176.14,
+      "end_price": 288.2183,
+      "variation_raw_pct": 63.63,
+      "now_price": 288.22,
+      "has_dividends": true,
+      "notes": []
+    }
+  },
+  {
+    "id": "7201dad0-b0e1-43c9-be93-683fa46d2877",
+    "timestamp": "2025-10-30T16:15:46.870489Z",
+    "ticker": "MSFT",
+    "importe_inicial": 500,
+    "horizonte_anios": 10,
+    "supuestos": {
+      "crecimiento_anual_pct": 8.0,
+      "deuda_sobre_activos_pct": 25.0,
+      "margen_seguridad_pct": 20.0,
+      "roe_pct": 18.0
+    },
+    "justificacion": "Ventajas competitivas claras, crecimiento cloud y buena rentabilidad.",
+    "modo": "SIN_DCA",
+    "dca": null,
+    "crecimiento_anual_estimado": 8.0,
+    "margen_seguridad_pct": 20.0,
+    "puntuacion": 100,
+    "observaciones": [
+      {
+        "tipo": "ok",
+        "msg": "Horizonte largo (≥10 años)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Margen de seguridad sólido (≥20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Buena justificación (detallada)."
+      }
+    ],
+    "resumen": "Análisis sólido.",
+    "inicio": null,
+    "fin": null,
+    "backtest": {
+      "ticker": "MSFT",
+      "start": "2015-10-30",
+      "end": "2025-10-30",
+      "desde": "2015-10-30",
+      "hasta": "2025-10-30",
+      "invested": 500.0,
+      "shares": 10.90055307798912,
+      "last_price": 526.79,
+      "final_value": 5742.3,
+      "pnl_abs": 5242.3,
+      "pnl_pct": 1048.46,
+      "modo": "SIN_DCA",
+      "start_price_adj": 45.8692,
+      "end_price_adj": 526.79,
+      "variation_adj_pct": 1048.46,
+      "start_price": 52.64,
+      "end_price": 526.79,
+      "variation_raw_pct": 900.74,
+      "now_price": 526.79,
+      "has_dividends": true,
+      "notes": []
+    }
+  },
+  {
     "id": "c76de152-aab1-42d3-8d86-351c320efeb7",
     "timestamp": "2025-10-30T15:14:10.597799Z",
     "ticker": "MSFT",
