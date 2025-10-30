@@ -1,0 +1,303 @@
+{
+  "sessions": {
+    "car_8d9db1": {
+      "session_id": "car_8d9db1",
+      "player": "Javi",
+      "difficulty": "intermedio",
+      "universe": [
+        "AAPL",
+        "MSFT"
+      ],
+      "rejected_universe": [],
+      "capital_initial": 50000.0,
+      "capital_current": 71587.84,
+      "period": {
+        "start": "2007-02-04",
+        "end": "2014-02-03"
+      },
+      "turns": [
+        {
+          "n": 1,
+          "start": "2007-02-04",
+          "end": "2007-08-03",
+          "status": "completed",
+          "closed_at": "2025-10-30T15:16:56.413959"
+        },
+        {
+          "n": 2,
+          "start": "2007-08-04",
+          "end": "2008-02-03",
+          "status": "pending"
+        },
+        {
+          "n": 3,
+          "start": "2008-02-04",
+          "end": "2008-08-03",
+          "status": "pending"
+        },
+        {
+          "n": 4,
+          "start": "2008-08-04",
+          "end": "2009-02-03",
+          "status": "pending"
+        },
+        {
+          "n": 5,
+          "start": "2009-02-04",
+          "end": "2009-08-03",
+          "status": "pending"
+        },
+        {
+          "n": 6,
+          "start": "2009-08-04",
+          "end": "2010-02-03",
+          "status": "pending"
+        },
+        {
+          "n": 7,
+          "start": "2010-02-04",
+          "end": "2010-08-03",
+          "status": "pending"
+        },
+        {
+          "n": 8,
+          "start": "2010-08-04",
+          "end": "2011-02-03",
+          "status": "pending"
+        },
+        {
+          "n": 9,
+          "start": "2011-02-04",
+          "end": "2011-08-03",
+          "status": "pending"
+        },
+        {
+          "n": 10,
+          "start": "2011-08-04",
+          "end": "2012-02-03",
+          "status": "pending"
+        },
+        {
+          "n": 11,
+          "start": "2012-02-04",
+          "end": "2012-08-03",
+          "status": "pending"
+        },
+        {
+          "n": 12,
+          "start": "2012-08-04",
+          "end": "2013-02-03",
+          "status": "pending"
+        },
+        {
+          "n": 13,
+          "start": "2013-02-04",
+          "end": "2013-08-03",
+          "status": "pending"
+        },
+        {
+          "n": 14,
+          "start": "2013-08-04",
+          "end": "2014-02-03",
+          "status": "pending"
+        }
+      ],
+      "completed_turns": [
+        {
+          "turn_n": 1,
+          "range": {
+            "start": "2007-02-04",
+            "end": "2007-08-03"
+          },
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.6
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.4
+            }
+          ],
+          "use_dca": true,
+          "turn_return": 0.336306,
+          "turn_return_market": 0.336306,
+          "portfolio_value": 71587.84,
+          "events": []
+        }
+      ],
+      "seed": 3923729551187856058,
+      "created_at": "2025-10-30T15:14:39.114801",
+      "closed": false,
+      "total_turns": 14,
+      "cum_return": 0.431757,
+      "events_log": []
+    },
+    "car_841858": {
+      "session_id": "car_841858",
+      "player": "Javi",
+      "difficulty": "intermedio",
+      "universe": [
+        "AAPL",
+        "MSFT",
+        "CASH"
+      ],
+      "rejected_universe": [],
+      "capital_initial": 50000.0,
+      "capital_current": 68612.57,
+      "period": {
+        "start": "2007-02-04",
+        "end": "2014-02-03"
+      },
+      "turns": [
+        {
+          "n": 1,
+          "start": "2007-02-04",
+          "end": "2007-08-03",
+          "status": "completed",
+          "closed_at": "2025-10-30T15:53:59.468968"
+        },
+        {
+          "n": 2,
+          "start": "2007-08-04",
+          "end": "2008-02-03",
+          "status": "pending"
+        },
+        {
+          "n": 3,
+          "start": "2008-02-04",
+          "end": "2008-08-03",
+          "status": "pending"
+        },
+        {
+          "n": 4,
+          "start": "2008-08-04",
+          "end": "2009-02-03",
+          "status": "pending"
+        },
+        {
+          "n": 5,
+          "start": "2009-02-04",
+          "end": "2009-08-03",
+          "status": "pending"
+        },
+        {
+          "n": 6,
+          "start": "2009-08-04",
+          "end": "2010-02-03",
+          "status": "pending"
+        },
+        {
+          "n": 7,
+          "start": "2010-02-04",
+          "end": "2010-08-03",
+          "status": "pending"
+        },
+        {
+          "n": 8,
+          "start": "2010-08-04",
+          "end": "2011-02-03",
+          "status": "pending"
+        },
+        {
+          "n": 9,
+          "start": "2011-02-04",
+          "end": "2011-08-03",
+          "status": "pending"
+        },
+        {
+          "n": 10,
+          "start": "2011-08-04",
+          "end": "2012-02-03",
+          "status": "pending"
+        },
+        {
+          "n": 11,
+          "start": "2012-02-04",
+          "end": "2012-08-03",
+          "status": "pending"
+        },
+        {
+          "n": 12,
+          "start": "2012-08-04",
+          "end": "2013-02-03",
+          "status": "pending"
+        },
+        {
+          "n": 13,
+          "start": "2013-02-04",
+          "end": "2013-08-03",
+          "status": "pending"
+        },
+        {
+          "n": 14,
+          "start": "2013-08-04",
+          "end": "2014-02-03",
+          "status": "pending"
+        }
+      ],
+      "completed_turns": [
+        {
+          "turn_n": 1,
+          "range": {
+            "start": "2007-02-04",
+            "end": "2007-08-03"
+          },
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.5
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.3
+            },
+            {
+              "ticker": "CASH",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": true,
+          "turn_return": 0.280768,
+          "turn_return_market": 0.280768,
+          "portfolio_value": 68612.57,
+          "events": [],
+          "dca_in_turn": 3571.43,
+          "invested_so_far": 53571.43,
+          "pnl_abs": 15041.14,
+          "pnl_pct": 0.280768,
+          "cum_return_net": 0.280768,
+          "delta_vs_prev": 18612.57
+        }
+      ],
+      "seed": 3923729551187856058,
+      "created_at": "2025-10-30T15:52:32.306925",
+      "closed": false,
+      "total_turns": 14,
+      "turns_total": 14,
+      "contrib_so_far": 3571.4285714285716,
+      "cum_return": 0.372251,
+      "events_log": [],
+      "decisions": [
+        {
+          "turn_n": 1,
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.5
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.3
+            },
+            {
+              "ticker": "CASH",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": true
+        }
+      ]
+    }
+  }
+}
