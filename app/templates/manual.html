@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block title %}Manual de Usuario{% endblock %}
+
+{% block content %}
+<section class="card">
+  <div class="card-section">
+    <h1>Manual de Usuario — Simulador de Inversiones</h1>
+    <div class="manual-video">
+      <div class="video-placeholder" role="img" aria-label="Vídeo introductorio">
+        <video controls playsinline preload="metadata" style="max-width:640px; width:100%; height:auto;" aria-label="Vídeo introductorio">
+          <source src="{{ url_for('static', filename='videos/videoplayback.mp4') }}" type="video/mp4">
+          Tu navegador no soporta la reproducción de vídeo.
+        </video>
+    </div>
+
+    <article class="manual-content">
+      <p>
+        Este manual explica paso a paso cómo utilizar el simulador de inversiones en sus distintos modos, así como las mejores
+        prácticas para interpretar los resultados y compartirlos.
+      </p>
+
+      <h2>1. Acceso y modos disponibles</h2>
+      <ul>
+        <li><strong>Modo Práctica:</strong> simula casos puntuales y escenarios personalizados.</li>
+        <li><strong>Modo Carrera:</strong> gestiona turnos sucesivos con histórico real, eventos y ranking.</li>
+        <li><strong>Manual de Usuario:</strong> la sección que estás leyendo, con documentación centralizada.</li>
+      </ul>
+
+      <h2>2. Preparar tu sesión</h2>
+      <p>
+        Antes de iniciar cualquier simulación conviene definir:
+      </p>
+      <ul>
+        <li><strong>Capital disponible:</strong> importe total que estás dispuesto a asignar.</li>
+        <li><strong>Universo de activos:</strong> tickers o empresas que seguirás.</li>
+        <li><strong>Objetivo temporal:</strong> horizonte de análisis para interpretar los resultados.</li>
+      </ul>
+
+      <h2>3. Modo Práctica paso a paso</h2>
+      <ol>
+        <li>Accede a <em>Nuevo análisis</em> para cargar datos históricos.</li>
+        <li>Introduce ticker, fechas y, opcionalmente, eventos o notas.</li>
+        <li>Descarga reportes CSV o PDF desde la sección de resultados.</li>
+        <li>Guarda tus observaciones en el historial para futuras consultas.</li>
+      </ol>
+
+      <h2>4. Modo Carrera paso a paso</h2>
+      <ol>
+        <li>Configura jugador, dificultad, capital y universo inicial.</li>
+        <li>Revisa el turno activo, distribuye pesos (máximo 10 activos) y aplica DCA si procede.</li>
+        <li>Cierra cada turno para actualizar retornos, eventos aplicados y valor de cartera.</li>
+        <li>Genera el informe final para visualizar métricas, techo teórico, warnings y ranking.</li>
+      </ol>
+      <p>
+        Recuerda respetar los límites de pesos y activos; el sistema validará tanto en cliente como en servidor.
+      </p>
+
+      <h2>5. Interpretación de métricas</h2>
+      <ul>
+        <li><strong>CAGR:</strong> crecimiento anual compuesto; útil para comparar estrategias en diferentes horizontes.</li>
+        <li><strong>Volatilidad anual:</strong> desviación estándar mensual anualizada; identifica estabilidad.</li>
+        <li><strong>Drawdown máximo:</strong> pérdida máxima desde un pico; refleja riesgos de caídas profundas.</li>
+        <li><strong>Tracking error:</strong> dispersión respecto al benchmark; combinada con active return define el information ratio.</li>
+      </ul>
+
+      <h2>6. Exportaciones y reporting</h2>
+      <p>
+        Desde el informe de carrera puedes descargar:
+      </p>
+      <ul>
+        <li>Snapshots por turno (CSV).</li>
+        <li>Serie equity y benchmark (CSV).</li>
+        <li>Resumen ejecutivo (CSV) y gráfico PNG.</li>
+      </ul>
+      <p>
+        En modo práctica, los reportes se descargan desde la sección de análisis o historial.
+      </p>
+
+      <h2>7. Ranking y compartición</h2>
+      <ul>
+        <li><strong>Ranking local:</strong> envío opt-in de score y estrellas. Requiere consentimiento explícito.</li>
+        <li><strong>Share payload:</strong> devuelve dificultad, periodo, universo y hash de semilla para reproducir resultados.</li>
+        <li><strong>Buenas prácticas:</strong> incluye siempre descripción del método y riesgos asumidos.</li>
+      </ul>
+
+      <h2>8. Consejos y soporte</h2>
+      <ul>
+        <li>Revisa los warnings de datos antes de tomar decisiones.</li>
+        <li>Mantén registros de tus hipótesis para comparar con resultados reales.</li>
+        <li>Contacta con el equipo si detectas inconsistencias en precios o eventos.</li>
+      </ul>
+      <p>
+        Gracias por utilizar el simulador. Tu feedback ayuda a mejorar futuras versiones.
+      </p>
+    </article>
+  </div>
+</section>
+{% endblock %}

@@ -241,7 +241,7 @@ async function copyCurrentUrl() {
   }
 }
 
-// --- Utilidad: resaltar coincidencias en texto (para Empresas) ---
+// --- Utilidad: resaltar coincidencias en texto (para Ejemplos de empresas) ---
 function highlight(text, needle) {
   if (!needle) return String(text ?? "");
   const esc = String(needle).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -260,7 +260,7 @@ const state = {
 };
 
 /* ============================================================================
- * Empresas (listado + paginado + orden)
+ * Ejemplos de empresas (listado + paginado + orden)
  * ==========================================================================*/
 
 /**
@@ -325,7 +325,7 @@ async function loadEmpresas() {
     infoEl.textContent =
       total === 0
         ? "0 resultados"
-        : `Mostrando ${start} – ${end} de ${total} · p. ${page} · ${per_page}/pág`;
+        : `Mostrando ${start} - ${end} de ${total} · pág. ${page} · ${per_page}/pág`;
   }
 
   // Botones
@@ -334,7 +334,7 @@ async function loadEmpresas() {
 }
 
 /**
- * Enlaza eventos de bÃºsqueda, paginado y "compartir" en Empresas.
+ * Enlaza eventos de bÃºsqueda, paginado y "compartir" en Ejemplos de empresas.
  */
 function bindEmpresas() {
   // Buscar
@@ -370,7 +370,7 @@ function bindEmpresas() {
     loadEmpresas().catch((e) => alert(e.message));
   });
 
-  // Share URL (Empresas) — solo si existe el botón
+  // Share URL (Ejemplos de empresas) — solo si existe el botón
   const empShareBtn = $("#emp-share");
   if (empShareBtn) {
     empShareBtn.addEventListener("click", async () => {
@@ -855,7 +855,7 @@ function bindHistorial() {
 function readParams() {
   const p = new URLSearchParams(location.search);
 
-  // --- Empresas ---
+  // --- Ejemplos de empresas ---
   state.emp.q = p.get("emp_q") ?? state.emp.q;
   state.emp.sector = p.get("emp_sector") ?? state.emp.sector;
   state.emp.page = Number(p.get("emp_page") ?? state.emp.page) || 1;
@@ -879,7 +879,7 @@ function readParams() {
 function writeParams(replace = true) {
   const p = new URLSearchParams(location.search);
 
-  // --- Empresas ---
+  // --- Ejemplos de empresas ---
   state.emp.q ? p.set("emp_q", state.emp.q) : p.delete("emp_q");
   state.emp.sector ? p.set("emp_sector", state.emp.sector) : p.delete("emp_sector");
   state.emp.page > 1 ? p.set("emp_page", String(state.emp.page)) : p.delete("emp_page");
@@ -973,7 +973,7 @@ function closeObservacionesModal() {
  * ==========================================================================*/
 
 function bindSorting() {
-  // Empresas
+  // Ejemplos de empresas
   document.querySelectorAll("[data-sort-emp]").forEach((th) => {
     th.addEventListener("click", () => {
       const key = th.getAttribute("data-sort-emp");

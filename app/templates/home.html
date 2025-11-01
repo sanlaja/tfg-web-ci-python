@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Simulador de Inversiones{% endblock %}
+
+{% block content %}
+<section class="landing-hero">
+  <h1>Bienvenido al simulador de inversiones, escoja el modo que desea:</h1>
+
+  <div class="landing-actions">
+    <div class="landing-item">
+      <img src="{{ url_for('static', filename='img/modo-practica.png') }}" alt="Modo Práctica" class="landing-icon">
+      <a class="landing-btn" href="{{ url_for('main.inicio_alias') }}">Modo Práctica</a>
+    </div>
+
+    <div class="landing-item">
+      <img src="{{ url_for('static', filename='img/modo-carrera.png') }}" alt="Modo Carrera" class="landing-icon">
+      <a class="landing-btn" href="{{ url_for('main.career_page') }}">Modo Carrera</a>
+    </div>
+
+    <div class="landing-item">
+      <img src="{{ url_for('static', filename='img/manual-usuario.png') }}" alt="Manual de Usuario" class="landing-icon">
+      <a class="landing-btn" href="{{ url_for('main.manual_page') }}">Manual de Usuario</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

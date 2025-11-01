@@ -7,19 +7,30 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='estilos.css') }}" />
   <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/favicon.png') }}" />
 </head>
-<body>
+{% set _nav_mode = nav_mode or 'practice' %}
+<body data-nav-mode="{{ _nav_mode }}">
   <header class="top-nav">
     <div class="brand">
-      <a href="{{ url_for('main.inicio') }}">Simulador</a>
+      <a href="{{ url_for('main.home') }}">Simulador</a>
     </div>
+    {% if _nav_mode == 'practice' %}
     <nav class="top-nav__links" aria-label="Principal">
-      <a class="nav-link {% if active == 'inicio' %}active{% endif %}" href="{{ url_for('main.inicio') }}">Inicio</a>
-      <a class="nav-link {% if active == 'empresas' %}active{% endif %}" href="{{ url_for('main.empresas_page') }}">Empresas</a>
+      <a class="nav-link {% if active == 'inicio' %}active{% endif %}" href="{{ url_for('main.inicio_alias') }}">Inicio</a>
+      <a class="nav-link {% if active == 'empresas' %}active{% endif %}" href="{{ url_for('main.empresas_page') }}">Ejemplos de empresas</a>
       <a class="nav-link {% if active == 'analisis' %}active{% endif %}" href="{{ url_for('main.analisis_page') }}">Nuevo an&aacute;lisis</a>
       <a class="nav-link {% if active == 'aprende' %}active{% endif %}" href="{{ url_for('main.aprende_page') }}">Aprende a invertir</a>
       <a class="nav-link {% if active == 'historial' %}active{% endif %}" href="{{ url_for('main.historial_page') }}">Historial</a>
       <a class="nav-link {% if active == 'career' %}active{% endif %}" href="{{ url_for('main.career_page') }}">Modo Carrera</a>
     </nav>
+    {% elif _nav_mode == 'career' %}
+    <nav class="top-nav__links" aria-label="Principal">
+      <a class="btn btn-secondary" href="{{ url_for('main.home') }}">Volver al inicio</a>
+    </nav>
+    {% elif _nav_mode == 'manual' %}
+    <nav class="top-nav__links" aria-label="Principal">
+      <a class="btn btn-secondary" href="{{ url_for('main.home') }}">Volver al inicio</a>
+    </nav>
+    {% endif %}
   </header>
 
   <main class="main-content">

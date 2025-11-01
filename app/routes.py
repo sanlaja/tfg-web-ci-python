@@ -19,13 +19,13 @@ bp = Blueprint("main", __name__)
 #   Vistas HTML
 # ----------------------
 @bp.get("/")
-def inicio():
-    return render_template("inicio.html", active="inicio")
+def home():
+    return render_template("home.html", active="home", nav_mode="landing")
 
 
 @bp.get("/inicio")
 def inicio_alias():
-    return render_template("inicio.html", active="inicio")
+    return render_template("inicio.html", active="inicio", nav_mode="practice")
 
 
 @bp.get("/empresas")
@@ -37,27 +37,32 @@ def empresas_page():
     )
     if wants_json and request.args.get("format") != "html":
         return listar_empresas()
-    return render_template("empresas.html", active="empresas")
+    return render_template("empresas.html", active="empresas", nav_mode="practice")
 
 
 @bp.get("/nuevo-analisis")
 def analisis_page():
-    return render_template("analisis.html", active="analisis")
+    return render_template("analisis.html", active="analisis", nav_mode="practice")
 
 
 @bp.get("/historial")
 def historial_page():
-    return render_template("historial.html", active="historial")
+    return render_template("historial.html", active="historial", nav_mode="practice")
 
 
 @bp.get("/aprende")
 def aprende_page():
-    return render_template("aprende.html", active="aprende")
+    return render_template("aprende.html", active="aprende", nav_mode="practice")
+
+
+@bp.get("/manual")
+def manual_page():
+    return render_template("manual.html", active="manual", nav_mode="manual")
 
 
 @bp.get("/modo-carrera")
 def career_page():
-    return render_template("career.html", active="career")
+    return render_template("career.html", active="career", nav_mode="career")
 
 
 # ----------------------

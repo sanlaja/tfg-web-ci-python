@@ -1,12 +1,307 @@
-﻿[
-  {"ticker": "MSFT",  "nombre": "Microsoft",           "sector": "Tecnología"},
-  {"ticker": "AAPL",  "nombre": "Apple",               "sector": "Tecnología"},
-  {"ticker": "GOOGL", "nombre": "Alphabet",            "sector": "Tecnología"},
-  {"ticker": "AMZN",  "nombre": "Amazon",              "sector": "Consumo"},
-  {"ticker": "JNJ",   "nombre": "Johnson & Johnson",   "sector": "Salud"},
-  {"ticker": "NVDA",  "nombre": "NVIDIA",              "sector": "Tecnología"},
-  {"ticker": "KO",    "nombre": "Coca-Cola",           "sector": "Consumo"},
-  {"ticker": "PG",    "nombre": "Procter & Gamble",    "sector": "Consumo"},
-  {"ticker": "TSLA",  "nombre": "Tesla",               "sector": "Automoción"},
-  {"ticker": "BABA",  "nombre": "Alibaba",             "sector": "Tecnología"}
+[
+  {
+    "ticker": "AAPL",
+    "nombre": "Apple",
+    "sector": "Tecnología"
+  },
+  {
+    "ticker": "MSFT",
+    "nombre": "Microsoft",
+    "sector": "Tecnología"
+  },
+  {
+    "ticker": "GOOGL",
+    "nombre": "Alphabet",
+    "sector": "Tecnología"
+  },
+  {
+    "ticker": "AMZN",
+    "nombre": "Amazon",
+    "sector": "Consumo discrecional"
+  },
+  {
+    "ticker": "META",
+    "nombre": "Meta Platforms",
+    "sector": "Servicios de comunicación"
+  },
+  {
+    "ticker": "NVDA",
+    "nombre": "NVIDIA",
+    "sector": "Tecnología"
+  },
+  {
+    "ticker": "TSLA",
+    "nombre": "Tesla",
+    "sector": "Automoción"
+  },
+  {
+    "ticker": "BRK-B",
+    "nombre": "Berkshire Hathaway",
+    "sector": "Finanzas"
+  },
+  {
+    "ticker": "V",
+    "nombre": "Visa",
+    "sector": "Finanzas"
+  },
+  {
+    "ticker": "MA",
+    "nombre": "Mastercard",
+    "sector": "Finanzas"
+  },
+  {
+    "ticker": "JPM",
+    "nombre": "JPMorgan Chase",
+    "sector": "Finanzas"
+  },
+  {
+    "ticker": "JNJ",
+    "nombre": "Johnson & Johnson",
+    "sector": "Salud"
+  },
+  {
+    "ticker": "PG",
+    "nombre": "Procter & Gamble",
+    "sector": "Consumo básico"
+  },
+  {
+    "ticker": "XOM",
+    "nombre": "ExxonMobil",
+    "sector": "Energía"
+  },
+  {
+    "ticker": "CVX",
+    "nombre": "Chevron",
+    "sector": "Energía"
+  },
+  {
+    "ticker": "PEP",
+    "nombre": "PepsiCo",
+    "sector": "Consumo básico"
+  },
+  {
+    "ticker": "KO",
+    "nombre": "Coca-Cola",
+    "sector": "Consumo básico"
+  },
+  {
+    "ticker": "AVGO",
+    "nombre": "Broadcom",
+    "sector": "Tecnología"
+  },
+  {
+    "ticker": "ORCL",
+    "nombre": "Oracle",
+    "sector": "Tecnología"
+  },
+  {
+    "ticker": "CSCO",
+    "nombre": "Cisco Systems",
+    "sector": "Tecnología"
+  },
+  {
+    "ticker": "ADBE",
+    "nombre": "Adobe",
+    "sector": "Tecnología"
+  },
+  {
+    "ticker": "COST",
+    "nombre": "Costco",
+    "sector": "Consumo defensivo"
+  },
+  {
+    "ticker": "TSM",
+    "nombre": "Taiwan Semiconductor",
+    "sector": "Tecnología"
+  },
+  {
+    "ticker": "TMO",
+    "nombre": "Thermo Fisher Scientific",
+    "sector": "Salud"
+  },
+  {
+    "ticker": "MRK",
+    "nombre": "Merck & Co.",
+    "sector": "Salud"
+  },
+  {
+    "ticker": "WMT",
+    "nombre": "Walmart",
+    "sector": "Consumo defensivo"
+  },
+  {
+    "ticker": "PFE",
+    "nombre": "Pfizer",
+    "sector": "Salud"
+  },
+  {
+    "ticker": "NKE",
+    "nombre": "Nike",
+    "sector": "Consumo discrecional"
+  },
+  {
+    "ticker": "MCD",
+    "nombre": "McDonald's",
+    "sector": "Consumo discrecional"
+  },
+  {
+    "ticker": "ABT",
+    "nombre": "Abbott Laboratories",
+    "sector": "Salud"
+  },
+  {
+    "ticker": "LLY",
+    "nombre": "Eli Lilly",
+    "sector": "Salud"
+  },
+  {
+    "ticker": "INTU",
+    "nombre": "Intuit",
+    "sector": "Tecnología"
+  },
+  {
+    "ticker": "IBM",
+    "nombre": "IBM",
+    "sector": "Tecnología"
+  },
+  {
+    "ticker": "AMD",
+    "nombre": "Advanced Micro Devices",
+    "sector": "Tecnología"
+  },
+  {
+    "ticker": "TXN",
+    "nombre": "Texas Instruments",
+    "sector": "Tecnología"
+  },
+  {
+    "ticker": "CRM",
+    "nombre": "Salesforce",
+    "sector": "Tecnología"
+  },
+  {
+    "ticker": "NFLX",
+    "nombre": "Netflix",
+    "sector": "Servicios de comunicación"
+  },
+  {
+    "ticker": "DIS",
+    "nombre": "Walt Disney",
+    "sector": "Servicios de comunicación"
+  },
+  {
+    "ticker": "LIN",
+    "nombre": "Linde",
+    "sector": "Materiales"
+  },
+  {
+    "ticker": "UPS",
+    "nombre": "UPS",
+    "sector": "Transporte"
+  },
+  {
+    "ticker": "UNH",
+    "nombre": "UnitedHealth Group",
+    "sector": "Salud"
+  },
+  {
+    "ticker": "BAC",
+    "nombre": "Bank of America",
+    "sector": "Finanzas"
+  },
+  {
+    "ticker": "HON",
+    "nombre": "Honeywell",
+    "sector": "Industria"
+  },
+  {
+    "ticker": "CAT",
+    "nombre": "Caterpillar",
+    "sector": "Industria"
+  },
+  {
+    "ticker": "AMAT",
+    "nombre": "Applied Materials",
+    "sector": "Tecnología"
+  },
+  {
+    "ticker": "BKNG",
+    "nombre": "Booking Holdings",
+    "sector": "Consumo discrecional"
+  },
+  {
+    "ticker": "QCOM",
+    "nombre": "Qualcomm",
+    "sector": "Tecnología"
+  },
+  {
+    "ticker": "SBUX",
+    "nombre": "Starbucks",
+    "sector": "Consumo discrecional"
+  },
+  {
+    "ticker": "GE",
+    "nombre": "General Electric",
+    "sector": "Industria"
+  },
+  {
+    "ticker": "BABA",
+    "nombre": "Alibaba",
+    "sector": "Tecnología"
+  },
+  {
+    "ticker": "SAP",
+    "nombre": "SAP",
+    "sector": "Tecnología"
+  },
+  {
+    "ticker": "ASML",
+    "nombre": "ASML Holding",
+    "sector": "Tecnología"
+  },
+  {
+    "ticker": "SONY",
+    "nombre": "Sony",
+    "sector": "Tecnología"
+  },
+  {
+    "ticker": "RIO",
+    "nombre": "Rio Tinto",
+    "sector": "Materiales"
+  },
+  {
+    "ticker": "BHP",
+    "nombre": "BHP",
+    "sector": "Materiales"
+  },
+  {
+    "ticker": "BP",
+    "nombre": "BP",
+    "sector": "Energía"
+  },
+  {
+    "ticker": "TTE",
+    "nombre": "TotalEnergies",
+    "sector": "Energía"
+  },
+  {
+    "ticker": "ENB",
+    "nombre": "Enbridge",
+    "sector": "Energía"
+  },
+  {
+    "ticker": "TD",
+    "nombre": "Toronto-Dominion Bank",
+    "sector": "Finanzas"
+  },
+  {
+    "ticker": "LULU",
+    "nombre": "Lululemon Athletica",
+    "sector": "Consumo discrecional"
+  },
+  {
+    "ticker": "DE",
+    "nombre": "Deere & Co.",
+    "sector": "Industria"
+  }
 ]

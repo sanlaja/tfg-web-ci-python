@@ -1,6 +1,6 @@
-{% extends "base.html" %}
+﻿{% extends "base.html" %}
 
-{% block title %}Aprende a invertir &middot; Simulador{% endblock %}
+{% block title %}Aprende a invertir · Simulador{% endblock %}
 
 {% block content %}
 <section class="edu-section">
@@ -10,7 +10,7 @@
         <p class="eyebrow">Guía esencial</p>
         <h1>Aprende a invertir</h1>
         <p class="lead">
-          Domina los conceptos clave antes de completar tu próximo análisis y saca el máximo partido a cada decisión.
+          Antes de lanzar tu primera simulación, revisa los conceptos clave para diseñar un plan sencillo y realista.
         </p>
       </div>
       <div>
@@ -22,29 +22,44 @@
 
 <section class="edu-section">
   <div class="card">
+    <h2>Campos principales del simulador</h2>
+    <p>Estos cuatro elementos construyen la mayor parte de tus previsiones. Dedica unos minutos a definirlos.</p>
     <div class="edu-grid">
       <div>
-        <h2>PARTE 1: ¿Qué significa invertir en una empresa?</h2>
-        <h3>¿Qué es invertir?</h3>
-        <p>
-          Invertir en una empresa significa comprar una parte (acción) de ella, con la esperanza de que esa empresa:
-        </p>
+        <h3>1. Importe inicial (€)</h3>
+        <p>Es el capital que aportas hoy. Refleja ahorros disponibles y debe ser una cifra que no comprometa tus gastos básicos.</p>
         <ul>
-          <li>Gane dinero en el futuro</li>
-          <li>Aumente su valor, permitiendo al inversor vender más caro o recibir dividendos (reparto de beneficios).</li>
+          <li><strong>Cómo estimarlo:</strong> suma ahorros líquidos que puedas inmovilizar sin urgencia.</li>
+          <li><strong>Ejemplo:</strong> 5.000&nbsp;€ destinados a un plan de 5 años.</li>
+          <li><strong>Consejo:</strong> mantén un fondo de emergencia separado para imprevistos.</li>
         </ul>
-        <h3>¿Por qué invertir?</h3>
-        <ul>
-          <li>Para hacer crecer tu dinero más que en una cuenta bancaria.</li>
-          <li>Para participar en el éxito de grandes empresas (como Apple, Amazon, etc.).</li>
-          <li>Para protegerte de la inflación.</li>
-        </ul>
-        <p style="color: red;">
-          Pero invertir no es apostar. Requiere análisis, paciencia, y entender ciertos conceptos básicos.
-        </p>
       </div>
       <div>
-        <img class="img-slot" src="/static/img/interes-compuesto-calculadora.png" alt="Ilustración sobre análisis de empresas" />
+        <h3>2. Horizonte (años, ≥1)</h3>
+        <p>Plazo mínimo durante el cual mantendrás la inversión. A mayor horizonte, menor impacto de la volatilidad.</p>
+        <ul>
+          <li><strong>Recomendación:</strong> comienza en 1 año y apunta a 5+ si quieres aprovechar el interés compuesto.</li>
+          <li><strong>Ejemplo:</strong> Guardar 10 años permite atravesar ciclos económicos completos.</li>
+          <li><strong>Riesgo:</strong> horizontes cortos requieren más liquidez y tolerancia a oscilaciones.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>3. Crecimiento anual estimado (%)</h3>
+        <p>Proyección del aumento medio anual de tu inversión. Es opcional, pero útil para crear escenarios.</p>
+        <ul>
+          <li><strong>Cómo estimarlo:</strong> revisa el crecimiento histórico de ingresos o beneficios (ej. 7,5&nbsp;%).</li>
+          <li><strong>Precaución:</strong> tasas altas son difíciles de mantener; contrasta con previsiones realistas.</li>
+          <li><strong>Escenarios:</strong> compara uno moderado (5&nbsp;%) con otro optimista (8-10&nbsp;%) y evalúa diferencias.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>4. Margen de seguridad (%)</h3>
+        <p>Colchón que recorta tus estimaciones para protegerte frente a errores o eventos inesperados.</p>
+        <ul>
+          <li><strong>Regla general:</strong> aplica entre 15&nbsp;% y 30&nbsp;% según la calidad del negocio.</li>
+          <li><strong>Ejemplo:</strong> si valoras una acción en 100&nbsp;€, con margen del 20&nbsp;% solo comprarías por debajo de 80&nbsp;€.</li>
+          <li><strong>Beneficio:</strong> te obliga a ser prudente al proyectar crecimientos o múltiplos de valoración.</li>
+        </ul>
       </div>
     </div>
   </div>
@@ -54,74 +69,17 @@
   <div class="card">
     <div class="edu-grid">
       <div>
-        <h2>PARTE 2: Conceptos clave para rellenar el formulario</h2>
-        <p>Vamos campo por campo explicando qué es cada cosa, cómo estimarlo, y por qué importa.</p>
+        <h2>Cómo preparar tu análisis</h2>
         <ol>
-          <li>
-            <h3>1. Ticker</h3>
-            <p><strong>Qué es:</strong> Código de una empresa en la bolsa (ej. MSFT = Microsoft, AAPL = Apple).</p>
-            <p><strong>Dónde encontrarlo:</strong> En sitios como Yahoo Finance, Google Finance, Investing.com.</p>
-            <p><strong>Ejemplo:</strong> Si quieres analizar Apple, escribes AAPL.</p>
-          </li>
-          <li>
-            <h3>2. Importe inicial (€)</h3>
-            <p><strong>Qué es:</strong> El dinero que planeas invertir hoy.</p>
-            <p><strong>Ejemplo:</strong> 1.000 €</p>
-            <p><strong>Nota:</strong> Esto no afecta al análisis en sí, pero sirve para calcular cuánto podrías tener al final del periodo.</p>
-          </li>
-          <li>
-            <h3>3. Horizonte (años, ≥1)</h3>
-            <p><strong>Qué es:</strong> Cuánto tiempo vas a mantener tu inversión sin vender.</p>
-            <p><strong>Recomendación:</strong> Puedes comenzar desde 1 año, pero idealmente apunta a 5 años o más para suavizar la volatilidad.</p>
-            <p><strong>Ejemplo:</strong> 10 años.</p>
-          </li>
-          <li>
-            <h3>4. Crecimiento anual (%)</h3>
-            <p><strong>Qué es:</strong> Estimación de cuánto crecerá el valor de la empresa cada año.</p>
-            <p><strong>Cómo se calcula:</strong> Se puede estimar mirando el crecimiento pasado de las ventas, beneficios, o valor en bolsa.</p>
-            <p><strong>Ejemplo:</strong> Si crees que la empresa crecerá un 12% al año, pones “12”.</p>
-            <p><strong>Dónde mirar:</strong> Yahoo Finance → Financials → Revenue/BENEFITS → CAGR (Crecimiento anual compuesto).</p>
-          </li>
-          <li>
-            <h3>5. Margen de seguridad (%)</h3>
-            <p><strong>Qué es:</strong> Un “colchón de seguridad” para protegerte de errores en tus estimaciones.</p>
-            <p><strong>Por qué importa:</strong> Estimar el futuro es difícil. El margen te protege si las cosas van peor de lo esperado.</p>
-            <p><strong>Ejemplo:</strong> Si calculas que una acción vale 100€, puedes aplicar un margen de seguridad del 25%, y no comprarla si cuesta más de 75€.</p>
-            <p><strong>Recomendación general:</strong> 15%-30%</p>
-          </li>
-          <li>
-            <h3>6. ROE (%) – Return on Equity (Rentabilidad sobre el capital)</h3>
-            <p><strong>Qué es:</strong> Mide cuánto beneficio genera la empresa con el dinero de sus accionistas.</p>
-            <p><strong>Fórmula:</strong> Beneficio neto / Capital propio</p>
-            <p><strong>Por qué importa:</strong> Una empresa con alto ROE usa bien su capital para generar beneficios.</p>
-            <p><strong>Ejemplo:</strong> Un ROE del 20% significa que por cada 100€ de capital, gana 20€ al año.</p>
-            <p><strong>Recomendación:</strong> Buen ROE > 15%</p>
-            <p><strong>Dónde mirar:</strong> Yahoo Finance → Statistics → Profitability</p>
-          </li>
-          <li>
-            <h3>7. Deuda / Activos (%)</h3>
-            <p><strong>Qué es:</strong> Proporción de la empresa que está financiada con deuda.</p>
-            <p><strong>Por qué importa:</strong> Mucha deuda puede ser peligrosa si los ingresos bajan.</p>
-            <p><strong>Ejemplo:</strong> Si el ratio es 40%, significa que el 40% de los activos están financiados con deuda.</p>
-            <p><strong>Recomendación:</strong> Depende del sector, pero idealmente &lt; 50%</p>
-            <p><strong>Dónde mirar:</strong> Yahoo Finance → Balance Sheet</p>
-          </li>
-          <li>
-            <h3>8. Justificación (≥ 20 caracteres)</h3>
-            <p><strong>Qué es:</strong> Un resumen de por qué eliges esta empresa.</p>
-            <p><strong>Qué incluir:</strong></p>
-            <ul>
-              <li>Ventajas competitivas (tecnología, marca, red)</li>
-              <li>Buen historial de crecimiento</li>
-              <li>Liderazgo sólido</li>
-              <li>Buena situación financiera</li>
-            </ul>
-            <p><strong>Ejemplo:</strong> “Apple tiene una marca fuerte, crece de forma estable, tiene altos márgenes y baja deuda.”</p>
-          </li>
+          <li>Investiga el modelo de negocio y su ventaja competitiva.</li>
+          <li>Revisa estados financieros y ratios de deuda para entender la salud de la empresa.</li>
+          <li>Define el horizonte temporal y la estrategia de aportaciones (única, periódica, con DCA, etc.).</li>
+          <li>Introduce los campos en el simulador y genera escenarios conservadores y optimistas.</li>
+          <li>Evalúa el margen de seguridad antes de tomar decisiones reales.</li>
         </ol>
       </div>
       <div>
-        <img class="img-slot" src="/static/img/analisis.webp" alt="Ilustración de formulario para análisis de inversiones" />
+        <img class="img-slot" src="/static/img/analisis.webp" alt="Ilustración sobre análisis de inversiones" />
       </div>
     </div>
   </div>
@@ -129,37 +87,17 @@
 
 <section class="edu-section">
   <div class="card">
-    <div class="edu-grid">
-      <div>
-        <h2>PARTE 3: Reglas básicas del buen análisis (principios)</h2>
-        <ul>
-          <li>Invierte en lo que entiendes</li>
-          <li>Analiza el negocio, no el precio</li>
-          <li>Diversifica</li>
-          <li>Piensa a largo plazo</li>
-          <li>Evita modas o rumores</li>
-        </ul>
-      </div>
-      <div>
-        <img class="img-slot" src="/static/img/rules.jpg" alt="Concepto visual de principios de inversión responsable" />
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="edu-section">
-  <div class="card">
-    <h2>Resumen final</h2>
-    <p>
-      Este formulario permite analizar una empresa a largo plazo utilizando criterios fundamentales como crecimiento, rentabilidad, deuda y margen de seguridad. Aprender estos conceptos ayuda a construir una base sólida como inversor.
-    </p>
-    <p>
-      <em>*Esta es información general y no constituye asesoramiento financiero. Para orientación personalizada, consulta con un profesional autorizado.*</em>
-    </p>
+    <h2>Consejos prácticos</h2>
+    <ul>
+      <li>Invierte en negocios que entiendas y cuya evolución puedas seguir.</li>
+      <li>Diversifica: no concentres todo tu capital en una sola empresa o sector.</li>
+      <li>Registra tus hipótesis para contrastarlas con los resultados que entregue el simulador.</li>
+      <li>Revisa periódicamente las métricas clave (CAGR, volatilidad, drawdown) para ajustar tu plan.</li>
+    </ul>
+    <p class="muted">*Este contenido es educativo y no constituye asesoramiento financiero personalizado.*</p>
     <div class="cta-center">
-      <a class="btn btn-primary btn-large" href="{{ url_for('main.analisis_page') }}">
-        Ir a Nuevo análisis
-      </a>
+
+      
     </div>
   </div>
 </section>
