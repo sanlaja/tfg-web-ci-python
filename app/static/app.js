@@ -256,6 +256,7 @@ function highlight(text, needle) {
 const state = {
   emp: { page: 1, per_page: 10, q: "", sector: "", sort: "ticker", dir: "asc" },
   his: { page: 1, per_page: 10, ticker: "", desde: "", hasta: "", sort: "timestamp", dir: "desc" },
+  career: { bench: "^GSPC" },
 };
 
 /* ============================================================================
@@ -1015,6 +1016,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const hasEmpresas = Boolean(document.getElementById("emp-tbody"));
   const hasAnalisis = Boolean(document.getElementById("btn-enviar-propuesta"));
   const hasHistorial = Boolean(document.getElementById("his-tbody"));
+  const hasCareer = Boolean(document.getElementById("career-app"));
 
   const hasBacktestModal = Boolean(document.getElementById("modalBacktest"));
   if (hasBacktestModal) {
@@ -1114,7 +1116,799 @@ document.addEventListener("DOMContentLoaded", async () => {
       ]);
     });
   }
+
+  if (hasCareer) {
+    initCareerPage();
+  }
 });
+
+/* ============================================================================
+ * Modo Carrera (UI)
+ * ==========================================================================*/
+
+const CAREER_MAX_ASSETS = 10;
+const CAREER_STORAGE_KEY = "career:preferences";
+const CAREER_PALETTE = [
+  "#1d4ed8",
+  "#34d399",
+  "#f59e0b",
+  "#ef4444",
+  "#a855f7",
+  "#14b8a6",
+  "#6366f1",
+  "#06b6d4",
+  "#f97316",
+  "#84cc16",
+];
+
+const careerState = {
+  bench: state.career?.bench || "^GSPC",
+  sessionId: null,
+  sessionData: null,
+  report: null,
+  charts: { series: null, equity: null },
+  latestSeriesTickers: [],
+};
+
+function loadCareerPrefs() {
+  try {
+    const raw = localStorage.getItem(CAREER_STORAGE_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch {
+    return {};
+  }
+}
+
+function saveCareerPrefs(partial) {
+  const current = loadCareerPrefs();
+  const next = { ...current, ...partial };
+  try {
+    localStorage.setItem(CAREER_STORAGE_KEY, JSON.stringify(next));
+  } catch (err) {
+    console.warn("No se pudo persistir carrera:", err);
+  }
+}
+
+function initCareerPage() {
+  const prefs = loadCareerPrefs();
+  if (prefs.bench) {
+    careerState.bench = prefs.bench;
+  }
+  if (Array.isArray(prefs.lastTickers)) {
+    careerState.latestSeriesTickers = prefs.lastTickers;
+  }
+  state.career.bench = careerState.bench;
+
+  const playerInput = document.getElementById("career-player");
+  const benchInput = document.getElementById("career-bench");
+  if (benchInput) benchInput.value = careerState.bench;
+  if (playerInput && prefs.player) {
+    playerInput.value = prefs.player;
+  }
+
+  const addAssetBtn = document.getElementById("career-add-asset");
+  const closeTurnBtn = document.getElementById("career-close-turn");
+  const createBtn = document.getElementById("career-create-btn");
+  const loadLastBtn = document.getElementById("career-load-last-btn");
+  const loadSeriesBtn = document.getElementById("career-load-series");
+  const reportBtn = document.getElementById("career-report-btn");
+  const reportRefreshBtn = document.getElementById("career-report-refresh");
+  const exportPngBtn = document.getElementById("career-export-png");
+  const rankingSubmitBtn = document.getElementById("career-ranking-submit");
+  const rankingRefreshBtn = document.getElementById("career-ranking-refresh");
+  const shareBtn = document.getElementById("career-share-btn");
+
+  createBtn?.addEventListener("click", handleCareerCreate);
+  loadLastBtn?.addEventListener("click", handleCareerLoadLast);
+  addAssetBtn?.addEventListener("click", () => addCareerAllocRow());
+  closeTurnBtn?.addEventListener("click", handleCareerCloseTurn);
+  loadSeriesBtn?.addEventListener("click", () => loadCareerSeries());
+  reportBtn?.addEventListener("click", () => renderCareerReport({ includeSeries: true }));
+  reportRefreshBtn?.addEventListener("click", () => renderCareerReport({ includeSeries: true, force: true }));
+  exportPngBtn?.addEventListener("click", exportCareerPng);
+  rankingSubmitBtn?.addEventListener("click", submitCareerRanking);
+  rankingRefreshBtn?.addEventListener("click", refreshCareerRanking);
+  shareBtn?.addEventListener("click", fetchCareerShare);
+
+  const consentChk = document.getElementById("career-ranking-consent");
+  consentChk?.addEventListener("change", () => {
+    if (!careerState.report) {
+      rankingSubmitBtn.disabled = true;
+      return;
+    }
+    rankingSubmitBtn.disabled = !consentChk.checked;
+  });
+
+  benchInput?.addEventListener("change", () => {
+    careerState.bench = benchInput.value.trim() || "^GSPC";
+    state.career.bench = careerState.bench;
+    saveCareerPrefs({ bench: careerState.bench });
+  });
+
+  const allocList = document.getElementById("career-alloc-list");
+  allocList?.addEventListener("input", () => {
+    rememberCareerAllocTickers();
+    updateCareerAllocSummary();
+  });
+  allocList?.addEventListener("click", (ev) => {
+    if (ev.target.closest(".career-remove-asset")) {
+      ev.target.closest(".alloc-row")?.remove();
+      ensureCareerAllocRows();
+      rememberCareerAllocTickers();
+      updateCareerAllocSummary();
+    }
+  });
+
+  const exportButtons = document.querySelectorAll(".career-export-buttons [data-export]");
+  exportButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const type = btn.getAttribute("data-export");
+      if (!type) return;
+      exportCareerCsv(type);
+    });
+  });
+
+  if (loadLastBtn) {
+    const prefs = loadCareerPrefs();
+    loadLastBtn.disabled = !prefs.lastSessionId;
+  }
+
+  ensureCareerAllocRows();
+  updateCareerAllocSummary();
+  refreshCareerRanking();
+
+  const storedSessionId = prefs.lastSessionId;
+  if (storedSessionId) {
+    handleCareerLoadSession(storedSessionId, { silent: true }).catch((err) => {
+      console.warn("No se pudo recuperar la sesión previa:", err);
+    });
+  }
+}
+
+function ensureCareerAllocRows() {
+  const list = document.getElementById("career-alloc-list");
+  if (!list) return;
+  const rows = Array.from(list.querySelectorAll(".alloc-row"));
+  if (rows.length === 0) {
+    for (let i = 0; i < 3; i++) addCareerAllocRow();
+  }
+}
+
+function addCareerAllocRow(prefill) {
+  const list = document.getElementById("career-alloc-list");
+  if (!list) return;
+  const rows = list.querySelectorAll(".alloc-row").length;
+  if (rows >= CAREER_MAX_ASSETS) {
+    mostrarToastError("La cartera admite como máximo 10 activos.");
+    return;
+  }
+  const row = document.createElement("div");
+  row.className = "alloc-row";
+  row.innerHTML = `
+    <input type="text" class="career-alloc-ticker" placeholder="Ticker" maxlength="15" value="${prefill?.ticker || ""}" />
+    <input type="number" class="career-alloc-weight" placeholder="Peso" step="0.01" min="0" max="1" value="${prefill?.weight ?? ""}" />
+    <button type="button" class="btn btn-ghost btn--xs career-remove-asset" aria-label="Quitar">×</button>
+  `;
+  list.appendChild(row);
+}
+
+function resetCareerAllocRows(tickers) {
+  const list = document.getElementById("career-alloc-list");
+  if (!list) return;
+  list.innerHTML = "";
+  (tickers || []).forEach((ticker) => addCareerAllocRow({ ticker }));
+  ensureCareerAllocRows();
+  updateCareerAllocSummary();
+}
+
+function collectCareerAlloc() {
+  const list = document.getElementById("career-alloc-list");
+  if (!list) return [];
+  return Array.from(list.querySelectorAll(".alloc-row"))
+    .map((row) => {
+      const ticker = row.querySelector(".career-alloc-ticker")?.value?.trim()?.toUpperCase();
+      const weightInput = row.querySelector(".career-alloc-weight");
+      const weight = weightInput?.value ? Number(weightInput.value) : NaN;
+      return { ticker, weight };
+    })
+    .filter((item) => item.ticker && Number.isFinite(item.weight) && item.weight > 0);
+}
+
+function updateCareerAllocSummary() {
+  const summary = document.getElementById("career-alloc-summary");
+  if (!summary) return;
+  const alloc = collectCareerAlloc();
+  const total = alloc.reduce((acc, item) => acc + item.weight, 0);
+  const uniqueTickers = new Set(alloc.map((item) => item.ticker));
+  summary.textContent = `Peso total: ${total.toFixed(2)} · Activos: ${uniqueTickers.size}`;
+  if (total > 1.0001 || uniqueTickers.size > CAREER_MAX_ASSETS) {
+    summary.classList.add("text-neg");
+  } else {
+    summary.classList.remove("text-neg");
+  }
+}
+
+function rememberCareerAllocTickers() {
+  const tickers = collectCareerAlloc().map((item) => item.ticker);
+  careerState.latestSeriesTickers = tickers;
+  saveCareerPrefs({ lastTickers: tickers });
+}
+
+function handleCareerCreate() {
+  const player = document.getElementById("career-player")?.value?.trim() || "";
+  const difficulty = document.getElementById("career-difficulty")?.value || "intermedio";
+  const universeRaw = document.getElementById("career-universe")?.value || "";
+  const capital = Number(document.getElementById("career-capital")?.value || 50000);
+  const bench = document.getElementById("career-bench")?.value?.trim() || "^GSPC";
+
+  if (!difficulty) {
+    mostrarToastError("Selecciona dificultad.");
+    return;
+  }
+  if (!Number.isFinite(capital) || capital <= 0) {
+    mostrarToastError("Capital inválido.");
+    return;
+  }
+
+  const universe = universeRaw
+    .split(/[,\s]+/)
+    .map((t) => t.trim().toUpperCase())
+    .filter(Boolean);
+
+  const payload = {
+    player,
+    difficulty,
+    universe,
+    capital,
+  };
+
+  const btn = document.getElementById("career-create-btn");
+  careerSetLoading(btn, true);
+  jsonPost("/api/career/session", payload)
+    .then((data) => {
+      mostrarToastOk("Sesión creada.");
+      if (player) saveCareerPrefs({ player });
+      careerState.bench = bench;
+      state.career.bench = bench;
+      saveCareerPrefs({ bench, lastSessionId: data.session_id });
+      handleCareerLoadSession(data.session_id);
+    })
+    .catch((err) => {
+      mostrarToastError(err?.message || "No se pudo crear la sesión.");
+    })
+    .finally(() => careerSetLoading(btn, false));
+}
+
+function handleCareerLoadLast() {
+  const prefs = loadCareerPrefs();
+  if (!prefs.lastSessionId) {
+    mostrarToastError("No hay sesión previa almacenada.");
+    return;
+  }
+  handleCareerLoadSession(prefs.lastSessionId).catch((err) => {
+    mostrarToastError(err?.message || "No se pudo cargar la sesión.");
+  });
+}
+
+async function handleCareerLoadSession(sessionId, opts = {}) {
+  const data = await jsonGet(`/api/career/session/${encodeURIComponent(sessionId)}`);
+  careerState.sessionId = sessionId;
+  careerState.sessionData = data.session;
+  saveCareerPrefs({ lastSessionId: sessionId });
+  renderCareerSession(data.session);
+  updateCareerAllocSummary();
+  if (!opts.silent) {
+    mostrarToastOk("Sesión cargada.");
+  }
+  return data.session;
+}
+
+function renderCareerSession(session) {
+  const card = document.getElementById("career-session-card");
+  const seriesCard = document.getElementById("career-series-card");
+  if (card) card.hidden = false;
+  if (seriesCard) seriesCard.hidden = false;
+  const shareOut = document.getElementById("career-share-output");
+  if (shareOut) {
+    shareOut.textContent = "Genera el informe para habilitar el share.";
+  }
+  careerState.report = null;
+  const rankingSubmit = document.getElementById("career-ranking-submit");
+  if (rankingSubmit) rankingSubmit.disabled = true;
+
+  document.getElementById("career-session-id").textContent = session.session_id;
+  const period = session.period || {};
+  document.getElementById("career-session-range").textContent = `Periodo: ${period.start || "—"} → ${period.end || "—"}`;
+  document.getElementById("career-session-capital").textContent = fmtEur(session.capital_current);
+  const loadLastBtn = document.getElementById("career-load-last-btn");
+  if (loadLastBtn) loadLastBtn.disabled = false;
+
+  const pendingTurn = (session.turns || []).find((t) => t.status === "pending");
+  const turnLabel = pendingTurn
+    ? `${pendingTurn.start} → ${pendingTurn.end}`
+    : "Sesión completada";
+  document.getElementById("career-session-turn").textContent = turnLabel;
+
+  const closeBtn = document.getElementById("career-close-turn");
+  if (closeBtn) closeBtn.disabled = !pendingTurn;
+
+  updateCareerTurnsTable(session.completed_turns || []);
+  updateCareerSeriesSelectors(session);
+
+  const prefs = loadCareerPrefs();
+  if (prefs.lastTickers?.length) {
+    resetCareerAllocRows(prefs.lastTickers);
+  } else {
+    resetCareerAllocRows((session.universe || []).slice(0, 3));
+  }
+  document.getElementById("career-report-card").hidden = false;
+}
+
+function updateCareerTurnsTable(turns) {
+  const body = document.getElementById("career-turns-body");
+  if (!body) return;
+  if (!turns.length) {
+    body.innerHTML = `<tr><td colspan="5" class="empty">Aún no hay turnos cerrados.</td></tr>`;
+    return;
+  }
+  body.innerHTML = turns
+    .map((turn) => {
+      const range = turn.range || {};
+      return `
+        <tr>
+          <td>${turn.turn_n}</td>
+          <td>${range.start || "—"} → ${range.end || "—"}</td>
+          <td class="${turn.turn_return >= 0 ? "text-pos" : "text-neg"}">${fmtPct((turn.turn_return || 0) * 100)}</td>
+          <td>${fmtEur(turn.portfolio_value)}</td>
+          <td>${turn.use_dca ? "Sí" : "No"}</td>
+        </tr>`;
+    })
+    .join("");
+}
+
+function updateCareerSeriesSelectors(session) {
+  const container = document.getElementById("career-series-tickers");
+  if (!container) return;
+  const universe = new Set(session.universe || []);
+  (session.decisions || []).forEach((decision) => {
+    (decision.alloc || []).forEach((item) => {
+      if (item.ticker) universe.add(String(item.ticker).toUpperCase());
+    });
+  });
+  const tickers = Array.from(universe).sort();
+  if (!tickers.length) {
+    container.innerHTML = `<span class="muted">Añade activos para ver series.</span>`;
+    return;
+  }
+  const saved = new Set(careerState.latestSeriesTickers || tickers.slice(0, 3));
+  container.innerHTML = tickers
+    .map((ticker) => {
+      const checked = saved.has(ticker) ? "checked" : "";
+      return `
+        <label class="checkbox-inline">
+          <input type="checkbox" class="career-series-option" value="${ticker}" ${checked} />
+          <span>${ticker}</span>
+        </label>`;
+    })
+    .join("");
+}
+
+function handleCareerCloseTurn() {
+  if (!careerState.sessionId) {
+    mostrarToastError("Crea o carga una sesión primero.");
+    return;
+  }
+  const alloc = collectCareerAlloc();
+  const unique = new Set(alloc.map((item) => item.ticker));
+  const totalWeight = alloc.reduce((acc, item) => acc + item.weight, 0);
+  if (!alloc.length) {
+    mostrarToastError("Añade al menos un activo con peso.");
+    return;
+  }
+  if (unique.size > CAREER_MAX_ASSETS) {
+    mostrarToastError("La cartera admite como máximo 10 activos.");
+    return;
+  }
+  if (totalWeight > 1.0001) {
+    mostrarToastError("La suma de pesos no puede superar 1.0.");
+    return;
+  }
+
+  const pendingTurn = (careerState.sessionData?.turns || []).find((t) => t.status === "pending");
+  if (!pendingTurn) {
+    mostrarToastError("No hay turnos pendientes.");
+    return;
+  }
+
+  const payload = {
+    session_id: careerState.sessionId,
+    turn_n: pendingTurn.n,
+    alloc,
+    use_dca: Boolean(document.getElementById("career-use-dca")?.checked),
+  };
+
+  const btn = document.getElementById("career-close-turn");
+  careerSetLoading(btn, true);
+  jsonPost("/api/career/turn", payload)
+    .then((data) => {
+      mostrarToastOk("Turno cerrado.");
+      handleCareerLoadSession(careerState.sessionId).then(() => {
+        renderCareerReport({ includeSeries: false });
+        loadCareerSeries();
+      });
+      return data;
+    })
+    .catch((err) => {
+      mostrarToastError(err?.message || "No se pudo cerrar el turno.");
+    })
+    .finally(() => careerSetLoading(btn, false));
+}
+
+function loadCareerSeries() {
+  if (!careerState.sessionId) {
+    mostrarToastError("Crea o carga una sesión primero.");
+    return;
+  }
+  const selected = Array.from(
+    document.querySelectorAll(".career-series-option:checked")
+  ).map((input) => input.value);
+  if (!selected.length) {
+    mostrarToastError("Selecciona al menos un ticker para graficar.");
+    return;
+  }
+  careerState.latestSeriesTickers = selected;
+  saveCareerPrefs({ lastTickers: selected });
+  const base = `/api/career/series/${encodeURIComponent(careerState.sessionId)}`;
+  const url = `${base}?${qs({ tickers: selected.join(",") })}`;
+
+  const emptyMsg = document.getElementById("career-series-empty");
+  if (emptyMsg) emptyMsg.textContent = "Cargando series...";
+
+  jsonGet(url)
+    .then((data) => {
+      renderCareerSeriesChart(data);
+    })
+    .catch((err) => {
+      mostrarToastError(err?.message || "No se pudieron cargar las series.");
+    })
+    .finally(() => {
+      if (emptyMsg) emptyMsg.textContent = "";
+    });
+}
+
+function renderCareerSeriesChart(payload) {
+  const canvas = document.getElementById("career-series-chart");
+  if (!canvas || typeof Chart === "undefined") return;
+  const emptyMsg = document.getElementById("career-series-empty");
+  const labels = new Set();
+  const datasets = [];
+  let colorIndex = 0;
+
+  Object.entries(payload.series || {}).forEach(([ticker, series]) => {
+    const entries = series || [];
+    entries.forEach((point) => labels.add(point[0]));
+  });
+
+  const labelArray = Array.from(labels).sort();
+
+  Object.entries(payload.series || {}).forEach(([ticker, series]) => {
+    const entries = series || [];
+    const map = new Map(entries.map((item) => [item[0], item[1]]));
+    const data = labelArray.map((label) => (map.has(label) ? Number(map.get(label)) : null));
+    datasets.push({
+      label: ticker,
+      data,
+      borderColor: CAREER_PALETTE[colorIndex % CAREER_PALETTE.length],
+      tension: 0.15,
+      spanGaps: true,
+    });
+    colorIndex += 1;
+  });
+
+  if (!careerState.charts.series) {
+    careerState.charts.series = new Chart(canvas.getContext("2d"), {
+      type: "line",
+      data: { labels: labelArray, datasets },
+      options: {
+        responsive: true,
+        interaction: { mode: "index", intersect: false },
+        plugins: {
+          legend: { display: true },
+          tooltip: { callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.formattedValue}` } },
+        },
+        scales: {
+          y: { title: { display: true, text: "Base 100" } },
+        },
+      },
+    });
+  } else {
+    careerState.charts.series.data.labels = labelArray;
+    careerState.charts.series.data.datasets = datasets;
+    careerState.charts.series.update();
+  }
+
+  if (emptyMsg) {
+    emptyMsg.textContent = datasets.length ? "" : "Sin datos para mostrar.";
+  }
+}
+
+function renderCareerReport(options = {}) {
+  if (!careerState.sessionId) {
+    mostrarToastError("Crea o selecciona una sesión.");
+    return;
+  }
+  const includeSeries = options.includeSeries === true;
+  const bench = careerState.bench || "^GSPC";
+  const url = `/api/career/report/${encodeURIComponent(careerState.sessionId)}?${qs({
+    bench,
+    include_series: includeSeries ? "true" : "false",
+  })}`;
+  const btn = document.getElementById("career-report-btn");
+  careerSetLoading(btn, true);
+  jsonGet(url)
+    .then((data) => {
+      careerState.report = data;
+      renderCareerReportPanels(data, includeSeries);
+      document.getElementById("career-ranking-submit").disabled = !document.getElementById("career-ranking-consent")?.checked;
+      mostrarToastOk("Informe actualizado.");
+    })
+    .catch((err) => {
+      mostrarToastError(err?.message || "No se pudo generar el informe.");
+    })
+    .finally(() => careerSetLoading(btn, false));
+}
+
+function renderCareerReportPanels(report, hasSeries) {
+  const starsEl = document.getElementById("career-score-stars");
+  const valueEl = document.getElementById("career-score-value");
+  const notesEl = document.getElementById("career-score-notes");
+
+  const score = report.score || {};
+  if (starsEl) starsEl.textContent = `${score.stars ?? "—"}★`;
+  if (valueEl) valueEl.textContent = `${score.value ?? "—"} / 10`;
+  if (notesEl) notesEl.textContent = score.notes || "Genera el informe para ver tu puntuación.";
+
+  renderCareerMetrics(report);
+  renderCareerWarnings(report.warnings || []);
+  renderCareerTheoretical(report.theoretical || {});
+
+  if (hasSeries && report.portfolio_equity?.series?.length) {
+    renderCareerEquityChart(report, careerState.bench);
+  }
+}
+
+function renderCareerMetrics(report) {
+  const portfolio = report.portfolio_equity?.metrics || {};
+  const benchmark = report.benchmark?.metrics || {};
+  const tracking = report.tracking || {};
+
+  const mapMetrics = (target, metrics) => {
+    const el = document.getElementById(target);
+    if (!el) return;
+    el.innerHTML = `
+      <li>CAGR: ${fmtPct((metrics.CAGR || 0) * 100)}</li>
+      <li>Volatilidad anual: ${fmtPct((metrics.vol_annual || 0) * 100)}</li>
+      <li>Drawdown: ${fmtPct((metrics.max_drawdown || 0) * 100)}</li>
+      <li>Retorno total: ${fmtPct((metrics.total_return || 0) * 100)}</li>
+    `;
+  };
+
+  mapMetrics("career-metrics-portfolio", portfolio);
+  mapMetrics("career-metrics-benchmark", benchmark);
+
+  const trackingEl = document.getElementById("career-metrics-tracking");
+  if (trackingEl) {
+    trackingEl.innerHTML = `
+      <li>Active return: ${fmtPct((tracking.active_return || 0) * 100)}</li>
+      <li>Tracking error: ${fmtPct((tracking.tracking_error || 0) * 100)}</li>
+      <li>Information ratio: ${
+        tracking.information_ratio !== null && tracking.information_ratio !== undefined
+          ? tracking.information_ratio.toFixed(2)
+          : ND
+      }</li>
+    `;
+  }
+}
+
+function renderCareerWarnings(warnings) {
+  const container = document.getElementById("career-warnings-list");
+  if (!container) return;
+  if (!warnings.length) {
+    container.innerHTML = `<span class="muted">Sin advertencias.</span>`;
+    return;
+  }
+  container.innerHTML = warnings
+    .map((w) => `<span class="warning-chip">${w}</span>`)
+    .join("");
+}
+
+function renderCareerTheoretical(theoretical) {
+  const tbody = document.getElementById("career-theoretical-body");
+  if (!tbody) return;
+  const method = theoretical.method || {};
+  const rows = ["k1", "k2", "k3"]
+    .map((key) => {
+      const item = theoretical[key];
+      if (!item) return "";
+      const tickers = (item.tickers || []).join(", ");
+      const metrics = item.metrics || {};
+      const methodTag = key === "k1" ? "—" : method[key] || "—";
+      return `
+        <tr>
+          <td>${key.toUpperCase()} <span class="badge badge-soft">${methodTag}</span></td>
+          <td>${tickers || "—"}</td>
+          <td>${fmtPct((metrics.CAGR || 0) * 100)}</td>
+          <td>${fmtPct((metrics.max_drawdown || 0) * 100)}</td>
+        </tr>`;
+    })
+    .filter(Boolean)
+    .join("");
+  tbody.innerHTML = rows || `<tr><td colspan="4" class="empty">Sin datos.</td></tr>`;
+}
+
+function renderCareerEquityChart(report, benchTicker) {
+  if (typeof Chart === "undefined") return;
+  const canvas = document.getElementById("career-equity-chart");
+  if (!canvas) return;
+  const equitySeries = report.portfolio_equity?.series || [];
+  const benchSeries = report.benchmark?.series || [];
+  const labels = Array.from(
+    new Set([...equitySeries, ...benchSeries].map((item) => item[0]))
+  ).sort();
+  const toMap = (series) => {
+    const map = new Map(series.map((item) => [item[0], item[1]]));
+    return labels.map((label) => (map.has(label) ? Number(map.get(label)) : null));
+  };
+
+  const datasets = [
+    {
+      label: "Portfolio",
+      data: toMap(equitySeries),
+      borderColor: CAREER_PALETTE[0],
+      tension: 0.12,
+      spanGaps: true,
+    },
+  ];
+  if (benchSeries.length) {
+    datasets.push({
+      label: benchTicker || "Benchmark",
+      data: toMap(benchSeries),
+      borderColor: CAREER_PALETTE[1],
+      borderDash: [6, 4],
+      tension: 0.12,
+      spanGaps: true,
+    });
+  }
+
+  if (!careerState.charts.equity) {
+    careerState.charts.equity = new Chart(canvas.getContext("2d"), {
+      type: "line",
+      data: { labels, datasets },
+      options: {
+        responsive: true,
+        plugins: { legend: { display: true } },
+        interaction: { mode: "index", intersect: false },
+        scales: { y: { title: { display: true, text: "Base 100" } } },
+      },
+    });
+  } else {
+    careerState.charts.equity.data.labels = labels;
+    careerState.charts.equity.data.datasets = datasets;
+    careerState.charts.equity.update();
+  }
+}
+
+function exportCareerCsv(type) {
+  if (!careerState.sessionId) {
+    mostrarToastError("Selecciona una sesión.");
+    return;
+  }
+  const bench = careerState.bench || "^GSPC";
+  const url = `/api/career/export/${encodeURIComponent(
+    careerState.sessionId
+  )}?${qs({ type, bench })}`;
+  window.open(url, "_blank", "noopener");
+}
+
+function exportCareerPng() {
+  if (!careerState.charts.equity) {
+    mostrarToastError("Genera el informe para exportar el gráfico.");
+    return;
+  }
+  const link = document.createElement("a");
+  link.href = careerState.charts.equity.toBase64Image("image/png", 1);
+  link.download = `career_equity_${careerState.sessionId || "report"}.png`;
+  link.click();
+}
+
+function submitCareerRanking() {
+  if (!careerState.sessionId || !careerState.report) {
+    mostrarToastError("Genera un informe antes de publicar.");
+    return;
+  }
+  const consent = document.getElementById("career-ranking-consent")?.checked;
+  if (!consent) {
+    mostrarToastError("Activa el consentimiento antes de publicar en el ranking.");
+    return;
+  }
+  const payload = {
+    session_id: careerState.sessionId,
+    consent: true,
+    player: document.getElementById("career-player")?.value || "",
+    score: careerState.report.score?.value,
+    stars: careerState.report.score?.stars,
+    bench: careerState.bench || "^GSPC",
+  };
+  const btn = document.getElementById("career-ranking-submit");
+  careerSetLoading(btn, true);
+  jsonPost("/api/career/ranking", payload)
+    .then(() => {
+      mostrarToastOk("Score enviado al ranking local.");
+      refreshCareerRanking();
+    })
+    .catch((err) => {
+      mostrarToastError(err?.message || "No se pudo enviar el ranking.");
+    })
+    .finally(() => careerSetLoading(btn, false));
+}
+
+function refreshCareerRanking() {
+  const body = document.getElementById("career-ranking-body");
+  if (!body) return;
+  jsonGet("/api/career/ranking?limit=20")
+    .then((data) => {
+      const entries = data.entries || [];
+      body.innerHTML = entries.length
+        ? entries
+            .map((entry) => {
+              const period = entry.period || {};
+              return `
+                <tr>
+                  <td>${entry.player || "—"}</td>
+                  <td>${entry.difficulty || "—"}</td>
+                  <td>${entry.score?.toFixed?.(2) ?? entry.score ?? "—"} (${entry.stars ?? "—"}★)</td>
+                  <td>${entry.bench || "—"}</td>
+                  <td>${period.start || "—"} → ${period.end || "—"}</td>
+                </tr>`;
+            })
+            .join("")
+        : `<tr><td colspan="5" class="empty">Sin envíos todavía.</td></tr>`;
+    })
+    .catch((err) => {
+      console.warn("No se pudo cargar el ranking:", err);
+    });
+}
+
+function fetchCareerShare() {
+  if (!careerState.sessionId) {
+    mostrarToastError("Selecciona una sesión.");
+    return;
+  }
+  const output = document.getElementById("career-share-output");
+  jsonGet(`/api/career/share/${encodeURIComponent(careerState.sessionId)}`)
+    .then((data) => {
+      const text = JSON.stringify(data, null, 2);
+      output.textContent = text;
+      if (navigator.clipboard?.writeText) {
+        navigator.clipboard.writeText(text).catch(() => {});
+      }
+      mostrarToastOk("Payload share generado (copiado si es posible).");
+    })
+    .catch((err) => {
+      mostrarToastError(err?.message || "No se pudo obtener el share.");
+    });
+}
+
+function careerSetLoading(button, stateFlag) {
+  if (!button) return;
+  if (stateFlag) {
+    button.disabled = true;
+    button.dataset.loading = "true";
+  } else {
+    button.disabled = false;
+    delete button.dataset.loading;
+  }
+}
 
 /* ============================================================================
  * Auxiliares de datos (sectores)

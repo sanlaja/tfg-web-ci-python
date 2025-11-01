@@ -1,20 +1,22 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import calendar
 import hashlib
 import json
 import random
 import secrets
+import csv
+import math
 from copy import deepcopy
 from datetime import date, datetime, timedelta
+from io import StringIO
+from itertools import combinations
 from pathlib import Path
+from statistics import StatisticsError, mean
 from typing import Any, Iterable
 
-import math
-from itertools import combinations
-
 import pandas as pd
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, make_response, request
 from werkzeug.exceptions import BadRequest, NotFound
 
 try:
@@ -79,6 +81,7 @@ career_bp = Blueprint("career", __name__, url_prefix="/api/career")
 
 DATA_DIR = Path(__file__).resolve().parent / "data"
 SESSIONS_FILE = DATA_DIR / "career_sessions.json"
+RANKING_FILE = DATA_DIR / "career_ranking.json"
 BASE_START_DATE = date(2000, 1, 3)
 MAX_ASSETS = 10
 PORTFOLIO_SCOPE = "portfolio"
@@ -238,6 +241,39 @@ def _save_sessions_store(store: dict[str, Any]) -> None:
     SESSIONS_FILE.write_text(json.dumps(store, indent=2), encoding="utf-8")
 
 
+def _load_ranking_store() -> dict[str, Any]:
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+    if not RANKING_FILE.exists():
+        return {"entries": []}
+    try:
+        return json.loads(RANKING_FILE.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return {"entries": []}
+
+
+def _save_ranking_store(store: dict[str, Any]) -> None:
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+    RANKING_FILE.write_text(json.dumps(store, indent=2), encoding="utf-8")
+
+
+def _upsert_ranking_entry(entry: dict[str, Any]) -> None:
+    store = _load_ranking_store()
+    entries = [
+        e
+        for e in store.get("entries", [])
+        if e.get("session_id") != entry.get("session_id")
+    ]
+    entries.append(entry)
+    store["entries"] = entries
+    _save_ranking_store(store)
+
+
+def _ranking_entries_sorted() -> list[dict[str, Any]]:
+    store = _load_ranking_store()
+    entries = store.get("entries", [])
+    return sorted(entries, key=lambda e: e.get("score", 0.0), reverse=True)
+
+
 def _persist_session(session: dict[str, Any]) -> None:
     store = _load_sessions_store()
     sessions = store.setdefault("sessions", {})
@@ -323,11 +359,11 @@ def _adj_close_series(ticker: str, start: date, end: date) -> pd.Series:
         return SERIES_CACHE[cache_key]
     df = _download_history_df(
         ticker, start, end, include_actions=False
-    )  # REUSE: descarga histórico diario existente
+    )  # REUSE: descarga histÃ³rico diario existente
     series = _extract_series(
         df, "Adj Close", ticker
     )  # REUSE:  reutiliza extractor de columnas
-    normalized = _series_with_date_index(series)  # REUSE: normaliza índice de fechas
+    normalized = _series_with_date_index(series)  # REUSE: normaliza Ã­ndice de fechas
     if normalized.empty:
         SERIES_CACHE[cache_key] = normalized
         return normalized
@@ -378,7 +414,7 @@ def _build_normalized_series_map(
     for ticker in non_cash:
         data = _fetch_adj_close(
             ticker, start, end
-        )  # REUSE: reutiliza descarga y normalización del histórico diario
+        )  # REUSE: reutiliza descarga y normalizaciÃ³n del histÃ³rico diario
         if data and anchor_dates is None:
             anchor_dates = _extract_dates_from_series(data)
         series_map[ticker] = _normalize_base100(data)
@@ -460,7 +496,7 @@ def _returns_by_ticker(
             continue
         series = _adj_close_series(
             ticker, start, end
-        )  # REUSE: reutiliza descarga e índice homogenizado
+        )  # REUSE: reutiliza descarga e Ã­ndice homogenizado
         if series.empty:
             issues.append(ticker)
             continue
@@ -565,12 +601,12 @@ def _session_analysis_range(session: dict[str, Any]) -> tuple[date, date, str, s
     period = session.get("period") or {}
     start_iso = period.get("start")
     if not start_iso:
-        raise BadRequest("La sesión no tiene periodo configurado.")
+        raise BadRequest("La sesiÃ³n no tiene periodo configurado.")
     start_d = date.fromisoformat(start_iso)
 
     turns = session.get("turns") or []
     if not turns:
-        raise BadRequest("La sesión no dispone de turnos configurados.")
+        raise BadRequest("La sesiÃ³n no dispone de turnos configurados.")
 
     completed_turns = session.get("completed_turns") or []
     turn_lookup = {
@@ -701,6 +737,529 @@ def _equal_weights(count: int) -> list[float]:
     return [weight for _ in range(count)]
 
 
+def _clamp(value: float, min_value: float = 0.0, max_value: float = 1.0) -> float:
+    return max(min_value, min(value, max_value))
+
+
+def _turnover_average(session: dict[str, Any]) -> float:
+    snapshots = sorted(
+        (
+            snap
+            for snap in session.get("completed_turns") or []
+            if isinstance(snap, dict)
+        ),
+        key=lambda snap: snap.get("turn_n", 0),
+    )
+    if len(snapshots) < 2:
+        return 0.0
+
+    turnovers: list[float] = []
+    prev_alloc: dict[str, float] | None = None
+
+    for snapshot in snapshots:
+        alloc_list = snapshot.get("alloc") or []
+        current_alloc: dict[str, float] = {}
+        for entry in alloc_list:
+            ticker = str(entry.get("ticker", "")).strip().upper()
+            if not ticker:
+                continue
+            try:
+                weight = float(entry.get("weight", 0.0))
+            except (TypeError, ValueError):
+                weight = 0.0
+            current_alloc[ticker] = weight
+
+        if prev_alloc is not None:
+            tickers = set(prev_alloc) | set(current_alloc)
+            diff = sum(
+                abs(current_alloc.get(ticker, 0.0) - prev_alloc.get(ticker, 0.0))
+                for ticker in tickers
+            )
+            turnovers.append(0.5 * diff)
+        prev_alloc = current_alloc
+
+    try:
+        return float(mean(turnovers)) if turnovers else 0.0
+    except StatisticsError:
+        return 0.0
+
+
+def _compute_score_payload(
+    portfolio_metrics: dict[str, float],
+    tracking: dict[str, float | None],
+    turnover_avg: float,
+) -> dict[str, Any]:
+    cagr_component = _clamp(portfolio_metrics.get("CAGR", 0.0) / 0.20)
+    drawdown = portfolio_metrics.get("max_drawdown", 0.0)
+    drawdown_abs = abs(drawdown) if drawdown < 0 else drawdown
+    dd_component = _clamp((0.50 - min(drawdown_abs, 0.50)) / 0.50)
+    tracking_error = tracking.get("tracking_error") or 0.0
+    te_component = _clamp((0.30 - min(tracking_error, 0.30)) / 0.30)
+    turnover_component = _clamp((0.50 - min(turnover_avg, 0.50)) / 0.50)
+
+    score_0_1 = (
+        0.45 * cagr_component
+        + 0.25 * dd_component
+        + 0.20 * te_component
+        + 0.10 * turnover_component
+    )
+    value = round(score_0_1 * 10, 2)
+    stars = max(1, min(10, round(value)))
+
+    notes_parts: list[str] = []
+    if cagr_component >= 0.8:
+        notes_parts.append("CAGR alto")
+    elif cagr_component >= 0.5:
+        notes_parts.append("CAGR moderado")
+    else:
+        notes_parts.append("CAGR bajo")
+
+    if dd_component >= 0.8:
+        notes_parts.append("drawdown contenido")
+    elif dd_component >= 0.5:
+        notes_parts.append("drawdown moderado")
+    else:
+        notes_parts.append("drawdown elevado")
+
+    if te_component >= 0.7:
+        notes_parts.append("tracking estable")
+    elif te_component >= 0.4:
+        notes_parts.append("tracking medio")
+    else:
+        notes_parts.append("tracking volÃ¡til")
+
+    if turnover_component >= 0.7:
+        notes_parts.append("rotaciÃ³n baja")
+    elif turnover_component >= 0.4:
+        notes_parts.append("rotaciÃ³n media")
+    else:
+        notes_parts.append("rotaciÃ³n alta")
+
+    notes = ", ".join(notes_parts) + "; buen balance riesgo/retorno"
+
+    breakdown = {
+        "cagr_component": round(cagr_component, 4),
+        "dd_component": round(dd_component, 4),
+        "te_component": round(te_component, 4),
+        "turnover_component": round(turnover_component, 4),
+    }
+
+    return {
+        "stars": stars,
+        "value": value,
+        "breakdown": breakdown,
+        "notes": notes,
+        "score_0_1": score_0_1,
+    }
+
+
+def _compute_data_warnings(
+    session: dict[str, Any],
+    start_d: date,
+    end_d: date,
+    normalized_map: dict[str, list[list[str, float]]],
+    bench_ticker: str | None = None,
+) -> list[str]:
+    warnings: set[str] = set()
+    expected_days = len(pd.bdate_range(start=start_d, end=end_d))
+
+    all_tickers: set[str] = set(normalized_map.keys())
+    if bench_ticker:
+        all_tickers.add(bench_ticker)
+
+    rejected_set = {
+        str(t).strip().upper()
+        for t in session.get("rejected_universe") or []
+        if str(t).strip()
+    }
+    allocated_tickers = {
+        str(entry.get("ticker", "")).strip().upper()
+        for decision in session.get("decisions") or []
+        for entry in decision.get("alloc") or []
+        if str(entry.get("ticker", "")).strip()
+    }
+    for ticker in rejected_set & allocated_tickers:
+        warnings.add(f"rejected_in_range:{ticker}")
+
+    for ticker in sorted(all_tickers):
+        series_list = normalized_map.get(ticker) or []
+        series_pd = _series_list_to_series(series_list)
+        if series_pd.empty or len(series_pd) < 2:
+            warnings.add(f"short_series:{ticker}")
+            continue
+
+        present_days = {idx.normalize() for idx in series_pd.index}
+        if expected_days > 0:
+            coverage = len(present_days) / expected_days
+            if coverage < 0.8:
+                warnings.add(f"low_coverage:{ticker}")
+
+        gap_counter = 0
+        for bday in pd.bdate_range(start=start_d, end=end_d):
+            if bday.normalize() not in present_days:
+                gap_counter += 1
+                if gap_counter > 10:
+                    warnings.add(f"large_gap:{ticker}")
+                    break
+            else:
+                gap_counter = 0
+
+    return sorted(warnings)
+
+
+def _compute_benchmark_package(
+    bench_ticker: str, start_d: date, end_d: date
+) -> tuple[pd.Series, dict[str, float], pd.Series]:
+    bench_map = _build_normalized_series_map([bench_ticker], start_d, end_d)
+    bench_series_pd = _series_list_to_series(bench_map.get(bench_ticker, []))
+    if bench_series_pd.empty:
+        raise BadRequest("No hay datos disponibles para el benchmark solicitado.")
+    bench_metrics, bench_monthly = _compute_metrics_from_base100(bench_series_pd)
+    return bench_series_pd, bench_metrics, bench_monthly
+
+
+def _compute_theoretical_summary(
+    session: dict[str, Any], start_d: date, end_d: date, kmax: int = 3
+) -> dict[str, Any]:
+    universe_candidates = _collect_session_universe(session)
+    if not universe_candidates:
+        raise BadRequest("El universo de la sesiÃ³n estÃ¡ vacÃ­o.")
+
+    normalized_map = _build_normalized_series_map(universe_candidates, start_d, end_d)
+
+    ticker_metrics: dict[str, dict[str, float]] = {}
+    filtered_tickers: list[str] = []
+    for ticker in universe_candidates:
+        series_pd = _series_list_to_series(normalized_map.get(ticker, []))
+        if series_pd.empty:
+            continue
+        metrics, _ = _compute_metrics_from_base100(series_pd)
+        ticker_metrics[ticker] = metrics
+        filtered_tickers.append(ticker)
+
+    if not filtered_tickers:
+        raise BadRequest("No hay datos suficientes para evaluar el universo.")
+
+    original_count = len(filtered_tickers)
+    ranked_by_cagr = sorted(
+        filtered_tickers,
+        key=lambda tk: ticker_metrics[tk]["CAGR"],
+        reverse=True,
+    )
+
+    limit = 30
+    use_greedy = original_count > limit
+    if len(ranked_by_cagr) > limit:
+        ranked_by_cagr = ranked_by_cagr[:limit]
+
+    tickers_eval = ranked_by_cagr
+    if not tickers_eval:
+        raise BadRequest("No hay tickers elegibles tras aplicar filtros.")
+
+    results: dict[str, dict[str, Any]] = {}
+    method_map: dict[str, str] = {}
+
+    if len(tickers_eval) >= 1:
+        best_ticker = ranked_by_cagr[0]
+        series_pd = _series_list_to_series(normalized_map.get(best_ticker, []))
+        metrics = ticker_metrics[best_ticker]
+        results["k1"] = {
+            "tickers": [best_ticker],
+            "weights": [1.0],
+            "series": _pd_series_to_list(series_pd),
+            "metrics": {
+                "total_return": metrics["total_return"],
+                "CAGR": metrics["CAGR"],
+                "max_drawdown": metrics["max_drawdown"],
+            },
+        }
+
+    def _record_best_combination(label: str, combo_result: dict[str, Any]) -> None:
+        payload = combo_result.copy()
+        payload.pop("cagr", None)
+        results[label] = payload
+
+    if kmax >= 2 and len(tickers_eval) >= 2:
+        if use_greedy and "k1" in results:
+            base_ticker = results["k1"]["tickers"][0]
+            best_combo: dict[str, Any] | None = None
+            for candidate in tickers_eval:
+                if candidate == base_ticker:
+                    continue
+                combo = _evaluate_combo_result([base_ticker, candidate], normalized_map)
+                if not combo:
+                    continue
+                if (
+                    best_combo is None
+                    or combo["cagr"] > best_combo["cagr"]
+                    or (
+                        combo["cagr"] == best_combo["cagr"]
+                        and combo["metrics"]["total_return"]
+                        > best_combo["metrics"]["total_return"]
+                    )
+                ):
+                    best_combo = combo
+            if best_combo:
+                _record_best_combination("k2", best_combo)
+                method_map["k2"] = "greedy"
+        else:
+            best_combo = None
+            for combo in combinations(tickers_eval, 2):
+                combo_result = _evaluate_combo_result(list(combo), normalized_map)
+                if not combo_result:
+                    continue
+                if (
+                    best_combo is None
+                    or combo_result["cagr"] > best_combo["cagr"]
+                    or (
+                        combo_result["cagr"] == best_combo["cagr"]
+                        and combo_result["metrics"]["total_return"]
+                        > best_combo["metrics"]["total_return"]
+                    )
+                ):
+                    best_combo = combo_result
+            if best_combo:
+                _record_best_combination("k2", best_combo)
+                method_map["k2"] = "bruteforce"
+
+    if kmax >= 3 and len(tickers_eval) >= 3:
+        if use_greedy:
+            base_combo = results.get("k2")
+            if not base_combo and len(tickers_eval) >= 2:
+                tentative = tickers_eval[:2]
+                base_combo = _evaluate_combo_result(tentative, normalized_map)
+                if base_combo:
+                    _record_best_combination("k2", base_combo)
+                    method_map["k2"] = "greedy"
+            best_triple: dict[str, Any] | None = None
+            base_tickers = base_combo["tickers"] if base_combo else []
+            for candidate in tickers_eval:
+                if candidate in base_tickers:
+                    continue
+                combo_tickers = list(base_tickers) + [candidate]
+                if len(combo_tickers) != 3:
+                    continue
+                combo_result = _evaluate_combo_result(combo_tickers, normalized_map)
+                if not combo_result:
+                    continue
+                if (
+                    best_triple is None
+                    or combo_result["cagr"] > best_triple["cagr"]
+                    or (
+                        combo_result["cagr"] == best_triple["cagr"]
+                        and combo_result["metrics"]["total_return"]
+                        > best_triple["metrics"]["total_return"]
+                    )
+                ):
+                    best_triple = combo_result
+            if best_triple:
+                _record_best_combination("k3", best_triple)
+                method_map["k3"] = "greedy"
+        else:
+            best_combo = None
+            for combo in combinations(tickers_eval, 3):
+                combo_result = _evaluate_combo_result(list(combo), normalized_map)
+                if not combo_result:
+                    continue
+                if (
+                    best_combo is None
+                    or combo_result["cagr"] > best_combo["cagr"]
+                    or (
+                        combo_result["cagr"] == best_combo["cagr"]
+                        and combo_result["metrics"]["total_return"]
+                        > best_combo["metrics"]["total_return"]
+                    )
+                ):
+                    best_combo = combo_result
+            if best_combo:
+                _record_best_combination("k3", best_combo)
+                method_map["k3"] = "bruteforce"
+
+    return {
+        "top": results,
+        "method": method_map,
+        "universe": tickers_eval,
+        "normalized_map": normalized_map,
+        "ticker_metrics": ticker_metrics,
+        "use_greedy": use_greedy,
+    }
+
+
+def _generate_report_payload(
+    session: dict[str, Any],
+    bench_ticker: str,
+    include_series: bool,
+    start_d: date,
+    end_d: date,
+    start_iso: str,
+    end_iso: str,
+    kmax: int = 3,
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    portfolio_series_pd = _portfolio_equity_series(session, start_d, end_d)
+    portfolio_metrics, portfolio_monthly = _compute_metrics_from_base100(
+        portfolio_series_pd
+    )
+
+    bench_series_pd, bench_metrics, bench_monthly = _compute_benchmark_package(
+        bench_ticker, start_d, end_d
+    )
+
+    tracking = _tracking_summary(
+        portfolio_metrics, bench_metrics, portfolio_monthly, bench_monthly
+    )
+
+    try:
+        theoretical_summary = _compute_theoretical_summary(
+            session, start_d, end_d, kmax
+        )
+        normalized_map = dict(theoretical_summary["normalized_map"])
+        theoretical_top = theoretical_summary["top"]
+        method_map = theoretical_summary["method"]
+        universe_evaluated = theoretical_summary["universe"]
+        theoretical_error: str | None = None
+    except BadRequest as exc:
+        theoretical_summary = None
+        theoretical_top = {}
+        method_map = {}
+        universe_evaluated = []
+        normalized_map = _build_normalized_series_map(
+            _collect_session_universe(session), start_d, end_d
+        )
+        theoretical_error = getattr(exc, "description", str(exc))
+
+    normalized_map_with_bench = dict(normalized_map)
+    normalized_map_with_bench[bench_ticker] = _pd_series_to_list(bench_series_pd)
+
+    warnings = _compute_data_warnings(
+        session, start_d, end_d, normalized_map_with_bench, bench_ticker
+    )
+    if theoretical_summary is None and theoretical_error:
+        warnings.append(f"theoretical_unavailable:{theoretical_error}")
+    warnings = sorted(set(warnings))
+
+    turns_total = int(session.get("turns_total") or session.get("total_turns") or 0)
+    if not turns_total:
+        turns_total = len(session.get("turns") or [])
+    turns_closed = len(session.get("completed_turns") or [])
+
+    capital_initial = float(session.get("capital_initial", 0.0))
+    capital_current = float(session.get("capital_current", capital_initial))
+    contrib_so_far = float(session.get("contrib_so_far", 0.0))
+    invested_so_far = capital_initial + contrib_so_far
+    pnl_abs = capital_current - invested_so_far
+    pnl_pct = (pnl_abs / invested_so_far) if invested_so_far else 0.0
+
+    turnover_avg = _turnover_average(session)
+    score_info = _compute_score_payload(portfolio_metrics, tracking, turnover_avg)
+    score_payload = {
+        "stars": score_info["stars"],
+        "value": score_info["value"],
+        "breakdown": score_info["breakdown"],
+        "notes": score_info["notes"],
+    }
+
+    portfolio_equity_payload: dict[str, Any] = {
+        "base": 100.0,
+        "metrics": portfolio_metrics,
+    }
+    benchmark_payload: dict[str, Any] = {
+        "ticker": bench_ticker,
+        "metrics": bench_metrics,
+    }
+    if include_series:
+        portfolio_equity_payload["series"] = _pd_series_to_list(portfolio_series_pd)
+        benchmark_payload["series"] = _pd_series_to_list(bench_series_pd)
+
+    turns_payload: list[dict[str, Any]] = []
+    for snapshot in sorted(
+        (
+            snap
+            for snap in session.get("completed_turns") or []
+            if isinstance(snap, dict)
+        ),
+        key=lambda snap: snap.get("turn_n", 0),
+    ):
+        entry = {
+            "n": snapshot.get("turn_n"),
+            "range": snapshot.get("range"),
+            "alloc": snapshot.get("alloc"),
+            "use_dca": snapshot.get("use_dca"),
+            "dca_in_turn": snapshot.get("dca_in_turn"),
+            "turn_return": snapshot.get("turn_return"),
+            "turn_return_market": snapshot.get("turn_return_market"),
+            "ret_portfolio_shift": snapshot.get("ret_portfolio_shift"),
+            "portfolio_value": snapshot.get("portfolio_value"),
+            "events_applied": snapshot.get("events_applied"),
+            "events_new": snapshot.get("events_new"),
+        }
+        if snapshot.get("ret_ticker_shift"):
+            entry["ret_ticker_shift"] = snapshot.get("ret_ticker_shift")
+        turns_payload.append(entry)
+
+    theoretical_payload: dict[str, Any] = {
+        "method": method_map,
+    }
+    for label in ("k1", "k2", "k3"):
+        value = theoretical_top.get(label)
+        if value:
+            theoretical_payload[label] = value
+
+    meta_payload = {
+        "session_id": session.get("session_id"),
+        "player": session.get("player"),
+        "difficulty": session.get("difficulty"),
+        "capital_initial": round(capital_initial, 2),
+        "capital_current": round(capital_current, 2),
+        "turns_total": turns_total,
+        "turns_closed": turns_closed,
+        "contrib_so_far": round(contrib_so_far, 2),
+        "invested_so_far": round(invested_so_far, 2),
+        "pnl_abs": round(pnl_abs, 2),
+        "pnl_pct": round(pnl_pct, 6),
+    }
+
+    report_payload = {
+        "range": {"start": start_iso, "end": end_iso},
+        "meta": meta_payload,
+        "portfolio_equity": portfolio_equity_payload,
+        "benchmark": benchmark_payload,
+        "tracking": tracking,
+        "turns": turns_payload,
+        "theoretical": theoretical_payload,
+        "score": score_payload,
+        "warnings": warnings,
+    }
+
+    context = {
+        "portfolio_series_pd": portfolio_series_pd,
+        "benchmark_series_pd": bench_series_pd,
+        "portfolio_metrics": portfolio_metrics,
+        "benchmark_metrics": bench_metrics,
+        "tracking": tracking,
+        "score_internal": score_info,
+        "turnover_avg": turnover_avg,
+        "warnings": warnings,
+        "universe_evaluated": universe_evaluated,
+        "normalized_map": normalized_map_with_bench,
+        "theoretical": theoretical_payload,
+        "bench_ticker": bench_ticker,
+    }
+
+    return report_payload, context
+
+
+def _build_csv_response(filename: str, rows: list[list[Any]]):
+    buffer = StringIO()
+    writer = csv.writer(buffer)
+    for row in rows:
+        writer.writerow(row)
+    csv_content = buffer.getvalue()
+    response = make_response(csv_content)
+    response.headers["Content-Type"] = "text/csv; charset=utf-8"
+    response.headers["Content-Disposition"] = f'attachment; filename="{filename}"'
+    return response
+
+
 def _ensure_max_assets(
     alloc: list[dict[str, Any]], max_assets: int = MAX_ASSETS
 ) -> list[dict[str, float]]:
@@ -725,7 +1284,7 @@ def _ensure_max_assets(
             aggregated[ticker] += weight
     if len(aggregated) > max_assets:
         raise BadRequest(
-            f"La cartera admite como máximo {max_assets} activos por turno."
+            f"La cartera admite como mÃ¡ximo {max_assets} activos por turno."
         )
     return [
         {"ticker": ticker, "weight": round(aggregated[ticker], 6)} for ticker in order
@@ -738,7 +1297,7 @@ def _parse_date(value: str | None, field: str) -> date:
     try:
         return date.fromisoformat(value)
     except ValueError as exc:  # pragma: no cover
-        raise BadRequest(f"Fecha inválida para '{field}'.") from exc
+        raise BadRequest(f"Fecha invÃ¡lida para '{field}'.") from exc
 
 
 def _instantiate_event_from_template(
@@ -928,7 +1487,7 @@ def _build_event_from_payload(
     try:
         impact_value = float(impact_value)
     except (TypeError, ValueError) as exc:
-        raise BadRequest("impact_pct debe ser numérico.") from exc
+        raise BadRequest("impact_pct debe ser numÃ©rico.") from exc
     if impact_value < MIN_EVENT_IMPACT or impact_value > MAX_EVENT_IMPACT:
         raise BadRequest("impact_pct fuera de rango permitido [-0.5, 0.5].")
 
@@ -959,7 +1518,7 @@ def _build_event_from_payload(
             sectors = _available_sectors(session, reference_alloc)
             if not sectors:
                 raise BadRequest(
-                    "No se encontró un sector válido para asignar al evento sectorial."
+                    "No se encontrÃ³ un sector vÃ¡lido para asignar al evento sectorial."
                 )
             target_value = rng.choice(sectors)
     elif scope_lower == "ticker":
@@ -1060,14 +1619,14 @@ def create_session():
     difficulty = str(payload.get("difficulty", "")).strip().lower()
     if difficulty not in DIFFICULTY_CONFIG:
         return _json_error(
-            "Dificultad inválida. Usa principiante, intermedio o experto.", 400
+            "Dificultad invÃ¡lida. Usa principiante, intermedio o experto.", 400
         )
     universe = payload.get("universe") or []
     capital = payload.get("capital", 50000)
     try:
         capital_value = float(capital)
     except (TypeError, ValueError):
-        return _json_error("Capital inválido.", 400)
+        return _json_error("Capital invÃ¡lido.", 400)
     if capital_value <= 0:
         return _json_error("El capital debe ser mayor que cero.", 400)
 
@@ -1162,7 +1721,7 @@ def close_turn():
         raise NotFound("Sesión no encontrada.")
     _ensure_session_defaults(session)
     if session.get("closed"):
-        return _json_error("La sesión ya finalizó.", 400)
+        return _json_error("La sesiÃ³n ya finalizÃ³.", 400)
 
     pending_turn = _next_pending_turn(session)
     if not pending_turn:
@@ -1193,7 +1752,7 @@ def close_turn():
         if rejected_new:
             msg = ", ".join(rejected_new)
             return _json_error(
-                f"Tickers no válidos para el periodo del turno: {msg}.", 400
+                f"Tickers no vÃ¡lidos para el periodo del turno: {msg}.", 400
             )
         if valid_new:
             known_universe.update(valid_new)
@@ -1341,7 +1900,7 @@ def normalized_series():
         return _json_error("Debe proporcionar al menos un ticker.", 400)
     unique_tickers = list(dict.fromkeys(tickers))
     if len(unique_tickers) > MAX_ASSETS:
-        return _json_error("La cartera admite como máximo 10 activos por turno.", 400)
+        return _json_error("La cartera admite como mÃ¡ximo 10 activos por turno.", 400)
     start_d = _parse_date(t0_param, "t0")
     end_d = _parse_date(t1_param, "t1")
     if end_d < start_d:
@@ -1370,18 +1929,18 @@ def session_series(session_id: str):
         return _json_error("Debe proporcionar al menos un ticker.", 400)
     unique_tickers = list(dict.fromkeys(tickers))
     if len(unique_tickers) > MAX_ASSETS:
-        return _json_error("La cartera admite como máximo 10 activos por turno.", 400)
+        return _json_error("La cartera admite como mÃ¡ximo 10 activos por turno.", 400)
 
     period = session.get("period") or {}
     start_iso = period.get("start")
     end_iso_period = period.get("end")
     if not start_iso:
-        return _json_error("La sesión no tiene periodo configurado.", 400)
+        return _json_error("La sesiÃ³n no tiene periodo configurado.", 400)
     start_d = date.fromisoformat(start_iso)
 
     turns = session.get("turns") or []
     if not turns:
-        return _json_error("La sesión no dispone de turnos configurados.", 400)
+        return _json_error("La sesiÃ³n no dispone de turnos configurados.", 400)
 
     completed_turns = session.get("completed_turns") or []
     turn_lookup = {
@@ -1431,6 +1990,304 @@ def session_series(session_id: str):
     return jsonify(response_payload), 200
 
 
+@career_bp.route("/report/<session_id>", methods=["GET"])
+def session_report(session_id: str):
+    session = _get_session(session_id)
+    if not session:
+        raise NotFound("Sesión no encontrada.")
+    _ensure_session_defaults(session)
+
+    include_series = str(request.args.get("include_series", "false")).lower() == "true"
+    bench_param = request.args.get("bench", "^GSPC")
+    bench_ticker = str(bench_param or "^GSPC").strip().upper() or "^GSPC"
+
+    try:
+        start_d, end_d, start_iso, end_iso = _session_analysis_range(session)
+    except BadRequest as exc:
+        message = getattr(exc, "description", str(exc))
+        status_code = exc.code if hasattr(exc, "code") else 400
+        return _json_error(message, status_code)
+
+    try:
+        report_payload, _ = _generate_report_payload(
+            session,
+            bench_ticker,
+            include_series,
+            start_d,
+            end_d,
+            start_iso,
+            end_iso,
+        )
+    except BadRequest as exc:
+        message = getattr(exc, "description", str(exc))
+        status_code = exc.code if hasattr(exc, "code") else 400
+        return _json_error(message, status_code)
+
+    report_payload["benchmark"]["ticker"] = bench_ticker
+    return jsonify(report_payload), 200
+
+
+@career_bp.route("/ranking", methods=["POST"])
+def ranking_submit():
+    payload = request.get_json(silent=True) or {}
+    session_id = payload.get("session_id")
+    if not session_id:
+        return _json_error("session_id es obligatorio.", 400)
+    if payload.get("consent") is not True:
+        return _json_error(
+            "Se requiere consentimiento para guardar en el ranking.", 400
+        )
+
+    session = _get_session(session_id)
+    if not session:
+        raise NotFound("Sesión no encontrada.")
+    _ensure_session_defaults(session)
+
+    bench_param = payload.get("bench") or "^GSPC"
+    bench_ticker = str(bench_param).strip().upper() or "^GSPC"
+
+    try:
+        start_d, end_d, start_iso, end_iso = _session_analysis_range(session)
+    except BadRequest as exc:
+        message = getattr(exc, "description", str(exc))
+        status_code = exc.code if hasattr(exc, "code") else 400
+        return _json_error(message, status_code)
+
+    try:
+        report_payload, _ = _generate_report_payload(
+            session, bench_ticker, False, start_d, end_d, start_iso, end_iso
+        )
+    except BadRequest as exc:
+        message = getattr(exc, "description", str(exc))
+        status_code = exc.code if hasattr(exc, "code") else 400
+        return _json_error(message, status_code)
+
+    try:
+        provided_score = float(payload.get("score"))
+        provided_stars = int(payload.get("stars"))
+    except (TypeError, ValueError):
+        return _json_error("score/stars inválidos.", 400)
+
+    expected_score = report_payload.get("score", {}).get("value")
+    expected_stars = report_payload.get("score", {}).get("stars")
+    if expected_score is None or expected_stars is None:
+        return _json_error("No se pudo calcular la puntuación de la sesión.", 400)
+    if abs(provided_score - expected_score) > 0.1 or provided_stars != expected_stars:
+        return _json_error("Score proporcionado no coincide con el informe.", 400)
+
+    entry = {
+        "session_id": session_id,
+        "player": payload.get("player") or session.get("player"),
+        "difficulty": session.get("difficulty"),
+        "period": {"start": start_iso, "end": end_iso},
+        "score": round(expected_score, 2),
+        "stars": expected_stars,
+        "bench": bench_ticker,
+        "created_at": datetime.utcnow().isoformat(),
+    }
+    _upsert_ranking_entry(entry)
+    return jsonify({"ok": True}), 200
+
+
+@career_bp.route("/ranking", methods=["GET"])
+def ranking_list():
+    try:
+        limit = int(request.args.get("limit", 20))
+    except (TypeError, ValueError):
+        limit = 20
+    limit = max(1, min(limit, 100))
+    entries = _ranking_entries_sorted()
+    return jsonify({"entries": entries[:limit]}), 200
+
+
+@career_bp.route("/share/<session_id>", methods=["GET"])
+def session_share(session_id: str):
+    session = _get_session(session_id)
+    if not session:
+        raise NotFound("Sesión no encontrada.")
+    _ensure_session_defaults(session)
+    try:
+        start_d, end_d, start_iso, end_iso = _session_analysis_range(session)
+    except BadRequest as exc:
+        message = getattr(exc, "description", str(exc))
+        status_code = exc.code if hasattr(exc, "code") else 400
+        return _json_error(message, status_code)
+
+    universe_used = sorted(
+        {
+            str(entry.get("ticker", "")).strip().upper()
+            for decision in session.get("decisions") or []
+            for entry in decision.get("alloc") or []
+            if str(entry.get("ticker", "")).strip()
+        }
+    )
+
+    bench = "^GSPC"
+    seed_value = session.get("seed") or 0
+    seed_hash = hashlib.sha256(
+        f"{session_id}|{seed_value}|{start_iso}|{end_iso}".encode("utf-8")
+    ).hexdigest()[:16]
+
+    payload = {
+        "session_id": session_id,
+        "difficulty": session.get("difficulty"),
+        "period": {"start": start_iso, "end": end_iso},
+        "universe_used": universe_used,
+        "seed_hash": seed_hash,
+        "bench": bench,
+    }
+    return jsonify(payload), 200
+
+
+@career_bp.route("/export/<session_id>", methods=["GET"])
+def session_export(session_id: str):
+    session = _get_session(session_id)
+    if not session:
+        raise NotFound("Sesión no encontrada.")
+    _ensure_session_defaults(session)
+
+    export_type = (request.args.get("type") or "snapshots").lower()
+    bench_param = request.args.get("bench", "^GSPC")
+    bench_ticker = str(bench_param or "^GSPC").strip().upper() or "^GSPC"
+
+    try:
+        start_d, end_d, start_iso, end_iso = _session_analysis_range(session)
+    except BadRequest as exc:
+        message = getattr(exc, "description", str(exc))
+        status_code = exc.code if hasattr(exc, "code") else 400
+        return _json_error(message, status_code)
+
+    try:
+        report_payload, context = _generate_report_payload(
+            session,
+            bench_ticker,
+            True,
+            start_d,
+            end_d,
+            start_iso,
+            end_iso,
+        )
+    except BadRequest as exc:
+        message = getattr(exc, "description", str(exc))
+        status_code = exc.code if hasattr(exc, "code") else 400
+        return _json_error(message, status_code)
+
+    filename = f"{session_id}_{export_type}.csv"
+
+    if export_type == "snapshots":
+        header = [
+            "turn_n",
+            "range_start",
+            "range_end",
+            "weights_json",
+            "use_dca",
+            "dca_in_turn",
+            "turn_return",
+            "turn_return_market",
+            "ret_portfolio_shift",
+            "ret_ticker_shift_json",
+            "portfolio_value",
+            "events_applied_json",
+            "events_new_json",
+        ]
+        rows = [header]
+        for turn in report_payload.get("turns", []):
+            range_info = turn.get("range") or {}
+            rows.append(
+                [
+                    turn.get("n"),
+                    range_info.get("start"),
+                    range_info.get("end"),
+                    json.dumps(turn.get("alloc"), ensure_ascii=False),
+                    turn.get("use_dca"),
+                    turn.get("dca_in_turn"),
+                    turn.get("turn_return"),
+                    turn.get("turn_return_market"),
+                    turn.get("ret_portfolio_shift"),
+                    json.dumps(turn.get("ret_ticker_shift"), ensure_ascii=False),
+                    turn.get("portfolio_value"),
+                    json.dumps(turn.get("events_applied"), ensure_ascii=False),
+                    json.dumps(turn.get("events_new"), ensure_ascii=False),
+                ]
+            )
+        return _build_csv_response(filename, rows)
+
+    if export_type == "equity":
+        rows = [["date", "value"]]
+        series = context["portfolio_series_pd"].sort_index()
+        for idx, val in series.items():
+            rows.append([idx.date().isoformat(), round(float(val), 4)])
+        return _build_csv_response(filename, rows)
+
+    if export_type == "benchmark":
+        rows = [["date", "value"]]
+        series = context["benchmark_series_pd"].sort_index()
+        for idx, val in series.items():
+            rows.append([idx.date().isoformat(), round(float(val), 4)])
+        return _build_csv_response(filename, rows)
+
+    if export_type == "report":
+        meta = report_payload.get("meta", {})
+        portfolio_metrics = report_payload.get("portfolio_equity", {}).get(
+            "metrics", {}
+        )
+        benchmark_metrics = report_payload.get("benchmark", {}).get("metrics", {})
+        tracking = report_payload.get("tracking", {})
+        score = report_payload.get("score", {})
+        header = [
+            "session_id",
+            "player",
+            "difficulty",
+            "range_start",
+            "range_end",
+            "capital_initial",
+            "capital_current",
+            "invested_so_far",
+            "pnl_abs",
+            "pnl_pct",
+            "CAGR_portfolio",
+            "CAGR_benchmark",
+            "vol_annual_portfolio",
+            "vol_annual_benchmark",
+            "max_drawdown_portfolio",
+            "max_drawdown_benchmark",
+            "active_return",
+            "tracking_error",
+            "information_ratio",
+            "score_value",
+            "score_stars",
+        ]
+        rows = [header]
+        rows.append(
+            [
+                meta.get("session_id"),
+                meta.get("player"),
+                meta.get("difficulty"),
+                start_iso,
+                end_iso,
+                meta.get("capital_initial"),
+                meta.get("capital_current"),
+                meta.get("invested_so_far"),
+                meta.get("pnl_abs"),
+                meta.get("pnl_pct"),
+                portfolio_metrics.get("CAGR"),
+                benchmark_metrics.get("CAGR"),
+                portfolio_metrics.get("vol_annual"),
+                benchmark_metrics.get("vol_annual"),
+                portfolio_metrics.get("max_drawdown"),
+                benchmark_metrics.get("max_drawdown"),
+                tracking.get("active_return"),
+                tracking.get("tracking_error"),
+                tracking.get("information_ratio"),
+                score.get("value"),
+                score.get("stars"),
+            ]
+        )
+        return _build_csv_response(filename, rows)
+
+    return _json_error("Tipo de exportación no soportado.", 400)
+
+
 @career_bp.route("/benchmark/<session_id>", methods=["GET"])
 def session_benchmark(session_id: str):
     session = _get_session(session_id)
@@ -1447,14 +2304,15 @@ def session_benchmark(session_id: str):
     bench_param = request.args.get("bench", "^GSPC")
     bench_ticker = str(bench_param or "^GSPC").strip().upper() or "^GSPC"
 
-    series_map = _build_normalized_series_map([bench_ticker], start_d, end_d)
-    bench_series_pd = _series_list_to_series(series_map.get(bench_ticker, []))
-    if bench_series_pd.empty:
-        return _json_error(
-            "No hay datos disponibles para el benchmark solicitado.", 400
+    try:
+        bench_series_pd, bench_metrics, bench_monthly = _compute_benchmark_package(
+            bench_ticker, start_d, end_d
         )
+    except BadRequest as exc:
+        message = getattr(exc, "description", str(exc))
+        status_code = exc.code if hasattr(exc, "code") else 400
+        return _json_error(message, status_code)
 
-    bench_metrics, bench_monthly = _compute_metrics_from_base100(bench_series_pd)
     portfolio_series_pd = _portfolio_equity_series(session, start_d, end_d)
     portfolio_metrics, portfolio_monthly = _compute_metrics_from_base100(
         portfolio_series_pd
@@ -1522,167 +2380,18 @@ def session_theoretical(session_id: str):
         kmax_param = 3
     kmax = max(1, min(kmax_param, 3))
 
-    universe_candidates = _collect_session_universe(session)
-    if not universe_candidates:
-        return _json_error("El universo de la sesión está vacío.", 400)
-
-    normalized_map = _build_normalized_series_map(universe_candidates, start_d, end_d)
-
-    ticker_metrics: dict[str, dict[str, float]] = {}
-    filtered_tickers: list[str] = []
-    for ticker in universe_candidates:
-        series_pd = _series_list_to_series(normalized_map.get(ticker, []))
-        if series_pd.empty:
-            continue
-        metrics, _ = _compute_metrics_from_base100(series_pd)
-        ticker_metrics[ticker] = metrics
-        filtered_tickers.append(ticker)
-
-    if not filtered_tickers:
-        return _json_error("No hay datos suficientes para evaluar el universo.", 400)
-
-    original_count = len(filtered_tickers)
-    ranked_by_cagr = sorted(
-        filtered_tickers,
-        key=lambda tk: ticker_metrics[tk]["CAGR"],
-        reverse=True,
-    )
-
-    limit = 30
-    use_greedy = original_count > limit
-    if len(ranked_by_cagr) > limit:
-        ranked_by_cagr = ranked_by_cagr[:limit]
-
-    tickers_eval = ranked_by_cagr
-    if not tickers_eval:
-        return _json_error("No hay tickers elegibles tras aplicar filtros.", 400)
-
-    results: dict[str, dict[str, Any]] = {}
-    method_map: dict[str, str] = {}
-
-    if len(tickers_eval) >= 1:
-        best_ticker = ranked_by_cagr[0]
-        series_pd = _series_list_to_series(normalized_map.get(best_ticker, []))
-        metrics = ticker_metrics[best_ticker]
-        results["k1"] = {
-            "tickers": [best_ticker],
-            "weights": [1.0],
-            "series": _pd_series_to_list(series_pd),
-            "metrics": {
-                "total_return": metrics["total_return"],
-                "CAGR": metrics["CAGR"],
-                "max_drawdown": metrics["max_drawdown"],
-            },
-        }
-
-    def _record_best_combination(label: str, combo_result: dict[str, Any]) -> None:
-        payload = combo_result.copy()
-        payload.pop("cagr", None)
-        results[label] = payload
-
-    if kmax >= 2 and len(tickers_eval) >= 2:
-        if use_greedy and "k1" in results:
-            base_ticker = results["k1"]["tickers"][0]
-            best_combo: dict[str, Any] | None = None
-            for candidate in tickers_eval:
-                if candidate == base_ticker:
-                    continue
-                combo = _evaluate_combo_result([base_ticker, candidate], normalized_map)
-                if not combo:
-                    continue
-                if (
-                    best_combo is None
-                    or combo["cagr"] > best_combo["cagr"]
-                    or (
-                        combo["cagr"] == best_combo["cagr"]
-                        and combo["metrics"]["total_return"]
-                        > best_combo["metrics"]["total_return"]
-                    )
-                ):
-                    best_combo = combo
-            if best_combo:
-                _record_best_combination("k2", best_combo)
-                method_map["k2"] = "greedy"
-        else:
-            best_combo = None
-            for combo in combinations(tickers_eval, 2):
-                combo_result = _evaluate_combo_result(list(combo), normalized_map)
-                if not combo_result:
-                    continue
-                if (
-                    best_combo is None
-                    or combo_result["cagr"] > best_combo["cagr"]
-                    or (
-                        combo_result["cagr"] == best_combo["cagr"]
-                        and combo_result["metrics"]["total_return"]
-                        > best_combo["metrics"]["total_return"]
-                    )
-                ):
-                    best_combo = combo_result
-            if best_combo:
-                _record_best_combination("k2", best_combo)
-            if "k2" in results:
-                method_map["k2"] = "bruteforce"
-
-    if kmax >= 3 and len(tickers_eval) >= 3:
-        if use_greedy:
-            base_combo = results.get("k2")
-            if not base_combo and len(tickers_eval) >= 2:
-                tentative = tickers_eval[:2]
-                base_combo = _evaluate_combo_result(tentative, normalized_map)
-                if base_combo:
-                    _record_best_combination("k2", base_combo)
-                    method_map["k2"] = "greedy"
-            best_triple: dict[str, Any] | None = None
-            base_tickers = base_combo["tickers"] if base_combo else []
-            for candidate in tickers_eval:
-                if candidate in base_tickers:
-                    continue
-                combo_tickers = list(base_tickers) + [candidate]
-                if len(combo_tickers) != 3:
-                    continue
-                combo_result = _evaluate_combo_result(combo_tickers, normalized_map)
-                if not combo_result:
-                    continue
-                if (
-                    best_triple is None
-                    or combo_result["cagr"] > best_triple["cagr"]
-                    or (
-                        combo_result["cagr"] == best_triple["cagr"]
-                        and combo_result["metrics"]["total_return"]
-                        > best_triple["metrics"]["total_return"]
-                    )
-                ):
-                    best_triple = combo_result
-            if best_triple:
-                _record_best_combination("k3", best_triple)
-                method_map["k3"] = "greedy"
-        else:
-            best_combo = None
-            for combo in combinations(tickers_eval, 3):
-                combo_result = _evaluate_combo_result(list(combo), normalized_map)
-                if not combo_result:
-                    continue
-                if (
-                    best_combo is None
-                    or combo_result["cagr"] > best_combo["cagr"]
-                    or (
-                        combo_result["cagr"] == best_combo["cagr"]
-                        and combo_result["metrics"]["total_return"]
-                        > best_combo["metrics"]["total_return"]
-                    )
-                ):
-                    best_combo = combo_result
-            if best_combo:
-                _record_best_combination("k3", best_combo)
-            if "k3" in results:
-                method_map["k3"] = "bruteforce"
+    try:
+        summary = _compute_theoretical_summary(session, start_d, end_d, kmax)
+    except BadRequest as exc:
+        message = getattr(exc, "description", str(exc))
+        status_code = exc.code if hasattr(exc, "code") else 400
+        return _json_error(message, status_code)
 
     response_payload = {
         "range": {"start": start_iso, "end": end_iso},
-        "universe_evaluated": tickers_eval,
-        "top": results,
-        "method": method_map,
+        "universe_evaluated": summary["universe"],
+        "top": summary["top"],
+        "method": summary["method"],
     }
     return jsonify(response_payload), 200
 

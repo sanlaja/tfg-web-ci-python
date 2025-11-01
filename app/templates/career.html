@@ -1,0 +1,272 @@
+{% extends "base.html" %}
+{% block title %}Modo Carrera{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1>Modo Carrera</h1>
+  <p class="muted">
+    Gestiona tu carrera como gestor: crea una partida con datos históricos reales, cierra turnos con tu cartera y revisa tu informe final con métricas, techo teórico y ranking local.
+  </p>
+</div>
+
+<div id="career-app" class="career-layout">
+  <section class="card">
+    <div class="card-section">
+      <h2>1. Crear nueva sesión</h2>
+      <div class="form-grid">
+        <label class="field">
+          <span>Jugador</span>
+          <input id="career-player" type="text" placeholder="Tu nombre o alias" />
+        </label>
+        <label class="field">
+          <span>Dificultad</span>
+          <select id="career-difficulty">
+            <option value="principiante">Principiante · turnos anuales</option>
+            <option value="intermedio" selected>Intermedio · turnos semestrales</option>
+            <option value="experto">Experto · turnos mensuales</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>Capital inicial (€)</span>
+          <input id="career-capital" type="number" min="1000" step="1000" value="50000" />
+        </label>
+        <label class="field">
+          <span>Benchmark</span>
+          <input id="career-bench" type="text" value="^GSPC" />
+        </label>
+        <label class="field field--wide">
+          <span>Universo inicial (tickers separados por comas)</span>
+          <input id="career-universe" type="text" placeholder="AAPL,MSFT,GOOGL..." />
+        </label>
+      </div>
+      <div class="actions-row">
+        <button id="career-create-btn" class="btn btn-primary" type="button">
+          Crear sesión
+        </button>
+        <button id="career-load-last-btn" class="btn btn-ghost" type="button">
+          Reanudar última sesión
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="card" id="career-session-card" hidden>
+    <div class="card-section">
+      <div class="career-session-header">
+        <div>
+          <h2>2. Sesión activa</h2>
+          <p class="muted">
+            Session ID · <code id="career-session-id">—</code>
+          </p>
+          <p class="muted" id="career-session-range">Periodo: —</p>
+        </div>
+        <div class="career-session-stats">
+          <div>
+            <span class="muted">Capital actual</span>
+            <strong id="career-session-capital">—</strong>
+          </div>
+          <div>
+            <span class="muted">Turno en curso</span>
+            <strong id="career-session-turn">—</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="career-turn-builder">
+        <div class="turn-builder-head">
+          <h3>Asignación del turno</h3>
+          <p class="muted">
+            Máximo 10 activos por turno. La suma de pesos debe ser ≤ 1.0.
+          </p>
+        </div>
+        <div class="alloc-table" id="career-alloc-list" aria-live="polite"></div>
+        <p class="muted" id="career-alloc-summary">Peso total: 0.00 · Activos: 0</p>
+        <div class="actions-row">
+          <div class="actions-row__left">
+            <button id="career-add-asset" class="btn btn-ghost" type="button">
+              Añadir activo
+            </button>
+            <label class="checkbox-inline">
+              <input id="career-use-dca" type="checkbox" />
+              <span>Aplicar DCA en este turno</span>
+            </label>
+          </div>
+          <div class="actions-row__right">
+            <button id="career-close-turn" class="btn btn-primary" type="button" disabled>
+              Cerrar turno
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <details class="career-turns-history" open>
+        <summary>Historial de turnos</summary>
+        <div class="table-scroll">
+          <table class="table turns-table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Rango</th>
+                <th>Retorno</th>
+                <th>Valor cartera</th>
+                <th>DCA</th>
+              </tr>
+            </thead>
+            <tbody id="career-turns-body">
+              <tr><td colspan="5" class="empty">Aún no hay turnos cerrados.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <section class="card" id="career-series-card" hidden>
+    <div class="card-section">
+      <div class="career-panel-head">
+        <h2>3. Series por activo</h2>
+        <div class="career-series-controls" id="career-series-tickers"></div>
+        <button id="career-load-series" class="btn btn-ghost" type="button">
+          Actualizar gráficas
+        </button>
+      </div>
+      <div class="chart-wrapper">
+        <canvas id="career-series-chart" aria-label="Series base 100 por activo"></canvas>
+        <p id="career-series-empty" class="empty">Selecciona una sesión y activos para ver las series.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card" id="career-report-card" hidden>
+    <div class="card-section">
+      <div class="career-panel-head">
+        <h2>4. Informe final</h2>
+        <div class="actions-row">
+          <button id="career-report-btn" class="btn btn-ghost" type="button">
+            Generar informe
+          </button>
+          <button id="career-report-refresh" class="btn btn-ghost" type="button">
+            Actualizar
+          </button>
+        </div>
+      </div>
+
+      <div class="career-score">
+        <div class="star-badge" id="career-score-stars" aria-live="polite">—★</div>
+        <div>
+          <h3 id="career-score-value">— / 10</h3>
+          <p id="career-score-notes" class="muted">Genera el informe para ver la puntuación.</p>
+        </div>
+      </div>
+
+      <div class="career-metrics">
+        <div class="metric-card">
+          <h4>Portfolio</h4>
+          <ul id="career-metrics-portfolio" class="metric-list"></ul>
+        </div>
+        <div class="metric-card">
+          <h4>Benchmark</h4>
+          <ul id="career-metrics-benchmark" class="metric-list"></ul>
+        </div>
+        <div class="metric-card">
+          <h4>Tracking</h4>
+          <ul id="career-metrics-tracking" class="metric-list"></ul>
+        </div>
+      </div>
+
+      <div class="career-warnings">
+        <h4>Alertas de datos</h4>
+        <div id="career-warnings-list" class="warning-chips" aria-live="polite">
+          <span class="muted">Sin advertencias.</span>
+        </div>
+      </div>
+
+      <div class="career-theoretical">
+        <h4>Techo teórico (Buy &amp; Hold)</h4>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Estrategia</th>
+              <th>Tickers</th>
+              <th>CAGR</th>
+              <th>Drawdown</th>
+            </tr>
+          </thead>
+          <tbody id="career-theoretical-body">
+            <tr><td colspan="4" class="empty">Sin datos.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="chart-wrapper">
+        <canvas id="career-equity-chart" aria-label="Equity vs Benchmark"></canvas>
+      </div>
+
+      <div class="career-export">
+        <div class="career-export-buttons">
+          <button class="btn btn-ghost" data-export="snapshots">CSV Snapshots</button>
+          <button class="btn btn-ghost" data-export="equity">CSV Equity</button>
+          <button class="btn btn-ghost" data-export="benchmark">CSV Benchmark</button>
+          <button class="btn btn-ghost" data-export="report">CSV Report</button>
+        </div>
+        <button id="career-export-png" class="btn btn-ghost" type="button">
+          Exportar gráfico equity (PNG)
+        </button>
+      </div>
+
+      <div class="career-ranking">
+        <div class="career-ranking-head">
+          <div>
+            <h4>Ranking local</h4>
+            <p class="muted">
+              Comparte tu score (opt-in manual). Se guarda en <code>data/career_ranking.json</code>.
+            </p>
+          </div>
+          <label class="checkbox-inline">
+            <input id="career-ranking-consent" type="checkbox" />
+            <span>Autorizo enviar mi puntuación</span>
+          </label>
+        </div>
+        <div class="actions-row">
+          <button id="career-ranking-submit" class="btn btn-primary" type="button" disabled>
+            Publicar en ranking
+          </button>
+          <button id="career-ranking-refresh" class="btn btn-ghost" type="button">
+            Ver top 10
+          </button>
+        </div>
+        <div class="table-scroll">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Jugador</th>
+                <th>Dificultad</th>
+                <th>Score</th>
+                <th>Bench</th>
+                <th>Periodo</th>
+              </tr>
+            </thead>
+            <tbody id="career-ranking-body">
+              <tr><td colspan="5" class="empty">Sin envíos todavía.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="career-share">
+        <div class="career-share-head">
+          <h4>Share / reproducibilidad</h4>
+          <button id="career-share-btn" class="btn btn-ghost" type="button">
+            Obtener payload
+          </button>
+        </div>
+        <pre id="career-share-output" class="career-share-output" aria-live="polite">Solicita un informe para habilitar el share.</pre>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div id="toast-container" aria-live="polite" aria-atomic="true"></div>
+
+<script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js" integrity="sha384-e6cc9LaIG7xZ3XD5B+jtr1NhTWPQGQdRCh6xiZ+ZFUtWCpg4ycv3Sh+SkZoopvUY" crossorigin="anonymous"></script>
+{% endblock %}

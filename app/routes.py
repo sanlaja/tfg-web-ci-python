@@ -55,6 +55,11 @@ def aprende_page():
     return render_template("aprende.html", active="aprende")
 
 
+@bp.get("/modo-carrera")
+def career_page():
+    return render_template("career.html", active="career")
+
+
 # ----------------------
 #   Health
 # ----------------------
