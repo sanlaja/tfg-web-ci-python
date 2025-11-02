@@ -159,6 +159,401 @@ MIN_EVENT_IMPACT = -0.5
 MIN_EVENT_DURATION = 1
 MAX_EVENT_DURATION = 6
 
+DIFFICULTY_LABELS = {
+    "principiante": "easy",
+    "intermedio": "medium",
+    "experto": "hard",
+}
+
+
+def _neg_event(
+    *,
+    id: str,
+    name: str,
+    scope: str,
+    target: str,
+    impact_pct: float | None = None,
+    impact_range: tuple[float, float] | None = None,
+    remaining_turns: int | None = None,
+    remaining_turns_range: tuple[int, int] | None = None,
+    difficulty_label: str,
+    category: str = "negative",
+) -> dict[str, Any]:
+    tpl: dict[str, Any] = {
+        "id": id,
+        "name": name,
+        "scope": scope,
+        "target": target,
+        "category": category,
+        "difficulty": difficulty_label,
+    }
+    if impact_pct is not None:
+        tpl["impact_pct"] = impact_pct
+    if impact_range is not None:
+        tpl["impact_range"] = impact_range
+    if remaining_turns is not None:
+        tpl["remaining_turns"] = remaining_turns
+    if remaining_turns_range is not None:
+        tpl["remaining_turns_range"] = remaining_turns_range
+    return tpl
+
+
+EVENTS_BY_DIFFICULTY: dict[str, dict[str, list[dict[str, Any]]]] = {
+    "principiante": {
+        "portfolio": [
+            _neg_event(
+                id="macro_inflation_mild",
+                name="Inflacion moderada",
+                scope="portfolio",
+                target="all",
+                impact_pct=-0.02,
+                remaining_turns=1,
+                difficulty_label="easy",
+            ),
+            _neg_event(
+                id="macro_rates_light",
+                name="Subida leve de tipos",
+                scope="portfolio",
+                target="all",
+                impact_pct=-0.015,
+                remaining_turns=1,
+                difficulty_label="easy",
+            ),
+            _neg_event(
+                id="macro_employment_miss",
+                name="Datos de empleo peores de lo previsto",
+                scope="portfolio",
+                target="all",
+                impact_pct=-0.018,
+                remaining_turns=1,
+                difficulty_label="easy",
+            ),
+            _neg_event(
+                id="macro_geopolitics_limited",
+                name="Tensiones geopoliticas limitadas",
+                scope="portfolio",
+                target="all",
+                impact_pct=-0.02,
+                remaining_turns=1,
+                difficulty_label="easy",
+            ),
+        ],
+        "sector": [
+            _neg_event(
+                id="sector_regulation_light",
+                name="Regulacion leve del sector",
+                scope="sector",
+                target="auto",
+                impact_pct=-0.02,
+                remaining_turns=1,
+                difficulty_label="easy",
+            ),
+            _neg_event(
+                id="sector_input_costs",
+                name="Aumento de costes en materias primas",
+                scope="sector",
+                target="auto",
+                impact_pct=-0.03,
+                remaining_turns=1,
+                difficulty_label="easy",
+            ),
+            _neg_event(
+                id="sector_supplier_delays",
+                name="Retrasos de proveedores",
+                scope="sector",
+                target="auto",
+                impact_pct=-0.025,
+                remaining_turns=1,
+                difficulty_label="easy",
+            ),
+            _neg_event(
+                id="sector_competition_heat",
+                name="Competencia agresiva en el sector",
+                scope="sector",
+                target="auto",
+                impact_pct=-0.025,
+                remaining_turns=1,
+                difficulty_label="easy",
+            ),
+        ],
+        "ticker": [
+            _neg_event(
+                id="ticker_quarterly_soft",
+                name="Resultados trimestrales flojos",
+                scope="ticker",
+                target="auto",
+                impact_pct=-0.02,
+                remaining_turns=1,
+                difficulty_label="easy",
+            ),
+            _neg_event(
+                id="ticker_customer_noise",
+                name="Pequenas quejas de clientes",
+                scope="ticker",
+                target="auto",
+                impact_pct=-0.015,
+                remaining_turns=1,
+                difficulty_label="easy",
+            ),
+            _neg_event(
+                id="ticker_management_rotation",
+                name="Rotacion de mandos intermedios",
+                scope="ticker",
+                target="auto",
+                impact_pct=-0.02,
+                remaining_turns=1,
+                difficulty_label="easy",
+            ),
+            _neg_event(
+                id="ticker_contract_rumor",
+                name="Rumores de perdida de contrato",
+                scope="ticker",
+                target="auto",
+                impact_pct=-0.025,
+                remaining_turns=1,
+                difficulty_label="easy",
+            ),
+        ],
+    },
+    "intermedio": {
+        "portfolio": [
+            _neg_event(
+                id="macro_regional_debt",
+                name="Crisis de deuda regional",
+                scope="portfolio",
+                target="all",
+                impact_pct=-0.04,
+                remaining_turns=2,
+                difficulty_label="medium",
+            ),
+            _neg_event(
+                id="macro_technical_recession",
+                name="Recesion tecnica",
+                scope="portfolio",
+                target="all",
+                impact_pct=-0.05,
+                remaining_turns=2,
+                difficulty_label="medium",
+            ),
+            _neg_event(
+                id="macro_consumption_drop",
+                name="Caida del consumo interno",
+                scope="portfolio",
+                target="all",
+                impact_pct=-0.035,
+                remaining_turns=2,
+                difficulty_label="medium",
+            ),
+            _neg_event(
+                id="macro_monetary_tightening_fast",
+                name="Endurecimiento monetario mas rapido",
+                scope="portfolio",
+                target="all",
+                impact_pct=-0.045,
+                remaining_turns=2,
+                difficulty_label="medium",
+            ),
+        ],
+        "sector": [
+            _neg_event(
+                id="sector_environment_scandal",
+                name="Escandalo medioambiental sectorial",
+                scope="sector",
+                target="auto",
+                impact_pct=-0.04,
+                remaining_turns=2,
+                difficulty_label="medium",
+            ),
+            _neg_event(
+                id="sector_supply_crisis",
+                name="Crisis de suministros del sector",
+                scope="sector",
+                target="auto",
+                impact_pct=-0.05,
+                remaining_turns=2,
+                difficulty_label="medium",
+            ),
+            _neg_event(
+                id="sector_demand_slump",
+                name="Bajada de demanda del sector",
+                scope="sector",
+                target="auto",
+                impact_pct=-0.04,
+                remaining_turns=2,
+                difficulty_label="medium",
+            ),
+            _neg_event(
+                id="sector_regulator_inspections",
+                name="Entrada del regulador con inspecciones",
+                scope="sector",
+                target="auto",
+                impact_pct=-0.045,
+                remaining_turns=2,
+                difficulty_label="medium",
+            ),
+        ],
+        "ticker": [
+            _neg_event(
+                id="ticker_exec_departures",
+                name="Fuga de directivos clave",
+                scope="ticker",
+                target="auto",
+                impact_pct=-0.05,
+                remaining_turns=2,
+                difficulty_label="medium",
+            ),
+            _neg_event(
+                id="ticker_product_recall",
+                name="Retirada de producto por fallos",
+                scope="ticker",
+                target="auto",
+                impact_pct=-0.06,
+                remaining_turns=2,
+                difficulty_label="medium",
+            ),
+            _neg_event(
+                id="ticker_contract_loss",
+                name="Perdida de contrato estrategico",
+                scope="ticker",
+                target="auto",
+                impact_pct=-0.055,
+                remaining_turns=2,
+                difficulty_label="medium",
+            ),
+            _neg_event(
+                id="ticker_rating_downgrade",
+                name="Rebaja de rating de la compania",
+                scope="ticker",
+                target="auto",
+                impact_pct=-0.05,
+                remaining_turns=2,
+                difficulty_label="medium",
+            ),
+        ],
+    },
+    "experto": {
+        "portfolio": [
+            _neg_event(
+                id="macro_market_collapse",
+                name="Colapso bursatil global",
+                scope="portfolio",
+                target="all",
+                impact_pct=-0.08,
+                remaining_turns=3,
+                difficulty_label="hard",
+            ),
+            _neg_event(
+                id="macro_financial_panic",
+                name="Panico financiero",
+                scope="portfolio",
+                target="all",
+                impact_pct=-0.10,
+                remaining_turns=3,
+                difficulty_label="hard",
+            ),
+            _neg_event(
+                id="macro_energy_crisis",
+                name="Crisis energetica prolongada",
+                scope="portfolio",
+                target="all",
+                impact_pct=-0.075,
+                remaining_turns=3,
+                difficulty_label="hard",
+            ),
+            _neg_event(
+                id="macro_inflation_shock",
+                name="Shock inflacionario inesperado",
+                scope="portfolio",
+                target="all",
+                impact_pct=-0.085,
+                remaining_turns=3,
+                difficulty_label="hard",
+            ),
+        ],
+        "sector": [
+            _neg_event(
+                id="sector_tech_collapse",
+                name="Colapso tecnologico del sector",
+                scope="sector",
+                target="auto",
+                impact_pct=-0.07,
+                remaining_turns_range=(2, 3),
+                difficulty_label="hard",
+            ),
+            _neg_event(
+                id="sector_tax_changes",
+                name="Cambios fiscales adversos al sector",
+                scope="sector",
+                target="auto",
+                impact_pct=-0.09,
+                remaining_turns=3,
+                difficulty_label="hard",
+            ),
+            _neg_event(
+                id="sector_boycott",
+                name="Boicot comercial contra el sector",
+                scope="sector",
+                target="auto",
+                impact_pct=-0.08,
+                remaining_turns=3,
+                difficulty_label="hard",
+            ),
+            _neg_event(
+                id="sector_activity_ban",
+                name="Prohibicion temporal de actividad",
+                scope="sector",
+                target="auto",
+                impact_pct=-0.085,
+                remaining_turns=2,
+                difficulty_label="hard",
+            ),
+        ],
+        "ticker": [
+            _neg_event(
+                id="ticker_accounting_fraud",
+                name="Fraude contable descubierto",
+                scope="ticker",
+                target="auto",
+                impact_pct=-0.10,
+                remaining_turns=3,
+                difficulty_label="hard",
+            ),
+            _neg_event(
+                id="ticker_regulator_investigation",
+                name="Investigacion del regulador",
+                scope="ticker",
+                target="auto",
+                impact_pct=-0.09,
+                remaining_turns=3,
+                difficulty_label="hard",
+            ),
+            _neg_event(
+                id="ticker_cyber_attack",
+                name="Ciberataque critico a la empresa",
+                scope="ticker",
+                target="auto",
+                impact_pct=-0.08,
+                remaining_turns=2,
+                difficulty_label="hard",
+            ),
+            _neg_event(
+                id="ticker_bankruptcy_risk",
+                name="Riesgo de quiebra o intervencion",
+                scope="ticker",
+                target="auto",
+                impact_pct=-0.12,
+                remaining_turns=3,
+                difficulty_label="hard",
+            ),
+        ],
+    },
+}
+EVENT_TRIGGER_PROBABILITIES = {
+    "principiante": {"portfolio": 0.35, "sector": 0.30, "ticker": 0.25},
+    "intermedio": {"portfolio": 0.45, "sector": 0.40, "ticker": 0.35},
+    "experto": {"portfolio": 0.55, "sector": 0.45, "ticker": 0.40},
+}
+
 
 def _flat_cash_series_from_index(index: Iterable[date]) -> list[list[str, float]]:
     return [[d.isoformat(), 100.0] for d in index]
@@ -1307,41 +1702,91 @@ def _instantiate_event_from_template(
     rng: random.Random,
 ) -> dict[str, Any] | None:
     scope = (template.get("scope") or "").lower()
-    impact_range = template.get("impact_range", (0.0, 0.0))
-    duration_range = template.get("duration_turns_range", (1, 1))
-    impact_value = round(_random_in_range(impact_range, rng), 6)
-    duration = rng.randint(
-        max(MIN_EVENT_DURATION, int(duration_range[0])),
-        min(MAX_EVENT_DURATION, int(duration_range[1])),
-    )
-    target: str | None = None
+    impact_value = template.get("impact_pct")
+    if impact_value is None:
+        impact_range = template.get("impact_range") or template.get("impact_range")
+        if impact_range is None:
+            impact_range = (0.0, 0.0)
+        impact_value = _random_in_range(tuple(impact_range), rng)
+    try:
+        impact_value = float(impact_value)
+    except (TypeError, ValueError):
+        impact_value = 0.0
+    impact_value = max(MIN_EVENT_IMPACT, min(MAX_EVENT_IMPACT, impact_value))
 
+    duration_value = template.get("remaining_turns")
+    if duration_value is None:
+        duration_range = (
+            template.get("remaining_turns_range")
+            or template.get("duration_turns_range")
+            or (MIN_EVENT_DURATION, MIN_EVENT_DURATION)
+        )
+        try:
+            lo_raw, hi_raw = duration_range  # type: ignore[misc]
+        except (TypeError, ValueError):
+            lo_raw, hi_raw = MIN_EVENT_DURATION, MIN_EVENT_DURATION
+        lo = max(MIN_EVENT_DURATION, int(lo_raw))
+        hi = min(MAX_EVENT_DURATION, int(hi_raw))
+        if hi < lo:
+            lo, hi = hi, lo
+        duration_value = rng.randint(lo, hi)
+    else:
+        try:
+            duration_value = int(duration_value)
+        except (TypeError, ValueError):
+            duration_value = MIN_EVENT_DURATION
+    duration_value = int(
+        max(MIN_EVENT_DURATION, min(MAX_EVENT_DURATION, duration_value))
+    )
+
+    target_override = (template.get("target") or "").strip().lower()
+    target: str | None = None
     if scope == "portfolio":
         target = None
     elif scope == "sector":
         sectors = _available_sectors(session, alloc)
         if not sectors:
             return None
-        target = rng.choice(sectors)
+        sector_candidates = [str(s).upper() for s in sectors if s]
+        if target_override and target_override != "auto":
+            chosen = target_override.upper()
+            if chosen not in sector_candidates:
+                return None
+            target = chosen
+        else:
+            if not sector_candidates:
+                return None
+            target = rng.choice(sector_candidates)
     elif scope == "ticker":
-        tickers = [item["ticker"] for item in alloc if not _is_cash(item["ticker"])]
+        tickers = [
+            str(item.get("ticker")).upper()
+            for item in alloc
+            if item.get("ticker") and not _is_cash(str(item.get("ticker")))
+        ]
         if not tickers:
             return None
-        target = rng.choice(tickers)
+        if target_override and target_override != "auto":
+            chosen = target_override.upper()
+            if chosen not in tickers:
+                return None
+            target = chosen
+        else:
+            target = rng.choice(tickers)
     else:
         return None
 
-    if target is not None:
-        target = str(target).upper()
-
-    return {
+    event_payload: dict[str, Any] = {
         "id": template.get("id"),
         "name": template.get("name"),
         "scope": template.get("scope"),
         "target": target,
-        "impact_pct": impact_value,
-        "remaining_turns": int(max(MIN_EVENT_DURATION, duration)),
+        "impact_pct": round(impact_value, 6),
+        "remaining_turns": duration_value,
     }
+    for meta_key in ("category", "difficulty"):
+        if template.get(meta_key):
+            event_payload[meta_key] = template[meta_key]
+    return event_payload
 
 
 def _draw_events_for_turn(
@@ -1354,16 +1799,43 @@ def _draw_events_for_turn(
     if not isinstance(rng, random.Random):
         seed_hint = period_ctx.get("seed")
         rng = random.Random(seed_hint) if seed_hint is not None else random.Random()
+
     drawn: list[dict[str, Any]] = []
+    diff_templates = EVENTS_BY_DIFFICULTY.get(difficulty, {})
+    trigger_map = EVENT_TRIGGER_PROBABILITIES.get(difficulty, {})
+    for category in ("portfolio", "sector", "ticker"):
+        templates = diff_templates.get(category, [])
+        probability = trigger_map.get(category, 0.0)
+        if not templates or probability <= 0:
+            continue
+        if rng.random() > probability:
+            continue
+        candidates = templates[:]
+        rng.shuffle(candidates)
+        for template in candidates:
+            event = _instantiate_event_from_template(template, session, alloc, rng)
+            if event:
+                drawn.append(event)
+                break
+
     for template in EVENTS_CATALOG:
-        prob = template.get("prob", {}).get(difficulty, 0.0)
-        if prob <= 0:
+        prob_map = template.get("prob")
+        if not prob_map:
             continue
-        if rng.random() > prob:
+        probability = prob_map.get(difficulty, 0.0)
+        if probability <= 0 or rng.random() > probability:
             continue
-        event = _instantiate_event_from_template(template, session, alloc, rng)
+        legacy_template = dict(template)
+        legacy_template.setdefault("category", "legacy")
+        legacy_template.setdefault(
+            "difficulty", DIFFICULTY_LABELS.get(difficulty, difficulty)
+        )
+        event = _instantiate_event_from_template(legacy_template, session, alloc, rng)
         if event:
+            event.setdefault("category", legacy_template.get("category"))
+            event.setdefault("difficulty", legacy_template.get("difficulty"))
             drawn.append(event)
+
     return drawn
 
 
@@ -1465,6 +1937,22 @@ def _build_event_from_payload(
             ),
             None,
         )
+        if template is None:
+            for diff_catalog in EVENTS_BY_DIFFICULTY.values():
+                found = next(
+                    (
+                        candidate
+                        for category_templates in diff_catalog.values()
+                        for candidate in category_templates
+                        if candidate.get("id") == event_id
+                    ),
+                    None,
+                )
+                if found is not None:
+                    template = found
+                    break
+    if template:
+        template = deepcopy(template)
 
     scope_value = payload.get("scope") or (template.get("scope") if template else None)
     if not scope_value:
@@ -1481,7 +1969,7 @@ def _build_event_from_payload(
     impact_value = payload.get("impact_pct")
     if impact_value is None:
         if template and template.get("impact_range"):
-            impact_value = _random_in_range(template["impact_range"], rng)
+            impact_value = _random_in_range(tuple(template["impact_range"]), rng)
         else:
             raise BadRequest("impact_pct es obligatorio para eventos personalizados.")
     try:
