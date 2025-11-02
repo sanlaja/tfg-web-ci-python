@@ -1531,6 +1531,15 @@ function handleCareerCloseTurn() {
   careerSetLoading(btn, true);
   jsonPost("/api/career/turn", payload)
     .then((data) => {
+      if (data && data.ok === false && data.error_code === "NO_HISTORICAL_DATA") {
+        const invalid = Array.isArray(data.invalid_tickers) ? data.invalid_tickers : [];
+        const suffix = invalid.length ? ` (Sin datos historicos: ${invalid.join(", ")})` : "";
+        const message =
+          data.message ||
+          "No se encontraron datos historicos validos para estos tickers. Ajusta la cartera e intenta de nuevo.";
+        mostrarToastError(`${message}${suffix}`.trim());
+        return;
+      }
       mostrarToastOk("Turno cerrado.");
       showCareerEventsModal(data?.snapshot);
       handleCareerLoadSession(careerState.sessionId).then(() => {

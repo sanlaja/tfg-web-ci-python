@@ -93,6 +93,69 @@ def _is_cash(ticker: str) -> bool:
     return (ticker or "").strip().upper() in CASH_TICKERS
 
 
+class NoHistoricalDataError(Exception):
+    """Raised when requested tickers lack historical data for the given range."""
+
+    def __init__(self, tickers: Iterable[str], message: str | None = None):
+        tickers_set = {str(t or "").strip().upper() for t in tickers if t}
+        self.tickers = sorted(tickers_set)
+        default_message: str
+        if message:
+            default_message = message
+        elif self.tickers:
+            default_message = (
+                "No hay datos historicos suficientes para los tickers: "
+                + ", ".join(self.tickers)
+            )
+        else:
+            default_message = (
+                "No hay datos historicos suficientes para los tickers solicitados."
+            )
+        self.message = default_message
+        super().__init__(default_message)
+
+
+try:  # pragma: no cover - import optional
+    from yfinance.utils import YFTzMissingError, YFPricesMissingError  # type: ignore
+except Exception:  # pragma: no cover
+
+    class YFTzMissingError(Exception):
+        """Fallback placeholder for yfinance missing-tz errors."""
+
+        pass
+
+    class YFPricesMissingError(Exception):
+        """Fallback placeholder for yfinance price missing errors."""
+
+        pass
+
+
+def _format_no_history_message(ticker: str) -> str:
+    ticker_norm = (ticker or "").strip().upper() or "N/A"
+    return (
+        f"El ticker {ticker_norm} no tiene datos historicos validos o ha sido retirado."
+    )
+
+
+def _raise_no_history_for_ticker(ticker: str, exc: Exception | None = None) -> None:
+    ticker_norm = (ticker or "").strip().upper()
+    raise NoHistoricalDataError(
+        [ticker_norm], message=_format_no_history_message(ticker_norm)
+    ) from exc
+
+
+def _exception_indicates_no_history(exc: Exception) -> bool:
+    if isinstance(exc, (NoHistoricalDataError, YFTzMissingError, YFPricesMissingError)):
+        return True
+    message = str(exc).lower()
+    return (
+        "possibly delisted" in message
+        or "no timezone found" in message
+        or "no price data found" in message
+        or "data doesn't exist for startdate" in message
+    )
+
+
 DIFFICULTY_CONFIG = {
     "principiante": {
         "years": (10, 15),
@@ -749,16 +812,31 @@ def _generate_period(
 
 
 def _adj_close_series(ticker: str, start: date, end: date) -> pd.Series:
-    cache_key = (ticker, start.isoformat(), end.isoformat())
+    ticker_norm = (ticker or "").strip().upper()
+    cache_key = (ticker_norm, start.isoformat(), end.isoformat())
     if cache_key in SERIES_CACHE:
         return SERIES_CACHE[cache_key]
-    df = _download_history_df(
-        ticker, start, end, include_actions=False
-    )  # REUSE: descarga histÃ³rico diario existente
-    series = _extract_series(
-        df, "Adj Close", ticker
-    )  # REUSE:  reutiliza extractor de columnas
-    normalized = _series_with_date_index(series)  # REUSE: normaliza Ã­ndice de fechas
+    try:
+        df = _download_history_df(
+            ticker, start, end, include_actions=False
+        )  # REUSE: descarga historico diario existente
+    except Exception as exc:  # pragma: no cover - errores de red/datos externos
+        if _exception_indicates_no_history(exc):
+            _raise_no_history_for_ticker(ticker_norm, exc)
+        raise
+    try:
+        series = _extract_series(
+            df, "Adj Close", ticker
+        )  # REUSE:  reutiliza extractor de columnas
+    except KeyError as exc:
+        if exc.args and str(exc.args[0]).strip().lower() == "adj close":
+            _raise_no_history_for_ticker(ticker_norm, exc)
+        raise
+    except Exception as exc:
+        if _exception_indicates_no_history(exc):
+            _raise_no_history_for_ticker(ticker_norm, exc)
+        raise
+    normalized = _series_with_date_index(series)  # REUSE: normaliza indice de fechas
     if normalized.empty:
         SERIES_CACHE[cache_key] = normalized
         return normalized
@@ -906,8 +984,7 @@ def _returns_by_ticker(
             continue
         returns[ticker] = (end_price / start_price) - 1.0
     if issues:
-        tickers_msg = ", ".join(sorted(set(issues)))
-        raise BadRequest(f"No hay datos suficientes para los tickers: {tickers_msg}.")
+        raise NoHistoricalDataError(issues)
     return returns
 
 
@@ -2043,7 +2120,16 @@ def _build_event_from_payload(
 def _calculate_turn_return(
     alloc: list[dict[str, float]], start: date, end: date
 ) -> float:
-    returns = _returns_by_ticker(alloc, start, end)
+    try:
+        returns = _returns_by_ticker(alloc, start, end)
+    except NoHistoricalDataError as exc:
+        message_override = getattr(exc, "message", None)
+        if message_override:
+            raise BadRequest(message_override) from exc
+        tickers_msg = ", ".join(exc.tickers)
+        raise BadRequest(
+            f"No hay datos suficientes para los tickers: {tickers_msg}."
+        ) from exc
     return sum(item["weight"] * returns.get(item["ticker"], 0.0) for item in alloc)
 
 
@@ -2238,15 +2324,59 @@ def close_turn():
             candidates, period_start, period_end
         )
         if rejected_new:
-            msg = ", ".join(rejected_new)
-            return _json_error(
-                f"Tickers no vÃ¡lidos para el periodo del turno: {msg}.", 400
-            )
+            invalid = sorted({str(t).strip().upper() for t in rejected_new if t})
+            if len(invalid) == 1:
+                msg = (
+                    f"El ticker {invalid[0]} no tiene datos historicos validos para este periodo. "
+                    "Prueba con otro ticker o cambia de ano."
+                )
+            else:
+                tickers_txt = ", ".join(invalid)
+                msg = (
+                    f"Los tickers {tickers_txt} no tienen datos historicos validos para este periodo. "
+                    "Prueba con otros tickers o cambia de ano."
+                )
+            payload = {
+                "ok": False,
+                "error_code": "NO_HISTORICAL_DATA",
+                "invalid_tickers": invalid,
+                "message": msg,
+            }
+            return jsonify(payload), 200
         if valid_new:
             known_universe.update(valid_new)
             session["universe"] = sorted(known_universe)
 
-    base_returns = _returns_by_ticker(clean_alloc, turn_start, turn_end)
+    try:
+        base_returns = _returns_by_ticker(clean_alloc, turn_start, turn_end)
+    except NoHistoricalDataError as exc:
+        invalid = exc.tickers or []
+        message_override = getattr(exc, "message", None)
+        if message_override:
+            msg = message_override
+        elif len(invalid) == 1:
+            msg = (
+                f"El ticker {invalid[0]} no tiene datos historicos validos para este periodo. "
+                "Prueba con otro ticker o cambia de ano."
+            )
+        elif len(invalid) > 1:
+            tickers_txt = ", ".join(invalid)
+            msg = (
+                f"Los tickers {tickers_txt} no tienen datos historicos validos para este periodo. "
+                "Prueba con otros tickers o cambia de ano."
+            )
+        else:
+            msg = (
+                "No se encontraron datos historicos validos para este periodo. "
+                "Prueba con otros tickers o cambia de ano."
+            )
+        payload = {
+            "ok": False,
+            "error_code": "NO_HISTORICAL_DATA",
+            "invalid_tickers": invalid,
+            "message": msg,
+        }
+        return jsonify(payload), 200
     turn_return_market = sum(
         item["weight"] * base_returns.get(item["ticker"], 0.0) for item in clean_alloc
     )
