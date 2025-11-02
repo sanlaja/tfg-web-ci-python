@@ -671,6 +671,49 @@ mark.hl {
   gap: 16px;
 }
 
+#career-events-modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(15, 23, 42, 0.35);
+  z-index: 70;
+  padding: 16px;
+}
+
+#career-events-modal .modal__content {
+  background: #fff;
+  border-radius: 18px;
+  width: min(720px, 100%);
+  padding: 24px;
+  position: relative;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+#career-events-modal .modal__close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  border: none;
+  background: transparent;
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--color-dark);
+}
+
+#career-events-modal .modal__body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: min(60vh, 520px);
+  overflow-y: auto;
+}
+
 .career-layout {
   display: flex;
   flex-direction: column;

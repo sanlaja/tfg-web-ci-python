@@ -1068,6 +1068,614 @@
           "use_dca": true
         }
       ]
+    },
+    "car_d5cc8c": {
+      "session_id": "car_d5cc8c",
+      "player": "Javier2",
+      "difficulty": "intermedio",
+      "universe": [
+        "AAPL",
+        "CASH",
+        "GOOGL",
+        "MSFT",
+        "UBI.PA"
+      ],
+      "rejected_universe": [],
+      "capital_initial": 50000.0,
+      "capital_current": 168834.27,
+      "period": {
+        "start": "2003-01-19",
+        "end": "2008-01-18"
+      },
+      "turns": [
+        {
+          "n": 1,
+          "start": "2003-01-19",
+          "end": "2003-07-18",
+          "status": "completed",
+          "closed_at": "2025-11-01T19:49:33.225919"
+        },
+        {
+          "n": 2,
+          "start": "2003-07-19",
+          "end": "2004-01-18",
+          "status": "completed",
+          "closed_at": "2025-11-01T19:50:18.708136"
+        },
+        {
+          "n": 3,
+          "start": "2004-01-19",
+          "end": "2004-07-18",
+          "status": "completed",
+          "closed_at": "2025-11-01T19:51:26.030351"
+        },
+        {
+          "n": 4,
+          "start": "2004-07-19",
+          "end": "2005-01-18",
+          "status": "completed",
+          "closed_at": "2025-11-01T19:52:04.982119"
+        },
+        {
+          "n": 5,
+          "start": "2005-01-19",
+          "end": "2005-07-18",
+          "status": "completed",
+          "closed_at": "2025-11-01T19:53:01.114604"
+        },
+        {
+          "n": 6,
+          "start": "2005-07-19",
+          "end": "2006-01-18",
+          "status": "completed",
+          "closed_at": "2025-11-01T19:53:40.662709"
+        },
+        {
+          "n": 7,
+          "start": "2006-01-19",
+          "end": "2006-07-18",
+          "status": "completed",
+          "closed_at": "2025-11-02T10:39:20.261734"
+        },
+        {
+          "n": 8,
+          "start": "2006-07-19",
+          "end": "2007-01-18",
+          "status": "pending"
+        },
+        {
+          "n": 9,
+          "start": "2007-01-19",
+          "end": "2007-07-18",
+          "status": "pending"
+        },
+        {
+          "n": 10,
+          "start": "2007-07-19",
+          "end": "2008-01-18",
+          "status": "pending"
+        }
+      ],
+      "completed_turns": [
+        {
+          "turn_n": 1,
+          "range": {
+            "start": "2003-01-19",
+            "end": "2003-07-18"
+          },
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.3
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.3
+            },
+            {
+              "ticker": "CASH",
+              "weight": 0.2
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": false,
+          "turn_return": 0.360282,
+          "turn_return_market": 0.360282,
+          "portfolio_value": 68014.12,
+          "events": [],
+          "events_applied": [],
+          "events_new": [],
+          "ret_portfolio_shift": 0.0,
+          "dca_in_turn": 0.0,
+          "invested_so_far": 50000.0,
+          "pnl_abs": 18014.12,
+          "pnl_pct": 0.360282,
+          "cum_return_net": 0.360282,
+          "delta_vs_prev": 18014.12
+        },
+        {
+          "turn_n": 2,
+          "range": {
+            "start": "2003-07-19",
+            "end": "2004-01-18"
+          },
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.1
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.7
+            },
+            {
+              "ticker": "CASH",
+              "weight": 0.1
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.1
+            }
+          ],
+          "use_dca": false,
+          "turn_return": 0.269789,
+          "turn_return_market": 0.269789,
+          "portfolio_value": 86363.59,
+          "events": [],
+          "events_applied": [],
+          "events_new": [],
+          "ret_portfolio_shift": 0.0,
+          "dca_in_turn": 0.0,
+          "invested_so_far": 50000.0,
+          "pnl_abs": 36363.59,
+          "pnl_pct": 0.727272,
+          "cum_return_net": 0.727272,
+          "delta_vs_prev": 18349.47
+        },
+        {
+          "turn_n": 3,
+          "range": {
+            "start": "2004-01-19",
+            "end": "2004-07-18"
+          },
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.7
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.1
+            },
+            {
+              "ticker": "CASH",
+              "weight": 0.1
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.1
+            }
+          ],
+          "use_dca": false,
+          "turn_return": 0.265845,
+          "turn_return_market": 0.265845,
+          "portfolio_value": 109322.89,
+          "events": [],
+          "events_applied": [],
+          "events_new": [],
+          "ret_portfolio_shift": 0.0,
+          "dca_in_turn": 0.0,
+          "invested_so_far": 50000.0,
+          "pnl_abs": 59322.89,
+          "pnl_pct": 1.186458,
+          "cum_return_net": 1.186458,
+          "delta_vs_prev": 22959.3
+        },
+        {
+          "turn_n": 4,
+          "range": {
+            "start": "2004-07-19",
+            "end": "2005-01-18"
+          },
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.1
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.7
+            },
+            {
+              "ticker": "CASH",
+              "weight": 0.1
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.1
+            }
+          ],
+          "use_dca": false,
+          "turn_return": 0.500376,
+          "turn_return_market": 0.500376,
+          "portfolio_value": 164025.48,
+          "events": [],
+          "events_applied": [],
+          "events_new": [
+            {
+              "id": "sector_rumor_neg",
+              "name": "Rumor sectorial (negativo)",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.048915,
+              "remaining_turns": 1
+            }
+          ],
+          "ret_portfolio_shift": 0.0,
+          "dca_in_turn": 0.0,
+          "invested_so_far": 50000.0,
+          "pnl_abs": 114025.48,
+          "pnl_pct": 2.28051,
+          "cum_return_net": 2.28051,
+          "delta_vs_prev": 54702.59
+        },
+        {
+          "turn_n": 5,
+          "range": {
+            "start": "2005-01-19",
+            "end": "2005-07-18"
+          },
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.1
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.1
+            },
+            {
+              "ticker": "CASH",
+              "weight": 0.1
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.7
+            }
+          ],
+          "use_dca": false,
+          "turn_return": 0.029317,
+          "turn_return_market": 0.068449,
+          "portfolio_value": 168834.27,
+          "events": [
+            {
+              "id": "sector_rumor_neg",
+              "name": "Rumor sectorial (negativo)",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.048915,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "sector_rumor_neg",
+              "name": "Rumor sectorial (negativo)",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.048915,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            }
+          ],
+          "events_new": [],
+          "ret_portfolio_shift": 0.0,
+          "ret_ticker_shift": {
+            "AAPL": -0.048915,
+            "MSFT": -0.048915
+          },
+          "dca_in_turn": 0.0,
+          "invested_so_far": 50000.0,
+          "pnl_abs": 118834.27,
+          "pnl_pct": 2.376685,
+          "cum_return_net": 2.376685,
+          "delta_vs_prev": 4808.79
+        },
+        {
+          "turn_n": 6,
+          "range": {
+            "start": "2005-07-19",
+            "end": "2006-01-18"
+          },
+          "alloc": [
+            {
+              "ticker": "CASH",
+              "weight": 1.0
+            }
+          ],
+          "use_dca": false,
+          "turn_return": 0.0,
+          "turn_return_market": 0.0,
+          "portfolio_value": 168834.27,
+          "events": [],
+          "events_applied": [],
+          "events_new": [],
+          "ret_portfolio_shift": 0.0,
+          "dca_in_turn": 0.0,
+          "invested_so_far": 50000.0,
+          "pnl_abs": 118834.27,
+          "pnl_pct": 2.376685,
+          "cum_return_net": 2.376685,
+          "delta_vs_prev": 0.0
+        },
+        {
+          "turn_n": 7,
+          "range": {
+            "start": "2006-01-19",
+            "end": "2006-07-18"
+          },
+          "alloc": [
+            {
+              "ticker": "CASH",
+              "weight": 1.0
+            }
+          ],
+          "use_dca": false,
+          "turn_return": 0.0,
+          "turn_return_market": 0.0,
+          "portfolio_value": 168834.27,
+          "events": [],
+          "events_applied": [],
+          "events_new": [
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.053728,
+              "remaining_turns": 1
+            }
+          ],
+          "ret_portfolio_shift": 0.0,
+          "dca_in_turn": 0.0,
+          "invested_so_far": 50000.0,
+          "pnl_abs": 118834.27,
+          "pnl_pct": 2.376685,
+          "cum_return_net": 2.376685,
+          "delta_vs_prev": 0.0
+        }
+      ],
+      "seed": 15700557996431342424,
+      "created_at": "2025-11-01T19:47:20.514167",
+      "closed": false,
+      "total_turns": 10,
+      "turns_total": 10,
+      "contrib_so_far": 0.0,
+      "cum_return": 2.376685,
+      "events_log": [
+        {
+          "turn_n": 1,
+          "applied": [],
+          "drawn": []
+        },
+        {
+          "turn_n": 2,
+          "applied": [],
+          "drawn": []
+        },
+        {
+          "turn_n": 3,
+          "applied": [],
+          "drawn": []
+        },
+        {
+          "turn_n": 4,
+          "applied": [],
+          "drawn": [
+            {
+              "id": "sector_rumor_neg",
+              "name": "Rumor sectorial (negativo)",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.048915,
+              "remaining_turns": 1
+            }
+          ]
+        },
+        {
+          "turn_n": 5,
+          "applied": [
+            {
+              "id": "sector_rumor_neg",
+              "name": "Rumor sectorial (negativo)",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.048915,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            }
+          ],
+          "drawn": []
+        },
+        {
+          "turn_n": 6,
+          "applied": [],
+          "drawn": []
+        },
+        {
+          "turn_n": 7,
+          "applied": [],
+          "drawn": [
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.053728,
+              "remaining_turns": 1
+            }
+          ]
+        }
+      ],
+      "active_events": [
+        {
+          "id": "macro_shock_neg",
+          "name": "Shock macro (negativo)",
+          "scope": "portfolio",
+          "target": null,
+          "impact_pct": -0.053728,
+          "remaining_turns": 1
+        }
+      ],
+      "sectors_map": {
+        "AAPL": "TECH",
+        "MSFT": "TECH"
+      },
+      "decisions": [
+        {
+          "turn_n": 1,
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.3
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.3
+            },
+            {
+              "ticker": "CASH",
+              "weight": 0.2
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": false
+        },
+        {
+          "turn_n": 2,
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.1
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.7
+            },
+            {
+              "ticker": "CASH",
+              "weight": 0.1
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.1
+            }
+          ],
+          "use_dca": false
+        },
+        {
+          "turn_n": 3,
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.7
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.1
+            },
+            {
+              "ticker": "CASH",
+              "weight": 0.1
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.1
+            }
+          ],
+          "use_dca": false
+        },
+        {
+          "turn_n": 4,
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.1
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.7
+            },
+            {
+              "ticker": "CASH",
+              "weight": 0.1
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.1
+            }
+          ],
+          "use_dca": false
+        },
+        {
+          "turn_n": 5,
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.1
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.1
+            },
+            {
+              "ticker": "CASH",
+              "weight": 0.1
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.7
+            }
+          ],
+          "use_dca": false
+        },
+        {
+          "turn_n": 6,
+          "alloc": [
+            {
+              "ticker": "CASH",
+              "weight": 1.0
+            }
+          ],
+          "use_dca": false
+        },
+        {
+          "turn_n": 7,
+          "alloc": [
+            {
+              "ticker": "CASH",
+              "weight": 1.0
+            }
+          ],
+          "use_dca": false
+        }
+      ]
     }
   }
 }

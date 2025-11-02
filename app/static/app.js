@@ -1532,6 +1532,7 @@ function handleCareerCloseTurn() {
   jsonPost("/api/career/turn", payload)
     .then((data) => {
       mostrarToastOk("Turno cerrado.");
+      showCareerEventsModal(data?.snapshot);
       handleCareerLoadSession(careerState.sessionId).then(() => {
         renderCareerReport({ includeSeries: false });
         loadCareerSeries();
@@ -1923,4 +1924,175 @@ async function loadSectores() {
   sel.innerHTML =
     `<option value="">Todos los sectores</option>` +
     sectores.map((s) => `<option value="${s}">${s}</option>`).join("");
+}
+
+function showCareerEventsModal(snapshot) {
+  const applied = Array.isArray(snapshot?.events_applied)
+    ? snapshot.events_applied
+    : Array.isArray(snapshot?.events)
+    ? snapshot.events
+    : [];
+  const upcoming = Array.isArray(snapshot?.events_new) ? snapshot.events_new : [];
+
+  if (!applied.length && !upcoming.length) {
+    return;
+  }
+
+  const existing = document.getElementById("career-events-modal");
+  if (existing) existing.remove();
+
+  const previouslyFocused =
+    document.activeElement instanceof HTMLElement ? document.activeElement : null;
+
+  const overlay = document.createElement("div");
+  overlay.id = "career-events-modal";
+  overlay.className = "modal";
+  overlay.setAttribute("role", "dialog");
+  overlay.setAttribute("aria-modal", "true");
+  overlay.setAttribute("aria-labelledby", "cem-title");
+
+  const content = document.createElement("div");
+  content.className = "modal__content";
+
+  const closeBtn = document.createElement("button");
+  closeBtn.type = "button";
+  closeBtn.className = "modal__close";
+  closeBtn.setAttribute("aria-label", "Cerrar");
+  closeBtn.textContent = "\u00D7";
+
+  const header = document.createElement("div");
+  header.className = "modal__header";
+  const title = document.createElement("h3");
+  title.id = "cem-title";
+  title.textContent = "Eventos del turno";
+  header.appendChild(title);
+
+  const body = document.createElement("div");
+  body.className = "modal__body";
+  body.id = "cem-body";
+
+  if (applied.length) {
+    body.appendChild(buildEventsSection("Aplicados este turno", applied));
+  }
+  if (upcoming.length) {
+    body.appendChild(buildEventsSection("Nuevos para proximos turnos", upcoming));
+  }
+
+  const footer = document.createElement("div");
+  footer.className = "modal__actions";
+  const acceptBtn = document.createElement("button");
+  acceptBtn.type = "button";
+  acceptBtn.className = "btn btn-primary";
+  acceptBtn.textContent = "Entendido";
+  footer.appendChild(acceptBtn);
+
+  content.appendChild(closeBtn);
+  content.appendChild(header);
+  content.appendChild(body);
+  content.appendChild(footer);
+  overlay.appendChild(content);
+  document.body.appendChild(overlay);
+
+  requestAnimationFrame(() => closeBtn.focus({ preventScroll: true }));
+
+  function closeModal() {
+    document.removeEventListener("keydown", onKeyDown, true);
+    if (overlay.parentNode) {
+      overlay.parentNode.removeChild(overlay);
+    }
+    if (previouslyFocused && previouslyFocused.focus) {
+      previouslyFocused.focus();
+    }
+  }
+
+  function onKeyDown(ev) {
+    if (ev.key === "Escape") {
+      ev.preventDefault();
+      closeModal();
+    }
+  }
+
+  overlay.addEventListener("click", (ev) => {
+    if (ev.target === overlay) closeModal();
+  });
+  closeBtn.addEventListener("click", closeModal);
+  acceptBtn.addEventListener("click", closeModal);
+  document.addEventListener("keydown", onKeyDown, true);
+
+  function buildEventsSection(titleText, events) {
+    const section = document.createElement("section");
+    const heading = document.createElement("h4");
+    heading.textContent = titleText;
+    section.appendChild(heading);
+
+    events.forEach((evt) => {
+      const block = document.createElement("div");
+      block.className = "career-events-block";
+
+      const name = document.createElement("p");
+      name.className = "career-event-name";
+      name.textContent = formatEventName(evt);
+      block.appendChild(name);
+
+      const list = document.createElement("ul");
+      list.className = "kv";
+
+      [
+        createKvRow("Ambito", formatScope(evt.scope)),
+        createKvRow("Objetivo", formatValue(evt.target)),
+        createKvRow("Impacto", formatImpact(evt.impact_pct)),
+        createKvRow("Turnos restantes", formatRemaining(evt.remaining_turns)),
+        createKvRow("Afectados", Array.isArray(evt.affected) && evt.affected.length ? evt.affected.join(", ") : null),
+      ].forEach((row) => {
+        if (row) list.appendChild(row);
+      });
+
+      block.appendChild(list);
+      section.appendChild(block);
+    });
+
+    return section;
+  }
+
+  function createKvRow(labelText, valueText) {
+    if (valueText === null || valueText === undefined || valueText === "") {
+      return null;
+    }
+    const li = document.createElement("li");
+    const strong = document.createElement("strong");
+    strong.textContent = `${labelText}:`;
+    const span = document.createElement("span");
+    span.textContent = valueText;
+    li.appendChild(strong);
+    li.appendChild(span);
+    return li;
+  }
+
+  function formatEventName(evt) {
+    return evt?.name || evt?.id || "Evento";
+  }
+
+  function formatScope(scope) {
+    if (!scope) return null;
+    return scope.charAt(0).toUpperCase() + scope.slice(1);
+  }
+
+  function formatValue(value) {
+    if (value === null || value === undefined || value === "") return null;
+    return String(value);
+  }
+
+  function formatImpact(value) {
+    const num = Number(value);
+    if (!Number.isFinite(num)) return null;
+    const scaled = num * 100;
+    const sign = scaled >= 0 ? "+" : "";
+    return `${sign}${scaled.toFixed(2)}%`;
+  }
+
+  function formatRemaining(value) {
+    if (value === null || value === undefined) return null;
+    if (Number.isNaN(Number(value))) return null;
+    return String(value);
+  }
 }
