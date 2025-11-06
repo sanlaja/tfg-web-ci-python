@@ -2393,6 +2393,128 @@ def close_turn():
         + per_ticker_shift.get(item["ticker"], 0.0)
         for item in clean_alloc
     }
+    ret_by_ticker = {
+        item["ticker"]: round(base_returns.get(item["ticker"], 0.0), 6)
+        for item in clean_alloc
+    }
+    ret_by_ticker_final = {
+        item["ticker"]: round(adjusted_returns.get(item["ticker"], 0.0), 6)
+        for item in clean_alloc
+    }
+
+    def _rounded_weights(raw_weights: list[float], normalized: bool) -> list[float]:
+        rounded = [0.0 for _ in raw_weights]
+        if not normalized:
+            for idx, weight in enumerate(raw_weights):
+                if weight > 0 and math.isfinite(weight):
+                    rounded[idx] = round(weight, 6)
+            return rounded
+
+        scale = 10**6
+        positive = [
+            (idx, weight)
+            for idx, weight in enumerate(raw_weights)
+            if weight > 0 and math.isfinite(weight)
+        ]
+        if not positive:
+            return rounded
+
+        target_total = int(round(sum(weight for _, weight in positive) * scale))
+        ints = []
+        fractions: list[tuple[float, int]] = []
+        for idx, weight in positive:
+            scaled = weight * scale
+            base = math.floor(scaled)
+            ints.append([idx, base])
+            fractions.append((scaled - base, idx))
+        current_sum = sum(base for _, base in ints)
+        delta = target_total - current_sum
+
+        if delta > 0:
+            for frac, idx in sorted(fractions, reverse=True):
+                if frac <= 0:
+                    continue
+                for item in ints:
+                    if item[0] == idx:
+                        item[1] += 1
+                        delta -= 1
+                        break
+                if delta <= 0:
+                    break
+        elif delta < 0:
+            for frac, idx in sorted(fractions, key=lambda x: x[0]):
+                for item in ints:
+                    if item[0] == idx and item[1] > 0:
+                        item[1] -= 1
+                        delta += 1
+                        break
+                if delta >= 0:
+                    break
+
+        for idx, value in ints:
+            rounded[idx] = value / scale
+        return rounded
+
+    drift_data: list[dict[str, Any]] = []
+    drift_valid = True
+    drift_denominator = 0.0
+    survivors_idx: list[int] = []
+
+    for idx, item in enumerate(clean_alloc):
+        ticker = item.get("ticker")
+        weight_current = float(item.get("weight") or 0.0)
+        if not ticker or not math.isfinite(weight_current):
+            weight_current = 0.0
+        ret_final = adjusted_returns.get(ticker, 0.0)
+        if not math.isfinite(ret_final):
+            drift_valid = False
+            ret_final = 0.0
+        growth_raw = weight_current * (1.0 + ret_final)
+        if not math.isfinite(growth_raw):
+            drift_valid = False
+            growth_raw = 0.0
+        growth = max(growth_raw, 0.0)
+        if growth > 0:
+            drift_denominator += growth
+        if weight_current > 0 and ret_final > -1.0:
+            survivors_idx.append(idx)
+        drift_data.append(
+            {
+                "index": idx,
+                "ticker": ticker,
+                "weight": weight_current,
+                "ret_final": ret_final,
+                "growth": growth,
+            }
+        )
+
+    raw_next_weights = [0.0 for _ in drift_data]
+    normalized_weights = False
+
+    if drift_valid and drift_denominator > 0 and math.isfinite(drift_denominator):
+        normalized_weights = True
+        for data in drift_data:
+            if data["growth"] > 0:
+                raw_next_weights[data["index"]] = data["growth"] / drift_denominator
+    elif survivors_idx:
+        normalized_weights = True
+        equal_weight = 1.0 / len(survivors_idx)
+        for idx in survivors_idx:
+            raw_next_weights[idx] = equal_weight
+    else:
+        for data in drift_data:
+            if data["weight"] > 0:
+                raw_next_weights[data["index"]] = data["weight"]
+
+    rounded_next_weights = _rounded_weights(raw_next_weights, normalized_weights)
+    alloc_next_suggested = [
+        {
+            "ticker": data["ticker"],
+            "weight": round(max(rounded_next_weights[data["index"]], 0.0), 6),
+        }
+        for data in drift_data
+        if data["ticker"]
+    ]
     turn_return_final = (
         sum(
             item["weight"] * adjusted_returns.get(item["ticker"], 0.0)
@@ -2475,6 +2597,9 @@ def close_turn():
         "events_applied": events_applied_snapshot,
         "events_new": events_new_snapshot,
         "ret_portfolio_shift": round(ret_portfolio_shift, 6),
+        "ret_by_ticker": ret_by_ticker,
+        "ret_by_ticker_final": ret_by_ticker_final,
+        "alloc_next_suggested": alloc_next_suggested,
     }
     if ret_ticker_shift_map:
         snapshot["ret_ticker_shift"] = ret_ticker_shift_map

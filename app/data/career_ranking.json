@@ -25,6 +25,19 @@
       "stars": 7,
       "bench": "^GSPC",
       "created_at": "2025-11-01T19:56:20.182490"
+    },
+    {
+      "session_id": "car_9742a7",
+      "player": "Javier3",
+      "difficulty": "experto",
+      "period": {
+        "start": "2005-12-24",
+        "end": "2006-12-23"
+      },
+      "score": 0.9,
+      "stars": 1,
+      "bench": "^GSPC",
+      "created_at": "2025-11-06T17:38:29.374844"
     }
   ]
 }

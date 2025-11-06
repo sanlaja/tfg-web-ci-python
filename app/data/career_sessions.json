@@ -5866,6 +5866,3163 @@
           "use_dca": true
         }
       ]
+    },
+    "car_9742a7": {
+      "session_id": "car_9742a7",
+      "player": "Javier3",
+      "difficulty": "experto",
+      "universe": [
+        "AAPL",
+        "MSFT",
+        "GOOGL",
+        "UBI.PA"
+      ],
+      "rejected_universe": [],
+      "capital_initial": 50000.0,
+      "capital_current": 26735.04,
+      "period": {
+        "start": "2005-12-24",
+        "end": "2006-12-23"
+      },
+      "turns": [
+        {
+          "n": 1,
+          "start": "2005-12-24",
+          "end": "2006-01-23",
+          "status": "completed",
+          "closed_at": "2025-11-06T17:31:11.034654"
+        },
+        {
+          "n": 2,
+          "start": "2006-01-24",
+          "end": "2006-02-23",
+          "status": "completed",
+          "closed_at": "2025-11-06T17:32:35.391439"
+        },
+        {
+          "n": 3,
+          "start": "2006-02-24",
+          "end": "2006-03-23",
+          "status": "completed",
+          "closed_at": "2025-11-06T17:33:13.241757"
+        },
+        {
+          "n": 4,
+          "start": "2006-03-24",
+          "end": "2006-04-23",
+          "status": "completed",
+          "closed_at": "2025-11-06T17:33:20.654814"
+        },
+        {
+          "n": 5,
+          "start": "2006-04-24",
+          "end": "2006-05-23",
+          "status": "completed",
+          "closed_at": "2025-11-06T17:33:25.069747"
+        },
+        {
+          "n": 6,
+          "start": "2006-05-24",
+          "end": "2006-06-23",
+          "status": "completed",
+          "closed_at": "2025-11-06T17:33:32.696023"
+        },
+        {
+          "n": 7,
+          "start": "2006-06-24",
+          "end": "2006-07-23",
+          "status": "completed",
+          "closed_at": "2025-11-06T17:33:38.343646"
+        },
+        {
+          "n": 8,
+          "start": "2006-07-24",
+          "end": "2006-08-23",
+          "status": "completed",
+          "closed_at": "2025-11-06T17:33:44.243843"
+        },
+        {
+          "n": 9,
+          "start": "2006-08-24",
+          "end": "2006-09-23",
+          "status": "completed",
+          "closed_at": "2025-11-06T17:34:12.950931"
+        },
+        {
+          "n": 10,
+          "start": "2006-09-24",
+          "end": "2006-10-23",
+          "status": "completed",
+          "closed_at": "2025-11-06T17:34:35.245569"
+        },
+        {
+          "n": 11,
+          "start": "2006-10-24",
+          "end": "2006-11-23",
+          "status": "completed",
+          "closed_at": "2025-11-06T17:35:53.981834"
+        },
+        {
+          "n": 12,
+          "start": "2006-11-24",
+          "end": "2006-12-23",
+          "status": "completed",
+          "closed_at": "2025-11-06T17:37:07.539904"
+        }
+      ],
+      "completed_turns": [
+        {
+          "turn_n": 1,
+          "range": {
+            "start": "2005-12-24",
+            "end": "2006-01-23"
+          },
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.3
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.4
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.3
+            }
+          ],
+          "use_dca": false,
+          "turn_return": -0.008371,
+          "turn_return_market": -0.008371,
+          "portfolio_value": 49581.44,
+          "events": [],
+          "events_applied": [],
+          "events_new": [
+            {
+              "id": "sector_activity_ban",
+              "name": "Prohibicion temporal de actividad",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.085,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "hard"
+            }
+          ],
+          "ret_portfolio_shift": 0.0,
+          "ret_by_ticker": {
+            "AAPL": 0.046342,
+            "MSFT": -0.004156,
+            "UBI.PA": -0.068704
+          },
+          "ret_by_ticker_final": {
+            "AAPL": 0.046342,
+            "MSFT": -0.004156,
+            "UBI.PA": -0.068704
+          },
+          "alloc_next_suggested": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.316553
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.4017
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.281747
+            }
+          ],
+          "dca_in_turn": 0.0,
+          "invested_so_far": 50000.0,
+          "pnl_abs": -418.56,
+          "pnl_pct": -0.008371,
+          "cum_return_net": -0.008371,
+          "delta_vs_prev": -418.56
+        },
+        {
+          "turn_n": 2,
+          "range": {
+            "start": "2006-01-24",
+            "end": "2006-02-23"
+          },
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.316553
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.4017
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.281747
+            }
+          ],
+          "use_dca": true,
+          "turn_return": -0.113381,
+          "turn_return_market": -0.052329,
+          "portfolio_value": 47654.11,
+          "events": [
+            {
+              "id": "sector_activity_ban",
+              "name": "Prohibicion temporal de actividad",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.085,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "sector_activity_ban",
+              "name": "Prohibicion temporal de actividad",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.085,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            }
+          ],
+          "events_new": [
+            {
+              "id": "sector_boycott",
+              "name": "Boicot comercial contra el sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.08,
+              "remaining_turns": 3,
+              "category": "negative",
+              "difficulty": "hard"
+            },
+            {
+              "id": "sector_rumor_neg",
+              "name": "Rumor sectorial (negativo)",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.047788,
+              "remaining_turns": 2,
+              "category": "legacy",
+              "difficulty": "hard"
+            }
+          ],
+          "ret_portfolio_shift": 0.0,
+          "ret_by_ticker": {
+            "AAPL": -0.056418,
+            "MSFT": 0.017897,
+            "UBI.PA": -0.147861
+          },
+          "ret_by_ticker_final": {
+            "AAPL": -0.141418,
+            "MSFT": -0.067103,
+            "UBI.PA": -0.147861
+          },
+          "alloc_next_suggested": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.306543
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.422667
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.27079
+            }
+          ],
+          "ret_ticker_shift": {
+            "AAPL": -0.085,
+            "MSFT": -0.085
+          },
+          "dca_in_turn": 4166.67,
+          "invested_so_far": 54166.67,
+          "pnl_abs": -6512.56,
+          "pnl_pct": -0.120232,
+          "cum_return_net": -0.120232,
+          "delta_vs_prev": -1927.33
+        },
+        {
+          "turn_n": 3,
+          "range": {
+            "start": "2006-02-24",
+            "end": "2006-03-23"
+          },
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.306543
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.422667
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.27079
+            }
+          ],
+          "use_dca": true,
+          "turn_return": -0.159039,
+          "turn_return_market": -0.003871,
+          "portfolio_value": 43579.28,
+          "events": [
+            {
+              "id": "sector_activity_ban",
+              "name": "Prohibicion temporal de actividad",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.085,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "sector_boycott",
+              "name": "Boicot comercial contra el sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.08,
+              "remaining_turns": 3,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "sector_rumor_neg",
+              "name": "Rumor sectorial (negativo)",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.047788,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "sector_activity_ban",
+              "name": "Prohibicion temporal de actividad",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.085,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "sector_boycott",
+              "name": "Boicot comercial contra el sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.08,
+              "remaining_turns": 3,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "sector_rumor_neg",
+              "name": "Rumor sectorial (negativo)",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.047788,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            }
+          ],
+          "events_new": [
+            {
+              "id": "macro_inflation_shock",
+              "name": "Shock inflacionario inesperado",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.085,
+              "remaining_turns": 3,
+              "category": "negative",
+              "difficulty": "hard"
+            },
+            {
+              "id": "sector_tax_changes",
+              "name": "Cambios fiscales adversos al sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.09,
+              "remaining_turns": 3,
+              "category": "negative",
+              "difficulty": "hard"
+            }
+          ],
+          "ret_portfolio_shift": 0.0,
+          "ret_by_ticker": {
+            "AAPL": -0.158131,
+            "MSFT": 0.008261,
+            "UBI.PA": 0.151818
+          },
+          "ret_by_ticker_final": {
+            "AAPL": -0.370919,
+            "MSFT": -0.204527,
+            "UBI.PA": 0.151818
+          },
+          "alloc_next_suggested": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.22931
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.399804
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.370886
+            }
+          ],
+          "ret_ticker_shift": {
+            "AAPL": -0.212788,
+            "MSFT": -0.212788
+          },
+          "dca_in_turn": 4166.67,
+          "invested_so_far": 58333.33,
+          "pnl_abs": -14754.06,
+          "pnl_pct": -0.252927,
+          "cum_return_net": -0.252927,
+          "delta_vs_prev": -4074.83
+        },
+        {
+          "turn_n": 4,
+          "range": {
+            "start": "2006-03-24",
+            "end": "2006-04-23"
+          },
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.22931
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.399804
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.370886
+            }
+          ],
+          "use_dca": true,
+          "turn_return": -0.16768,
+          "turn_return_market": 0.054334,
+          "portfolio_value": 39739.93,
+          "events": [
+            {
+              "id": "sector_boycott",
+              "name": "Boicot comercial contra el sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.08,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "sector_rumor_neg",
+              "name": "Rumor sectorial (negativo)",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.047788,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "macro_inflation_shock",
+              "name": "Shock inflacionario inesperado",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.085,
+              "remaining_turns": 3,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_tax_changes",
+              "name": "Cambios fiscales adversos al sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.09,
+              "remaining_turns": 3,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "sector_boycott",
+              "name": "Boicot comercial contra el sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.08,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "sector_rumor_neg",
+              "name": "Rumor sectorial (negativo)",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.047788,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "macro_inflation_shock",
+              "name": "Shock inflacionario inesperado",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.085,
+              "remaining_turns": 3,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_tax_changes",
+              "name": "Cambios fiscales adversos al sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.09,
+              "remaining_turns": 3,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            }
+          ],
+          "events_new": [
+            {
+              "id": "macro_financial_panic",
+              "name": "Panico financiero",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.1,
+              "remaining_turns": 3,
+              "category": "negative",
+              "difficulty": "hard"
+            },
+            {
+              "id": "sector_tech_collapse",
+              "name": "Colapso tecnologico del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.07,
+              "remaining_turns": 3,
+              "category": "negative",
+              "difficulty": "hard"
+            },
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.039818,
+              "remaining_turns": 2,
+              "category": "legacy",
+              "difficulty": "hard"
+            }
+          ],
+          "ret_portfolio_shift": -0.085,
+          "ret_by_ticker": {
+            "AAPL": 0.118079,
+            "MSFT": 0.005183,
+            "UBI.PA": 0.067904
+          },
+          "ret_by_ticker_final": {
+            "AAPL": -0.099709,
+            "MSFT": -0.212605,
+            "UBI.PA": 0.067904
+          },
+          "alloc_next_suggested": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.225053
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.343178
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.431769
+            }
+          ],
+          "ret_ticker_shift": {
+            "AAPL": -0.217788,
+            "MSFT": -0.217788
+          },
+          "dca_in_turn": 4166.67,
+          "invested_so_far": 62500.0,
+          "pnl_abs": -22760.07,
+          "pnl_pct": -0.364161,
+          "cum_return_net": -0.364161,
+          "delta_vs_prev": -3839.35
+        },
+        {
+          "turn_n": 5,
+          "range": {
+            "start": "2006-04-24",
+            "end": "2006-05-23"
+          },
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.225053
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.343178
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.431769
+            }
+          ],
+          "use_dca": true,
+          "turn_return": -0.430179,
+          "turn_return_market": -0.068985,
+          "portfolio_value": 25018.92,
+          "events": [
+            {
+              "id": "sector_boycott",
+              "name": "Boicot comercial contra el sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.08,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "macro_inflation_shock",
+              "name": "Shock inflacionario inesperado",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.085,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_tax_changes",
+              "name": "Cambios fiscales adversos al sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.09,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "macro_financial_panic",
+              "name": "Panico financiero",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.1,
+              "remaining_turns": 3,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_tech_collapse",
+              "name": "Colapso tecnologico del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.07,
+              "remaining_turns": 3,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.039818,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "sector_boycott",
+              "name": "Boicot comercial contra el sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.08,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "macro_inflation_shock",
+              "name": "Shock inflacionario inesperado",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.085,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_tax_changes",
+              "name": "Cambios fiscales adversos al sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.09,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "macro_financial_panic",
+              "name": "Panico financiero",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.1,
+              "remaining_turns": 3,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_tech_collapse",
+              "name": "Colapso tecnologico del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.07,
+              "remaining_turns": 3,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.039818,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            }
+          ],
+          "events_new": [
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.027287,
+              "remaining_turns": 1,
+              "category": "legacy",
+              "difficulty": "hard"
+            }
+          ],
+          "ret_portfolio_shift": -0.224818,
+          "ret_by_ticker": {
+            "AAPL": -0.039544,
+            "MSFT": -0.156072,
+            "UBI.PA": -0.015113
+          },
+          "ret_by_ticker_final": {
+            "AAPL": -0.279544,
+            "MSFT": -0.396072,
+            "UBI.PA": -0.015113
+          },
+          "alloc_next_suggested": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.204043
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.260816
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.535141
+            }
+          ],
+          "ret_ticker_shift": {
+            "AAPL": -0.24,
+            "MSFT": -0.24
+          },
+          "dca_in_turn": 4166.67,
+          "invested_so_far": 66666.67,
+          "pnl_abs": -41647.75,
+          "pnl_pct": -0.624716,
+          "cum_return_net": -0.624716,
+          "delta_vs_prev": -14721.01
+        },
+        {
+          "turn_n": 6,
+          "range": {
+            "start": "2006-05-24",
+            "end": "2006-06-23"
+          },
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.204043
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.260816
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.535141
+            }
+          ],
+          "use_dca": true,
+          "turn_return": -0.357197,
+          "turn_return_market": -0.030714,
+          "portfolio_value": 18760.59,
+          "events": [
+            {
+              "id": "macro_inflation_shock",
+              "name": "Shock inflacionario inesperado",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.085,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_tax_changes",
+              "name": "Cambios fiscales adversos al sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.09,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "macro_financial_panic",
+              "name": "Panico financiero",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.1,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_tech_collapse",
+              "name": "Colapso tecnologico del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.07,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.039818,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.027287,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "macro_inflation_shock",
+              "name": "Shock inflacionario inesperado",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.085,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_tax_changes",
+              "name": "Cambios fiscales adversos al sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.09,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "macro_financial_panic",
+              "name": "Panico financiero",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.1,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_tech_collapse",
+              "name": "Colapso tecnologico del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.07,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.039818,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.027287,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            }
+          ],
+          "events_new": [
+            {
+              "id": "sector_activity_ban",
+              "name": "Prohibicion temporal de actividad",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.085,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "hard"
+            }
+          ],
+          "ret_portfolio_shift": -0.252105,
+          "ret_by_ticker": {
+            "AAPL": -0.071204,
+            "MSFT": -0.042553,
+            "UBI.PA": -0.009506
+          },
+          "ret_by_ticker_final": {
+            "AAPL": -0.231204,
+            "MSFT": -0.202553,
+            "UBI.PA": -0.009506
+          },
+          "alloc_next_suggested": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.175289
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.232411
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.5923
+            }
+          ],
+          "ret_ticker_shift": {
+            "AAPL": -0.16,
+            "MSFT": -0.16
+          },
+          "dca_in_turn": 4166.67,
+          "invested_so_far": 70833.33,
+          "pnl_abs": -52072.74,
+          "pnl_pct": -0.735145,
+          "cum_return_net": -0.735145,
+          "delta_vs_prev": -6258.33
+        },
+        {
+          "turn_n": 7,
+          "range": {
+            "start": "2006-06-24",
+            "end": "2006-07-23"
+          },
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.175289
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.232411
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.5923
+            }
+          ],
+          "use_dca": true,
+          "turn_return": -0.202995,
+          "turn_return_market": -0.039801,
+          "portfolio_value": 18273.15,
+          "events": [
+            {
+              "id": "macro_financial_panic",
+              "name": "Panico financiero",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.1,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_tech_collapse",
+              "name": "Colapso tecnologico del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.07,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "sector_activity_ban",
+              "name": "Prohibicion temporal de actividad",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.085,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "macro_financial_panic",
+              "name": "Panico financiero",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.1,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_tech_collapse",
+              "name": "Colapso tecnologico del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.07,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "sector_activity_ban",
+              "name": "Prohibicion temporal de actividad",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.085,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            }
+          ],
+          "events_new": [
+            {
+              "id": "macro_energy_crisis",
+              "name": "Crisis energetica prolongada",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.075,
+              "remaining_turns": 3,
+              "category": "negative",
+              "difficulty": "hard"
+            },
+            {
+              "id": "sector_tech_collapse",
+              "name": "Colapso tecnologico del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.07,
+              "remaining_turns": 3,
+              "category": "negative",
+              "difficulty": "hard"
+            }
+          ],
+          "ret_portfolio_shift": -0.1,
+          "ret_by_ticker": {
+            "AAPL": 0.029326,
+            "MSFT": 0.046013,
+            "UBI.PA": -0.093931
+          },
+          "ret_by_ticker_final": {
+            "AAPL": -0.125674,
+            "MSFT": -0.108987,
+            "UBI.PA": -0.093931
+          },
+          "alloc_next_suggested": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.170857
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.230858
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.598285
+            }
+          ],
+          "ret_ticker_shift": {
+            "AAPL": -0.155,
+            "MSFT": -0.155
+          },
+          "dca_in_turn": 4166.67,
+          "invested_so_far": 75000.0,
+          "pnl_abs": -56726.85,
+          "pnl_pct": -0.756358,
+          "cum_return_net": -0.756358,
+          "delta_vs_prev": -487.44
+        },
+        {
+          "turn_n": 8,
+          "range": {
+            "start": "2006-07-24",
+            "end": "2006-08-23"
+          },
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.170857
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.230858
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.598285
+            }
+          ],
+          "use_dca": true,
+          "turn_return": 0.028067,
+          "turn_return_market": 0.165333,
+          "portfolio_value": 23069.63,
+          "events": [
+            {
+              "id": "sector_activity_ban",
+              "name": "Prohibicion temporal de actividad",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.085,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "macro_energy_crisis",
+              "name": "Crisis energetica prolongada",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.075,
+              "remaining_turns": 3,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_tech_collapse",
+              "name": "Colapso tecnologico del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.07,
+              "remaining_turns": 3,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "sector_activity_ban",
+              "name": "Prohibicion temporal de actividad",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.085,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "macro_energy_crisis",
+              "name": "Crisis energetica prolongada",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.075,
+              "remaining_turns": 3,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_tech_collapse",
+              "name": "Colapso tecnologico del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.07,
+              "remaining_turns": 3,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            }
+          ],
+          "events_new": [
+            {
+              "id": "macro_energy_crisis",
+              "name": "Crisis energetica prolongada",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.075,
+              "remaining_turns": 3,
+              "category": "negative",
+              "difficulty": "hard"
+            },
+            {
+              "id": "sector_tax_changes",
+              "name": "Cambios fiscales adversos al sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.09,
+              "remaining_turns": 3,
+              "category": "negative",
+              "difficulty": "hard"
+            }
+          ],
+          "ret_portfolio_shift": -0.075,
+          "ret_by_ticker": {
+            "AAPL": 0.095897,
+            "MSFT": 0.073522,
+            "UBI.PA": 0.220588
+          },
+          "ret_by_ticker_final": {
+            "AAPL": -0.059103,
+            "MSFT": -0.081478,
+            "UBI.PA": 0.220588
+          },
+          "alloc_next_suggested": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.145738
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.192235
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.662027
+            }
+          ],
+          "ret_ticker_shift": {
+            "AAPL": -0.155,
+            "MSFT": -0.155
+          },
+          "dca_in_turn": 4166.67,
+          "invested_so_far": 79166.67,
+          "pnl_abs": -56097.04,
+          "pnl_pct": -0.708594,
+          "cum_return_net": -0.708594,
+          "delta_vs_prev": 4796.48
+        },
+        {
+          "turn_n": 9,
+          "range": {
+            "start": "2006-08-24",
+            "end": "2006-09-23"
+          },
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.145738
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.192235
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.662027
+            }
+          ],
+          "use_dca": true,
+          "turn_return": -0.12636,
+          "turn_return_market": 0.077716,
+          "portfolio_value": 23794.73,
+          "events": [
+            {
+              "id": "macro_energy_crisis",
+              "name": "Crisis energetica prolongada",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.075,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_tech_collapse",
+              "name": "Colapso tecnologico del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.07,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "macro_energy_crisis",
+              "name": "Crisis energetica prolongada",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.075,
+              "remaining_turns": 3,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_tax_changes",
+              "name": "Cambios fiscales adversos al sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.09,
+              "remaining_turns": 3,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "macro_energy_crisis",
+              "name": "Crisis energetica prolongada",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.075,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_tech_collapse",
+              "name": "Colapso tecnologico del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.07,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "macro_energy_crisis",
+              "name": "Crisis energetica prolongada",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.075,
+              "remaining_turns": 3,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_tax_changes",
+              "name": "Cambios fiscales adversos al sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.09,
+              "remaining_turns": 3,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            }
+          ],
+          "events_new": [],
+          "ret_portfolio_shift": -0.15,
+          "ret_by_ticker": {
+            "AAPL": 0.076537,
+            "MSFT": 0.035741,
+            "UBI.PA": 0.090164
+          },
+          "ret_by_ticker_final": {
+            "AAPL": -0.083463,
+            "MSFT": -0.124259,
+            "UBI.PA": 0.090164
+          },
+          "alloc_next_suggested": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.13049
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.16446
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.70505
+            }
+          ],
+          "ret_ticker_shift": {
+            "AAPL": -0.16,
+            "MSFT": -0.16
+          },
+          "dca_in_turn": 4166.67,
+          "invested_so_far": 83333.33,
+          "pnl_abs": -59538.6,
+          "pnl_pct": -0.714463,
+          "cum_return_net": -0.714463,
+          "delta_vs_prev": 725.1
+        },
+        {
+          "turn_n": 10,
+          "range": {
+            "start": "2006-09-24",
+            "end": "2006-10-23"
+          },
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.13049
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.16446
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.70505
+            }
+          ],
+          "use_dca": true,
+          "turn_return": -0.133132,
+          "turn_return_market": 0.06406,
+          "portfolio_value": 24238.84,
+          "events": [
+            {
+              "id": "macro_energy_crisis",
+              "name": "Crisis energetica prolongada",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.075,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_tech_collapse",
+              "name": "Colapso tecnologico del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.07,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "macro_energy_crisis",
+              "name": "Crisis energetica prolongada",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.075,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_tax_changes",
+              "name": "Cambios fiscales adversos al sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.09,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "macro_energy_crisis",
+              "name": "Crisis energetica prolongada",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.075,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_tech_collapse",
+              "name": "Colapso tecnologico del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.07,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "macro_energy_crisis",
+              "name": "Crisis energetica prolongada",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.075,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_tax_changes",
+              "name": "Cambios fiscales adversos al sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.09,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            }
+          ],
+          "events_new": [
+            {
+              "id": "macro_energy_crisis",
+              "name": "Crisis energetica prolongada",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.075,
+              "remaining_turns": 3,
+              "category": "negative",
+              "difficulty": "hard"
+            },
+            {
+              "id": "sector_boycott",
+              "name": "Boicot comercial contra el sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.08,
+              "remaining_turns": 3,
+              "category": "negative",
+              "difficulty": "hard"
+            },
+            {
+              "id": "ticker_bankruptcy_risk",
+              "name": "Riesgo de quiebra o intervencion",
+              "scope": "ticker",
+              "target": "MSFT",
+              "impact_pct": -0.12,
+              "remaining_turns": 3,
+              "category": "negative",
+              "difficulty": "hard"
+            }
+          ],
+          "ret_portfolio_shift": -0.15,
+          "ret_by_ticker": {
+            "AAPL": 0.07538,
+            "MSFT": 0.055659,
+            "UBI.PA": 0.063925
+          },
+          "ret_by_ticker_final": {
+            "AAPL": -0.08462,
+            "MSFT": -0.104341,
+            "UBI.PA": 0.063925
+          },
+          "alloc_next_suggested": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.117466
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.144857
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.737677
+            }
+          ],
+          "ret_ticker_shift": {
+            "AAPL": -0.16,
+            "MSFT": -0.16
+          },
+          "dca_in_turn": 4166.67,
+          "invested_so_far": 87500.0,
+          "pnl_abs": -63261.16,
+          "pnl_pct": -0.722985,
+          "cum_return_net": -0.722985,
+          "delta_vs_prev": 444.11
+        },
+        {
+          "turn_n": 11,
+          "range": {
+            "start": "2006-10-24",
+            "end": "2006-11-23"
+          },
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.117466
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.144857
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.737677
+            }
+          ],
+          "use_dca": true,
+          "turn_return": -0.124971,
+          "turn_return_market": 0.087006,
+          "portfolio_value": 24855.63,
+          "events": [
+            {
+              "id": "macro_energy_crisis",
+              "name": "Crisis energetica prolongada",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.075,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_tax_changes",
+              "name": "Cambios fiscales adversos al sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.09,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "macro_energy_crisis",
+              "name": "Crisis energetica prolongada",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.075,
+              "remaining_turns": 3,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_boycott",
+              "name": "Boicot comercial contra el sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.08,
+              "remaining_turns": 3,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "ticker_bankruptcy_risk",
+              "name": "Riesgo de quiebra o intervencion",
+              "scope": "ticker",
+              "target": "MSFT",
+              "impact_pct": -0.12,
+              "remaining_turns": 3,
+              "affected": [
+                "MSFT"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "macro_energy_crisis",
+              "name": "Crisis energetica prolongada",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.075,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_tax_changes",
+              "name": "Cambios fiscales adversos al sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.09,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "macro_energy_crisis",
+              "name": "Crisis energetica prolongada",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.075,
+              "remaining_turns": 3,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_boycott",
+              "name": "Boicot comercial contra el sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.08,
+              "remaining_turns": 3,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "ticker_bankruptcy_risk",
+              "name": "Riesgo de quiebra o intervencion",
+              "scope": "ticker",
+              "target": "MSFT",
+              "impact_pct": -0.12,
+              "remaining_turns": 3,
+              "affected": [
+                "MSFT"
+              ]
+            }
+          ],
+          "events_new": [
+            {
+              "id": "sector_activity_ban",
+              "name": "Prohibicion temporal de actividad",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.085,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "hard"
+            }
+          ],
+          "ret_portfolio_shift": -0.15,
+          "ret_by_ticker": {
+            "AAPL": 0.11425,
+            "MSFT": 0.061609,
+            "UBI.PA": 0.087655
+          },
+          "ret_by_ticker_final": {
+            "AAPL": -0.05575,
+            "MSFT": -0.228391,
+            "UBI.PA": 0.087655
+          },
+          "alloc_next_suggested": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.108209
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.109044
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.782747
+            }
+          ],
+          "ret_ticker_shift": {
+            "AAPL": -0.17,
+            "MSFT": -0.29
+          },
+          "dca_in_turn": 4166.67,
+          "invested_so_far": 91666.67,
+          "pnl_abs": -66811.04,
+          "pnl_pct": -0.728848,
+          "cum_return_net": -0.728848,
+          "delta_vs_prev": 616.79
+        },
+        {
+          "turn_n": 12,
+          "range": {
+            "start": "2006-11-24",
+            "end": "2006-12-23"
+          },
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.108209
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.109044
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.782747
+            }
+          ],
+          "use_dca": true,
+          "turn_return": -0.07881,
+          "turn_return_market": 0.045122,
+          "portfolio_value": 26735.04,
+          "events": [
+            {
+              "id": "macro_energy_crisis",
+              "name": "Crisis energetica prolongada",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.075,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_boycott",
+              "name": "Boicot comercial contra el sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.08,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "ticker_bankruptcy_risk",
+              "name": "Riesgo de quiebra o intervencion",
+              "scope": "ticker",
+              "target": "MSFT",
+              "impact_pct": -0.12,
+              "remaining_turns": 2,
+              "affected": [
+                "MSFT"
+              ]
+            },
+            {
+              "id": "sector_activity_ban",
+              "name": "Prohibicion temporal de actividad",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.085,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "macro_energy_crisis",
+              "name": "Crisis energetica prolongada",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.075,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_boycott",
+              "name": "Boicot comercial contra el sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.08,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "ticker_bankruptcy_risk",
+              "name": "Riesgo de quiebra o intervencion",
+              "scope": "ticker",
+              "target": "MSFT",
+              "impact_pct": -0.12,
+              "remaining_turns": 2,
+              "affected": [
+                "MSFT"
+              ]
+            },
+            {
+              "id": "sector_activity_ban",
+              "name": "Prohibicion temporal de actividad",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.085,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            }
+          ],
+          "events_new": [
+            {
+              "id": "sector_activity_ban",
+              "name": "Prohibicion temporal de actividad",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.085,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "hard"
+            },
+            {
+              "id": "ticker_cyber_attack",
+              "name": "Ciberataque critico a la empresa",
+              "scope": "ticker",
+              "target": "UBI.PA",
+              "impact_pct": -0.08,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "hard"
+            }
+          ],
+          "ret_portfolio_shift": -0.075,
+          "ret_by_ticker": {
+            "AAPL": -0.102914,
+            "MSFT": -0.004032,
+            "UBI.PA": 0.072434
+          },
+          "ret_by_ticker_final": {
+            "AAPL": -0.267914,
+            "MSFT": -0.289032,
+            "UBI.PA": 0.072434
+          },
+          "alloc_next_suggested": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.079521
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.077823
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.842656
+            }
+          ],
+          "ret_ticker_shift": {
+            "AAPL": -0.165,
+            "MSFT": -0.285
+          },
+          "dca_in_turn": 4166.67,
+          "invested_so_far": 95833.33,
+          "pnl_abs": -69098.29,
+          "pnl_pct": -0.721026,
+          "cum_return_net": -0.721026,
+          "delta_vs_prev": 1879.41
+        }
+      ],
+      "seed": 10077316704097585269,
+      "created_at": "2025-11-06T17:30:39.841134",
+      "closed": true,
+      "total_turns": 12,
+      "turns_total": 12,
+      "contrib_so_far": 45833.33333333333,
+      "cum_return": -0.465299,
+      "events_log": [
+        {
+          "turn_n": 1,
+          "applied": [],
+          "drawn": [
+            {
+              "id": "sector_activity_ban",
+              "name": "Prohibicion temporal de actividad",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.085,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "hard"
+            }
+          ]
+        },
+        {
+          "turn_n": 2,
+          "applied": [
+            {
+              "id": "sector_activity_ban",
+              "name": "Prohibicion temporal de actividad",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.085,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            }
+          ],
+          "drawn": [
+            {
+              "id": "sector_boycott",
+              "name": "Boicot comercial contra el sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.08,
+              "remaining_turns": 3,
+              "category": "negative",
+              "difficulty": "hard"
+            },
+            {
+              "id": "sector_rumor_neg",
+              "name": "Rumor sectorial (negativo)",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.047788,
+              "remaining_turns": 2,
+              "category": "legacy",
+              "difficulty": "hard"
+            }
+          ]
+        },
+        {
+          "turn_n": 3,
+          "applied": [
+            {
+              "id": "sector_activity_ban",
+              "name": "Prohibicion temporal de actividad",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.085,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "sector_boycott",
+              "name": "Boicot comercial contra el sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.08,
+              "remaining_turns": 3,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "sector_rumor_neg",
+              "name": "Rumor sectorial (negativo)",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.047788,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            }
+          ],
+          "drawn": [
+            {
+              "id": "macro_inflation_shock",
+              "name": "Shock inflacionario inesperado",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.085,
+              "remaining_turns": 3,
+              "category": "negative",
+              "difficulty": "hard"
+            },
+            {
+              "id": "sector_tax_changes",
+              "name": "Cambios fiscales adversos al sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.09,
+              "remaining_turns": 3,
+              "category": "negative",
+              "difficulty": "hard"
+            }
+          ]
+        },
+        {
+          "turn_n": 4,
+          "applied": [
+            {
+              "id": "sector_boycott",
+              "name": "Boicot comercial contra el sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.08,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "sector_rumor_neg",
+              "name": "Rumor sectorial (negativo)",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.047788,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "macro_inflation_shock",
+              "name": "Shock inflacionario inesperado",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.085,
+              "remaining_turns": 3,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_tax_changes",
+              "name": "Cambios fiscales adversos al sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.09,
+              "remaining_turns": 3,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            }
+          ],
+          "drawn": [
+            {
+              "id": "macro_financial_panic",
+              "name": "Panico financiero",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.1,
+              "remaining_turns": 3,
+              "category": "negative",
+              "difficulty": "hard"
+            },
+            {
+              "id": "sector_tech_collapse",
+              "name": "Colapso tecnologico del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.07,
+              "remaining_turns": 3,
+              "category": "negative",
+              "difficulty": "hard"
+            },
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.039818,
+              "remaining_turns": 2,
+              "category": "legacy",
+              "difficulty": "hard"
+            }
+          ]
+        },
+        {
+          "turn_n": 5,
+          "applied": [
+            {
+              "id": "sector_boycott",
+              "name": "Boicot comercial contra el sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.08,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "macro_inflation_shock",
+              "name": "Shock inflacionario inesperado",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.085,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_tax_changes",
+              "name": "Cambios fiscales adversos al sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.09,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "macro_financial_panic",
+              "name": "Panico financiero",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.1,
+              "remaining_turns": 3,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_tech_collapse",
+              "name": "Colapso tecnologico del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.07,
+              "remaining_turns": 3,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.039818,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            }
+          ],
+          "drawn": [
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.027287,
+              "remaining_turns": 1,
+              "category": "legacy",
+              "difficulty": "hard"
+            }
+          ]
+        },
+        {
+          "turn_n": 6,
+          "applied": [
+            {
+              "id": "macro_inflation_shock",
+              "name": "Shock inflacionario inesperado",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.085,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_tax_changes",
+              "name": "Cambios fiscales adversos al sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.09,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "macro_financial_panic",
+              "name": "Panico financiero",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.1,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_tech_collapse",
+              "name": "Colapso tecnologico del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.07,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.039818,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.027287,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            }
+          ],
+          "drawn": [
+            {
+              "id": "sector_activity_ban",
+              "name": "Prohibicion temporal de actividad",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.085,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "hard"
+            }
+          ]
+        },
+        {
+          "turn_n": 7,
+          "applied": [
+            {
+              "id": "macro_financial_panic",
+              "name": "Panico financiero",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.1,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_tech_collapse",
+              "name": "Colapso tecnologico del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.07,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "sector_activity_ban",
+              "name": "Prohibicion temporal de actividad",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.085,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            }
+          ],
+          "drawn": [
+            {
+              "id": "macro_energy_crisis",
+              "name": "Crisis energetica prolongada",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.075,
+              "remaining_turns": 3,
+              "category": "negative",
+              "difficulty": "hard"
+            },
+            {
+              "id": "sector_tech_collapse",
+              "name": "Colapso tecnologico del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.07,
+              "remaining_turns": 3,
+              "category": "negative",
+              "difficulty": "hard"
+            }
+          ]
+        },
+        {
+          "turn_n": 8,
+          "applied": [
+            {
+              "id": "sector_activity_ban",
+              "name": "Prohibicion temporal de actividad",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.085,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "macro_energy_crisis",
+              "name": "Crisis energetica prolongada",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.075,
+              "remaining_turns": 3,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_tech_collapse",
+              "name": "Colapso tecnologico del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.07,
+              "remaining_turns": 3,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            }
+          ],
+          "drawn": [
+            {
+              "id": "macro_energy_crisis",
+              "name": "Crisis energetica prolongada",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.075,
+              "remaining_turns": 3,
+              "category": "negative",
+              "difficulty": "hard"
+            },
+            {
+              "id": "sector_tax_changes",
+              "name": "Cambios fiscales adversos al sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.09,
+              "remaining_turns": 3,
+              "category": "negative",
+              "difficulty": "hard"
+            }
+          ]
+        },
+        {
+          "turn_n": 9,
+          "applied": [
+            {
+              "id": "macro_energy_crisis",
+              "name": "Crisis energetica prolongada",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.075,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_tech_collapse",
+              "name": "Colapso tecnologico del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.07,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "macro_energy_crisis",
+              "name": "Crisis energetica prolongada",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.075,
+              "remaining_turns": 3,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_tax_changes",
+              "name": "Cambios fiscales adversos al sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.09,
+              "remaining_turns": 3,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            }
+          ],
+          "drawn": []
+        },
+        {
+          "turn_n": 10,
+          "applied": [
+            {
+              "id": "macro_energy_crisis",
+              "name": "Crisis energetica prolongada",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.075,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_tech_collapse",
+              "name": "Colapso tecnologico del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.07,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "macro_energy_crisis",
+              "name": "Crisis energetica prolongada",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.075,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_tax_changes",
+              "name": "Cambios fiscales adversos al sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.09,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            }
+          ],
+          "drawn": [
+            {
+              "id": "macro_energy_crisis",
+              "name": "Crisis energetica prolongada",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.075,
+              "remaining_turns": 3,
+              "category": "negative",
+              "difficulty": "hard"
+            },
+            {
+              "id": "sector_boycott",
+              "name": "Boicot comercial contra el sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.08,
+              "remaining_turns": 3,
+              "category": "negative",
+              "difficulty": "hard"
+            },
+            {
+              "id": "ticker_bankruptcy_risk",
+              "name": "Riesgo de quiebra o intervencion",
+              "scope": "ticker",
+              "target": "MSFT",
+              "impact_pct": -0.12,
+              "remaining_turns": 3,
+              "category": "negative",
+              "difficulty": "hard"
+            }
+          ]
+        },
+        {
+          "turn_n": 11,
+          "applied": [
+            {
+              "id": "macro_energy_crisis",
+              "name": "Crisis energetica prolongada",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.075,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_tax_changes",
+              "name": "Cambios fiscales adversos al sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.09,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "macro_energy_crisis",
+              "name": "Crisis energetica prolongada",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.075,
+              "remaining_turns": 3,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_boycott",
+              "name": "Boicot comercial contra el sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.08,
+              "remaining_turns": 3,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "ticker_bankruptcy_risk",
+              "name": "Riesgo de quiebra o intervencion",
+              "scope": "ticker",
+              "target": "MSFT",
+              "impact_pct": -0.12,
+              "remaining_turns": 3,
+              "affected": [
+                "MSFT"
+              ]
+            }
+          ],
+          "drawn": [
+            {
+              "id": "sector_activity_ban",
+              "name": "Prohibicion temporal de actividad",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.085,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "hard"
+            }
+          ]
+        },
+        {
+          "turn_n": 12,
+          "applied": [
+            {
+              "id": "macro_energy_crisis",
+              "name": "Crisis energetica prolongada",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.075,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_boycott",
+              "name": "Boicot comercial contra el sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.08,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "ticker_bankruptcy_risk",
+              "name": "Riesgo de quiebra o intervencion",
+              "scope": "ticker",
+              "target": "MSFT",
+              "impact_pct": -0.12,
+              "remaining_turns": 2,
+              "affected": [
+                "MSFT"
+              ]
+            },
+            {
+              "id": "sector_activity_ban",
+              "name": "Prohibicion temporal de actividad",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.085,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            }
+          ],
+          "drawn": [
+            {
+              "id": "sector_activity_ban",
+              "name": "Prohibicion temporal de actividad",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.085,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "hard"
+            },
+            {
+              "id": "ticker_cyber_attack",
+              "name": "Ciberataque critico a la empresa",
+              "scope": "ticker",
+              "target": "UBI.PA",
+              "impact_pct": -0.08,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "hard"
+            }
+          ]
+        }
+      ],
+      "active_events": [
+        {
+          "id": "macro_energy_crisis",
+          "name": "Crisis energetica prolongada",
+          "scope": "portfolio",
+          "target": null,
+          "impact_pct": -0.075,
+          "remaining_turns": 1,
+          "category": "negative",
+          "difficulty": "hard"
+        },
+        {
+          "id": "sector_boycott",
+          "name": "Boicot comercial contra el sector",
+          "scope": "sector",
+          "target": "TECH",
+          "impact_pct": -0.08,
+          "remaining_turns": 1,
+          "category": "negative",
+          "difficulty": "hard"
+        },
+        {
+          "id": "ticker_bankruptcy_risk",
+          "name": "Riesgo de quiebra o intervencion",
+          "scope": "ticker",
+          "target": "MSFT",
+          "impact_pct": -0.12,
+          "remaining_turns": 1,
+          "category": "negative",
+          "difficulty": "hard"
+        },
+        {
+          "id": "sector_activity_ban",
+          "name": "Prohibicion temporal de actividad",
+          "scope": "sector",
+          "target": "TECH",
+          "impact_pct": -0.085,
+          "remaining_turns": 1,
+          "category": "negative",
+          "difficulty": "hard"
+        },
+        {
+          "id": "sector_activity_ban",
+          "name": "Prohibicion temporal de actividad",
+          "scope": "sector",
+          "target": "TECH",
+          "impact_pct": -0.085,
+          "remaining_turns": 2,
+          "category": "negative",
+          "difficulty": "hard"
+        },
+        {
+          "id": "ticker_cyber_attack",
+          "name": "Ciberataque critico a la empresa",
+          "scope": "ticker",
+          "target": "UBI.PA",
+          "impact_pct": -0.08,
+          "remaining_turns": 2,
+          "category": "negative",
+          "difficulty": "hard"
+        }
+      ],
+      "sectors_map": {
+        "AAPL": "TECH",
+        "MSFT": "TECH"
+      },
+      "decisions": [
+        {
+          "turn_n": 1,
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.3
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.4
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.3
+            }
+          ],
+          "use_dca": false
+        },
+        {
+          "turn_n": 2,
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.316553
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.4017
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.281747
+            }
+          ],
+          "use_dca": true
+        },
+        {
+          "turn_n": 3,
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.306543
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.422667
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.27079
+            }
+          ],
+          "use_dca": true
+        },
+        {
+          "turn_n": 4,
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.22931
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.399804
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.370886
+            }
+          ],
+          "use_dca": true
+        },
+        {
+          "turn_n": 5,
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.225053
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.343178
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.431769
+            }
+          ],
+          "use_dca": true
+        },
+        {
+          "turn_n": 6,
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.204043
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.260816
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.535141
+            }
+          ],
+          "use_dca": true
+        },
+        {
+          "turn_n": 7,
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.175289
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.232411
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.5923
+            }
+          ],
+          "use_dca": true
+        },
+        {
+          "turn_n": 8,
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.170857
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.230858
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.598285
+            }
+          ],
+          "use_dca": true
+        },
+        {
+          "turn_n": 9,
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.145738
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.192235
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.662027
+            }
+          ],
+          "use_dca": true
+        },
+        {
+          "turn_n": 10,
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.13049
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.16446
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.70505
+            }
+          ],
+          "use_dca": true
+        },
+        {
+          "turn_n": 11,
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.117466
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.144857
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.737677
+            }
+          ],
+          "use_dca": true
+        },
+        {
+          "turn_n": 12,
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.108209
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.109044
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.782747
+            }
+          ],
+          "use_dca": true
+        }
+      ]
     }
   }
 }

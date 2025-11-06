@@ -1292,11 +1292,83 @@ function addCareerAllocRow(prefill) {
   list.appendChild(row);
 }
 
-function resetCareerAllocRows(tickers) {
+function normalizeWeightNumber(value) {
+  const num = Number(value);
+  if (!Number.isFinite(num)) return null;
+  if (num <= 0) return 0;
+  return Number(num.toFixed(6));
+}
+
+function roundWeights(rawWeights, normalized) {
+  const result = new Array(rawWeights.length).fill(0);
+  if (!normalized) {
+    rawWeights.forEach((weight, idx) => {
+      const normalizedWeight = normalizeWeightNumber(weight);
+      if (normalizedWeight !== null) {
+        result[idx] = normalizedWeight;
+      }
+    });
+    return result;
+  }
+
+  const positive = rawWeights
+    .map((weight, idx) => ({ idx, weight }))
+    .filter((item) => Number.isFinite(item.weight) && item.weight > 0);
+  if (!positive.length) return result;
+
+  const scale = 1_000_000;
+  const targetTotal = Math.round(
+    positive.reduce((acc, item) => acc + item.weight, 0) * scale
+  );
+  const ints = positive.map((item) => {
+    const scaled = item.weight * scale;
+    const base = Math.floor(scaled);
+    return { idx: item.idx, base, frac: scaled - base };
+  });
+  let currentSum = ints.reduce((acc, item) => acc + item.base, 0);
+  let delta = targetTotal - currentSum;
+
+  if (delta > 0) {
+    const sortedDesc = [...ints].sort((a, b) => b.frac - a.frac);
+    for (const entry of sortedDesc) {
+      if (delta <= 0) break;
+      if (entry.frac <= 0) continue;
+      entry.base += 1;
+      delta -= 1;
+    }
+  } else if (delta < 0) {
+    const sortedAsc = [...ints].sort((a, b) => a.frac - b.frac);
+    for (const entry of sortedAsc) {
+      if (delta >= 0) break;
+      if (entry.base <= 0) continue;
+      entry.base -= 1;
+      delta += 1;
+    }
+  }
+
+  ints.forEach((entry) => {
+    result[entry.idx] = entry.base / scale;
+  });
+  return result;
+}
+
+function resetCareerAllocRows(prefillList) {
   const list = document.getElementById("career-alloc-list");
   if (!list) return;
   list.innerHTML = "";
-  (tickers || []).forEach((ticker) => addCareerAllocRow({ ticker }));
+  const items = Array.isArray(prefillList) ? prefillList : [];
+  items.forEach((entry) => {
+    if (entry && typeof entry === "object" && entry.ticker) {
+      const ticker = String(entry.ticker || "").trim().toUpperCase();
+      const normalizedWeight = normalizeWeightNumber(entry.weight);
+      addCareerAllocRow({
+        ticker,
+        weight: normalizedWeight !== null ? normalizedWeight : "",
+      });
+    } else if (entry) {
+      addCareerAllocRow({ ticker: String(entry).trim().toUpperCase() });
+    }
+  });
   ensureCareerAllocRows();
   updateCareerAllocSummary();
 }
@@ -1332,6 +1404,109 @@ function rememberCareerAllocTickers() {
   const tickers = collectCareerAlloc().map((item) => item.ticker);
   careerState.latestSeriesTickers = tickers;
   saveCareerPrefs({ lastTickers: tickers });
+}
+
+function buildNextAllocFromSnapshot(snapshot) {
+  if (!snapshot || typeof snapshot !== "object") return [];
+
+  const suggested = Array.isArray(snapshot.alloc_next_suggested)
+    ? snapshot.alloc_next_suggested
+        .map((item) => {
+          const ticker = item?.ticker ? String(item.ticker).trim().toUpperCase() : "";
+          if (!ticker) return null;
+          const weight = normalizeWeightNumber(item?.weight);
+          return { ticker, weight: weight ?? 0 };
+        })
+        .filter(Boolean)
+    : [];
+  if (suggested.length) {
+    return suggested;
+  }
+
+  const alloc = Array.isArray(snapshot.alloc) ? snapshot.alloc : [];
+  if (!alloc.length) return [];
+
+  const returnsFinal = snapshot.ret_by_ticker_final || {};
+  const rows = alloc.map((item) => {
+    const ticker = item?.ticker ? String(item.ticker).trim().toUpperCase() : "";
+    const baseWeight = normalizeWeightNumber(item?.weight) ?? 0;
+    const rawReturn = Number(
+      returnsFinal[item?.ticker] ?? returnsFinal[ticker] ?? 0
+    );
+    const ret = Number.isFinite(rawReturn) ? rawReturn : 0;
+    const growthCandidate = baseWeight > 0 ? baseWeight * (1 + ret) : 0;
+    const growth =
+      Number.isFinite(growthCandidate) && growthCandidate > 0 ? growthCandidate : 0;
+    return { ticker, baseWeight, ret, growth };
+  });
+
+  const rawWeights = rows.map(() => 0);
+  let normalized = false;
+  const denominator = rows.reduce((acc, row) => acc + row.growth, 0);
+
+  if (Number.isFinite(denominator) && denominator > 0) {
+    normalized = true;
+    rows.forEach((row, idx) => {
+      if (row.growth > 0) {
+        rawWeights[idx] = row.growth / denominator;
+      }
+    });
+  } else {
+    const survivorsIdx = rows
+      .map((row, idx) => (row.ret > -1 && row.baseWeight > 0 ? idx : -1))
+      .filter((idx) => idx >= 0);
+    if (survivorsIdx.length) {
+      normalized = true;
+      const equal = 1 / survivorsIdx.length;
+      survivorsIdx.forEach((idx) => {
+        rawWeights[idx] = equal;
+      });
+    } else {
+      rows.forEach((row, idx) => {
+        rawWeights[idx] = row.baseWeight;
+      });
+    }
+  }
+
+  const roundedWeights = roundWeights(rawWeights, normalized);
+  let result = rows
+    .map((row, idx) => {
+      if (!row.ticker) return null;
+      const weight = normalizeWeightNumber(roundedWeights[idx]);
+      return {
+        ticker: row.ticker,
+        weight: weight ?? 0,
+      };
+    })
+    .filter(Boolean);
+
+  const total = result.reduce(
+    (acc, item) =>
+      acc + (Number.isFinite(item.weight) ? item.weight : 0),
+    0
+  );
+  if (!Number.isFinite(total) || total <= 0) {
+    const fallbackRaw = rows.map((row) => (row.ticker ? 1 : 0));
+    const activeCount = fallbackRaw.filter(Boolean).length;
+    if (!activeCount) {
+      return [];
+    }
+    const equalWeight = 1 / activeCount;
+    const equalRaw = rows.map((row) => (row.ticker ? equalWeight : 0));
+    const roundedEqual = roundWeights(equalRaw, true);
+    result = rows
+      .map((row, idx) => {
+        if (!row.ticker) return null;
+        const weight = normalizeWeightNumber(roundedEqual[idx]);
+        return {
+          ticker: row.ticker,
+          weight: weight ?? 0,
+        };
+      })
+      .filter(Boolean);
+  }
+
+  return result;
 }
 
 function handleCareerCreate() {
@@ -1436,7 +1611,23 @@ function renderCareerSession(session) {
   updateCareerSeriesSelectors(session);
 
   const prefs = loadCareerPrefs();
-  if (prefs.lastTickers?.length) {
+  const decisions = Array.isArray(session.decisions) ? session.decisions : [];
+  const lastDecision = decisions.length ? decisions[decisions.length - 1] : null;
+  const lastAlloc = Array.isArray(lastDecision?.alloc)
+    ? lastDecision.alloc
+        .map((item) => {
+          const ticker = item?.ticker ? String(item.ticker).trim().toUpperCase() : "";
+          if (!ticker) return null;
+          const weightNum = Number(item?.weight);
+          const weight = Number.isFinite(weightNum) ? weightNum : 0;
+          return { ticker, weight };
+        })
+        .filter(Boolean)
+    : [];
+
+  if (lastAlloc.length) {
+    resetCareerAllocRows(lastAlloc);
+  } else if (prefs.lastTickers?.length) {
     resetCareerAllocRows(prefs.lastTickers);
   } else {
     resetCareerAllocRows((session.universe || []).slice(0, 3));
@@ -1541,8 +1732,15 @@ function handleCareerCloseTurn() {
         return;
       }
       mostrarToastOk("Turno cerrado.");
-      showCareerEventsModal(data?.snapshot);
+      const snapshot = data?.snapshot;
+      const nextAlloc = buildNextAllocFromSnapshot(snapshot);
+      showCareerEventsModal(snapshot);
       handleCareerLoadSession(careerState.sessionId).then(() => {
+        if (nextAlloc.length) {
+          resetCareerAllocRows(nextAlloc);
+          updateCareerAllocSummary();
+          rememberCareerAllocTickers();
+        }
         renderCareerReport({ includeSeries: false });
         loadCareerSeries();
       });
