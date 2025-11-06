@@ -1020,7 +1020,7 @@ def _compute_metrics_from_base100(
     else:
         cagr = total_return
 
-    monthly = series.resample("M").last()
+    monthly = series.resample("ME").last()
     monthly_returns = monthly.pct_change().dropna()
     vol_annual = (
         float(monthly_returns.std(ddof=0) * math.sqrt(12))
@@ -1191,7 +1191,7 @@ def _combine_normalized_series(
     df = pd.DataFrame(data)
     df = df[tickers]
     df = df.sort_index()
-    df = df.fillna(method="ffill").fillna(method="bfill")
+    df = df.ffill().bfill()
     weights_by_ticker = pd.Series(weights, index=tickers)
     combined = df.mul(weights_by_ticker, axis=1).sum(axis=1)
     if combined.empty:

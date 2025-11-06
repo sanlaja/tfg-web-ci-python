@@ -1979,7 +1979,7 @@
       ],
       "rejected_universe": [],
       "capital_initial": 50000.0,
-      "capital_current": 205203.27,
+      "capital_current": 888306.56,
       "period": {
         "start": "2003-04-27",
         "end": "2016-04-26"
@@ -2052,25 +2052,29 @@
           "n": 10,
           "start": "2012-04-27",
           "end": "2013-04-26",
-          "status": "pending"
+          "status": "completed",
+          "closed_at": "2025-11-02T15:20:06.053510"
         },
         {
           "n": 11,
           "start": "2013-04-27",
           "end": "2014-04-26",
-          "status": "pending"
+          "status": "completed",
+          "closed_at": "2025-11-02T15:27:51.948482"
         },
         {
           "n": 12,
           "start": "2014-04-27",
           "end": "2015-04-26",
-          "status": "pending"
+          "status": "completed",
+          "closed_at": "2025-11-02T15:28:15.241736"
         },
         {
           "n": 13,
           "start": "2015-04-27",
           "end": "2016-04-26",
-          "status": "pending"
+          "status": "completed",
+          "closed_at": "2025-11-02T15:28:27.853309"
         }
       ],
       "completed_turns": [
@@ -2914,15 +2918,228 @@
           "pnl_pct": 1.808045,
           "cum_return_net": 1.808045,
           "delta_vs_prev": 21710.71
+        },
+        {
+          "turn_n": 10,
+          "range": {
+            "start": "2012-04-27",
+            "end": "2013-04-26"
+          },
+          "alloc": [
+            {
+              "ticker": "MSFT",
+              "weight": 1.0
+            }
+          ],
+          "use_dca": false,
+          "turn_return": 0.023894,
+          "turn_return_market": 0.023894,
+          "portfolio_value": 210106.41,
+          "events": [],
+          "events_applied": [],
+          "events_new": [
+            {
+              "id": "sector_regulation_light",
+              "name": "Regulacion leve del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "category": "negative",
+              "difficulty": "easy"
+            }
+          ],
+          "ret_portfolio_shift": 0.0,
+          "dca_in_turn": 0.0,
+          "invested_so_far": 73076.92,
+          "pnl_abs": 137029.49,
+          "pnl_pct": 1.87514,
+          "cum_return_net": 1.87514,
+          "delta_vs_prev": 4903.14
+        },
+        {
+          "turn_n": 11,
+          "range": {
+            "start": "2013-04-27",
+            "end": "2014-04-26"
+          },
+          "alloc": [
+            {
+              "ticker": "TSLA",
+              "weight": 1.0
+            }
+          ],
+          "use_dca": false,
+          "turn_return": 2.637604,
+          "turn_return_market": 2.637604,
+          "portfolio_value": 764283.95,
+          "events": [],
+          "events_applied": [],
+          "events_new": [
+            {
+              "id": "ticker_management_rotation",
+              "name": "Rotacion de mandos intermedios",
+              "scope": "ticker",
+              "target": "TSLA",
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "category": "negative",
+              "difficulty": "easy"
+            }
+          ],
+          "ret_portfolio_shift": 0.0,
+          "dca_in_turn": 0.0,
+          "invested_so_far": 73076.92,
+          "pnl_abs": 691207.02,
+          "pnl_pct": 9.458622,
+          "cum_return_net": 9.458622,
+          "delta_vs_prev": 554177.54
+        },
+        {
+          "turn_n": 12,
+          "range": {
+            "start": "2014-04-27",
+            "end": "2015-04-26"
+          },
+          "alloc": [
+            {
+              "ticker": "TSLA",
+              "weight": 1.0
+            }
+          ],
+          "use_dca": false,
+          "turn_return": 0.080348,
+          "turn_return_market": 0.100348,
+          "portfolio_value": 825692.33,
+          "events": [
+            {
+              "id": "ticker_management_rotation",
+              "name": "Rotacion de mandos intermedios",
+              "scope": "ticker",
+              "target": "TSLA",
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "affected": [
+                "TSLA"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "ticker_management_rotation",
+              "name": "Rotacion de mandos intermedios",
+              "scope": "ticker",
+              "target": "TSLA",
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "affected": [
+                "TSLA"
+              ]
+            }
+          ],
+          "events_new": [
+            {
+              "id": "macro_geopolitics_limited",
+              "name": "Tensiones geopoliticas limitadas",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "category": "negative",
+              "difficulty": "easy"
+            }
+          ],
+          "ret_portfolio_shift": 0.0,
+          "ret_ticker_shift": {
+            "TSLA": -0.02
+          },
+          "dca_in_turn": 0.0,
+          "invested_so_far": 73076.92,
+          "pnl_abs": 752615.4,
+          "pnl_pct": 10.298948,
+          "cum_return_net": 10.298948,
+          "delta_vs_prev": 61408.38
+        },
+        {
+          "turn_n": 13,
+          "range": {
+            "start": "2015-04-27",
+            "end": "2016-04-26"
+          },
+          "alloc": [
+            {
+              "ticker": "TSLA",
+              "weight": 1.0
+            }
+          ],
+          "use_dca": false,
+          "turn_return": 0.075832,
+          "turn_return_market": 0.095832,
+          "portfolio_value": 888306.56,
+          "events": [
+            {
+              "id": "macro_geopolitics_limited",
+              "name": "Tensiones geopoliticas limitadas",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "macro_geopolitics_limited",
+              "name": "Tensiones geopoliticas limitadas",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            }
+          ],
+          "events_new": [
+            {
+              "id": "macro_inflation_mild",
+              "name": "Inflacion moderada",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "category": "negative",
+              "difficulty": "easy"
+            },
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.05204,
+              "remaining_turns": 1,
+              "category": "legacy",
+              "difficulty": "easy"
+            }
+          ],
+          "ret_portfolio_shift": -0.02,
+          "dca_in_turn": 0.0,
+          "invested_so_far": 73076.92,
+          "pnl_abs": 815229.64,
+          "pnl_pct": 11.155774,
+          "cum_return_net": 11.155774,
+          "delta_vs_prev": 62614.23
         }
       ],
       "seed": 14600974747268186962,
       "created_at": "2025-11-02T11:48:39.979643",
-      "closed": false,
+      "closed": true,
       "total_turns": 13,
       "turns_total": 13,
       "contrib_so_far": 23076.923076923078,
-      "cum_return": 3.104065,
+      "cum_return": 16.766131,
       "events_log": [
         {
           "turn_n": 1,
@@ -3273,9 +3490,128 @@
             }
           ],
           "drawn": []
+        },
+        {
+          "turn_n": 10,
+          "applied": [],
+          "drawn": [
+            {
+              "id": "sector_regulation_light",
+              "name": "Regulacion leve del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "category": "negative",
+              "difficulty": "easy"
+            }
+          ]
+        },
+        {
+          "turn_n": 11,
+          "applied": [],
+          "drawn": [
+            {
+              "id": "ticker_management_rotation",
+              "name": "Rotacion de mandos intermedios",
+              "scope": "ticker",
+              "target": "TSLA",
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "category": "negative",
+              "difficulty": "easy"
+            }
+          ]
+        },
+        {
+          "turn_n": 12,
+          "applied": [
+            {
+              "id": "ticker_management_rotation",
+              "name": "Rotacion de mandos intermedios",
+              "scope": "ticker",
+              "target": "TSLA",
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "affected": [
+                "TSLA"
+              ]
+            }
+          ],
+          "drawn": [
+            {
+              "id": "macro_geopolitics_limited",
+              "name": "Tensiones geopoliticas limitadas",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "category": "negative",
+              "difficulty": "easy"
+            }
+          ]
+        },
+        {
+          "turn_n": 13,
+          "applied": [
+            {
+              "id": "macro_geopolitics_limited",
+              "name": "Tensiones geopoliticas limitadas",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            }
+          ],
+          "drawn": [
+            {
+              "id": "macro_inflation_mild",
+              "name": "Inflacion moderada",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "category": "negative",
+              "difficulty": "easy"
+            },
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.05204,
+              "remaining_turns": 1,
+              "category": "legacy",
+              "difficulty": "easy"
+            }
+          ]
         }
       ],
-      "active_events": [],
+      "active_events": [
+        {
+          "id": "macro_inflation_mild",
+          "name": "Inflacion moderada",
+          "scope": "portfolio",
+          "target": null,
+          "impact_pct": -0.02,
+          "remaining_turns": 1,
+          "category": "negative",
+          "difficulty": "easy"
+        },
+        {
+          "id": "macro_shock_neg",
+          "name": "Shock macro (negativo)",
+          "scope": "portfolio",
+          "target": null,
+          "impact_pct": -0.05204,
+          "remaining_turns": 1,
+          "category": "legacy",
+          "difficulty": "easy"
+        }
+      ],
       "sectors_map": {
         "AAPL": "TECH",
         "MSFT": "TECH",
@@ -3472,6 +3808,2062 @@
             }
           ],
           "use_dca": false
+        },
+        {
+          "turn_n": 10,
+          "alloc": [
+            {
+              "ticker": "MSFT",
+              "weight": 1.0
+            }
+          ],
+          "use_dca": false
+        },
+        {
+          "turn_n": 11,
+          "alloc": [
+            {
+              "ticker": "TSLA",
+              "weight": 1.0
+            }
+          ],
+          "use_dca": false
+        },
+        {
+          "turn_n": 12,
+          "alloc": [
+            {
+              "ticker": "TSLA",
+              "weight": 1.0
+            }
+          ],
+          "use_dca": false
+        },
+        {
+          "turn_n": 13,
+          "alloc": [
+            {
+              "ticker": "TSLA",
+              "weight": 1.0
+            }
+          ],
+          "use_dca": false
+        }
+      ]
+    },
+    "car_05856e": {
+      "session_id": "car_05856e",
+      "player": "Javier2",
+      "difficulty": "principiante",
+      "universe": [
+        "AAPL",
+        "MSFT",
+        "GOOGL",
+        "UBI.PA",
+        "TCEHY",
+        "KO"
+      ],
+      "rejected_universe": [],
+      "capital_initial": 50000.0,
+      "capital_current": 541952.22,
+      "period": {
+        "start": "2003-04-27",
+        "end": "2016-04-26"
+      },
+      "turns": [
+        {
+          "n": 1,
+          "start": "2003-04-27",
+          "end": "2004-04-26",
+          "status": "completed",
+          "closed_at": "2025-11-02T15:53:56.957281"
+        },
+        {
+          "n": 2,
+          "start": "2004-04-27",
+          "end": "2005-04-26",
+          "status": "completed",
+          "closed_at": "2025-11-02T15:54:08.751992"
+        },
+        {
+          "n": 3,
+          "start": "2005-04-27",
+          "end": "2006-04-26",
+          "status": "completed",
+          "closed_at": "2025-11-02T15:54:57.023275"
+        },
+        {
+          "n": 4,
+          "start": "2006-04-27",
+          "end": "2007-04-26",
+          "status": "completed",
+          "closed_at": "2025-11-02T15:56:44.892251"
+        },
+        {
+          "n": 5,
+          "start": "2007-04-27",
+          "end": "2008-04-26",
+          "status": "completed",
+          "closed_at": "2025-11-02T15:58:10.029722"
+        },
+        {
+          "n": 6,
+          "start": "2008-04-27",
+          "end": "2009-04-26",
+          "status": "completed",
+          "closed_at": "2025-11-02T15:58:57.410956"
+        },
+        {
+          "n": 7,
+          "start": "2009-04-27",
+          "end": "2010-04-26",
+          "status": "completed",
+          "closed_at": "2025-11-02T15:59:35.531747"
+        },
+        {
+          "n": 8,
+          "start": "2010-04-27",
+          "end": "2011-04-26",
+          "status": "completed",
+          "closed_at": "2025-11-02T16:00:01.936479"
+        },
+        {
+          "n": 9,
+          "start": "2011-04-27",
+          "end": "2012-04-26",
+          "status": "completed",
+          "closed_at": "2025-11-02T16:00:27.605158"
+        },
+        {
+          "n": 10,
+          "start": "2012-04-27",
+          "end": "2013-04-26",
+          "status": "completed",
+          "closed_at": "2025-11-02T16:00:40.289090"
+        },
+        {
+          "n": 11,
+          "start": "2013-04-27",
+          "end": "2014-04-26",
+          "status": "completed",
+          "closed_at": "2025-11-02T16:07:56.238227"
+        },
+        {
+          "n": 12,
+          "start": "2014-04-27",
+          "end": "2015-04-26",
+          "status": "completed",
+          "closed_at": "2025-11-02T16:08:43.839232"
+        },
+        {
+          "n": 13,
+          "start": "2015-04-27",
+          "end": "2016-04-26",
+          "status": "completed",
+          "closed_at": "2025-11-02T16:09:20.184946"
+        }
+      ],
+      "completed_turns": [
+        {
+          "turn_n": 1,
+          "range": {
+            "start": "2003-04-27",
+            "end": "2004-04-26"
+          },
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.3
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.3
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.3
+            }
+          ],
+          "use_dca": true,
+          "turn_return": 0.457714,
+          "turn_return_market": 0.457714,
+          "portfolio_value": 78492.28,
+          "events": [],
+          "events_applied": [],
+          "events_new": [
+            {
+              "id": "ticker_quarterly_soft",
+              "name": "Resultados trimestrales flojos",
+              "scope": "ticker",
+              "target": "AAPL",
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "category": "negative",
+              "difficulty": "easy"
+            }
+          ],
+          "ret_portfolio_shift": 0.0,
+          "dca_in_turn": 3846.15,
+          "invested_so_far": 53846.15,
+          "pnl_abs": 24646.13,
+          "pnl_pct": 0.457714,
+          "cum_return_net": 0.457714,
+          "delta_vs_prev": 28492.28
+        },
+        {
+          "turn_n": 2,
+          "range": {
+            "start": "2004-04-27",
+            "end": "2005-04-26"
+          },
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.3
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.3
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.3
+            }
+          ],
+          "use_dca": true,
+          "turn_return": 0.622215,
+          "turn_return_market": 0.628215,
+          "portfolio_value": 133570.63,
+          "events": [
+            {
+              "id": "ticker_quarterly_soft",
+              "name": "Resultados trimestrales flojos",
+              "scope": "ticker",
+              "target": "AAPL",
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "ticker_quarterly_soft",
+              "name": "Resultados trimestrales flojos",
+              "scope": "ticker",
+              "target": "AAPL",
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL"
+              ]
+            }
+          ],
+          "events_new": [
+            {
+              "id": "sector_input_costs",
+              "name": "Aumento de costes en materias primas",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.03,
+              "remaining_turns": 1,
+              "category": "negative",
+              "difficulty": "easy"
+            }
+          ],
+          "ret_portfolio_shift": 0.0,
+          "ret_ticker_shift": {
+            "AAPL": -0.02
+          },
+          "dca_in_turn": 3846.15,
+          "invested_so_far": 57692.31,
+          "pnl_abs": 75878.33,
+          "pnl_pct": 1.315224,
+          "cum_return_net": 1.315224,
+          "delta_vs_prev": 55078.35
+        },
+        {
+          "turn_n": 3,
+          "range": {
+            "start": "2005-04-27",
+            "end": "2006-04-26"
+          },
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.2
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.2
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.2
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": true,
+          "turn_return": 0.243956,
+          "turn_return_market": 0.255956,
+          "portfolio_value": 170940.48,
+          "events": [
+            {
+              "id": "sector_input_costs",
+              "name": "Aumento de costes en materias primas",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.03,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "sector_input_costs",
+              "name": "Aumento de costes en materias primas",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.03,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            }
+          ],
+          "events_new": [
+            {
+              "id": "sector_competition_heat",
+              "name": "Competencia agresiva en el sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.025,
+              "remaining_turns": 1,
+              "category": "negative",
+              "difficulty": "easy"
+            }
+          ],
+          "ret_portfolio_shift": 0.0,
+          "ret_ticker_shift": {
+            "AAPL": -0.03,
+            "MSFT": -0.03
+          },
+          "dca_in_turn": 3846.15,
+          "invested_so_far": 61538.46,
+          "pnl_abs": 109402.02,
+          "pnl_pct": 1.777783,
+          "cum_return_net": 1.777783,
+          "delta_vs_prev": 37369.85
+        },
+        {
+          "turn_n": 4,
+          "range": {
+            "start": "2006-04-27",
+            "end": "2007-04-26"
+          },
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.2
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.2
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.2
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": true,
+          "turn_return": 0.323822,
+          "turn_return_market": 0.333822,
+          "portfolio_value": 231386.34,
+          "events": [
+            {
+              "id": "sector_competition_heat",
+              "name": "Competencia agresiva en el sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.025,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "sector_competition_heat",
+              "name": "Competencia agresiva en el sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.025,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            }
+          ],
+          "events_new": [
+            {
+              "id": "sector_rumor_neg",
+              "name": "Rumor sectorial (negativo)",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.058774,
+              "remaining_turns": 1,
+              "category": "legacy",
+              "difficulty": "easy"
+            }
+          ],
+          "ret_portfolio_shift": 0.0,
+          "ret_ticker_shift": {
+            "AAPL": -0.025,
+            "MSFT": -0.025
+          },
+          "dca_in_turn": 3846.15,
+          "invested_so_far": 65384.62,
+          "pnl_abs": 166001.72,
+          "pnl_pct": 2.53885,
+          "cum_return_net": 2.53885,
+          "delta_vs_prev": 60445.86
+        },
+        {
+          "turn_n": 5,
+          "range": {
+            "start": "2007-04-27",
+            "end": "2008-04-26"
+          },
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.2
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.2
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.2
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": true,
+          "turn_return": 0.287921,
+          "turn_return_market": 0.311431,
+          "portfolio_value": 302960.98,
+          "events": [
+            {
+              "id": "sector_rumor_neg",
+              "name": "Rumor sectorial (negativo)",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.058774,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "sector_rumor_neg",
+              "name": "Rumor sectorial (negativo)",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.058774,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            }
+          ],
+          "events_new": [
+            {
+              "id": "macro_rates_light",
+              "name": "Subida leve de tipos",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.015,
+              "remaining_turns": 1,
+              "category": "negative",
+              "difficulty": "easy"
+            },
+            {
+              "id": "sector_supplier_delays",
+              "name": "Retrasos de proveedores",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.025,
+              "remaining_turns": 1,
+              "category": "negative",
+              "difficulty": "easy"
+            },
+            {
+              "id": "ticker_contract_rumor",
+              "name": "Rumores de perdida de contrato",
+              "scope": "ticker",
+              "target": "UBI.PA",
+              "impact_pct": -0.025,
+              "remaining_turns": 1,
+              "category": "negative",
+              "difficulty": "easy"
+            },
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.037812,
+              "remaining_turns": 1,
+              "category": "legacy",
+              "difficulty": "easy"
+            },
+            {
+              "id": "ticker_news_pos",
+              "name": "Noticia espec\u00edfica (positivo)",
+              "scope": "ticker",
+              "target": "MSFT",
+              "impact_pct": 0.025961,
+              "remaining_turns": 1,
+              "category": "legacy",
+              "difficulty": "easy"
+            }
+          ],
+          "ret_portfolio_shift": 0.0,
+          "ret_ticker_shift": {
+            "AAPL": -0.058774,
+            "MSFT": -0.058774
+          },
+          "dca_in_turn": 3846.15,
+          "invested_so_far": 69230.77,
+          "pnl_abs": 233730.21,
+          "pnl_pct": 3.376103,
+          "cum_return_net": 3.376103,
+          "delta_vs_prev": 71574.64
+        },
+        {
+          "turn_n": 6,
+          "range": {
+            "start": "2008-04-27",
+            "end": "2009-04-26"
+          },
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.2
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.2
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.2
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": true,
+          "turn_return": -0.3175,
+          "turn_return_market": -0.25488,
+          "portfolio_value": 209395.86,
+          "events": [
+            {
+              "id": "macro_rates_light",
+              "name": "Subida leve de tipos",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.015,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_supplier_delays",
+              "name": "Retrasos de proveedores",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.025,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "ticker_contract_rumor",
+              "name": "Rumores de perdida de contrato",
+              "scope": "ticker",
+              "target": "UBI.PA",
+              "impact_pct": -0.025,
+              "remaining_turns": 1,
+              "affected": [
+                "UBI.PA"
+              ]
+            },
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.037812,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "ticker_news_pos",
+              "name": "Noticia espec\u00edfica (positivo)",
+              "scope": "ticker",
+              "target": "MSFT",
+              "impact_pct": 0.025961,
+              "remaining_turns": 1,
+              "affected": [
+                "MSFT"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "macro_rates_light",
+              "name": "Subida leve de tipos",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.015,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_supplier_delays",
+              "name": "Retrasos de proveedores",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.025,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "ticker_contract_rumor",
+              "name": "Rumores de perdida de contrato",
+              "scope": "ticker",
+              "target": "UBI.PA",
+              "impact_pct": -0.025,
+              "remaining_turns": 1,
+              "affected": [
+                "UBI.PA"
+              ]
+            },
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.037812,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "ticker_news_pos",
+              "name": "Noticia espec\u00edfica (positivo)",
+              "scope": "ticker",
+              "target": "MSFT",
+              "impact_pct": 0.025961,
+              "remaining_turns": 1,
+              "affected": [
+                "MSFT"
+              ]
+            }
+          ],
+          "events_new": [
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.031962,
+              "remaining_turns": 2,
+              "category": "legacy",
+              "difficulty": "easy"
+            }
+          ],
+          "ret_portfolio_shift": -0.052812,
+          "ret_ticker_shift": {
+            "AAPL": -0.025,
+            "MSFT": 0.000961,
+            "UBI.PA": -0.025
+          },
+          "dca_in_turn": 3846.15,
+          "invested_so_far": 73076.92,
+          "pnl_abs": 136318.94,
+          "pnl_pct": 1.865417,
+          "cum_return_net": 1.865417,
+          "delta_vs_prev": -93565.12
+        },
+        {
+          "turn_n": 7,
+          "range": {
+            "start": "2009-04-27",
+            "end": "2010-04-26"
+          },
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.2
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.2
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.2
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": true,
+          "turn_return": 0.29283,
+          "turn_return_market": 0.324792,
+          "portfolio_value": 275685.69,
+          "events": [
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.031962,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.031962,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            }
+          ],
+          "events_new": [
+            {
+              "id": "ticker_management_rotation",
+              "name": "Rotacion de mandos intermedios",
+              "scope": "ticker",
+              "target": "MSFT",
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "category": "negative",
+              "difficulty": "easy"
+            },
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.021852,
+              "remaining_turns": 1,
+              "category": "legacy",
+              "difficulty": "easy"
+            }
+          ],
+          "ret_portfolio_shift": -0.031962,
+          "dca_in_turn": 3846.15,
+          "invested_so_far": 76923.08,
+          "pnl_abs": 198762.61,
+          "pnl_pct": 2.583914,
+          "cum_return_net": 2.583914,
+          "delta_vs_prev": 66289.83
+        },
+        {
+          "turn_n": 8,
+          "range": {
+            "start": "2010-04-27",
+            "end": "2011-04-26"
+          },
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.2
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.2
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.2
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": true,
+          "turn_return": -0.017762,
+          "turn_return_market": 0.040052,
+          "portfolio_value": 274566.93,
+          "events": [
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.031962,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "ticker_management_rotation",
+              "name": "Rotacion de mandos intermedios",
+              "scope": "ticker",
+              "target": "MSFT",
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "affected": [
+                "MSFT"
+              ]
+            },
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.021852,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.031962,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "ticker_management_rotation",
+              "name": "Rotacion de mandos intermedios",
+              "scope": "ticker",
+              "target": "MSFT",
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "affected": [
+                "MSFT"
+              ]
+            },
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.021852,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            }
+          ],
+          "events_new": [
+            {
+              "id": "sector_regulation_light",
+              "name": "Regulacion leve del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "category": "negative",
+              "difficulty": "easy"
+            }
+          ],
+          "ret_portfolio_shift": -0.053814,
+          "ret_ticker_shift": {
+            "MSFT": -0.02
+          },
+          "dca_in_turn": 3846.15,
+          "invested_so_far": 80769.23,
+          "pnl_abs": 193797.7,
+          "pnl_pct": 2.3994,
+          "cum_return_net": 2.3994,
+          "delta_vs_prev": -1118.76
+        },
+        {
+          "turn_n": 9,
+          "range": {
+            "start": "2011-04-27",
+            "end": "2012-04-26"
+          },
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.2
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.2
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.2
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": true,
+          "turn_return": 0.172581,
+          "turn_return_market": 0.180581,
+          "portfolio_value": 326461.92,
+          "events": [
+            {
+              "id": "sector_regulation_light",
+              "name": "Regulacion leve del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "sector_regulation_light",
+              "name": "Regulacion leve del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            }
+          ],
+          "events_new": [],
+          "ret_portfolio_shift": 0.0,
+          "ret_ticker_shift": {
+            "AAPL": -0.02,
+            "MSFT": -0.02
+          },
+          "dca_in_turn": 3846.15,
+          "invested_so_far": 84615.38,
+          "pnl_abs": 241846.54,
+          "pnl_pct": 2.858186,
+          "cum_return_net": 2.858186,
+          "delta_vs_prev": 51894.99
+        },
+        {
+          "turn_n": 10,
+          "range": {
+            "start": "2012-04-27",
+            "end": "2013-04-26"
+          },
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.2
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.2
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.2
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": true,
+          "turn_return": 0.097406,
+          "turn_return_market": 0.097406,
+          "portfolio_value": 362481.91,
+          "events": [],
+          "events_applied": [],
+          "events_new": [
+            {
+              "id": "sector_regulation_light",
+              "name": "Regulacion leve del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "category": "negative",
+              "difficulty": "easy"
+            }
+          ],
+          "ret_portfolio_shift": 0.0,
+          "dca_in_turn": 3846.15,
+          "invested_so_far": 88461.54,
+          "pnl_abs": 274020.37,
+          "pnl_pct": 3.097622,
+          "cum_return_net": 3.097622,
+          "delta_vs_prev": 36019.99
+        },
+        {
+          "turn_n": 11,
+          "range": {
+            "start": "2013-04-27",
+            "end": "2014-04-26"
+          },
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.2
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.2
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.2
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": false,
+          "turn_return": 0.228062,
+          "turn_return_market": 0.236062,
+          "portfolio_value": 445150.38,
+          "events": [
+            {
+              "id": "sector_regulation_light",
+              "name": "Regulacion leve del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "sector_regulation_light",
+              "name": "Regulacion leve del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            }
+          ],
+          "events_new": [
+            {
+              "id": "ticker_management_rotation",
+              "name": "Rotacion de mandos intermedios",
+              "scope": "ticker",
+              "target": "MSFT",
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "category": "negative",
+              "difficulty": "easy"
+            }
+          ],
+          "ret_portfolio_shift": 0.0,
+          "ret_ticker_shift": {
+            "AAPL": -0.02,
+            "MSFT": -0.02
+          },
+          "dca_in_turn": 0.0,
+          "invested_so_far": 88461.54,
+          "pnl_abs": 356688.84,
+          "pnl_pct": 4.032135,
+          "cum_return_net": 4.032135,
+          "delta_vs_prev": 82668.47
+        },
+        {
+          "turn_n": 12,
+          "range": {
+            "start": "2014-04-27",
+            "end": "2015-04-26"
+          },
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.2
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.2
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.2
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": true,
+          "turn_return": 0.216142,
+          "turn_return_market": 0.220142,
+          "portfolio_value": 546043.39,
+          "events": [
+            {
+              "id": "ticker_management_rotation",
+              "name": "Rotacion de mandos intermedios",
+              "scope": "ticker",
+              "target": "MSFT",
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "affected": [
+                "MSFT"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "ticker_management_rotation",
+              "name": "Rotacion de mandos intermedios",
+              "scope": "ticker",
+              "target": "MSFT",
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "affected": [
+                "MSFT"
+              ]
+            }
+          ],
+          "events_new": [
+            {
+              "id": "macro_geopolitics_limited",
+              "name": "Tensiones geopoliticas limitadas",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "category": "negative",
+              "difficulty": "easy"
+            }
+          ],
+          "ret_portfolio_shift": 0.0,
+          "ret_ticker_shift": {
+            "MSFT": -0.02
+          },
+          "dca_in_turn": 3846.15,
+          "invested_so_far": 92307.69,
+          "pnl_abs": 453735.69,
+          "pnl_pct": 4.91547,
+          "cum_return_net": 4.91547,
+          "delta_vs_prev": 100893.01
+        },
+        {
+          "turn_n": 13,
+          "range": {
+            "start": "2015-04-27",
+            "end": "2016-04-26"
+          },
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.2
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.2
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": true,
+          "turn_return": -0.014434,
+          "turn_return_market": 0.005566,
+          "portfolio_value": 541952.22,
+          "events": [
+            {
+              "id": "macro_geopolitics_limited",
+              "name": "Tensiones geopoliticas limitadas",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "macro_geopolitics_limited",
+              "name": "Tensiones geopoliticas limitadas",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            }
+          ],
+          "events_new": [
+            {
+              "id": "macro_inflation_mild",
+              "name": "Inflacion moderada",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "category": "negative",
+              "difficulty": "easy"
+            },
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.05204,
+              "remaining_turns": 1,
+              "category": "legacy",
+              "difficulty": "easy"
+            }
+          ],
+          "ret_portfolio_shift": -0.02,
+          "dca_in_turn": 3846.15,
+          "invested_so_far": 96153.85,
+          "pnl_abs": 445798.37,
+          "pnl_pct": 4.636303,
+          "cum_return_net": 4.636303,
+          "delta_vs_prev": -4091.17
+        }
+      ],
+      "seed": 14600974747268186962,
+      "created_at": "2025-11-02T15:52:33.741558",
+      "closed": true,
+      "total_turns": 13,
+      "turns_total": 13,
+      "contrib_so_far": 46153.84615384615,
+      "cum_return": 9.839044,
+      "events_log": [
+        {
+          "turn_n": 1,
+          "applied": [],
+          "drawn": [
+            {
+              "id": "ticker_quarterly_soft",
+              "name": "Resultados trimestrales flojos",
+              "scope": "ticker",
+              "target": "AAPL",
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "category": "negative",
+              "difficulty": "easy"
+            }
+          ]
+        },
+        {
+          "turn_n": 2,
+          "applied": [
+            {
+              "id": "ticker_quarterly_soft",
+              "name": "Resultados trimestrales flojos",
+              "scope": "ticker",
+              "target": "AAPL",
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL"
+              ]
+            }
+          ],
+          "drawn": [
+            {
+              "id": "sector_input_costs",
+              "name": "Aumento de costes en materias primas",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.03,
+              "remaining_turns": 1,
+              "category": "negative",
+              "difficulty": "easy"
+            }
+          ]
+        },
+        {
+          "turn_n": 3,
+          "applied": [
+            {
+              "id": "sector_input_costs",
+              "name": "Aumento de costes en materias primas",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.03,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            }
+          ],
+          "drawn": [
+            {
+              "id": "sector_competition_heat",
+              "name": "Competencia agresiva en el sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.025,
+              "remaining_turns": 1,
+              "category": "negative",
+              "difficulty": "easy"
+            }
+          ]
+        },
+        {
+          "turn_n": 4,
+          "applied": [
+            {
+              "id": "sector_competition_heat",
+              "name": "Competencia agresiva en el sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.025,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            }
+          ],
+          "drawn": [
+            {
+              "id": "sector_rumor_neg",
+              "name": "Rumor sectorial (negativo)",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.058774,
+              "remaining_turns": 1,
+              "category": "legacy",
+              "difficulty": "easy"
+            }
+          ]
+        },
+        {
+          "turn_n": 5,
+          "applied": [
+            {
+              "id": "sector_rumor_neg",
+              "name": "Rumor sectorial (negativo)",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.058774,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            }
+          ],
+          "drawn": [
+            {
+              "id": "macro_rates_light",
+              "name": "Subida leve de tipos",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.015,
+              "remaining_turns": 1,
+              "category": "negative",
+              "difficulty": "easy"
+            },
+            {
+              "id": "sector_supplier_delays",
+              "name": "Retrasos de proveedores",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.025,
+              "remaining_turns": 1,
+              "category": "negative",
+              "difficulty": "easy"
+            },
+            {
+              "id": "ticker_contract_rumor",
+              "name": "Rumores de perdida de contrato",
+              "scope": "ticker",
+              "target": "UBI.PA",
+              "impact_pct": -0.025,
+              "remaining_turns": 1,
+              "category": "negative",
+              "difficulty": "easy"
+            },
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.037812,
+              "remaining_turns": 1,
+              "category": "legacy",
+              "difficulty": "easy"
+            },
+            {
+              "id": "ticker_news_pos",
+              "name": "Noticia espec\u00edfica (positivo)",
+              "scope": "ticker",
+              "target": "MSFT",
+              "impact_pct": 0.025961,
+              "remaining_turns": 1,
+              "category": "legacy",
+              "difficulty": "easy"
+            }
+          ]
+        },
+        {
+          "turn_n": 6,
+          "applied": [
+            {
+              "id": "macro_rates_light",
+              "name": "Subida leve de tipos",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.015,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_supplier_delays",
+              "name": "Retrasos de proveedores",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.025,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            },
+            {
+              "id": "ticker_contract_rumor",
+              "name": "Rumores de perdida de contrato",
+              "scope": "ticker",
+              "target": "UBI.PA",
+              "impact_pct": -0.025,
+              "remaining_turns": 1,
+              "affected": [
+                "UBI.PA"
+              ]
+            },
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.037812,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "ticker_news_pos",
+              "name": "Noticia espec\u00edfica (positivo)",
+              "scope": "ticker",
+              "target": "MSFT",
+              "impact_pct": 0.025961,
+              "remaining_turns": 1,
+              "affected": [
+                "MSFT"
+              ]
+            }
+          ],
+          "drawn": [
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.031962,
+              "remaining_turns": 2,
+              "category": "legacy",
+              "difficulty": "easy"
+            }
+          ]
+        },
+        {
+          "turn_n": 7,
+          "applied": [
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.031962,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            }
+          ],
+          "drawn": [
+            {
+              "id": "ticker_management_rotation",
+              "name": "Rotacion de mandos intermedios",
+              "scope": "ticker",
+              "target": "MSFT",
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "category": "negative",
+              "difficulty": "easy"
+            },
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.021852,
+              "remaining_turns": 1,
+              "category": "legacy",
+              "difficulty": "easy"
+            }
+          ]
+        },
+        {
+          "turn_n": 8,
+          "applied": [
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.031962,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "ticker_management_rotation",
+              "name": "Rotacion de mandos intermedios",
+              "scope": "ticker",
+              "target": "MSFT",
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "affected": [
+                "MSFT"
+              ]
+            },
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.021852,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            }
+          ],
+          "drawn": [
+            {
+              "id": "sector_regulation_light",
+              "name": "Regulacion leve del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "category": "negative",
+              "difficulty": "easy"
+            }
+          ]
+        },
+        {
+          "turn_n": 9,
+          "applied": [
+            {
+              "id": "sector_regulation_light",
+              "name": "Regulacion leve del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            }
+          ],
+          "drawn": []
+        },
+        {
+          "turn_n": 10,
+          "applied": [],
+          "drawn": [
+            {
+              "id": "sector_regulation_light",
+              "name": "Regulacion leve del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "category": "negative",
+              "difficulty": "easy"
+            }
+          ]
+        },
+        {
+          "turn_n": 11,
+          "applied": [
+            {
+              "id": "sector_regulation_light",
+              "name": "Regulacion leve del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "MSFT"
+              ]
+            }
+          ],
+          "drawn": [
+            {
+              "id": "ticker_management_rotation",
+              "name": "Rotacion de mandos intermedios",
+              "scope": "ticker",
+              "target": "MSFT",
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "category": "negative",
+              "difficulty": "easy"
+            }
+          ]
+        },
+        {
+          "turn_n": 12,
+          "applied": [
+            {
+              "id": "ticker_management_rotation",
+              "name": "Rotacion de mandos intermedios",
+              "scope": "ticker",
+              "target": "MSFT",
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "affected": [
+                "MSFT"
+              ]
+            }
+          ],
+          "drawn": [
+            {
+              "id": "macro_geopolitics_limited",
+              "name": "Tensiones geopoliticas limitadas",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "category": "negative",
+              "difficulty": "easy"
+            }
+          ]
+        },
+        {
+          "turn_n": 13,
+          "applied": [
+            {
+              "id": "macro_geopolitics_limited",
+              "name": "Tensiones geopoliticas limitadas",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            }
+          ],
+          "drawn": [
+            {
+              "id": "macro_inflation_mild",
+              "name": "Inflacion moderada",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "category": "negative",
+              "difficulty": "easy"
+            },
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.05204,
+              "remaining_turns": 1,
+              "category": "legacy",
+              "difficulty": "easy"
+            }
+          ]
+        }
+      ],
+      "active_events": [
+        {
+          "id": "macro_inflation_mild",
+          "name": "Inflacion moderada",
+          "scope": "portfolio",
+          "target": null,
+          "impact_pct": -0.02,
+          "remaining_turns": 1,
+          "category": "negative",
+          "difficulty": "easy"
+        },
+        {
+          "id": "macro_shock_neg",
+          "name": "Shock macro (negativo)",
+          "scope": "portfolio",
+          "target": null,
+          "impact_pct": -0.05204,
+          "remaining_turns": 1,
+          "category": "legacy",
+          "difficulty": "easy"
+        }
+      ],
+      "sectors_map": {
+        "AAPL": "TECH",
+        "MSFT": "TECH"
+      },
+      "decisions": [
+        {
+          "turn_n": 1,
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.3
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.3
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.3
+            }
+          ],
+          "use_dca": true
+        },
+        {
+          "turn_n": 2,
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.3
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.3
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.3
+            }
+          ],
+          "use_dca": true
+        },
+        {
+          "turn_n": 3,
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.2
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.2
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.2
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": true
+        },
+        {
+          "turn_n": 4,
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.2
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.2
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.2
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": true
+        },
+        {
+          "turn_n": 5,
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.2
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.2
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.2
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": true
+        },
+        {
+          "turn_n": 6,
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.2
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.2
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.2
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": true
+        },
+        {
+          "turn_n": 7,
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.2
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.2
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.2
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": true
+        },
+        {
+          "turn_n": 8,
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.2
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.2
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.2
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": true
+        },
+        {
+          "turn_n": 9,
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.2
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.2
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.2
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": true
+        },
+        {
+          "turn_n": 10,
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.2
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.2
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.2
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": true
+        },
+        {
+          "turn_n": 11,
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.2
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.2
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.2
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": false
+        },
+        {
+          "turn_n": 12,
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.2
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.2
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.2
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": true
+        },
+        {
+          "turn_n": 13,
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.2
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.2
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": true
         }
       ]
     }

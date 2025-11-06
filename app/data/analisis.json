@@ -1,5 +1,64 @@
 [
   {
+    "id": "b49f9b11-e894-4627-9dd7-ecf70317f201",
+    "timestamp": "2025-11-03T16:03:46.994340Z",
+    "ticker": "MSFT",
+    "importe_inicial": 500,
+    "horizonte_anios": 3,
+    "supuestos": {
+      "crecimiento_anual_pct": 8.0,
+      "margen_seguridad_pct": 15.0,
+      "roe_pct": 0.0,
+      "deuda_sobre_activos_pct": 0.0
+    },
+    "justificacion": "retrteryyytrurtutyutyutyurururturtururyuryityityryuryuryurrurtyfgghjghjklkdrgdfhljkgjfgdfgxfhjkjkhgcfxdgchvjkljkhgfdxghjkkhgxfdgchvjkljhgfxdzfxgchvjknlmfxgchvjbknljvhcgfxgchvjkhljñkvhcgfchvjklkml,",
+    "modo": "SIN_DCA",
+    "dca": null,
+    "crecimiento_anual_estimado": 8.0,
+    "margen_seguridad_pct": 15.0,
+    "puntuacion": 73,
+    "observaciones": [
+      {
+        "tipo": "mejora",
+        "msg": "Margen de seguridad algo justo (10–20%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Crecimiento razonable (5–25%)."
+      },
+      {
+        "tipo": "ok",
+        "msg": "Buena justificación (detallada)."
+      }
+    ],
+    "resumen": "Análisis razonable con áreas de mejora.",
+    "inicio": "2020-08-12",
+    "fin": null,
+    "backtest": {
+      "ticker": "MSFT",
+      "start": "2020-08-12",
+      "end": "2025-11-03",
+      "desde": "2020-08-12",
+      "hasta": "2025-11-03",
+      "invested": 500.0,
+      "shares": 2.4988380113465,
+      "last_price": 519.6,
+      "final_value": 1298.4,
+      "pnl_abs": 798.4,
+      "pnl_pct": 159.68,
+      "modo": "SIN_DCA",
+      "start_price_adj": 200.093,
+      "end_price_adj": 519.6,
+      "variation_adj_pct": 159.68,
+      "start_price": 209.19,
+      "end_price": 519.6,
+      "variation_raw_pct": 148.39,
+      "now_price": 519.6,
+      "has_dividends": true,
+      "notes": []
+    }
+  },
+  {
     "id": "f1145f2f-d94a-44a7-ac01-9a243dd8df37",
     "timestamp": "2025-11-01T19:12:26.033451Z",
     "ticker": "MSFT",
