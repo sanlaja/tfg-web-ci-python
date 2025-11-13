@@ -4,94 +4,477 @@
 {% block content %}
 <section class="card">
   <div class="card-section">
-    <h1>Manual de Usuario — Simulador de Inversiones</h1>
+    <h1>Manual de Usuario &mdash; Simulador de Inversiones</h1>
     <div class="manual-video">
       <div class="video-placeholder" role="img" aria-label="Vídeo introductorio">
-        <video controls playsinline preload="metadata" style="max-width:640px; width:100%; height:auto;" aria-label="Vídeo introductorio">
+        <video
+          controls
+          playsinline
+          preload="metadata"
+          style="max-width:640px; width:100%; height:auto;"
+          aria-label="Vídeo introductorio"
+        >
           <source src="{{ url_for('static', filename='videos/videoplayback.mp4') }}" type="video/mp4">
           Tu navegador no soporta la reproducción de vídeo.
         </video>
+      </div>
     </div>
 
     <article class="manual-content">
       <p>
-        Este manual explica paso a paso cómo utilizar el simulador de inversiones en sus distintos modos, así como las mejores
-        prácticas para interpretar los resultados y compartirlos.
+        Este manual guía cada pantalla del simulador con explicaciones habladas en lenguaje cotidiano,
+        ejemplos numéricos redondos y referencias directas al backend (<code>app/career.py</code>) y
+        al frontend (<code>app/static/app.js</code>). La meta es que, incluso sin experiencia previa, puedas
+        entender qué significa cada campo, por qué importa y dónde aparece.
       </p>
 
-      <h2>1. Acceso y modos disponibles</h2>
-      <ul>
-        <li><strong>Modo Práctica:</strong> simula casos puntuales y escenarios personalizados.</li>
-        <li><strong>Modo Carrera:</strong> gestiona turnos sucesivos con histórico real, eventos y ranking.</li>
-        <li><strong>Manual de Usuario:</strong> la sección que estás leyendo, con documentación centralizada.</li>
-      </ul>
+      <nav class="manual-index">
+        <h2>Tabla de contenidos</h2>
+        <ol>
+          <li><a href="#introduccion" aria-label="Ir a Introducción rápida">Introducción rápida</a></li>
+          <li><a href="#conceptos" aria-label="Ir a Conceptos básicos">Conceptos básicos imprescindibles</a></li>
+          <li><a href="#modo-practica" aria-label="Ir a Modo Práctica">Modo Práctica paso a paso</a></li>
+          <li><a href="#modo-carrera" aria-label="Ir a Modo Carrera">Modo Carrera paso a paso</a></li>
+          <li><a href="#snapshot" aria-label="Ir a Snapshot del turno">Snapshot del turno</a></li>
+          <li><a href="#eventos" aria-label="Ir a Eventos">Eventos (simulaciones)</a></li>
+          <li><a href="#metricas" aria-label="Ir a Métricas y tracking">Métricas y tracking</a></li>
+          <li><a href="#score" aria-label="Ir a Score y rotación">Score y rotación</a></li>
+          <li><a href="#teorico" aria-label="Ir a Teórico top-k">Teórico (K1/K2/K3)</a></li>
+          <li><a href="#advertencias" aria-label="Ir a Advertencias">Advertencias y calidad de datos</a></li>
+          <li><a href="#exportaciones" aria-label="Ir a Exportaciones">Exportaciones y reporting</a></li>
+          <li><a href="#ranking" aria-label="Ir a Ranking y Share">Ranking y compartición</a></li>
+          <li><a href="#ui" aria-label="Ir a UI y accesibilidad">UI, accesibilidad y errores frecuentes</a></li>
+          <li><a href="#glosario" aria-label="Ir al Glosario completo">Glosario completo</a></li>
+          <li><a href="#faq" aria-label="Ir a Preguntas frecuentes">Preguntas frecuentes</a></li>
+        </ol>
+      </nav>
 
-      <h2>2. Preparar tu sesión</h2>
+      <h2 id="introduccion">1. Introducción rápida</h2>
       <p>
-        Antes de iniciar cualquier simulación conviene definir:
+        El simulador tiene dos modos independientes:
       </p>
       <ul>
-        <li><strong>Capital disponible:</strong> importe total que estás dispuesto a asignar.</li>
-        <li><strong>Universo de activos:</strong> tickers o empresas que seguirás.</li>
-        <li><strong>Objetivo temporal:</strong> horizonte de análisis para interpretar los resultados.</li>
+        <li><strong>Modo Práctica:</strong> analizas un único ticker con tus supuestos.</li>
+        <li><strong>Modo Carrera:</strong> gestionas una sesión con varios turnos, eventos y ranking.</li>
+      </ul>
+      <p>
+        Flujo recomendado para principiantes: 1) busca un ticker con el pre-check de Yahoo Finance,
+        2) pruébalo en Modo Práctica, 3) crea una sesión de Carrera con ese universo
+        y 4) respeta siempre las reglas clave: suma de pesos ≤ 1.0 y máximo 10 activos (CAREER_MAX_ASSETS = 10).
+        El benchmark por defecto es <code>^GSPC</code> y puedes cambiarlo en carrera.
+      </p>
+
+      <h2 id="conceptos">2. Conceptos básicos imprescindibles</h2>
+      <ul>
+        <li><strong>Ticker:</strong> símbolo bursátil en mayúsculas, por ejemplo <code>AAPL</code>.</li>
+        <li><strong>Benchmark:</strong> referencia para comparar tu cartera. La UI arranca con <code>^GSPC</code>.</li>
+        <li><strong>Cartera:</strong> lista <code>alloc</code> de objetos <code>{ticker, weight}</code>.</li>
+        <li><strong>Turno:</strong> intervalo definido por <code>range.start</code> y <code>range.end</code> dentro del periodo general.</li>
+        <li><strong><a href="#gls-periodo-analisis">Periodo de análisis</a>:</strong> fechas <code>period_start</code> y <code>period_end</code> que fijan el rango completo.</li>
+        <li><strong>SOT (Start of Turn):</strong> capital y pesos en el instante previo a los eventos; sirve para medir variaciones.</li>
+        <li><strong>DCA:</strong> aportación automática <code>dca_in_turn</code> = <code>capital_inicial / total_turnos</code> cuando está activa.</li>
       </ul>
 
-      <h2>3. Modo Práctica paso a paso</h2>
+      <h2 id="modo-practica">3. Modo Práctica paso a paso</h2>
       <ol>
-        <li>Accede a <em>Nuevo análisis</em> para cargar datos históricos.</li>
-        <li>Introduce ticker, fechas y, opcionalmente, eventos o notas.</li>
-        <li>Descarga reportes CSV o PDF desde la sección de resultados.</li>
-        <li>Guarda tus observaciones en el historial para futuras consultas.</li>
+        <li><strong>Formulario:</strong> completa ticker, importe (ej. 1.000&nbsp;€), horizonte en años, fechas y, si quieres, notas.</li>
+        <li><strong>Validaciones:</strong> el frontend exige importes positivos, fechas ordenadas y tickers conocidos; si falla verás un toast rojo.</li>
+        <li><strong>DCA:</strong> elige entre inversión única o aportaciones periódicas (misma lógica que en Carrera).</li>
+        <li><strong>Métricas:</strong> tras enviar, se calculan CAGR, drawdown, PnL y observaciones. El modal de observaciones es accesible (cierra con Esc).</li>
+        <li><strong>Historial:</strong> puedes guardar los resultados y exportar CSV para revisar más tarde.</li>
+      </ol>
+      <p>
+        Ejemplo: inviertes 1.000&nbsp;€ en <code>MSFT</code> sin DCA, el informe muestra +10&nbsp;% &rarr; capital final simulado 1.100&nbsp;€.
+      </p>
+
+      <h2 id="modo-carrera">4. Modo Carrera paso a paso</h2>
+      <ol>
+        <li><strong>Crear sesión:</strong> define jugador, dificultad (principiante/intermedio/experto), capital, universo inicial y benchmark (default <code>^GSPC</code>).</li>
+        <li><strong>Asignar pesos:</strong> el formulario usa <code>step=0.01</code>, valora hasta 10 activos (regla MAX_ASSETS/CAREER_MAX_ASSETS = 10) y exige que la suma de pesos sea ≤ 1.0; la validación existe en el cliente y en el servidor.</li>
+        <li><strong>DCA:</strong> activa la casilla si quieres que antes de cada turno se ingrese <code>dca_in_turn</code>; se refleja en el snapshot.</li>
+        <li><strong>Cerrar turno:</strong> el backend confirma que <code>turn_n</code> coincide, que los tickers tienen histórico y que se respetan las reglas. Si falla, verás mensajes como “La suma de pesos no puede superar 1.0”.</li>
+        <li><strong>Eventos:</strong> tras cerrar, aparece el modal de eventos aplicados y nuevos.</li>
+        <li><strong>Drift automático:</strong> los pesos del siguiente turno se pre-rellenan con <code>alloc_next_suggested</code>, calculado con el drift natural (<code>w * (1 + r)</code> / suma).</li>
+        <li><strong>Informe y ranking:</strong> genera el informe para revisar métricas, advertencias y, si quieres, comparte tus resultados (requiere consentimiento).</li>
       </ol>
 
-      <h2>4. Modo Carrera paso a paso</h2>
-      <ol>
-        <li>Configura jugador, dificultad, capital y universo inicial.</li>
-        <li>Revisa el turno activo, distribuye pesos (máximo 10 activos) y aplica DCA si procede.</li>
-        <li>Cierra cada turno para actualizar retornos, eventos aplicados y valor de cartera.</li>
-        <li>Genera el informe final para visualizar métricas, techo teórico, warnings y ranking.</li>
-      </ol>
+      <h2 id="snapshot">5. Snapshot del turno</h2>
       <p>
-        Recuerda respetar los límites de pesos y activos; el sistema validará tanto en cliente como en servidor.
-      </p>
-
-      <h2>5. Interpretación de métricas</h2>
-      <ul>
-        <li><strong>CAGR:</strong> crecimiento anual compuesto; útil para comparar estrategias en diferentes horizontes.</li>
-        <li><strong>Volatilidad anual:</strong> desviación estándar mensual anualizada; identifica estabilidad.</li>
-        <li><strong>Drawdown máximo:</strong> pérdida máxima desde un pico; refleja riesgos de caídas profundas.</li>
-        <li><strong>Tracking error:</strong> dispersión respecto al benchmark; combinada con active return define el information ratio.</li>
-      </ul>
-
-      <h2>6. Exportaciones y reporting</h2>
-      <p>
-        Desde el informe de carrera puedes descargar:
+        El snapshot es la foto completa del turno, almacenada en <code>session.completed_turns</code> y en <code>career_snapshots.csv</code>.
+        Incluye:
       </p>
       <ul>
-        <li>Snapshots por turno (CSV).</li>
-        <li>Serie equity y benchmark (CSV).</li>
-        <li>Resumen ejecutivo (CSV) y gráfico PNG.</li>
+        <li>Identificación: <code>turn_n</code>, <code>range.start</code>, <code>range.end</code>, <code>alloc</code>, <code>use_dca</code>, <code>dca_in_turn</code>.</li>
+        <li>Retornos de mercado: <code>ret_by_ticker</code> (sin eventos) y <code>turn_return_market</code>.</li>
+        <li>Impactos de eventos: <code>ret_portfolio_shift</code>, <code>ret_ticker_shift</code>, <code>ret_by_ticker_final</code>.</li>
+        <li>Resultado final: <code>turn_return</code>, <code>portfolio_value</code>, <code>invested_so_far</code>, <code>pnl_abs</code>, <code>pnl_pct</code>, <code>cum_return_net</code>, <code>delta_vs_prev</code>.</li>
+        <li>Eventos: <code>events_applied</code>, <code>events_new</code>, <code>events_log</code>, <code>active_events</code>.</li>
+        <li>Próximo turno: <code>alloc_next_suggested</code> (respetando orden original y máximo 10 activos).</li>
+      </ul>
+      <pre><code>{
+  "turn_n": 2,
+  "range": {"start": "2005-03-01", "end": "2005-04-01"},
+  "alloc": [{"ticker": "AAPL", "weight": 0.5}, {"ticker": "MSFT", "weight": 0.5}],
+  "turn_return_market": 0.03,
+  "ret_portfolio_shift": -0.01,
+  "ret_by_ticker_final": {"AAPL": 0.07, "MSFT": 0.01},
+  "turn_return": 0.02,
+  "invested_so_far": 10200,
+  "pnl_abs": 204,
+  "alloc_next_suggested": [{"ticker": "AAPL", "weight": 0.65}, {"ticker": "MSFT", "weight": 0.35}]
+}</code></pre>
+
+      <h2 id="eventos">6. Eventos (simulaciones)</h2>
+      <p>
+        Cada evento tiene <code>scope</code> (<code>portfolio</code>, <code>sector</code> o <code>ticker</code>), <code>target</code>, <code>impact_pct</code> entre -0.5 y 0.5
+        y <code>remaining_turns</code> entre 1 y 6. Las dificultades influyen en la probabilidad y el número de turnos del periodo.
+      </p>
+      <ul>
+        <li>Impacto global: se suma a <code>ret_portfolio_shift</code> y afecta por igual a todos los pesos.</li>
+        <li>Impacto por ticker: se refleja en <code>per_ticker_shift</code> → <code>ret_ticker_shift</code> → <code>ret_by_ticker_final</code>.</li>
+        <li>Seguimiento: <code>events_log</code> muestra el historial completo; <code>active_events</code> lista los que siguen vivos.</li>
       </ul>
       <p>
-        En modo práctica, los reportes se descargan desde la sección de análisis o historial.
+        Ejemplo: evento <code>{"scope":"ticker","target":"MSFT","impact_pct":-0.04,"remaining_turns":2}</code>
+        resta 4 puntos porcentuales al retorno de MSFT durante dos turnos, reflejado en <code>ret_ticker_shift</code>.
       </p>
 
-      <h2>7. Ranking y compartición</h2>
+      <h2 id="metricas">7. Métricas y tracking</h2>
+      <p>
+        El informe genera dos series <a href="#gls-base100">Base 100</a>: <a href="#gls-portfolio-equity-series"><code>portfolio_equity.series</code></a>
+        y <a href="#gls-benchmark-series"><code>benchmark.series</code></a>. Ambas comparten métricas:
+      </p>
       <ul>
-        <li><strong>Ranking local:</strong> envío opt-in de score y estrellas. Requiere consentimiento explícito.</li>
-        <li><strong>Share payload:</strong> devuelve dificultad, periodo, universo y hash de semilla para reproducir resultados.</li>
-        <li><strong>Buenas prácticas:</strong> incluye siempre descripción del método y riesgos asumidos.</li>
-      </ul>
-
-      <h2>8. Consejos y soporte</h2>
-      <ul>
-        <li>Revisa los warnings de datos antes de tomar decisiones.</li>
-        <li>Mantén registros de tus hipótesis para comparar con resultados reales.</li>
-        <li>Contacta con el equipo si detectas inconsistencias en precios o eventos.</li>
+        <li><strong>Total return:</strong> variación acumulada (ej. de 100 a 150 = +50&nbsp;%).</li>
+        <li><strong>CAGR:</strong> crecimiento anual compuesto (si pasas de 100 a 133 en 3 años ≈ 10&nbsp;%).</li>
+        <li><strong><code>vol_annual</code>:</strong> desviación estándar anualizada del rendimiento.</li>
+        <li><strong><code>max_drawdown</code>:</strong> caída máxima desde el último pico (ej. 120 &rarr; 90 = -25&nbsp;%).</li>
       </ul>
       <p>
-        Gracias por utilizar el simulador. Tu feedback ayuda a mejorar futuras versiones.
+        El bloque <code>tracking</code> resume la relación cartera-benchmark:
       </p>
+      <ul>
+        <li><strong><code>active_return</code>:</strong> CAGR cartera − CAGR benchmark.</li>
+        <li><strong><code>tracking_error</code>:</strong> desviación de las diferencias de retorno.</li>
+        <li><strong><code>information_ratio</code>:</strong> <code>active_return / tracking_error</code>; valores &gt; 0.5 indican consistencia.</li>
+      </ul>
+
+      <h2 id="score">8. Score y rotación</h2>
+      <p>
+        El score numérico (0–10) y las estrellas agrupan cuatro componentes calculados en <code>app/career.py</code>:
+        <code>cagr_component</code>, <code>dd_component</code>, <code>te_component</code> y <code>turnover_component</code>.
+        El turno medio de rotación (<code>_turnover_average</code>) mide qué porcentaje de la cartera se reemplaza entre turnos;
+        rotaciones menores suelen mejorar el componente de turnover. Ejemplo orientativo:
+      </p>
+      <table class="table table-compact" aria-label="Ejemplo de score">
+        <thead>
+          <tr><th>Componente</th><th>Valor</th><th>Interpretación</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>cagr_component</code></td><td>0.75</td><td>Buen crecimiento anual</td></tr>
+          <tr><td><code>dd_component</code></td><td>0.60</td><td>Drawdown contenido</td></tr>
+          <tr><td><code>te_component</code></td><td>0.70</td><td>Tracking estable</td></tr>
+          <tr><td><code>turnover_component</code></td><td>0.50</td><td>Pocos cambios por turno</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="teorico">9. Teórico (K1/K2/K3)</h2>
+      <p>
+        El módulo teórico calcula combinaciones ideales de 1, 2 o 3 activos sobre el universo validado.
+        Utiliza los campos <code>k1</code>, <code>k2</code>, <code>k3</code>, la lista <code>universe_evaluated</code>,
+        el mapa normalizado <code>normalized_map</code> y la etiqueta <code>method</code> (puede ser <em>greedy</em> o <em>bruteforce</em> según
+        el tamaño del universo). Sirve como referencia para comparar tu asignación real con la mejor combinación histórica.
+        Si no hay datos suficientes, se mostrará una advertencia en la sección correspondiente.
+      </p>
+
+      <h2 id="advertencias">10. Advertencias y calidad de datos</h2>
+      <p>
+        Se presentan como chips naranjas en la tarjeta de informe:
+      </p>
+      <ul>
+        <li><a href="#gls-short-series"><code>short_series:&lt;ticker&gt;</code></a>: muy pocos datos; amplía el periodo.</li>
+        <li><a href="#gls-low-coverage"><code>low_coverage:&lt;ticker&gt;</code></a>: falta más del 20&nbsp;% de precios; considera otro rango o ticker.</li>
+        <li><a href="#gls-large-gap"><code>large_gap:&lt;ticker&gt;</code></a>: huecos largos sin cotización; revisa noticias o liquidez.</li>
+        <li><a href="#gls-rejected-in-range"><code>rejected_in_range:&lt;ticker&gt;</code></a>: el ticker quedó fuera durante parte del periodo; verifica la bolsa.</li>
+        <li>Teórico no disponible: indica que <code>normalized_map</code> no pudo calcularse (ej. universo vacío).</li>
+      </ul>
+
+      <h2 id="exportaciones">11. Exportaciones y reporting</h2>
+      <p>
+        Todos los CSV mantienen los nombres exactos del backend:
+      </p>
+      <h3>career_snapshots.csv</h3>
+      <p>
+        Columnas: <code>turn_n</code>, <code>range_start</code>, <code>range_end</code>, <code>weights_json</code>,
+        <code>use_dca</code>, <code>dca_in_turn</code>, <code>turn_return</code>, <code>turn_return_market</code>,
+        <code>ret_portfolio_shift</code>, <code>ret_ticker_shift_json</code>, <code>portfolio_value</code>,
+        <code>invested_so_far</code>, <code>pnl_abs</code>, <code>pnl_pct</code>, <code>events_applied_json</code>, <code>events_new_json</code>.
+      </p>
+      <h3>career_equity.csv</h3>
+      <p>Columnas: <code>date</code>, <code>portfolio_value_base100</code>, <code>benchmark_value_base100</code>.</p>
+      <h3>career_summary.csv</h3>
+      <p>
+        Incluye identificación (<code>session_id</code>, <code>player</code>, <code>difficulty</code>),
+        periodo/capitales (<code>period_start</code>, <code>period_end</code>, <code>capital_initial</code>, <code>capital_current</code>, <code>invested_so_far</code>),
+        resultados (<code>pnl_abs</code>, <code>pnl_pct</code>, <code>cum_return_net</code>),
+        métricas de cartera y benchmark (CAGR, <code>vol_annual</code>, <code>max_drawdown</code>, <code>total_return</code>),
+        tracking (<code>active_return</code>, <code>tracking_error</code>, <code>information_ratio</code>)
+        y score (<code>score_value</code>, <code>score_stars</code>, <code>cagr_component</code>, <code>dd_component</code>, <code>te_component</code>, <code>turnover_component</code>).
+      </p>
+      <p>
+        Además, desde la tarjeta del informe puedes exportar el gráfico de equity como PNG para llevarlo a otras presentaciones.
+      </p>
+
+      <h2 id="ranking">12. Ranking y compartición</h2>
+      <ul>
+        <li><strong>Consentimiento obligatorio:</strong> el botón de envío al ranking permanece deshabilitado hasta marcar la casilla de autorización.</li>
+        <li><strong>Datos compartidos:</strong> se envían dificultad, periodo, universo realmente usado, <a href="#gls-seed-hash"><code>seed_hash</code></a>, benchmark elegido y las métricas clave (score, CAGR, tracking). No se envía ninguna credencial sensible.</li>
+        <li><strong>Reproducibilidad:</strong> otro usuario puede reconstruir la sesión aplicando el mismo universo, periodo y <a href="#gls-seed">semilla</a>.</li>
+      </ul>
+
+      <h2 id="ui">13. UI, accesibilidad y errores frecuentes</h2>
+      <p>
+        La interfaz mantiene ayudas permanentes:
+      </p>
+      <ul>
+        <li><a href="#gls-modal">Modales accesibles</a> (Observaciones, Eventos, Backtest) que enfocan el primer elemento y permiten cerrar con <kbd>Esc</kbd> o clic fuera.</li>
+        <li><a href="#gls-toast">Toasts</a> en español: verde con “Turno cerrado.”, rojo con mensajes como “La suma de pesos no puede superar 1.0”.</li>
+        <li><a href="#gls-precheck-yahoo">Pre-check de Yahoo Finance</a> que valida tickers antes de pedir datos pesados.</li>
+        <li><a href="#gls-badge">Badges</a> y <a href="#gls-chip">chips</a> para dificultad, advertencias y métodos teóricos, siguiendo la misma paleta.</li>
+        <li>Mensajes frecuentes que conviene memorizar:
+          <ul>
+            <li>“La cartera admite como máximo 10 activos.” → elimina filas hasta cumplir CAREER_MAX_ASSETS.</li>
+            <li>“turn_n no coincide con el turno pendiente.” → recarga la sesión antes de volver a enviar.</li>
+            <li>“No se encontraron datos históricos válidos...” → cambia fechas o ticker.</li>
+            <li>“No hay turnos pendientes.” → todos los turnos están cerrados; crea una sesión nueva.</li>
+          </ul>
+        </li>
+      </ul>
+
+      <h2 id="glosario">14. Glosario completo</h2>
+      <p>Cada entrada usa el formato: Definición — Por qué importa — Dónde se ve — Ejemplo.</p>
+      <dl class="glosario">
+        <dt id="gls-ticker">Ticker</dt>
+        <dd>Identificador oficial de una empresa — Permite descargar precios correctos — Formularios de Práctica/Carrera, CSV — <code>"ticker": "MSFT"</code>.</dd>
+
+        <dt id="gls-benchmark">Benchmark</dt>
+        <dd>Índice de referencia (ej. <code>^STOXX50E</code>) — Sirve para medir si tu cartera lo supera — Selector de Carrera, informes, share payload — Cambiar a <code>^IXIC</code> para comparar contra Nasdaq.</dd>
+
+        <dt id="gls-benchmark-default">Benchmark por defecto ^GSPC</dt>
+        <dd>Benchmark inicial configurado en la UI — Garantiza comparaciones estándar si no eliges otro — Formulario de creación de sesión — Crear sesión y dejar <code>^GSPC</code> para comparar con S&amp;P&nbsp;500.</dd>
+
+        <dt id="gls-alloc">Cartera / Asignación (<code>alloc</code>)</dt>
+        <dd>Lista de pesos {ticker, weight} — Define cómo se reparte el capital — Formulario de Carrera, snapshot, <code>weights_json</code> — <code>[{"ticker":"AAPL","weight":0.4}]</code>.</dd>
+
+        <dt id="gls-max-assets">MAX_ASSETS / CAREER_MAX_ASSETS</dt>
+        <dd>Constante (valor actual 10) que limita el número de activos por turno — Evita asignaciones inmanejables y coincide en backend/frontend — Validaciones del formulario y errores del endpoint — Intentar añadir 11 filas muestra “La cartera admite como máximo 10 activos”.</dd>
+
+        <dt id="gls-universo">Universo</dt>
+        <dd>Lista de tickers validados para una sesión — Delimita qué activos puedes usar y exportar — Campo <code>session.universe</code>, panel de series — Universo inicial <code>["AAPL","MSFT","NVDA"]</code>.</dd>
+
+        <dt id="gls-periodo-analisis">Periodo de análisis (<code>period_start</code>, <code>period_end</code>)</dt>
+        <dd>Fechas que marcan el intervalo completo de la sesión — Determinan qué datos históricos se descargan — Cabecera de Carrera, exportaciones, ranking/share — 2005-01-01 a 2007-12-31.</dd>
+
+        <dt id="gls-efectivo">Efectivo (<code>CASH</code>, <code>CASH:USD</code>)</dt>
+        <dd>Ticker especial que representa liquidez — Permite dejar parte del capital sin invertir — Formularios de asignación — Poner <code>{"ticker":"CASH","weight":0.2}</code> para mantener 20&nbsp;% en efectivo.</dd>
+
+        <dt id="gls-turno">Turno (<code>turn_n</code>, <code>range.start</code>, <code>range.end</code>)</dt>
+        <dd>Bloque de tiempo dentro del periodo total — Organiza la sesión y el histórico — Tarjeta de Carrera, tabla de turnos, snapshots — <code>turn_n=3</code> con <code>start="2005-05-01"</code>.</dd>
+
+        <dt id="gls-sot">SOT (Start of Turn)</dt>
+        <dd>Estado inicial antes de aplicar retornos y eventos — Permite comparar cambios contra el final del turno — Concepto usado al interpretar <code>delta_vs_prev</code> — Capital SOT 10.000&nbsp;€ → capital final 10.500&nbsp;€.</dd>
+
+        <dt id="gls-snapshot">Snapshot</dt>
+        <dd>Registro completo de cada turno — Es la fuente de verdad para reporting y drift — Modal post-turno, CSV de snapshots — Ver ejemplo en la sección “Snapshot del turno”.</dd>
+
+        <dt id="gls-dca">DCA (Dollar-Cost Averaging)</dt>
+        <dd>Estrategia de aportaciones iguales por turno — Suaviza la entrada al mercado — Checkbox “Usar DCA”, snapshot, CSV — Capital inicial 12.000&nbsp;€, 12 turnos → DCA de 1.000&nbsp;€.</dd>
+
+        <dt id="gls-use-dca"><code>use_dca</code></dt>
+        <dd>Bandera booleana que indica si DCA está activo — Determina si se suma <code>dca_in_turn</code> antes del retorno — Snapshot, CSV — <code>"use_dca": true</code>.</dd>
+
+        <dt id="gls-dca-in-turn"><code>dca_in_turn</code></dt>
+        <dd>Importe exacto aportado en el turno vía DCA — Ajusta <code>invested_so_far</code> — Snapshot, CSV — <code>"dca_in_turn": 1000.0</code>.</dd>
+
+        <dt id="gls-ret-by-ticker"><code>ret_by_ticker</code></dt>
+        <dd>Retorno base por ticker (sin eventos) — Permite auditar datos históricos — Snapshot, APIs — <code>{"AAPL": 0.015}</code>.</dd>
+
+        <dt id="gls-ret-portfolio-shift"><code>ret_portfolio_shift</code></dt>
+        <dd>Ajuste global de eventos — Explica cambios que afectan a todos los activos — Snapshot, CSV — <code>-0.01</code> resta 1 punto porcentual al turno.</dd>
+
+        <dt id="gls-ret-ticker-shift"><code>ret_ticker_shift</code></dt>
+        <dd>Mapa de ajustes por ticker tras eventos — Muestra quién gana o pierde por noticias — Snapshot, <code>ret_ticker_shift_json</code> — <code>{"MSFT": -0.03}</code>.</dd>
+
+        <dt id="gls-ret-by-ticker-final"><code>ret_by_ticker_final</code></dt>
+        <dd>Retorno base + eventos para cada ticker — Alimenta el drift de <code>alloc_next_suggested</code> — Snapshot — <code>{"AAPL": 0.07}</code>.</dd>
+
+        <dt id="gls-base100">Base 100</dt>
+        <dd>Escala que arranca en 100 para comparar trayectorias sin depender de euros — Facilita ver si cartera o benchmark lo hacen mejor — Gráfico de equity, CSV de equity — Cartera pasa de 100 a 140 = +40&nbsp;%.</dd>
+
+        <dt id="gls-portfolio-equity-series"><code>portfolio_equity.series</code></dt>
+        <dd>Lista de pares fecha/valor en Base 100 para tu cartera — Alimenta gráficos y exportaciones — Informe de Carrera, <code>career_equity.csv</code> — <code>["2005-01-03", 101.2]</code>.</dd>
+
+        <dt id="gls-benchmark-series"><code>benchmark.series</code></dt>
+        <dd>Lista de pares fecha/valor en Base 100 para el benchmark seleccionado — Permite contrastar tus resultados — Informe de Carrera, <code>career_equity.csv</code> — <code>["2005-01-03", 100.8]</code>.</dd>
+
+        <dt id="gls-turn-return-market"><code>turn_return_market</code></dt>
+        <dd>Retorno ponderado sin eventos — Permite comparar con el resultado final — Snapshot, CSV — <code>0.03</code> (3&nbsp;%).</dd>
+
+        <dt id="gls-turn-return"><code>turn_return</code></dt>
+        <dd>Retorno final del turno (mercado + eventos) — Afecta al capital y a las métricas — Tabla de turnos, snapshot, CSV — <code>0.02</code> (2&nbsp;%).</dd>
+
+        <dt id="gls-portfolio-value"><code>portfolio_value</code></dt>
+        <dd>Valor de cartera tras aplicar el turno — Es la cifra que se muestra en la tarjeta principal — Snapshot, tabla, CSV — 10.204&nbsp;€.</dd>
+
+        <dt id="gls-invested-so-far"><code>invested_so_far</code></dt>
+        <dd>Capital inicial + aportaciones DCA acumuladas — Necesario para calcular PnL neto — Snapshot, CSV — 10.200&nbsp;€.</dd>
+
+        <dt id="gls-pnl-abs"><code>pnl_abs</code></dt>
+        <dd>Beneficio/pérdida absoluta — Cuantifica cuánto ganas en euros — Snapshot, CSV — 204&nbsp;€.</dd>
+
+        <dt id="gls-pnl-pct"><code>pnl_pct</code></dt>
+        <dd>Beneficio/pérdida relativo a lo invertido — Compara sesiones con diferentes capitales — Snapshot, CSV — 0.02 = +2&nbsp;%.</dd>
+
+        <dt id="gls-cum-return-net"><code>cum_return_net</code></dt>
+        <dd>Retorno acumulado neto tras aportaciones — Evalúa el avance real de la sesión — Snapshot, resumen ejecutivo — 0.18 = +18&nbsp;%.</dd>
+
+        <dt id="gls-delta-vs-prev"><code>delta_vs_prev</code></dt>
+        <dd>Diferencia de capital frente al turno anterior — Destaca saltos por eventos — Snapshot, CSV — +800&nbsp;€.</dd>
+
+        <dt id="gls-alloc-next-suggested"><code>alloc_next_suggested</code></dt>
+        <dd>Pesos recomendados para el siguiente turno según el drift — Evita reescribir la cartera manualmente — Snapshot, formulario pre-rellenado — <code>[{"ticker":"AAPL","weight":0.65}]</code>.</dd>
+
+        <dt id="gls-events-applied"><code>events_applied</code></dt>
+        <dd>Eventos que impactaron el turno actual — Explica cambios en retornos — Modal de eventos, CSV — Lista de eventos aplicados.</dd>
+
+        <dt id="gls-events-new"><code>events_new</code></dt>
+        <dd>Eventos sorteados para turnos futuros — Te permite anticipar efectos — Modal, CSV — Evento con <code>remaining_turns=2</code>.</dd>
+
+        <dt id="gls-short-series"><code>short_series:&lt;ticker&gt;</code></dt>
+        <dd>Etiqueta de advertencia cuando el histórico es muy corto — Señala que las métricas podrían ser poco fiables — Tarjeta de advertencias, CSV de snapshots — <code>short_series:AAPL</code> si solo hay unos días válidos.</dd>
+
+        <dt id="gls-low-coverage"><code>low_coverage:&lt;ticker&gt;</code></dt>
+        <dd>Advertencia por cobertura insuficiente de precios (&gt;20&nbsp;% de huecos) — Evita decisiones con datos incompletos — Tarjeta de advertencias, CSV — <code>low_coverage:UBI.PA</code>.</dd>
+
+        <dt id="gls-large-gap"><code>large_gap:&lt;ticker&gt;</code></dt>
+        <dd>Advertencia por largos periodos sin cotización — Te anima a revisar noticias o liquidez del activo — Tarjeta de advertencias, CSV — <code>large_gap:XYZ</code> cuando faltan meses enteros.</dd>
+
+        <dt id="gls-rejected-in-range"><code>rejected_in_range:&lt;ticker&gt;</code></dt>
+        <dd>Advertencia cuando el ticker quedó fuera de parte del rango — Informa que los cálculos pueden cambiar si ajustas el periodo — Tarjeta de advertencias, CSV — <code>rejected_in_range:ETF1</code> si cotiza solo en la segunda mitad.</dd>
+
+        <dt id="gls-events-log"><code>events_log</code></dt>
+        <dd>Historial acumulado de eventos — Sirve para auditoría — Endpoint <code>/api/career/events</code>, snapshot — Entradas con <code>"applied"</code> y <code>"drawn"</code>.</dd>
+
+        <dt id="gls-active-events"><code>active_events</code></dt>
+        <dd>Eventos aún vigentes — Importa porque seguirán afectando turnos futuros — Modal, endpoint de eventos — Lista de eventos con <code>remaining_turns</code> &gt; 0.</dd>
+
+        <dt id="gls-scope"><code>scope</code></dt>
+        <dd>Nivel al que aplica un evento — Define si afecta a toda la cartera, a un sector o a un ticker — Eventos, CSV — <code>"scope": "portfolio"</code>.</dd>
+
+        <dt id="gls-target"><code>target</code></dt>
+        <dd>Objetivo específico de un evento — Identifica qué sector o ticker recibe el impacto — Eventos, CSV — <code>"target": "TECH"</code>.</dd>
+
+        <dt id="gls-impact-pct"><code>impact_pct</code></dt>
+        <dd>Porcentaje de impacto de un evento (−0.5 a 0.5) — Determina la magnitud del ajuste — Eventos, snapshot — <code>-0.04</code>.</dd>
+
+        <dt id="gls-remaining-turns"><code>remaining_turns</code></dt>
+        <dd>Turnos restantes de un evento (1–6) — Ayuda a planificar los siguientes cierres — Eventos, snapshot — <code>2</code>.</dd>
+
+        <dt id="gls-total-return"><code>total_return</code></dt>
+        <dd>Variación acumulada respecto a 100 — Resumen rápido del rendimiento — Informes, CSV — 0.5 = +50&nbsp;%.</dd>
+
+        <dt id="gls-cagr">CAGR</dt>
+        <dd>Crecimiento anual compuesto — Normaliza periodos de distinta duración — Informes, CSV — 0.12 = +12&nbsp;% anualizado.</dd>
+
+        <dt id="gls-vol-annual"><code>vol_annual</code></dt>
+        <dd>Desviación estándar anualizada — Mide la volatilidad del portfolio — Informes, CSV — 0.18 = 18&nbsp;%.</dd>
+
+        <dt id="gls-max-drawdown"><code>max_drawdown</code></dt>
+        <dd>Caída máxima desde un pico — Señala el peor escenario histórico — Informes, CSV — -0.30.</dd>
+
+        <dt id="gls-active-return"><code>active_return</code></dt>
+        <dd>Diferencia entre CAGR de cartera y benchmark — Indica si superas al índice — Bloque de tracking, CSV — 0.04 = +4 puntos porcentuales.</dd>
+
+        <dt id="gls-tracking-error"><code>tracking_error</code></dt>
+        <dd>Desviación de los retornos frente al benchmark — Evalúa la consistencia relativa — Bloque de tracking, CSV — 0.05.</dd>
+
+        <dt id="gls-information-ratio"><code>information_ratio</code></dt>
+        <dd><code>active_return / tracking_error</code> — Resume eficiencia del exceso de retorno — Bloque de tracking, CSV — 0.8.</dd>
+
+        <dt id="gls-score-value"><code>score.value</code></dt>
+        <dd>Puntuación total (0–10) — Determina tu posición en el ranking — Panel de score, CSV — 8.2.</dd>
+
+        <dt id="gls-score-stars"><code>score.stars</code></dt>
+        <dd>Versión visual del score (estrella de 0 a 5) — Facilita la comparación rápida — Panel de score, ranking — 4★.</dd>
+
+        <dt id="gls-cagr-component"><code>cagr_component</code></dt>
+        <dd>Parte del score ligada al crecimiento anual — Premia carteras con CAGR alto — Resumen ejecutivo — 0.75.</dd>
+
+        <dt id="gls-dd-component"><code>dd_component</code></dt>
+        <dd>Parte del score ligada a drawdown — Favorece carteras defensivas — Resumen ejecutivo — 0.60.</dd>
+
+        <dt id="gls-te-component"><code>te_component</code></dt>
+        <dd>Parte del score ligada al tracking error — Recompensa consistencia — Resumen ejecutivo — 0.70.</dd>
+
+        <dt id="gls-turnover-component"><code>turnover_component</code></dt>
+        <dd>Parte del score ligada al turnover medio — Penaliza cambios excesivos — Resumen ejecutivo — 0.55.</dd>
+
+        <dt id="gls-turnover-avg"><code>turnover_avg</code></dt>
+        <dd>Promedio interno de rotaciones por turno — Permite explicar el componente anterior — Informe backend, CSV — 0.25 = 25&nbsp;% del capital rotado.</dd>
+
+        <dt id="gls-seed">seed</dt>
+        <dd>Número pseudoaleatorio asignado a la sesión — Fija el orden de los eventos para que puedan replicarse — Campo <code>session.seed</code>, backend — <code>seed = 123456</code> genera siempre la misma secuencia.</dd>
+
+        <dt id="gls-seed-hash">seed_hash</dt>
+        <dd>Resumen hash de la semilla real — Permite compartir resultados sin exponer la semilla completa — Ranking/share payload, resumen ejecutivo — <code>"seed_hash":"9a3f"</code>.</dd>
+
+        <dt id="gls-share-payload">Share payload</dt>
+        <dd>JSON con los datos necesarios para reproducir la sesión (dificultad, periodo, universo, <code>seed_hash</code>, benchmark y métricas) — Asegura transparencia al compartir resultados — Acción de compartir, ranking — Descarga que incluye <code>"universe_used":["AAPL","MSFT"]</code>.</dd>
+
+        <dt id="gls-toast">Toast</dt>
+        <dd>Mensaje flotante breve (verde o rojo) — Informa inmediatamente de un éxito o error — Parte inferior derecha de la UI — “Turno cerrado.” o “La suma de pesos no puede superar 1.0”.</dd>
+
+        <dt id="gls-chip">Chip</dt>
+        <dd>Etiqueta pequeña con fondo suave — Destaca advertencias o etiquetas de observación — Panel de advertencias, modal de observaciones — Chip naranja con “low_coverage:AAPL”.</dd>
+
+        <dt id="gls-badge">Badge</dt>
+        <dd>Insignia compacta que acompaña textos — Clasifica elementos como dificultad o método teórico — Tarjetas de sesión, tabla teórica — Badge “Intermedio” en color verde.</dd>
+
+        <dt id="gls-modal">Modal</dt>
+        <dd>Ventana superpuesta con fondo oscurecido — Permite revisar información sin salir de la página — Modales de eventos, observaciones, backtest — Modal de eventos que se cierra con <kbd>Esc</kbd>.</dd>
+
+        <dt id="gls-precheck-yahoo">Pre-check de Yahoo Finance</dt>
+        <dd>Validación previa que consulta si el ticker existe — Evita enviar formularios con símbolos inválidos — Formulario de Práctica y Carrera — Al escribir “XXXX” muestra un aviso antes de hacer la petición larga.</dd>
+
+        <dt id="gls-k1k2k3">K1 / K2 / K3</dt>
+        <dd>Conjuntos óptimos de 1, 2 y 3 activos según CAGR — Ofrecen un punto de referencia — Panel teórico, CSV — <code>k2 = ["AAPL","MSFT"]</code>.</dd>
+
+        <dt id="gls-normalized-map"><code>normalized_map</code></dt>
+        <dd>Series históricas normalizadas Base 100 para cada ticker — Base para el cálculo teórico — Backend teórico — Mapa con listas de valores.</dd>
+
+        <dt id="gls-universe-evaluated"><code>universe_evaluated</code></dt>
+        <dd>Subconjunto del universo con datos suficientes — Define qué activos se usan en el cálculo teórico — Panel teórico — Lista de tickers filtrados.</dd>
+
+        <dt id="gls-method"><code>method</code> (greedy/bruteforce)</dt>
+        <dd>Algoritmo usado para calcular combinaciones — Explica la complejidad del cálculo — Panel teórico, CSV — <code>"method":{"k2":"greedy"}</code>.</dd>
+
+        <dt id="gls-alloc-next">alloc_next_suggested</dt>
+        <dd>Pesos sugeridos por drift — Mantiene la continuidad entre turnos — Snapshot, auto-relleno del formulario — <code>0.65 / 0.35</code> tras un turno dispar.</dd>
+      </dl>
+
+      <h2 id="faq">15. Preguntas frecuentes</h2>
+      <h3>¿Puedo dejar parte de la cartera en efectivo?</h3>
+      <p>Sí. Usa <code>CASH</code> o <code>CASH:USD</code> o deja la suma de pesos por debajo de 1.0.</p>
+      <h3>¿Cómo registro un evento manual?</h3>
+      <p>En la sección de eventos de Carrera, define <code>scope</code>, <code>target</code>, <code>impact_pct</code> y <code>remaining_turns</code>.</p>
+      <h3>¿Qué hago si un ticker no aparece?</h3>
+      <p>Revisa el buscador de Yahoo Finance. Si sigue fallando, el backend mostrará “No se encontraron datos históricos...”</p>
+      <h3>¿Puedo reiniciar una sesión?</h3>
+      <p>No. Cuando <code>_next_pending_turn</code> regresa <code>None</code>, la sesión queda cerrada; crea una nueva.</p>
+      <h3>¿Por qué cambian mis pesos automáticamente?</h3>
+      <p>Porque <code>alloc_next_suggested</code> aplica el drift con <code>ret_by_ticker_final</code>. Puedes ajustar los valores antes de enviar el siguiente turno.</p>
+      <h3>¿Dónde encuentro las exportaciones?</h3>
+      <p>En la tarjeta de informes de Carrera: tres botones CSV y uno PNG. Todos usan las columnas listadas arriba.</p>
     </article>
   </div>
 </section>
