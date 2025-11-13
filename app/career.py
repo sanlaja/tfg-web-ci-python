@@ -2218,7 +2218,51 @@ def create_session():
             seed_value = _seed_from_player(player)
 
     rng = random.Random(seed_value)
-    start_d, end_d, turns = _generate_period(DIFFICULTY_CONFIG[difficulty], rng)
+    config = DIFFICULTY_CONFIG[difficulty]
+    period_mode = str(payload.get("period_mode", "random")).strip().lower()
+    if period_mode == "manual":
+        period_start_str = str(payload.get("period_start") or "").strip()
+        period_end_str = str(payload.get("period_end") or "").strip()
+        if not period_start_str or not period_end_str:
+            return _json_error(
+                "Debes seleccionar fecha de inicio y fin para el periodo manual.", 400
+            )
+        try:
+            start_d = date.fromisoformat(period_start_str)
+            end_d = date.fromisoformat(period_end_str)
+        except ValueError:
+            return _json_error(
+                "Fechas de periodo inválidas. Usa el formato AAAA-MM-DD.", 400
+            )
+        if start_d > end_d:
+            return _json_error(
+                "La fecha de inicio debe ser anterior o igual a la de fin.", 400
+            )
+        today = date.today()
+        if end_d > today:
+            return _json_error("La fecha de fin no puede ser posterior a hoy.", 400)
+        if start_d < BASE_START_DATE:
+            return _json_error(
+                f"La fecha de inicio debe ser posterior o igual a {BASE_START_DATE.isoformat()}.",
+                400,
+            )
+        min_years, max_years = config["years"]
+        duration_days = (end_d - start_d).days + 1
+        min_days = int(min_years * 365)
+        max_days = int(max_years * 366)
+        if duration_days < min_days or duration_days > max_days:
+            return _json_error(
+                f"Para dificultad {difficulty}, el periodo debe tener entre {min_years} y {max_years} años.",
+                400,
+            )
+        turns = _build_turn_schedule(start_d, end_d, config["turn_months"])
+        if not turns:
+            return _json_error(
+                "El periodo seleccionado no permite construir turnos para la dificultad elegida.",
+                400,
+            )
+    else:
+        start_d, end_d, turns = _generate_period(config, rng)
     valid_universe, rejected_universe = _validate_universe(universe, start_d, end_d)
 
     session_id = _generate_session_id()

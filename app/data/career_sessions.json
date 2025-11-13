@@ -9622,6 +9622,1167 @@
           "use_dca": false
         }
       ]
+    },
+    "car_3fd7c2": {
+      "session_id": "car_3fd7c2",
+      "player": "Javier5",
+      "difficulty": "principiante",
+      "universe": [
+        "AAPL",
+        "MSFT",
+        "GOOGL",
+        "UBI.PA"
+      ],
+      "rejected_universe": [],
+      "capital_initial": 50000.0,
+      "capital_current": 192095.45,
+      "period": {
+        "start": "2010-10-10",
+        "end": "2020-10-10"
+      },
+      "turns": [
+        {
+          "n": 1,
+          "start": "2010-10-10",
+          "end": "2011-10-09",
+          "status": "completed",
+          "closed_at": "2025-11-13T17:34:55.796153"
+        },
+        {
+          "n": 2,
+          "start": "2011-10-10",
+          "end": "2012-10-09",
+          "status": "completed",
+          "closed_at": "2025-11-13T17:35:01.169401"
+        },
+        {
+          "n": 3,
+          "start": "2012-10-10",
+          "end": "2013-10-09",
+          "status": "completed",
+          "closed_at": "2025-11-13T17:35:26.685302"
+        },
+        {
+          "n": 4,
+          "start": "2013-10-10",
+          "end": "2014-10-09",
+          "status": "completed",
+          "closed_at": "2025-11-13T17:35:41.023878"
+        },
+        {
+          "n": 5,
+          "start": "2014-10-10",
+          "end": "2015-10-09",
+          "status": "completed",
+          "closed_at": "2025-11-13T17:36:00.146597"
+        },
+        {
+          "n": 6,
+          "start": "2015-10-10",
+          "end": "2016-10-09",
+          "status": "completed",
+          "closed_at": "2025-11-13T17:36:05.100715"
+        },
+        {
+          "n": 7,
+          "start": "2016-10-10",
+          "end": "2017-10-09",
+          "status": "completed",
+          "closed_at": "2025-11-13T17:36:18.881384"
+        },
+        {
+          "n": 8,
+          "start": "2017-10-10",
+          "end": "2018-10-09",
+          "status": "completed",
+          "closed_at": "2025-11-13T17:36:30.676017"
+        },
+        {
+          "n": 9,
+          "start": "2018-10-10",
+          "end": "2019-10-09",
+          "status": "completed",
+          "closed_at": "2025-11-13T17:36:35.910833"
+        },
+        {
+          "n": 10,
+          "start": "2019-10-10",
+          "end": "2020-10-09",
+          "status": "completed",
+          "closed_at": "2025-11-13T17:36:50.493032"
+        },
+        {
+          "n": 11,
+          "start": "2020-10-10",
+          "end": "2020-10-10",
+          "status": "pending"
+        }
+      ],
+      "completed_turns": [
+        {
+          "turn_n": 1,
+          "range": {
+            "start": "2010-10-10",
+            "end": "2011-10-09"
+          },
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.3
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.3
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.4
+            }
+          ],
+          "use_dca": false,
+          "turn_return": -0.103646,
+          "turn_return_market": -0.103646,
+          "portfolio_value": 44817.71,
+          "events": [],
+          "events_applied": [],
+          "events_new": [],
+          "ret_portfolio_shift": 0.0,
+          "ret_by_ticker": {
+            "AAPL": 0.252031,
+            "MSFT": 0.094361,
+            "UBI.PA": -0.518908
+          },
+          "ret_by_ticker_final": {
+            "AAPL": 0.252031,
+            "MSFT": 0.094361,
+            "UBI.PA": -0.518908
+          },
+          "alloc_next_suggested": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.419041
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.366271
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.214688
+            }
+          ],
+          "dca_in_turn": 0.0,
+          "invested_so_far": 50000.0,
+          "pnl_abs": -5182.29,
+          "pnl_pct": -0.103646,
+          "cum_return_net": -0.103646,
+          "delta_vs_prev": -5182.29
+        },
+        {
+          "turn_n": 2,
+          "range": {
+            "start": "2011-10-10",
+            "end": "2012-10-09"
+          },
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.419041
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.366271
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.214688
+            }
+          ],
+          "use_dca": false,
+          "turn_return": 0.433112,
+          "turn_return_market": 0.433112,
+          "portfolio_value": 64228.78,
+          "events": [],
+          "events_applied": [],
+          "events_new": [
+            {
+              "id": "macro_inflation_mild",
+              "name": "Inflacion moderada",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "category": "negative",
+              "difficulty": "easy"
+            }
+          ],
+          "ret_portfolio_shift": 0.0,
+          "ret_by_ticker": {
+            "AAPL": 0.642396,
+            "MSFT": 0.116836,
+            "UBI.PA": 0.564204
+          },
+          "ret_by_ticker_final": {
+            "AAPL": 0.642396,
+            "MSFT": 0.116836,
+            "UBI.PA": 0.564204
+          },
+          "alloc_next_suggested": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.480236
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.285438
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.234326
+            }
+          ],
+          "dca_in_turn": 0.0,
+          "invested_so_far": 50000.0,
+          "pnl_abs": 14228.78,
+          "pnl_pct": 0.284576,
+          "cum_return_net": 0.284576,
+          "delta_vs_prev": 19411.07
+        },
+        {
+          "turn_n": 3,
+          "range": {
+            "start": "2012-10-10",
+            "end": "2013-10-09"
+          },
+          "alloc": [
+            {
+              "ticker": "GOOGL",
+              "weight": 0.480236
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.285438
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.234326
+            }
+          ],
+          "use_dca": false,
+          "turn_return": 0.029558,
+          "turn_return_market": 0.049558,
+          "portfolio_value": 66127.23,
+          "events": [
+            {
+              "id": "macro_inflation_mild",
+              "name": "Inflacion moderada",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "macro_inflation_mild",
+              "name": "Inflacion moderada",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            }
+          ],
+          "events_new": [],
+          "ret_portfolio_shift": -0.02,
+          "ret_by_ticker": {
+            "GOOGL": 0.149484,
+            "MSFT": -0.222694,
+            "UBI.PA": 0.1764
+          },
+          "ret_by_ticker_final": {
+            "GOOGL": 0.149484,
+            "MSFT": -0.222694,
+            "UBI.PA": 0.1764
+          },
+          "alloc_next_suggested": [
+            {
+              "ticker": "GOOGL",
+              "weight": 0.525958
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.211397
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.262645
+            }
+          ],
+          "dca_in_turn": 0.0,
+          "invested_so_far": 50000.0,
+          "pnl_abs": 16127.23,
+          "pnl_pct": 0.322545,
+          "cum_return_net": 0.322545,
+          "delta_vs_prev": 1898.45
+        },
+        {
+          "turn_n": 4,
+          "range": {
+            "start": "2013-10-10",
+            "end": "2014-10-09"
+          },
+          "alloc": [
+            {
+              "ticker": "GOOGL",
+              "weight": 0.525958
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.211397
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.262645
+            }
+          ],
+          "use_dca": false,
+          "turn_return": 0.284671,
+          "turn_return_market": 0.284671,
+          "portfolio_value": 84951.73,
+          "events": [],
+          "events_applied": [],
+          "events_new": [
+            {
+              "id": "sector_regulation_light",
+              "name": "Regulacion leve del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "category": "negative",
+              "difficulty": "easy"
+            }
+          ],
+          "ret_portfolio_shift": 0.0,
+          "ret_by_ticker": {
+            "GOOGL": 0.313552,
+            "MSFT": 0.397075,
+            "UBI.PA": 0.136364
+          },
+          "ret_by_ticker_final": {
+            "GOOGL": 0.313552,
+            "MSFT": 0.397075,
+            "UBI.PA": 0.136364
+          },
+          "alloc_next_suggested": [
+            {
+              "ticker": "GOOGL",
+              "weight": 0.537782
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.229894
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.232324
+            }
+          ],
+          "dca_in_turn": 0.0,
+          "invested_so_far": 50000.0,
+          "pnl_abs": 34951.73,
+          "pnl_pct": 0.699035,
+          "cum_return_net": 0.699035,
+          "delta_vs_prev": 18824.5
+        },
+        {
+          "turn_n": 5,
+          "range": {
+            "start": "2014-10-10",
+            "end": "2015-10-09"
+          },
+          "alloc": [
+            {
+              "ticker": "GOOGL",
+              "weight": 0.537782
+            },
+            {
+              "ticker": "AAPL",
+              "weight": 0.229894
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.232324
+            }
+          ],
+          "use_dca": false,
+          "turn_return": 0.150336,
+          "turn_return_market": 0.16569,
+          "portfolio_value": 97723.04,
+          "events": [
+            {
+              "id": "sector_regulation_light",
+              "name": "Regulacion leve del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "affected": [
+                "GOOGL",
+                "AAPL"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "sector_regulation_light",
+              "name": "Regulacion leve del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "affected": [
+                "GOOGL",
+                "AAPL"
+              ]
+            }
+          ],
+          "events_new": [
+            {
+              "id": "macro_geopolitics_limited",
+              "name": "Tensiones geopoliticas limitadas",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "category": "negative",
+              "difficulty": "easy"
+            }
+          ],
+          "ret_portfolio_shift": 0.0,
+          "ret_by_ticker": {
+            "GOOGL": 0.209028,
+            "AAPL": 0.132102,
+            "UBI.PA": 0.098607
+          },
+          "ret_by_ticker_final": {
+            "GOOGL": 0.189028,
+            "AAPL": 0.112102,
+            "UBI.PA": 0.098607
+          },
+          "alloc_next_suggested": [
+            {
+              "ticker": "GOOGL",
+              "weight": 0.55587
+            },
+            {
+              "ticker": "AAPL",
+              "weight": 0.222253
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.221877
+            }
+          ],
+          "ret_ticker_shift": {
+            "GOOGL": -0.02,
+            "AAPL": -0.02
+          },
+          "dca_in_turn": 0.0,
+          "invested_so_far": 50000.0,
+          "pnl_abs": 47723.04,
+          "pnl_pct": 0.954461,
+          "cum_return_net": 0.954461,
+          "delta_vs_prev": 12771.31
+        },
+        {
+          "turn_n": 6,
+          "range": {
+            "start": "2015-10-10",
+            "end": "2016-10-09"
+          },
+          "alloc": [
+            {
+              "ticker": "GOOGL",
+              "weight": 0.55587
+            },
+            {
+              "ticker": "AAPL",
+              "weight": 0.222253
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.221877
+            }
+          ],
+          "use_dca": false,
+          "turn_return": 0.217016,
+          "turn_return_market": 0.237016,
+          "portfolio_value": 118930.49,
+          "events": [
+            {
+              "id": "macro_geopolitics_limited",
+              "name": "Tensiones geopoliticas limitadas",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "macro_geopolitics_limited",
+              "name": "Tensiones geopoliticas limitadas",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            }
+          ],
+          "events_new": [
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.031715,
+              "remaining_turns": 2,
+              "category": "legacy",
+              "difficulty": "easy"
+            }
+          ],
+          "ret_portfolio_shift": -0.02,
+          "ret_by_ticker": {
+            "GOOGL": 0.183729,
+            "AAPL": 0.043895,
+            "UBI.PA": 0.563963
+          },
+          "ret_by_ticker_final": {
+            "GOOGL": 0.183729,
+            "AAPL": 0.043895,
+            "UBI.PA": 0.563963
+          },
+          "alloc_next_suggested": [
+            {
+              "ticker": "GOOGL",
+              "weight": 0.531925
+            },
+            {
+              "ticker": "AAPL",
+              "weight": 0.187555
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.28052
+            }
+          ],
+          "dca_in_turn": 0.0,
+          "invested_so_far": 50000.0,
+          "pnl_abs": 68930.49,
+          "pnl_pct": 1.37861,
+          "cum_return_net": 1.37861,
+          "delta_vs_prev": 21207.45
+        },
+        {
+          "turn_n": 7,
+          "range": {
+            "start": "2016-10-10",
+            "end": "2017-10-09"
+          },
+          "alloc": [
+            {
+              "ticker": "UBI.PA",
+              "weight": 1.0
+            }
+          ],
+          "use_dca": false,
+          "turn_return": 0.187085,
+          "turn_return_market": 0.2188,
+          "portfolio_value": 141180.55,
+          "events": [
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.031715,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.031715,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            }
+          ],
+          "events_new": [],
+          "ret_portfolio_shift": -0.031715,
+          "ret_by_ticker": {
+            "UBI.PA": 0.2188
+          },
+          "ret_by_ticker_final": {
+            "UBI.PA": 0.2188
+          },
+          "alloc_next_suggested": [
+            {
+              "ticker": "UBI.PA",
+              "weight": 1.0
+            }
+          ],
+          "dca_in_turn": 0.0,
+          "invested_so_far": 50000.0,
+          "pnl_abs": 91180.55,
+          "pnl_pct": 1.823611,
+          "cum_return_net": 1.823611,
+          "delta_vs_prev": 22250.06
+        },
+        {
+          "turn_n": 8,
+          "range": {
+            "start": "2017-10-10",
+            "end": "2018-10-09"
+          },
+          "alloc": [
+            {
+              "ticker": "UBI.PA",
+              "weight": 1.0
+            }
+          ],
+          "use_dca": false,
+          "turn_return": 0.357752,
+          "turn_return_market": 0.389467,
+          "portfolio_value": 191688.19,
+          "events": [
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.031715,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.031715,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            }
+          ],
+          "events_new": [],
+          "ret_portfolio_shift": -0.031715,
+          "ret_by_ticker": {
+            "UBI.PA": 0.389467
+          },
+          "ret_by_ticker_final": {
+            "UBI.PA": 0.389467
+          },
+          "alloc_next_suggested": [
+            {
+              "ticker": "UBI.PA",
+              "weight": 1.0
+            }
+          ],
+          "dca_in_turn": 0.0,
+          "invested_so_far": 50000.0,
+          "pnl_abs": 141688.19,
+          "pnl_pct": 2.833764,
+          "cum_return_net": 2.833764,
+          "delta_vs_prev": 50507.64
+        },
+        {
+          "turn_n": 9,
+          "range": {
+            "start": "2018-10-10",
+            "end": "2019-10-09"
+          },
+          "alloc": [
+            {
+              "ticker": "UBI.PA",
+              "weight": 1.0
+            }
+          ],
+          "use_dca": false,
+          "turn_return": -0.303849,
+          "turn_return_market": -0.303849,
+          "portfolio_value": 133443.94,
+          "events": [],
+          "events_applied": [],
+          "events_new": [],
+          "ret_portfolio_shift": 0.0,
+          "ret_by_ticker": {
+            "UBI.PA": -0.303849
+          },
+          "ret_by_ticker_final": {
+            "UBI.PA": -0.303849
+          },
+          "alloc_next_suggested": [
+            {
+              "ticker": "UBI.PA",
+              "weight": 1.0
+            }
+          ],
+          "dca_in_turn": 0.0,
+          "invested_so_far": 50000.0,
+          "pnl_abs": 83443.94,
+          "pnl_pct": 1.668879,
+          "cum_return_net": 1.668879,
+          "delta_vs_prev": -58244.25
+        },
+        {
+          "turn_n": 10,
+          "range": {
+            "start": "2019-10-10",
+            "end": "2020-10-09"
+          },
+          "alloc": [
+            {
+              "ticker": "UBI.PA",
+              "weight": 1.0
+            }
+          ],
+          "use_dca": false,
+          "turn_return": 0.439522,
+          "turn_return_market": 0.439522,
+          "portfolio_value": 192095.45,
+          "events": [],
+          "events_applied": [],
+          "events_new": [
+            {
+              "id": "macro_employment_miss",
+              "name": "Datos de empleo peores de lo previsto",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.018,
+              "remaining_turns": 1,
+              "category": "negative",
+              "difficulty": "easy"
+            },
+            {
+              "id": "ticker_quarterly_soft",
+              "name": "Resultados trimestrales flojos",
+              "scope": "ticker",
+              "target": "UBI.PA",
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "category": "negative",
+              "difficulty": "easy"
+            }
+          ],
+          "ret_portfolio_shift": 0.0,
+          "ret_by_ticker": {
+            "UBI.PA": 0.439522
+          },
+          "ret_by_ticker_final": {
+            "UBI.PA": 0.439522
+          },
+          "alloc_next_suggested": [
+            {
+              "ticker": "UBI.PA",
+              "weight": 1.0
+            }
+          ],
+          "dca_in_turn": 0.0,
+          "invested_so_far": 50000.0,
+          "pnl_abs": 142095.45,
+          "pnl_pct": 2.841909,
+          "cum_return_net": 2.841909,
+          "delta_vs_prev": 58651.51
+        }
+      ],
+      "seed": 2109862559047527795,
+      "created_at": "2025-11-13T17:31:47.181797",
+      "closed": false,
+      "total_turns": 11,
+      "turns_total": 11,
+      "contrib_so_far": 0.0,
+      "cum_return": 2.841909,
+      "events_log": [
+        {
+          "turn_n": 1,
+          "applied": [],
+          "drawn": []
+        },
+        {
+          "turn_n": 2,
+          "applied": [],
+          "drawn": [
+            {
+              "id": "macro_inflation_mild",
+              "name": "Inflacion moderada",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "category": "negative",
+              "difficulty": "easy"
+            }
+          ]
+        },
+        {
+          "turn_n": 3,
+          "applied": [
+            {
+              "id": "macro_inflation_mild",
+              "name": "Inflacion moderada",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            }
+          ],
+          "drawn": []
+        },
+        {
+          "turn_n": 4,
+          "applied": [],
+          "drawn": [
+            {
+              "id": "sector_regulation_light",
+              "name": "Regulacion leve del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "category": "negative",
+              "difficulty": "easy"
+            }
+          ]
+        },
+        {
+          "turn_n": 5,
+          "applied": [
+            {
+              "id": "sector_regulation_light",
+              "name": "Regulacion leve del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "affected": [
+                "GOOGL",
+                "AAPL"
+              ]
+            }
+          ],
+          "drawn": [
+            {
+              "id": "macro_geopolitics_limited",
+              "name": "Tensiones geopoliticas limitadas",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "category": "negative",
+              "difficulty": "easy"
+            }
+          ]
+        },
+        {
+          "turn_n": 6,
+          "applied": [
+            {
+              "id": "macro_geopolitics_limited",
+              "name": "Tensiones geopoliticas limitadas",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            }
+          ],
+          "drawn": [
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.031715,
+              "remaining_turns": 2,
+              "category": "legacy",
+              "difficulty": "easy"
+            }
+          ]
+        },
+        {
+          "turn_n": 7,
+          "applied": [
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.031715,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            }
+          ],
+          "drawn": []
+        },
+        {
+          "turn_n": 8,
+          "applied": [
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.031715,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            }
+          ],
+          "drawn": []
+        },
+        {
+          "turn_n": 9,
+          "applied": [],
+          "drawn": []
+        },
+        {
+          "turn_n": 10,
+          "applied": [],
+          "drawn": [
+            {
+              "id": "macro_employment_miss",
+              "name": "Datos de empleo peores de lo previsto",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.018,
+              "remaining_turns": 1,
+              "category": "negative",
+              "difficulty": "easy"
+            },
+            {
+              "id": "ticker_quarterly_soft",
+              "name": "Resultados trimestrales flojos",
+              "scope": "ticker",
+              "target": "UBI.PA",
+              "impact_pct": -0.02,
+              "remaining_turns": 1,
+              "category": "negative",
+              "difficulty": "easy"
+            }
+          ]
+        }
+      ],
+      "active_events": [
+        {
+          "id": "macro_employment_miss",
+          "name": "Datos de empleo peores de lo previsto",
+          "scope": "portfolio",
+          "target": null,
+          "impact_pct": -0.018,
+          "remaining_turns": 1,
+          "category": "negative",
+          "difficulty": "easy"
+        },
+        {
+          "id": "ticker_quarterly_soft",
+          "name": "Resultados trimestrales flojos",
+          "scope": "ticker",
+          "target": "UBI.PA",
+          "impact_pct": -0.02,
+          "remaining_turns": 1,
+          "category": "negative",
+          "difficulty": "easy"
+        }
+      ],
+      "sectors_map": {
+        "GOOGL": "TECH",
+        "MSFT": "TECH",
+        "AAPL": "TECH"
+      },
+      "decisions": [
+        {
+          "turn_n": 1,
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.3
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.3
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.4
+            }
+          ],
+          "use_dca": false
+        },
+        {
+          "turn_n": 2,
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.419041
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.366271
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.214688
+            }
+          ],
+          "use_dca": false
+        },
+        {
+          "turn_n": 3,
+          "alloc": [
+            {
+              "ticker": "GOOGL",
+              "weight": 0.480236
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.285438
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.234326
+            }
+          ],
+          "use_dca": false
+        },
+        {
+          "turn_n": 4,
+          "alloc": [
+            {
+              "ticker": "GOOGL",
+              "weight": 0.525958
+            },
+            {
+              "ticker": "MSFT",
+              "weight": 0.211397
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.262645
+            }
+          ],
+          "use_dca": false
+        },
+        {
+          "turn_n": 5,
+          "alloc": [
+            {
+              "ticker": "GOOGL",
+              "weight": 0.537782
+            },
+            {
+              "ticker": "AAPL",
+              "weight": 0.229894
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.232324
+            }
+          ],
+          "use_dca": false
+        },
+        {
+          "turn_n": 6,
+          "alloc": [
+            {
+              "ticker": "GOOGL",
+              "weight": 0.55587
+            },
+            {
+              "ticker": "AAPL",
+              "weight": 0.222253
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.221877
+            }
+          ],
+          "use_dca": false
+        },
+        {
+          "turn_n": 7,
+          "alloc": [
+            {
+              "ticker": "UBI.PA",
+              "weight": 1.0
+            }
+          ],
+          "use_dca": false
+        },
+        {
+          "turn_n": 8,
+          "alloc": [
+            {
+              "ticker": "UBI.PA",
+              "weight": 1.0
+            }
+          ],
+          "use_dca": false
+        },
+        {
+          "turn_n": 9,
+          "alloc": [
+            {
+              "ticker": "UBI.PA",
+              "weight": 1.0
+            }
+          ],
+          "use_dca": false
+        },
+        {
+          "turn_n": 10,
+          "alloc": [
+            {
+              "ticker": "UBI.PA",
+              "weight": 1.0
+            }
+          ],
+          "use_dca": false
+        }
+      ]
     }
   }
 }

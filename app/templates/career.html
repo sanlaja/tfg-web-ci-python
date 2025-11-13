@@ -38,6 +38,43 @@
           <span>Universo inicial (tickers separados por comas)</span>
           <input id="career-universe" type="text" placeholder="AAPL,MSFT,GOOGL..." />
         </label>
+        <div class="field field--wide">
+          <span>Periodo de juego</span>
+          <div class="career-period-options">
+            <label class="checkbox-inline">
+              <input
+                type="radio"
+                name="career-period-mode"
+                id="career-period-mode-random"
+                value="random"
+                checked
+              />
+              <span>Periodo aleatorio según la dificultad</span>
+            </label>
+            <label class="checkbox-inline">
+              <input
+                type="radio"
+                name="career-period-mode"
+                id="career-period-mode-manual"
+                value="manual"
+              />
+              <span>Elegir fechas manualmente</span>
+            </label>
+          </div>
+          <div id="career-period-manual-fields" class="career-period-manual hidden">
+            <label class="field">
+              <span>Fecha inicio</span>
+              <input type="date" id="career-period-start" />
+            </label>
+            <label class="field">
+              <span>Fecha fin</span>
+              <input type="date" id="career-period-end" />
+            </label>
+            <p class="text-muted">
+              Si eliges fechas manuales, deberán ser coherentes con la dificultad (por ejemplo, entre 3 y 7 años para intermedio).
+            </p>
+          </div>
+        </div>
       </div>
       <div class="actions-row">
         <button id="career-create-btn" class="btn btn-primary" type="button">

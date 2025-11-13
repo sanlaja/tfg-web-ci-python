@@ -1197,6 +1197,9 @@ function initCareerPage() {
   const rankingSubmitBtn = document.getElementById("career-ranking-submit");
   const rankingRefreshBtn = document.getElementById("career-ranking-refresh");
   const shareBtn = document.getElementById("career-share-btn");
+  const periodRandomEl = document.getElementById("career-period-mode-random");
+  const periodManualEl = document.getElementById("career-period-mode-manual");
+  const periodManualFields = document.getElementById("career-period-manual-fields");
 
   createBtn?.addEventListener("click", handleCareerCreate);
   loadLastBtn?.addEventListener("click", handleCareerLoadLast);
@@ -1224,6 +1227,17 @@ function initCareerPage() {
     state.career.bench = careerState.bench;
     saveCareerPrefs({ bench: careerState.bench });
   });
+
+  const updateCareerPeriodModeUI = () => {
+    if (periodManualEl?.checked) {
+      periodManualFields?.classList.remove("hidden");
+    } else {
+      periodManualFields?.classList.add("hidden");
+    }
+  };
+  periodRandomEl?.addEventListener("change", updateCareerPeriodModeUI);
+  periodManualEl?.addEventListener("change", updateCareerPeriodModeUI);
+  updateCareerPeriodModeUI();
 
   const allocList = document.getElementById("career-alloc-list");
   allocList?.addEventListener("input", () => {
@@ -1515,6 +1529,22 @@ function handleCareerCreate() {
   const universeRaw = document.getElementById("career-universe")?.value || "";
   const capital = Number(document.getElementById("career-capital")?.value || 50000);
   const bench = document.getElementById("career-bench")?.value?.trim() || "^GSPC";
+  const periodModeInput = document.querySelector('input[name="career-period-mode"]:checked');
+  const periodMode = periodModeInput?.value === "manual" ? "manual" : "random";
+  let periodStart = "";
+  let periodEnd = "";
+  if (periodMode === "manual") {
+    periodStart = document.getElementById("career-period-start")?.value || "";
+    periodEnd = document.getElementById("career-period-end")?.value || "";
+    if (!periodStart || !periodEnd) {
+      mostrarToastError("Selecciona una fecha de inicio y una fecha de fin para el periodo.");
+      return;
+    }
+    if (periodStart > periodEnd) {
+      mostrarToastError("La fecha de inicio debe ser anterior o igual a la de fin.");
+      return;
+    }
+  }
 
   if (!difficulty) {
     mostrarToastError("Selecciona dificultad.");
@@ -1535,7 +1565,12 @@ function handleCareerCreate() {
     difficulty,
     universe,
     capital,
+    period_mode: periodMode,
   };
+  if (periodMode === "manual") {
+    payload.period_start = periodStart;
+    payload.period_end = periodEnd;
+  }
 
   const btn = document.getElementById("career-create-btn");
   careerSetLoading(btn, true);
