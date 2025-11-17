@@ -177,6 +177,55 @@ function popGlobalLoading() {
 }
 
 /**
+ * Mapea los turnos (range.end) al label de fecha más cercano en el eje X.
+ * Regla: se usa el último día de mercado <= end; si ninguno, se usa el primer label.
+ * Devuelve un array de labels únicos (sin duplicados).
+ */
+function mapTurnEndsToNearestLabels(turns, labels) {
+  if (!Array.isArray(turns) || !Array.isArray(labels) || labels.length === 0) {
+    return [];
+  }
+
+  const labelTimes = labels.map((d) => {
+    const t = new Date(d).getTime();
+    return Number.isNaN(t) ? null : t;
+  });
+
+  const result = [];
+
+  (turns || []).forEach((turn) => {
+    const end = turn?.range?.end;
+    if (!end) return;
+
+    const endTs = new Date(end).getTime();
+    if (Number.isNaN(endTs)) return;
+
+    let bestIndex = -1;
+    for (let i = 0; i < labelTimes.length; i++) {
+      const lt = labelTimes[i];
+      if (lt == null) continue;
+      if (lt <= endTs) {
+        bestIndex = i;
+      } else {
+        break;
+      }
+    }
+
+    if (bestIndex === -1) {
+      bestIndex = labelTimes.findIndex((lt) => lt != null);
+      if (bestIndex === -1) return;
+    }
+
+    const chosenLabel = labels[bestIndex];
+    if (!result.includes(chosenLabel)) {
+      result.push(chosenLabel);
+    }
+  });
+
+  return result;
+}
+
+/**
  * Realiza un GET y devuelve JSON. Lanza Error si el status no es OK.
  * @param {string} url
  */
@@ -1908,10 +1957,10 @@ function renderCareerSeriesChart(payload) {
   });
 
   const labelArray = Array.from(labels).sort();
-  const turnBoundaries =
-    (careerState.report?.turns || [])
-      .map((turn) => turn?.range?.end || null)
-      .filter((end) => end && labelArray.includes(end));
+  const turnBoundaries = mapTurnEndsToNearestLabels(
+    careerState.report?.turns || [],
+    labelArray
+  );
 
   Object.entries(payload.series || {}).forEach(([ticker, series]) => {
     const entries = series || [];
