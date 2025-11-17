@@ -147,14 +147,48 @@ const qs = (obj) =>
     .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
     .join("&");
 
+// --- Loader global de la aplicación ----------------------------------------
+let _globalLoadingCounter = 0;
+
+function setGlobalLoadingVisible(visible) {
+  const el = document.getElementById("global-loading");
+  if (!el) return;
+  if (visible) {
+    el.classList.add("is-visible");
+    el.setAttribute("aria-hidden", "false");
+  } else {
+    el.classList.remove("is-visible");
+    el.setAttribute("aria-hidden", "true");
+  }
+}
+
+function pushGlobalLoading() {
+  _globalLoadingCounter += 1;
+  if (_globalLoadingCounter === 1) {
+    setGlobalLoadingVisible(true);
+  }
+}
+
+function popGlobalLoading() {
+  _globalLoadingCounter = Math.max(0, _globalLoadingCounter - 1);
+  if (_globalLoadingCounter === 0) {
+    setGlobalLoadingVisible(false);
+  }
+}
+
 /**
  * Realiza un GET y devuelve JSON. Lanza Error si el status no es OK.
  * @param {string} url
  */
 async function jsonGet(url) {
-  const res = await fetch(url);
-  if (!res.ok) throw new Error(`GET ${url} → ${res.status}`);
-  return res.json();
+  pushGlobalLoading();
+  try {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`GET ${url} → ${res.status}`);
+    return await res.json();
+  } finally {
+    popGlobalLoading();
+  }
 }
 
 /**
@@ -164,27 +198,32 @@ async function jsonGet(url) {
  * @param {any} body
  */
 async function jsonPost(url, body) {
-  const res = await fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  });
+  pushGlobalLoading();
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
 
-  // Intenta parsear JSON; si falla, usa objeto vacÃ­o
-  const data = await res.json().catch(() => ({}));
+    // Intenta parsear JSON; si falla, usa objeto vacÃ­o
+    const data = await res.json().catch(() => ({}));
 
-  if (!res.ok) {
-    const msg =
-      data?.errores?.join?.("; ") ||
-      data?.message ||
-      `Error ${res.status}`;
-    const error = new Error(msg);
-    error.status = res.status;
-    error.body = data;
-    error.url = url;
-    throw error;
+    if (!res.ok) {
+      const msg =
+        data?.errores?.join?.("; ") ||
+        data?.message ||
+        `Error ${res.status}`;
+      const error = new Error(msg);
+      error.status = res.status;
+      error.body = data;
+      error.url = url;
+      throw error;
+    }
+    return data;
+  } finally {
+    popGlobalLoading();
   }
-  return data;
 }
 
 // --- Utilidad: ordenar arrays de objetos por clave y direcciÃ³n ---

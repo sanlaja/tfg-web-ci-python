@@ -39,6 +39,14 @@
     </div>
   </main>
 
+  <!-- Loader global de la aplicación -->
+  <div id="global-loading" class="global-loading" aria-hidden="true">
+    <div class="global-loading-pill" role="status" aria-live="polite">
+      <span class="global-loading-spinner" aria-hidden="true"></span>
+      <span class="global-loading-text">Cargando…</span>
+    </div>
+  </div>
+
   <script defer src="{{ url_for('static', filename='app.js') }}"></script>
 </body>
 </html>

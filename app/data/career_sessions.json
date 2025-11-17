@@ -10798,7 +10798,7 @@
         "BTC-USD"
       ],
       "capital_initial": 50000.0,
-      "capital_current": 57313.56,
+      "capital_current": 48997.19,
       "period": {
         "start": "2003-08-14",
         "end": "2008-08-13"
@@ -10829,19 +10829,22 @@
           "n": 4,
           "start": "2005-02-14",
           "end": "2005-08-13",
-          "status": "pending"
+          "status": "completed",
+          "closed_at": "2025-11-17T16:18:48.558467"
         },
         {
           "n": 5,
           "start": "2005-08-14",
           "end": "2006-02-13",
-          "status": "pending"
+          "status": "completed",
+          "closed_at": "2025-11-17T16:18:52.381124"
         },
         {
           "n": 6,
           "start": "2006-02-14",
           "end": "2006-08-13",
-          "status": "pending"
+          "status": "completed",
+          "closed_at": "2025-11-17T16:21:02.636959"
         },
         {
           "n": 7,
@@ -11031,6 +11034,377 @@
           "pnl_pct": 0.146271,
           "cum_return_net": 0.146271,
           "delta_vs_prev": 4082.85
+        },
+        {
+          "turn_n": 4,
+          "range": {
+            "start": "2005-02-14",
+            "end": "2005-08-13"
+          },
+          "alloc": [
+            {
+              "ticker": "^GSPC",
+              "weight": 1.0
+            }
+          ],
+          "use_dca": false,
+          "turn_return": 0.034501,
+          "turn_return_market": 0.020105,
+          "portfolio_value": 59290.96,
+          "events": [
+            {
+              "id": "macro_regional_debt",
+              "name": "Crisis de deuda regional",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.04,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "ticker_news_pos",
+              "name": "Noticia espec\u00edfica (positivo)",
+              "scope": "ticker",
+              "target": "^GSPC",
+              "impact_pct": 0.054396,
+              "remaining_turns": 1,
+              "affected": [
+                "^GSPC"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "macro_regional_debt",
+              "name": "Crisis de deuda regional",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.04,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "ticker_news_pos",
+              "name": "Noticia espec\u00edfica (positivo)",
+              "scope": "ticker",
+              "target": "^GSPC",
+              "impact_pct": 0.054396,
+              "remaining_turns": 1,
+              "affected": [
+                "^GSPC"
+              ]
+            }
+          ],
+          "events_new": [
+            {
+              "id": "sector_environment_scandal",
+              "name": "Escandalo medioambiental sectorial",
+              "scope": "sector",
+              "target": "INDEX",
+              "impact_pct": -0.04,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            }
+          ],
+          "ret_portfolio_shift": -0.04,
+          "ret_by_ticker": {
+            "^GSPC": 0.020105
+          },
+          "ret_by_ticker_final": {
+            "^GSPC": 0.074501
+          },
+          "alloc_next_suggested": [
+            {
+              "ticker": "^GSPC",
+              "weight": 1.0
+            }
+          ],
+          "ret_ticker_shift": {
+            "^GSPC": 0.054396
+          },
+          "dca_in_turn": 0.0,
+          "invested_so_far": 50000.0,
+          "pnl_abs": 9290.96,
+          "pnl_pct": 0.185819,
+          "cum_return_net": 0.185819,
+          "delta_vs_prev": 1977.4
+        },
+        {
+          "turn_n": 5,
+          "range": {
+            "start": "2005-08-14",
+            "end": "2006-02-13"
+          },
+          "alloc": [
+            {
+              "ticker": "^GSPC",
+              "weight": 1.0
+            }
+          ],
+          "use_dca": false,
+          "turn_return": -0.016505,
+          "turn_return_market": 0.023495,
+          "portfolio_value": 58312.37,
+          "events": [
+            {
+              "id": "sector_environment_scandal",
+              "name": "Escandalo medioambiental sectorial",
+              "scope": "sector",
+              "target": "INDEX",
+              "impact_pct": -0.04,
+              "remaining_turns": 2,
+              "affected": [
+                "^GSPC"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "sector_environment_scandal",
+              "name": "Escandalo medioambiental sectorial",
+              "scope": "sector",
+              "target": "INDEX",
+              "impact_pct": -0.04,
+              "remaining_turns": 2,
+              "affected": [
+                "^GSPC"
+              ]
+            }
+          ],
+          "events_new": [
+            {
+              "id": "macro_monetary_tightening_fast",
+              "name": "Endurecimiento monetario mas rapido",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.045,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            },
+            {
+              "id": "sector_demand_slump",
+              "name": "Bajada de demanda del sector",
+              "scope": "sector",
+              "target": "INDEX",
+              "impact_pct": -0.04,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            },
+            {
+              "id": "ticker_product_recall",
+              "name": "Retirada de producto por fallos",
+              "scope": "ticker",
+              "target": "^GSPC",
+              "impact_pct": -0.06,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            },
+            {
+              "id": "ticker_news_pos",
+              "name": "Noticia espec\u00edfica (positivo)",
+              "scope": "ticker",
+              "target": "^GSPC",
+              "impact_pct": 0.032145,
+              "remaining_turns": 1,
+              "category": "legacy",
+              "difficulty": "medium"
+            }
+          ],
+          "ret_portfolio_shift": 0.0,
+          "ret_by_ticker": {
+            "^GSPC": 0.023495
+          },
+          "ret_by_ticker_final": {
+            "^GSPC": -0.016505
+          },
+          "alloc_next_suggested": [
+            {
+              "ticker": "^GSPC",
+              "weight": 1.0
+            }
+          ],
+          "ret_ticker_shift": {
+            "^GSPC": -0.04
+          },
+          "dca_in_turn": 0.0,
+          "invested_so_far": 50000.0,
+          "pnl_abs": 8312.37,
+          "pnl_pct": 0.166247,
+          "cum_return_net": 0.166247,
+          "delta_vs_prev": -978.59
+        },
+        {
+          "turn_n": 6,
+          "range": {
+            "start": "2006-02-14",
+            "end": "2006-08-13"
+          },
+          "alloc": [
+            {
+              "ticker": "^GSPC",
+              "weight": 1.0
+            }
+          ],
+          "use_dca": false,
+          "turn_return": -0.159746,
+          "turn_return_market": -0.006891,
+          "portfolio_value": 48997.19,
+          "events": [
+            {
+              "id": "sector_environment_scandal",
+              "name": "Escandalo medioambiental sectorial",
+              "scope": "sector",
+              "target": "INDEX",
+              "impact_pct": -0.04,
+              "remaining_turns": 1,
+              "affected": [
+                "^GSPC"
+              ]
+            },
+            {
+              "id": "macro_monetary_tightening_fast",
+              "name": "Endurecimiento monetario mas rapido",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.045,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_demand_slump",
+              "name": "Bajada de demanda del sector",
+              "scope": "sector",
+              "target": "INDEX",
+              "impact_pct": -0.04,
+              "remaining_turns": 2,
+              "affected": [
+                "^GSPC"
+              ]
+            },
+            {
+              "id": "ticker_product_recall",
+              "name": "Retirada de producto por fallos",
+              "scope": "ticker",
+              "target": "^GSPC",
+              "impact_pct": -0.06,
+              "remaining_turns": 2,
+              "affected": [
+                "^GSPC"
+              ]
+            },
+            {
+              "id": "ticker_news_pos",
+              "name": "Noticia espec\u00edfica (positivo)",
+              "scope": "ticker",
+              "target": "^GSPC",
+              "impact_pct": 0.032145,
+              "remaining_turns": 1,
+              "affected": [
+                "^GSPC"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "sector_environment_scandal",
+              "name": "Escandalo medioambiental sectorial",
+              "scope": "sector",
+              "target": "INDEX",
+              "impact_pct": -0.04,
+              "remaining_turns": 1,
+              "affected": [
+                "^GSPC"
+              ]
+            },
+            {
+              "id": "macro_monetary_tightening_fast",
+              "name": "Endurecimiento monetario mas rapido",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.045,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_demand_slump",
+              "name": "Bajada de demanda del sector",
+              "scope": "sector",
+              "target": "INDEX",
+              "impact_pct": -0.04,
+              "remaining_turns": 2,
+              "affected": [
+                "^GSPC"
+              ]
+            },
+            {
+              "id": "ticker_product_recall",
+              "name": "Retirada de producto por fallos",
+              "scope": "ticker",
+              "target": "^GSPC",
+              "impact_pct": -0.06,
+              "remaining_turns": 2,
+              "affected": [
+                "^GSPC"
+              ]
+            },
+            {
+              "id": "ticker_news_pos",
+              "name": "Noticia espec\u00edfica (positivo)",
+              "scope": "ticker",
+              "target": "^GSPC",
+              "impact_pct": 0.032145,
+              "remaining_turns": 1,
+              "affected": [
+                "^GSPC"
+              ]
+            }
+          ],
+          "events_new": [
+            {
+              "id": "sector_demand_slump",
+              "name": "Bajada de demanda del sector",
+              "scope": "sector",
+              "target": "INDEX",
+              "impact_pct": -0.04,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            }
+          ],
+          "ret_portfolio_shift": -0.045,
+          "ret_by_ticker": {
+            "^GSPC": -0.006891
+          },
+          "ret_by_ticker_final": {
+            "^GSPC": -0.114746
+          },
+          "alloc_next_suggested": [
+            {
+              "ticker": "^GSPC",
+              "weight": 1.0
+            }
+          ],
+          "ret_ticker_shift": {
+            "^GSPC": -0.107855
+          },
+          "dca_in_turn": 0.0,
+          "invested_so_far": 50000.0,
+          "pnl_abs": -1002.81,
+          "pnl_pct": -0.020056,
+          "cum_return_net": -0.020056,
+          "delta_vs_prev": -9315.18
         }
       ],
       "seed": 2109862559047527795,
@@ -11039,7 +11413,7 @@
       "total_turns": 10,
       "turns_total": 10,
       "contrib_so_far": 0.0,
-      "cum_return": 0.146271,
+      "cum_return": -0.020056,
       "events_log": [
         {
           "turn_n": 1,
@@ -11089,31 +11463,222 @@
               "difficulty": "medium"
             }
           ]
+        },
+        {
+          "turn_n": 4,
+          "applied": [
+            {
+              "id": "macro_regional_debt",
+              "name": "Crisis de deuda regional",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.04,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "ticker_news_pos",
+              "name": "Noticia espec\u00edfica (positivo)",
+              "scope": "ticker",
+              "target": "^GSPC",
+              "impact_pct": 0.054396,
+              "remaining_turns": 1,
+              "affected": [
+                "^GSPC"
+              ]
+            }
+          ],
+          "drawn": [
+            {
+              "id": "sector_environment_scandal",
+              "name": "Escandalo medioambiental sectorial",
+              "scope": "sector",
+              "target": "INDEX",
+              "impact_pct": -0.04,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            }
+          ]
+        },
+        {
+          "turn_n": 5,
+          "applied": [
+            {
+              "id": "sector_environment_scandal",
+              "name": "Escandalo medioambiental sectorial",
+              "scope": "sector",
+              "target": "INDEX",
+              "impact_pct": -0.04,
+              "remaining_turns": 2,
+              "affected": [
+                "^GSPC"
+              ]
+            }
+          ],
+          "drawn": [
+            {
+              "id": "macro_monetary_tightening_fast",
+              "name": "Endurecimiento monetario mas rapido",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.045,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            },
+            {
+              "id": "sector_demand_slump",
+              "name": "Bajada de demanda del sector",
+              "scope": "sector",
+              "target": "INDEX",
+              "impact_pct": -0.04,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            },
+            {
+              "id": "ticker_product_recall",
+              "name": "Retirada de producto por fallos",
+              "scope": "ticker",
+              "target": "^GSPC",
+              "impact_pct": -0.06,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            },
+            {
+              "id": "ticker_news_pos",
+              "name": "Noticia espec\u00edfica (positivo)",
+              "scope": "ticker",
+              "target": "^GSPC",
+              "impact_pct": 0.032145,
+              "remaining_turns": 1,
+              "category": "legacy",
+              "difficulty": "medium"
+            }
+          ]
+        },
+        {
+          "turn_n": 6,
+          "applied": [
+            {
+              "id": "sector_environment_scandal",
+              "name": "Escandalo medioambiental sectorial",
+              "scope": "sector",
+              "target": "INDEX",
+              "impact_pct": -0.04,
+              "remaining_turns": 1,
+              "affected": [
+                "^GSPC"
+              ]
+            },
+            {
+              "id": "macro_monetary_tightening_fast",
+              "name": "Endurecimiento monetario mas rapido",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.045,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_demand_slump",
+              "name": "Bajada de demanda del sector",
+              "scope": "sector",
+              "target": "INDEX",
+              "impact_pct": -0.04,
+              "remaining_turns": 2,
+              "affected": [
+                "^GSPC"
+              ]
+            },
+            {
+              "id": "ticker_product_recall",
+              "name": "Retirada de producto por fallos",
+              "scope": "ticker",
+              "target": "^GSPC",
+              "impact_pct": -0.06,
+              "remaining_turns": 2,
+              "affected": [
+                "^GSPC"
+              ]
+            },
+            {
+              "id": "ticker_news_pos",
+              "name": "Noticia espec\u00edfica (positivo)",
+              "scope": "ticker",
+              "target": "^GSPC",
+              "impact_pct": 0.032145,
+              "remaining_turns": 1,
+              "affected": [
+                "^GSPC"
+              ]
+            }
+          ],
+          "drawn": [
+            {
+              "id": "sector_demand_slump",
+              "name": "Bajada de demanda del sector",
+              "scope": "sector",
+              "target": "INDEX",
+              "impact_pct": -0.04,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            }
+          ]
         }
       ],
       "active_events": [
         {
-          "id": "macro_regional_debt",
-          "name": "Crisis de deuda regional",
+          "id": "macro_monetary_tightening_fast",
+          "name": "Endurecimiento monetario mas rapido",
           "scope": "portfolio",
           "target": null,
+          "impact_pct": -0.045,
+          "remaining_turns": 1,
+          "category": "negative",
+          "difficulty": "medium"
+        },
+        {
+          "id": "sector_demand_slump",
+          "name": "Bajada de demanda del sector",
+          "scope": "sector",
+          "target": "INDEX",
           "impact_pct": -0.04,
           "remaining_turns": 1,
           "category": "negative",
           "difficulty": "medium"
         },
         {
-          "id": "ticker_news_pos",
-          "name": "Noticia espec\u00edfica (positivo)",
+          "id": "ticker_product_recall",
+          "name": "Retirada de producto por fallos",
           "scope": "ticker",
           "target": "^GSPC",
-          "impact_pct": 0.054396,
+          "impact_pct": -0.06,
           "remaining_turns": 1,
-          "category": "legacy",
+          "category": "negative",
+          "difficulty": "medium"
+        },
+        {
+          "id": "sector_demand_slump",
+          "name": "Bajada de demanda del sector",
+          "scope": "sector",
+          "target": "INDEX",
+          "impact_pct": -0.04,
+          "remaining_turns": 2,
+          "category": "negative",
           "difficulty": "medium"
         }
       ],
-      "sectors_map": {},
+      "sectors_map": {
+        "^GSPC": "INDEX"
+      },
       "decisions": [
         {
           "turn_n": 1,
@@ -11137,6 +11702,36 @@
         },
         {
           "turn_n": 3,
+          "alloc": [
+            {
+              "ticker": "^GSPC",
+              "weight": 1.0
+            }
+          ],
+          "use_dca": false
+        },
+        {
+          "turn_n": 4,
+          "alloc": [
+            {
+              "ticker": "^GSPC",
+              "weight": 1.0
+            }
+          ],
+          "use_dca": false
+        },
+        {
+          "turn_n": 5,
+          "alloc": [
+            {
+              "ticker": "^GSPC",
+              "weight": 1.0
+            }
+          ],
+          "use_dca": false
+        },
+        {
+          "turn_n": 6,
           "alloc": [
             {
               "ticker": "^GSPC",

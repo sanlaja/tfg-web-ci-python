@@ -1124,3 +1124,55 @@ body[data-nav-mode="landing"] .container {
   background-color: #15803d;
 }
 
+
+
+/* Loader global (visible en todas las páginas) */
+.global-loading {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 999;
+  transition: opacity 0.15s ease-out;
+}
+
+.global-loading.is-visible {
+  opacity: 1;
+  pointer-events: none;
+}
+
+.global-loading-pill {
+  margin-top: 14px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.95);
+  color: #e2e8f0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.35);
+}
+
+.global-loading-spinner {
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  border: 2px solid rgba(148, 163, 184, 0.7);
+  border-top-color: #22c55e;
+  animation: global-loading-spin 0.8s linear infinite;
+}
+
+.global-loading-text {
+  letter-spacing: 0.02em;
+}
+
+@keyframes global-loading-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
