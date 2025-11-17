@@ -10783,6 +10783,369 @@
           "use_dca": false
         }
       ]
+    },
+    "car_005c9c": {
+      "session_id": "car_005c9c",
+      "player": "Javier5",
+      "difficulty": "intermedio",
+      "universe": [
+        "^GSPC",
+        "0700.HK",
+        "UBI.PA"
+      ],
+      "rejected_universe": [
+        "XAUUSD",
+        "BTC-USD"
+      ],
+      "capital_initial": 50000.0,
+      "capital_current": 57313.56,
+      "period": {
+        "start": "2003-08-14",
+        "end": "2008-08-13"
+      },
+      "turns": [
+        {
+          "n": 1,
+          "start": "2003-08-14",
+          "end": "2004-02-13",
+          "status": "completed",
+          "closed_at": "2025-11-13T18:11:30.125721"
+        },
+        {
+          "n": 2,
+          "start": "2004-02-14",
+          "end": "2004-08-13",
+          "status": "completed",
+          "closed_at": "2025-11-13T18:11:41.167248"
+        },
+        {
+          "n": 3,
+          "start": "2004-08-14",
+          "end": "2005-02-13",
+          "status": "completed",
+          "closed_at": "2025-11-17T15:43:12.232195"
+        },
+        {
+          "n": 4,
+          "start": "2005-02-14",
+          "end": "2005-08-13",
+          "status": "pending"
+        },
+        {
+          "n": 5,
+          "start": "2005-08-14",
+          "end": "2006-02-13",
+          "status": "pending"
+        },
+        {
+          "n": 6,
+          "start": "2006-02-14",
+          "end": "2006-08-13",
+          "status": "pending"
+        },
+        {
+          "n": 7,
+          "start": "2006-08-14",
+          "end": "2007-02-13",
+          "status": "pending"
+        },
+        {
+          "n": 8,
+          "start": "2007-02-14",
+          "end": "2007-08-13",
+          "status": "pending"
+        },
+        {
+          "n": 9,
+          "start": "2007-08-14",
+          "end": "2008-02-13",
+          "status": "pending"
+        },
+        {
+          "n": 10,
+          "start": "2008-02-14",
+          "end": "2008-08-13",
+          "status": "pending"
+        }
+      ],
+      "completed_turns": [
+        {
+          "turn_n": 1,
+          "range": {
+            "start": "2003-08-14",
+            "end": "2004-02-13"
+          },
+          "alloc": [
+            {
+              "ticker": "^GSPC",
+              "weight": 1.0
+            }
+          ],
+          "use_dca": false,
+          "turn_return": 0.156788,
+          "turn_return_market": 0.156788,
+          "portfolio_value": 57839.4,
+          "events": [],
+          "events_applied": [],
+          "events_new": [],
+          "ret_portfolio_shift": 0.0,
+          "ret_by_ticker": {
+            "^GSPC": 0.156788
+          },
+          "ret_by_ticker_final": {
+            "^GSPC": 0.156788
+          },
+          "alloc_next_suggested": [
+            {
+              "ticker": "^GSPC",
+              "weight": 1.0
+            }
+          ],
+          "dca_in_turn": 0.0,
+          "invested_so_far": 50000.0,
+          "pnl_abs": 7839.4,
+          "pnl_pct": 0.156788,
+          "cum_return_net": 0.156788,
+          "delta_vs_prev": 7839.4
+        },
+        {
+          "turn_n": 2,
+          "range": {
+            "start": "2004-02-14",
+            "end": "2004-08-13"
+          },
+          "alloc": [
+            {
+              "ticker": "^GSPC",
+              "weight": 1.0
+            }
+          ],
+          "use_dca": false,
+          "turn_return": -0.079681,
+          "turn_return_market": -0.079681,
+          "portfolio_value": 53230.71,
+          "events": [],
+          "events_applied": [],
+          "events_new": [
+            {
+              "id": "macro_regional_debt",
+              "name": "Crisis de deuda regional",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.04,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            }
+          ],
+          "ret_portfolio_shift": 0.0,
+          "ret_by_ticker": {
+            "^GSPC": -0.079681
+          },
+          "ret_by_ticker_final": {
+            "^GSPC": -0.079681
+          },
+          "alloc_next_suggested": [
+            {
+              "ticker": "^GSPC",
+              "weight": 1.0
+            }
+          ],
+          "dca_in_turn": 0.0,
+          "invested_so_far": 50000.0,
+          "pnl_abs": 3230.71,
+          "pnl_pct": 0.064614,
+          "cum_return_net": 0.064614,
+          "delta_vs_prev": -4608.69
+        },
+        {
+          "turn_n": 3,
+          "range": {
+            "start": "2004-08-14",
+            "end": "2005-02-13"
+          },
+          "alloc": [
+            {
+              "ticker": "^GSPC",
+              "weight": 1.0
+            }
+          ],
+          "use_dca": false,
+          "turn_return": 0.076701,
+          "turn_return_market": 0.116701,
+          "portfolio_value": 57313.56,
+          "events": [
+            {
+              "id": "macro_regional_debt",
+              "name": "Crisis de deuda regional",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.04,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "macro_regional_debt",
+              "name": "Crisis de deuda regional",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.04,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            }
+          ],
+          "events_new": [
+            {
+              "id": "ticker_news_pos",
+              "name": "Noticia espec\u00edfica (positivo)",
+              "scope": "ticker",
+              "target": "^GSPC",
+              "impact_pct": 0.054396,
+              "remaining_turns": 1,
+              "category": "legacy",
+              "difficulty": "medium"
+            }
+          ],
+          "ret_portfolio_shift": -0.04,
+          "ret_by_ticker": {
+            "^GSPC": 0.116701
+          },
+          "ret_by_ticker_final": {
+            "^GSPC": 0.116701
+          },
+          "alloc_next_suggested": [
+            {
+              "ticker": "^GSPC",
+              "weight": 1.0
+            }
+          ],
+          "dca_in_turn": 0.0,
+          "invested_so_far": 50000.0,
+          "pnl_abs": 7313.56,
+          "pnl_pct": 0.146271,
+          "cum_return_net": 0.146271,
+          "delta_vs_prev": 4082.85
+        }
+      ],
+      "seed": 2109862559047527795,
+      "created_at": "2025-11-13T18:09:52.188707",
+      "closed": false,
+      "total_turns": 10,
+      "turns_total": 10,
+      "contrib_so_far": 0.0,
+      "cum_return": 0.146271,
+      "events_log": [
+        {
+          "turn_n": 1,
+          "applied": [],
+          "drawn": []
+        },
+        {
+          "turn_n": 2,
+          "applied": [],
+          "drawn": [
+            {
+              "id": "macro_regional_debt",
+              "name": "Crisis de deuda regional",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.04,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            }
+          ]
+        },
+        {
+          "turn_n": 3,
+          "applied": [
+            {
+              "id": "macro_regional_debt",
+              "name": "Crisis de deuda regional",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.04,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            }
+          ],
+          "drawn": [
+            {
+              "id": "ticker_news_pos",
+              "name": "Noticia espec\u00edfica (positivo)",
+              "scope": "ticker",
+              "target": "^GSPC",
+              "impact_pct": 0.054396,
+              "remaining_turns": 1,
+              "category": "legacy",
+              "difficulty": "medium"
+            }
+          ]
+        }
+      ],
+      "active_events": [
+        {
+          "id": "macro_regional_debt",
+          "name": "Crisis de deuda regional",
+          "scope": "portfolio",
+          "target": null,
+          "impact_pct": -0.04,
+          "remaining_turns": 1,
+          "category": "negative",
+          "difficulty": "medium"
+        },
+        {
+          "id": "ticker_news_pos",
+          "name": "Noticia espec\u00edfica (positivo)",
+          "scope": "ticker",
+          "target": "^GSPC",
+          "impact_pct": 0.054396,
+          "remaining_turns": 1,
+          "category": "legacy",
+          "difficulty": "medium"
+        }
+      ],
+      "sectors_map": {},
+      "decisions": [
+        {
+          "turn_n": 1,
+          "alloc": [
+            {
+              "ticker": "^GSPC",
+              "weight": 1.0
+            }
+          ],
+          "use_dca": false
+        },
+        {
+          "turn_n": 2,
+          "alloc": [
+            {
+              "ticker": "^GSPC",
+              "weight": 1.0
+            }
+          ],
+          "use_dca": false
+        },
+        {
+          "turn_n": 3,
+          "alloc": [
+            {
+              "ticker": "^GSPC",
+              "weight": 1.0
+            }
+          ],
+          "use_dca": false
+        }
+      ]
     }
   }
 }

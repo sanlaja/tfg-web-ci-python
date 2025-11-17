@@ -1150,6 +1150,42 @@ const careerState = {
   latestSeriesTickers: [],
 };
 
+const CareerTurnBoundariesPlugin = {
+  id: "careerTurnBoundaries",
+  afterDraw(chart, args, options) {
+    const boundaries = options?.boundaries || [];
+    if (!boundaries.length) return;
+    const xScale = chart.scales?.x;
+    if (!xScale) return;
+    const { top, bottom } = chart.chartArea || {};
+    if (top === undefined || bottom === undefined) return;
+    const ctx = chart.ctx;
+    if (!ctx) return;
+    const color = options.color || "#000000";
+    const lineWidth = options.lineWidth || 1;
+    const lineDash = options.lineDash || [];
+    ctx.save();
+    ctx.strokeStyle = color;
+    ctx.lineWidth = lineWidth;
+    ctx.setLineDash(lineDash);
+    boundaries.forEach((value) => {
+      const x = xScale.getPixelForValue(value);
+      if (Number.isNaN(x)) return;
+      ctx.beginPath();
+      ctx.moveTo(x, top);
+      ctx.lineTo(x, bottom);
+      ctx.stroke();
+    });
+    ctx.restore();
+  },
+};
+
+let careerTurnPluginRegistered = false;
+if (typeof Chart !== "undefined") {
+  Chart.register(CareerTurnBoundariesPlugin);
+  careerTurnPluginRegistered = true;
+}
+
 function loadCareerPrefs() {
   try {
     const raw = localStorage.getItem(CAREER_STORAGE_KEY);
@@ -1833,6 +1869,10 @@ function renderCareerSeriesChart(payload) {
   });
 
   const labelArray = Array.from(labels).sort();
+  const turnBoundaries =
+    (careerState.report?.turns || [])
+      .map((turn) => turn?.range?.end || null)
+      .filter((end) => end && labelArray.includes(end));
 
   Object.entries(payload.series || {}).forEach(([ticker, series]) => {
     const entries = series || [];
@@ -1858,6 +1898,11 @@ function renderCareerSeriesChart(payload) {
         plugins: {
           legend: { display: true },
           tooltip: { callbacks: { label: (ctx) => `${ctx.dataset.label}: ${ctx.formattedValue}` } },
+          careerTurnBoundaries: {
+            boundaries: turnBoundaries,
+            color: "#000000",
+            lineWidth: 1,
+          },
         },
         scales: {
           y: { title: { display: true, text: "Base 100" } },
@@ -1865,9 +1910,18 @@ function renderCareerSeriesChart(payload) {
       },
     });
   } else {
-    careerState.charts.series.data.labels = labelArray;
-    careerState.charts.series.data.datasets = datasets;
-    careerState.charts.series.update();
+    const chart = careerState.charts.series;
+    chart.data.labels = labelArray;
+    chart.data.datasets = datasets;
+    if (!chart.options.plugins) {
+      chart.options.plugins = {};
+    }
+    chart.options.plugins.careerTurnBoundaries = {
+      boundaries: turnBoundaries,
+      color: "#000000",
+      lineWidth: 1,
+    };
+    chart.update();
   }
 
   if (emptyMsg) {
@@ -1991,6 +2045,10 @@ function renderCareerTheoretical(theoretical) {
 
 function renderCareerEquityChart(report, benchTicker) {
   if (typeof Chart === "undefined") return;
+  if (!careerTurnPluginRegistered) {
+    Chart.register(CareerTurnBoundariesPlugin);
+    careerTurnPluginRegistered = true;
+  }
   const canvas = document.getElementById("career-equity-chart");
   if (!canvas) return;
   const equitySeries = report.portfolio_equity?.series || [];
@@ -1998,6 +2056,9 @@ function renderCareerEquityChart(report, benchTicker) {
   const labels = Array.from(
     new Set([...equitySeries, ...benchSeries].map((item) => item[0]))
   ).sort();
+  const turnBoundaries = (report.turns || [])
+    .map((turn) => turn?.range?.end || null)
+    .filter((end) => end && labels.includes(end));
   const toMap = (series) => {
     const map = new Map(series.map((item) => [item[0], item[1]]));
     return labels.map((label) => (map.has(label) ? Number(map.get(label)) : null));
@@ -2029,15 +2090,31 @@ function renderCareerEquityChart(report, benchTicker) {
       data: { labels, datasets },
       options: {
         responsive: true,
-        plugins: { legend: { display: true } },
+        plugins: {
+          legend: { display: true },
+          careerTurnBoundaries: {
+            boundaries: turnBoundaries,
+            color: "#000000",
+            lineWidth: 1,
+          },
+        },
         interaction: { mode: "index", intersect: false },
         scales: { y: { title: { display: true, text: "Base 100" } } },
       },
     });
   } else {
-    careerState.charts.equity.data.labels = labels;
-    careerState.charts.equity.data.datasets = datasets;
-    careerState.charts.equity.update();
+    const chart = careerState.charts.equity;
+    chart.data.labels = labels;
+    chart.data.datasets = datasets;
+    if (!chart.options.plugins) {
+      chart.options.plugins = {};
+    }
+    chart.options.plugins.careerTurnBoundaries = {
+      boundaries: turnBoundaries,
+      color: "#000000",
+      lineWidth: 1,
+    };
+    chart.update();
   }
 }
 
