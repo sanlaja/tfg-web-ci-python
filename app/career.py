@@ -1666,6 +1666,10 @@ def _generate_report_payload(
         }
         if snapshot.get("ret_ticker_shift"):
             entry["ret_ticker_shift"] = snapshot.get("ret_ticker_shift")
+        if snapshot.get("ret_by_ticker"):
+            entry["ret_by_ticker"] = snapshot["ret_by_ticker"]
+        if snapshot.get("ret_by_ticker_final"):
+            entry["ret_by_ticker_final"] = snapshot["ret_by_ticker_final"]
         turns_payload.append(entry)
 
     theoretical_payload: dict[str, Any] = {

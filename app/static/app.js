@@ -34,6 +34,13 @@ const fmtPct = (value) => {
   return `${pctFmt.format(num)}%`;
 };
 
+const fmtSignedPct = (value) => {
+  const num = Number(value);
+  if (!Number.isFinite(num)) return ND;
+  const sign = num > 0 ? "+" : "";
+  return `${sign}${pctFmt.format(num)}%`;
+};
+
 const fmtEur = (value) => {
   const num = Number(value);
   if (!Number.isFinite(num)) return ND;
@@ -47,6 +54,125 @@ function applySignColor(selector, value) {
   const num = Number(value);
   if (!Number.isFinite(num)) return;
   el.classList.add(num >= 0 ? "text-pos" : "text-neg");
+}
+
+function createCareerModal(options = {}) {
+  const {
+    id,
+    title = "",
+    labelledBy,
+    contentClass = "",
+    bodyClass = "",
+    onClose,
+  } = options;
+
+  if (id) {
+    const existing = document.getElementById(id);
+    if (existing?.parentNode) {
+      existing.parentNode.removeChild(existing);
+    }
+  }
+
+  const overlay = document.createElement("div");
+  overlay.className = "modal-overlay";
+  if (id) overlay.id = id;
+  overlay.setAttribute("role", "dialog");
+  overlay.setAttribute("aria-modal", "true");
+
+  const titleId = labelledBy || (id ? `${id}-title` : "career-modal-title");
+  overlay.setAttribute("aria-labelledby", titleId);
+
+  const content = document.createElement("div");
+  content.className = ["modal__content", contentClass].filter(Boolean).join(" ");
+
+  const closeBtn = document.createElement("button");
+  closeBtn.type = "button";
+  closeBtn.className = "modal__close";
+  closeBtn.setAttribute("aria-label", "Cerrar");
+  closeBtn.textContent = "\u00D7";
+
+  const header = document.createElement("div");
+  header.className = "modal__header";
+  const titleEl = document.createElement("h3");
+  titleEl.id = titleId;
+  titleEl.textContent = title;
+  header.appendChild(titleEl);
+
+  const body = document.createElement("div");
+  body.className = ["modal__body", bodyClass].filter(Boolean).join(" ");
+
+  const footer = document.createElement("div");
+  footer.className = "modal__actions";
+
+  const previouslyFocused =
+    document.activeElement instanceof HTMLElement ? document.activeElement : null;
+
+  function close(result) {
+    document.removeEventListener("keydown", onKeyDown, true);
+    overlay.remove();
+    if (onClose) onClose(result);
+    if (previouslyFocused?.focus) {
+      previouslyFocused.focus();
+    }
+  }
+
+  function onKeyDown(ev) {
+    if (ev.key === "Escape") {
+      ev.preventDefault();
+      close(false);
+    }
+  }
+
+  overlay.addEventListener("click", (ev) => {
+    if (ev.target === overlay) close(false);
+  });
+  closeBtn.addEventListener("click", () => close(false));
+  document.addEventListener("keydown", onKeyDown, true);
+
+  content.append(closeBtn, header, body, footer);
+  overlay.appendChild(content);
+  document.body.appendChild(overlay);
+
+  return { overlay, content, body, footer, close };
+}
+
+function careerConfirm(message, options = {}) {
+  const { title = "Confirmar acción", confirmText = "Continuar", cancelText = "Cancelar" } =
+    options || {};
+  return new Promise((resolve) => {
+    let settled = false;
+    const modal = createCareerModal({
+      id: "career-confirm-modal",
+      title,
+      onClose: (result) => {
+        if (settled) return;
+        settled = true;
+        resolve(Boolean(result));
+      },
+    });
+
+    const paragraph = document.createElement("p");
+    paragraph.className = "modal__message";
+    paragraph.textContent = message;
+    modal.body.appendChild(paragraph);
+
+    const cancelBtn = document.createElement("button");
+    cancelBtn.type = "button";
+    cancelBtn.className = "btn btn-outline";
+    cancelBtn.textContent = cancelText;
+
+    const okBtn = document.createElement("button");
+    okBtn.type = "button";
+    okBtn.className = "btn btn-primary";
+    okBtn.textContent = confirmText;
+
+    modal.footer.append(cancelBtn, okBtn);
+
+    cancelBtn.addEventListener("click", () => modal.close(false));
+    okBtn.addEventListener("click", () => modal.close(true));
+
+    requestAnimationFrame(() => okBtn.focus({ preventScroll: true }));
+  });
 }
 
 function showBacktestSummary(ticker, start, end, summary) {
@@ -1234,6 +1360,7 @@ const careerState = {
   sessionId: null,
   sessionData: null,
   report: null,
+  turnsForDetail: [],
   charts: { series: null, equity: null },
   latestSeriesTickers: [],
   autoplayRunning: false,
@@ -1392,6 +1519,21 @@ function initCareerPage() {
       if (!type) return;
       exportCareerCsv(type);
     });
+  });
+
+  const turnsBody = document.getElementById("career-turns-body");
+  turnsBody?.addEventListener("click", (ev) => {
+    const target = ev.target instanceof Element ? ev.target : null;
+    const btn = target?.closest("[data-turn-detail]");
+    if (!btn) return;
+    const turnN = Number(btn.getAttribute("data-turn-detail"));
+    const turn =
+      (careerState.turnsForDetail || []).find(
+        (item) => (item?.n ?? item?.turn_n ?? item?.turn) === turnN
+      ) || null;
+    if (turn) {
+      showCareerTurnBreakdown(turn);
+    }
   });
 
   if (loadLastBtn) {
@@ -1813,23 +1955,136 @@ function renderCareerSession(session) {
 function updateCareerTurnsTable(turns) {
   const body = document.getElementById("career-turns-body");
   if (!body) return;
-  if (!turns.length) {
-    body.innerHTML = `<tr><td colspan="5" class="empty">Aún no hay turnos cerrados.</td></tr>`;
+  const safeTurns = Array.isArray(turns) ? turns : [];
+  careerState.turnsForDetail = safeTurns;
+  if (!safeTurns.length) {
+    body.innerHTML = `<tr><td colspan="6" class="empty">Aún no hay turnos cerrados.</td></tr>`;
     return;
   }
-  body.innerHTML = turns
+  body.innerHTML = safeTurns
     .map((turn) => {
       const range = turn.range || {};
+      const turnNumber = turn.n ?? turn.turn_n ?? turn.turn ?? ND;
+      const turnReturn = Number(turn.turn_return || 0);
+      const returnClass = Number.isFinite(turnReturn) && turnReturn < 0 ? "text-neg" : "text-pos";
       return `
         <tr>
-          <td>${turn.turn_n}</td>
+          <td class="turn-number">${turnNumber}</td>
           <td>${range.start || "—"} → ${range.end || "—"}</td>
-          <td class="${turn.turn_return >= 0 ? "text-pos" : "text-neg"}">${fmtPct((turn.turn_return || 0) * 100)}</td>
+          <td class="${returnClass} turn-return">${fmtPct((turnReturn || 0) * 100)}</td>
           <td>${fmtEur(turn.portfolio_value)}</td>
           <td>${turn.use_dca ? "Sí" : "No"}</td>
+          <td class="action-cell">
+            <button class="btn btn-ghost btn-compact career-turn-detail" type="button" data-turn-detail="${turnNumber}">
+              Ver desglose
+            </button>
+          </td>
         </tr>`;
     })
     .join("");
+}
+
+function showCareerTurnBreakdown(turn) {
+  const turnNumber = turn?.n ?? turn?.turn_n ?? turn?.turn ?? ND;
+  const range = turn?.range || {};
+  const overallReturn = Number(turn?.turn_return || 0);
+  const returnsMap = turn?.ret_by_ticker_final || turn?.ret_by_ticker || null;
+  const alloc = Array.isArray(turn?.alloc) ? turn.alloc : [];
+
+  const modal = createCareerModal({
+    id: "career-turn-breakdown",
+    title: `Turno ${turnNumber}`,
+    contentClass: "career-turn-modal",
+  });
+
+  const meta = document.createElement("div");
+  meta.className = "career-turn-breakdown-header";
+  meta.innerHTML = `
+    <div>
+      <p class="muted">Rango</p>
+      <strong>${range.start || "—"} → ${range.end || "—"}</strong>
+    </div>
+    <div>
+      <p class="muted">Retorno del turno</p>
+      <strong class="${overallReturn < 0 ? "text-neg" : "text-pos"}">${fmtPct(
+    overallReturn * 100
+  )}</strong>
+    </div>
+  `;
+  modal.body.appendChild(meta);
+
+  const rows =
+    alloc
+      .map((item) => {
+        const ticker = String(item?.ticker || "").toUpperCase();
+        const weight = Number(item?.weight ?? 0);
+        if (!ticker || !Number.isFinite(weight) || weight <= 0) return null;
+        const tickerRetRaw =
+          returnsMap?.[item?.ticker] ??
+          returnsMap?.[ticker] ??
+          (item?.ticker ? returnsMap?.[String(item.ticker).toUpperCase()] : undefined);
+        const tickerReturn = Number(tickerRetRaw ?? NaN);
+        if (!Number.isFinite(tickerReturn)) return null;
+        const contribution = weight * tickerReturn;
+        const share =
+          Number.isFinite(overallReturn) && Math.abs(overallReturn) > 1e-9
+            ? contribution / overallReturn
+            : null;
+        return { ticker, weight, tickerReturn, contribution, share };
+      })
+      .filter(Boolean)
+      .sort((a, b) => b.contribution - a.contribution) || [];
+
+  if (!rows.length) {
+    const message = document.createElement("p");
+    message.className = "modal__message";
+    message.textContent = "No hay datos suficientes para desglosar este turno.";
+    modal.body.appendChild(message);
+  } else {
+    const table = document.createElement("table");
+    table.className = "table career-breakdown-table";
+    table.innerHTML = `
+      <thead>
+        <tr>
+          <th>Ticker</th>
+          <th>Peso inicio</th>
+          <th>Retorno ticker</th>
+          <th>Contribución</th>
+          <th>Aporte vs turno</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${rows
+          .map((row) => {
+            const contributionPct = row.contribution * 100;
+            const sharePct = row.share !== null && row.share !== undefined ? row.share * 100 : null;
+            const contributionClass = contributionPct < 0 ? "text-neg" : "text-pos";
+            return `
+              <tr>
+                <td>${row.ticker}</td>
+                <td>${fmtPct(row.weight * 100)}</td>
+                <td class="${row.tickerReturn < 0 ? "text-neg" : "text-pos"}">${fmtSignedPct(
+              row.tickerReturn * 100
+            )}</td>
+                <td class="${contributionClass}">${fmtSignedPct(contributionPct)}</td>
+                <td>${sharePct === null ? ND : fmtSignedPct(sharePct)}</td>
+              </tr>
+            `;
+          })
+          .join("")}
+      </tbody>
+    `;
+    modal.body.appendChild(table);
+  }
+
+  const closeBtn = document.createElement("button");
+  closeBtn.type = "button";
+  closeBtn.className = "btn btn-primary";
+  closeBtn.textContent = "Cerrar";
+  modal.footer.appendChild(closeBtn);
+  closeBtn.addEventListener("click", () => modal.close());
+
+  requestAnimationFrame(() => closeBtn.focus({ preventScroll: true }));
 }
 
 function updateCareerSeriesSelectors(session) {
@@ -1939,7 +2194,7 @@ async function handleCareerAutoPlay() {
   }
   const turnsLeft = (careerState.sessionData?.turns || []).filter((t) => t.status === "pending").length;
   if (turnsLeft > 1) {
-    const ok = window.confirm(
+    const ok = await careerConfirm(
       `Se van a cerrar automáticamente los ${turnsLeft} turnos pendientes usando la asignación actual y el drift. ¿Continuar?`
     );
     if (!ok) return;
@@ -2156,7 +2411,9 @@ function renderCareerReportPanels(report, hasSeries) {
 
   renderCareerMetrics(report);
   renderCareerWarnings(report.warnings || []);
-  renderCareerTheoretical(report.theoretical || {});
+  if (Array.isArray(report.turns)) {
+    updateCareerTurnsTable(report.turns);
+  }
 
   if (hasSeries && report.portfolio_equity?.series?.length) {
     renderCareerEquityChart(report, careerState.bench);
@@ -2208,28 +2465,9 @@ function renderCareerWarnings(warnings) {
     .join("");
 }
 
-function renderCareerTheoretical(theoretical) {
-  const tbody = document.getElementById("career-theoretical-body");
-  if (!tbody) return;
-  const method = theoretical.method || {};
-  const rows = ["k1", "k2", "k3"]
-    .map((key) => {
-      const item = theoretical[key];
-      if (!item) return "";
-      const tickers = (item.tickers || []).join(", ");
-      const metrics = item.metrics || {};
-      const methodTag = key === "k1" ? "—" : method[key] || "—";
-      return `
-        <tr>
-          <td>${key.toUpperCase()} <span class="badge badge-soft">${methodTag}</span></td>
-          <td>${tickers || "—"}</td>
-          <td>${fmtPct((metrics.CAGR || 0) * 100)}</td>
-          <td>${fmtPct((metrics.max_drawdown || 0) * 100)}</td>
-        </tr>`;
-    })
-    .filter(Boolean)
-    .join("");
-  tbody.innerHTML = rows || `<tr><td colspan="4" class="empty">Sin datos.</td></tr>`;
+function renderCareerTheoretical() {
+  // Bloque retirado de la interfaz; se deja la función como no-op por compatibilidad.
+  return;
 }
 
 function renderCareerEquityChart(report, benchTicker) {
@@ -2369,19 +2607,25 @@ function refreshCareerRanking() {
       const entries = data.entries || [];
       body.innerHTML = entries.length
         ? entries
-            .map((entry) => {
+            .map((entry, index) => {
               const period = entry.period || {};
+              const score = entry.score?.toFixed?.(2) ?? entry.score ?? "—";
+              const stars = entry.stars ?? "—";
               return `
                 <tr>
+                  <td class="col-rank">${index + 1}</td>
                   <td>${entry.player || "—"}</td>
-                  <td>${entry.difficulty || "—"}</td>
-                  <td>${entry.score?.toFixed?.(2) ?? entry.score ?? "—"} (${entry.stars ?? "—"}★)</td>
-                  <td>${entry.bench || "—"}</td>
+                  <td><span class="badge badge-soft">${entry.difficulty || "—"}</span></td>
+                  <td class="col-score">
+                    <span class="score-main">${score}</span>
+                    <span class="score-stars">(${stars}★)</span>
+                  </td>
+                  <td class="col-bench">${entry.bench || "—"}</td>
                   <td>${period.start || "—"} → ${period.end || "—"}</td>
                 </tr>`;
             })
             .join("")
-        : `<tr><td colspan="5" class="empty">Sin envíos todavía.</td></tr>`;
+        : `<tr><td colspan="6" class="empty">Sin envíos todavía.</td></tr>`;
     })
     .catch((err) => {
       console.warn("No se pudo cargar el ranking:", err);

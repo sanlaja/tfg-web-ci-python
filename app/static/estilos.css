@@ -195,6 +195,69 @@ img {
   gap: 6px;
 }
 
+.career-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.career-field-label {
+  font-weight: 600;
+  color: var(--color-dark);
+}
+
+.segmented-control {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+  width: 100%;
+}
+
+.segmented-option {
+  position: relative;
+  display: block;
+}
+
+.segmented-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.segmented-option span {
+  display: block;
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: var(--btn-radius);
+  border: 1px solid var(--line);
+  background: #f8faf5;
+  transition: all 0.15s ease;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.segmented-option span:hover {
+  border-color: var(--color-primary-2);
+  background: rgba(172, 204, 123, 0.2);
+}
+
+.segmented-option input[type="radio"]:focus-visible + span {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.segmented-option input[type="radio"]:checked + span {
+  border-color: var(--color-primary);
+  background: rgba(102, 138, 76, 0.12);
+  color: var(--color-dark);
+  box-shadow: var(--shadow-soft);
+}
+
 label.muted {
   font-size: 0.83rem;
   font-weight: 500;
@@ -311,6 +374,12 @@ textarea {
 .btn-large {
   padding: 14px 32px;
   font-size: 1.05rem;
+}
+
+.btn-compact {
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  border-radius: 8px;
 }
 
 .muted {
@@ -622,8 +691,57 @@ mark.hl {
 
 .modal__body {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 10px;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(15, 23, 42, 0.35);
+  z-index: 70;
+  padding: 16px;
+}
+
+.modal__content {
+  background: #fff;
+  border-radius: 18px;
+  width: min(720px, 100%);
+  padding: 24px;
+  position: relative;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.modal__close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  border: none;
+  background: transparent;
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--color-dark);
+}
+
+.modal__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.modal__message {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--color-dark);
+  line-height: 1.5;
 }
 
 #modalBacktest {
@@ -751,6 +869,98 @@ mark.hl {
   display: flex;
   flex-direction: column;
   gap: 12px;
+}
+
+.career-turns-table-wrapper {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: auto;
+  background: #fff;
+  box-shadow: var(--shadow-soft);
+}
+
+.career-turns-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.career-turns-table th,
+.career-turns-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  font-size: 0.95rem;
+}
+
+.career-turns-table thead {
+  background: rgba(102, 138, 76, 0.08);
+}
+
+.career-turns-table tbody tr:nth-child(odd) {
+  background: #f8faf5;
+}
+
+.career-turns-table tbody tr:hover {
+  background: rgba(102, 138, 76, 0.08);
+}
+
+.career-turns-table .turn-number {
+  font-weight: 600;
+}
+
+.career-turns-table .turn-return {
+  font-weight: 600;
+}
+
+.career-turns-table .action-cell {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.career-turns-table .empty {
+  text-align: center;
+  color: var(--muted);
+}
+
+.career-turn-modal .modal__body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.career-turn-breakdown-header {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: rgba(102, 138, 76, 0.08);
+}
+
+.career-turn-breakdown-header strong {
+  font-size: 1.05rem;
+}
+
+.career-breakdown-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.career-breakdown-table th,
+.career-breakdown-table td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+}
+
+.career-breakdown-table th {
+  background: rgba(102, 138, 76, 0.08);
+  font-weight: 600;
+}
+
+.career-breakdown-table tbody tr:nth-child(odd) {
+  background: #f8faf5;
 }
 
 .alloc-row {
@@ -888,6 +1098,7 @@ mark.hl {
 }
 
 .career-ranking {
+  margin-top: 24px;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -896,9 +1107,78 @@ mark.hl {
 .career-ranking-head {
   display: flex;
   justify-content: space-between;
-  gap: 12px;
-  align-items: center;
+  gap: 16px;
+  align-items: flex-start;
   flex-wrap: wrap;
+}
+
+.career-ranking-table-wrapper {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: auto;
+  background: #fff;
+  box-shadow: var(--shadow-soft);
+}
+
+.career-ranking-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.career-ranking-table th,
+.career-ranking-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+}
+
+.career-ranking-table thead {
+  background: #f7faf3;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+.career-ranking-table tbody tr:nth-child(even) {
+  background: #fbfdf7;
+}
+
+.career-ranking-table tbody tr:hover {
+  background: #f4f8eb;
+}
+
+.career-ranking-table .col-rank {
+  width: 1%;
+  white-space: nowrap;
+  color: var(--muted);
+}
+
+.career-ranking-table .col-score {
+  text-align: right;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.career-ranking-table .score-stars {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-left: 4px;
+}
+
+.career-ranking-table .col-bench {
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace);
+}
+
+.career-ranking-table .empty {
+  text-align: center;
+  padding: 18px 0;
+  color: var(--muted);
+}
+
+.career-ranking-table tbody tr:first-child .col-rank::before {
+  content: "🏆 ";
 }
 
 .career-share {
