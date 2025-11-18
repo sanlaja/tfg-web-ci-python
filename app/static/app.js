@@ -1236,6 +1236,7 @@ const careerState = {
   report: null,
   charts: { series: null, equity: null },
   latestSeriesTickers: [],
+  autoplayRunning: false,
 };
 
 const CareerTurnBoundariesPlugin = {
@@ -1312,6 +1313,7 @@ function initCareerPage() {
 
   const addAssetBtn = document.getElementById("career-add-asset");
   const closeTurnBtn = document.getElementById("career-close-turn");
+  const autoplayBtn = document.getElementById("career-autoplay");
   const createBtn = document.getElementById("career-create-btn");
   const loadLastBtn = document.getElementById("career-load-last-btn");
   const loadSeriesBtn = document.getElementById("career-load-series");
@@ -1329,6 +1331,12 @@ function initCareerPage() {
   loadLastBtn?.addEventListener("click", handleCareerLoadLast);
   addAssetBtn?.addEventListener("click", () => addCareerAllocRow());
   closeTurnBtn?.addEventListener("click", handleCareerCloseTurn);
+  if (autoplayBtn) {
+    autoplayBtn.addEventListener("click", () => {
+      if (careerState.autoplayRunning) return;
+      handleCareerAutoPlay();
+    });
+  }
   loadSeriesBtn?.addEventListener("click", () => loadCareerSeries());
   reportBtn?.addEventListener("click", () => renderCareerReport({ includeSeries: true }));
   reportRefreshBtn?.addEventListener("click", () => renderCareerReport({ includeSeries: true, force: true }));
@@ -1542,6 +1550,14 @@ function rememberCareerAllocTickers() {
   const tickers = collectCareerAlloc().map((item) => item.ticker);
   careerState.latestSeriesTickers = tickers;
   saveCareerPrefs({ lastTickers: tickers });
+}
+
+function setCareerTurnActionsEnabled(enabled) {
+  const closeBtn = document.getElementById("career-close-turn");
+  const autoBtn = document.getElementById("career-autoplay");
+  const disabled = !enabled;
+  if (closeBtn) closeBtn.disabled = disabled;
+  if (autoBtn) autoBtn.disabled = disabled;
 }
 
 function buildNextAllocFromSnapshot(snapshot) {
@@ -1855,11 +1871,11 @@ function handleCareerCloseTurn() {
     mostrarToastError("Añade al menos un activo con peso.");
     return;
   }
-  if (unique.size > CAREER_MAX_ASSETS) {
-    mostrarToastError("La cartera admite como máximo 10 activos.");
-    return;
-  }
-  if (totalWeight > 1.0001) {
+    if (unique.size > CAREER_MAX_ASSETS) {
+      mostrarToastError("La cartera admite como máximo 10 activos.");
+      return;
+    }
+    if (totalWeight > 1.0001) {
     mostrarToastError("La suma de pesos no puede superar 1.0.");
     return;
   }
@@ -1900,15 +1916,100 @@ function handleCareerCloseTurn() {
           updateCareerAllocSummary();
           rememberCareerAllocTickers();
         }
-        renderCareerReport({ includeSeries: false });
-        loadCareerSeries();
-      });
-      return data;
-    })
+      renderCareerReport({ includeSeries: false });
+      loadCareerSeries();
+    });
+    return data;
+  })
     .catch((err) => {
       mostrarToastError(err?.message || "No se pudo cerrar el turno.");
     })
     .finally(() => careerSetLoading(btn, false));
+}
+
+async function handleCareerAutoPlay() {
+  if (!careerState.sessionId) {
+    mostrarToastError("Crea o carga una sesión primero.");
+    return;
+  }
+  const pendingTurn = (careerState.sessionData?.turns || []).find((t) => t.status === "pending");
+  if (!pendingTurn) {
+    mostrarToastError("No hay turnos pendientes.");
+    return;
+  }
+  const turnsLeft = (careerState.sessionData?.turns || []).filter((t) => t.status === "pending").length;
+  if (turnsLeft > 1) {
+    const ok = window.confirm(
+      `Se van a cerrar automáticamente los ${turnsLeft} turnos pendientes usando la asignación actual y el drift. ¿Continuar?`
+    );
+    if (!ok) return;
+  }
+
+  careerState.autoplayRunning = true;
+  setCareerTurnActionsEnabled(false);
+
+  try {
+    const useDca = Boolean(document.getElementById("career-use-dca")?.checked);
+    while (true) {
+      const currentPending = (careerState.sessionData?.turns || []).find((t) => t.status === "pending");
+      if (!currentPending) break;
+
+      const alloc = collectCareerAlloc();
+      const unique = new Set(alloc.map((item) => item.ticker));
+      const totalWeight = alloc.reduce((acc, item) => acc + item.weight, 0);
+
+      if (!alloc.length) {
+        mostrarToastError("Añade al menos un activo con peso.");
+        break;
+      }
+      if (unique.size > CAREER_MAX_ASSETS) {
+        mostrarToastError("La cartera admite como máximo 10 activos.");
+        break;
+      }
+      if (totalWeight > 1.0001) {
+        mostrarToastError("La suma de pesos no puede superar 1.0.");
+        break;
+      }
+
+      const payload = {
+        session_id: careerState.sessionId,
+        turn_n: currentPending.n,
+        alloc,
+        use_dca: useDca,
+      };
+      const data = await jsonPost("/api/career/turn", payload);
+
+      if (data && data.ok === false && data.error_code === "NO_HISTORICAL_DATA") {
+        const invalid = Array.isArray(data.invalid_tickers) ? data.invalid_tickers : [];
+        const suffix = invalid.length ? ` (Sin datos historicos: ${invalid.join(", ")})` : "";
+        const message =
+          data.message ||
+          "No se encontraron datos historicos validos para estos tickers. Ajusta la cartera e intenta de nuevo.";
+        mostrarToastError(`${message}${suffix}`.trim());
+        break;
+      }
+
+      const snapshot = data?.snapshot;
+      const nextAlloc = buildNextAllocFromSnapshot(snapshot);
+      if (nextAlloc && nextAlloc.length) {
+        resetCareerAllocRows(nextAlloc);
+        updateCareerAllocSummary();
+        rememberCareerAllocTickers();
+      }
+
+      await handleCareerLoadSession(careerState.sessionId, { silent: true });
+    }
+
+    await renderCareerReport({ includeSeries: true });
+    await loadCareerSeries();
+    mostrarToastOk("Simulación automática de turnos completada.");
+  } catch (err) {
+    console.error("Error en autoplay de carrera:", err);
+    mostrarToastError(err?.message || "No se pudo completar la simulación automática.");
+  } finally {
+    careerState.autoplayRunning = false;
+    setCareerTurnActionsEnabled(true);
+  }
 }
 
 function loadCareerSeries() {

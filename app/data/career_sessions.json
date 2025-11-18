@@ -11741,6 +11741,1911 @@
           "use_dca": false
         }
       ]
+    },
+    "car_add637": {
+      "session_id": "car_add637",
+      "player": "Javier5",
+      "difficulty": "intermedio",
+      "universe": [
+        "AAPL",
+        "GOOGL",
+        "MSFT",
+        "UBI.PA",
+        "^GSPC"
+      ],
+      "rejected_universe": [],
+      "capital_initial": 50000.0,
+      "capital_current": 70230.31,
+      "period": {
+        "start": "2012-10-11",
+        "end": "2016-10-10"
+      },
+      "turns": [
+        {
+          "n": 1,
+          "start": "2012-10-11",
+          "end": "2013-04-10",
+          "status": "completed",
+          "closed_at": "2025-11-18T16:19:04.550069"
+        },
+        {
+          "n": 2,
+          "start": "2013-04-11",
+          "end": "2013-10-10",
+          "status": "completed",
+          "closed_at": "2025-11-18T16:19:05.732559"
+        },
+        {
+          "n": 3,
+          "start": "2013-10-11",
+          "end": "2014-04-10",
+          "status": "completed",
+          "closed_at": "2025-11-18T16:19:07.072518"
+        },
+        {
+          "n": 4,
+          "start": "2014-04-11",
+          "end": "2014-10-10",
+          "status": "completed",
+          "closed_at": "2025-11-18T16:19:08.759210"
+        },
+        {
+          "n": 5,
+          "start": "2014-10-11",
+          "end": "2015-04-10",
+          "status": "completed",
+          "closed_at": "2025-11-18T16:19:09.759197"
+        },
+        {
+          "n": 6,
+          "start": "2015-04-11",
+          "end": "2015-10-10",
+          "status": "completed",
+          "closed_at": "2025-11-18T16:19:10.951529"
+        },
+        {
+          "n": 7,
+          "start": "2015-10-11",
+          "end": "2016-04-10",
+          "status": "completed",
+          "closed_at": "2025-11-18T16:19:12.124552"
+        },
+        {
+          "n": 8,
+          "start": "2016-04-11",
+          "end": "2016-10-10",
+          "status": "completed",
+          "closed_at": "2025-11-18T16:19:13.416514"
+        }
+      ],
+      "completed_turns": [
+        {
+          "turn_n": 1,
+          "range": {
+            "start": "2012-10-11",
+            "end": "2013-04-10"
+          },
+          "alloc": [
+            {
+              "ticker": "^GSPC",
+              "weight": 0.2
+            },
+            {
+              "ticker": "AAPL",
+              "weight": 0.3
+            },
+            {
+              "ticker": "GOOGL",
+              "weight": 0.3
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": false,
+          "turn_return": 0.023119,
+          "turn_return_market": 0.023119,
+          "portfolio_value": 51155.97,
+          "events": [],
+          "events_applied": [],
+          "events_new": [
+            {
+              "id": "sector_environment_scandal",
+              "name": "Escandalo medioambiental sectorial",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.04,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            },
+            {
+              "id": "ticker_exec_departures",
+              "name": "Fuga de directivos clave",
+              "scope": "ticker",
+              "target": "^GSPC",
+              "impact_pct": -0.05,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            },
+            {
+              "id": "sector_rumor_neg",
+              "name": "Rumor sectorial (negativo)",
+              "scope": "sector",
+              "target": "INDEX",
+              "impact_pct": -0.043006,
+              "remaining_turns": 1,
+              "category": "legacy",
+              "difficulty": "medium"
+            }
+          ],
+          "ret_portfolio_shift": 0.0,
+          "ret_by_ticker": {
+            "^GSPC": 0.1081,
+            "AAPL": 0.1081,
+            "GOOGL": -0.299107,
+            "UBI.PA": 0.294007
+          },
+          "ret_by_ticker_final": {
+            "^GSPC": 0.1081,
+            "AAPL": 0.1081,
+            "GOOGL": -0.299107,
+            "UBI.PA": 0.294007
+          },
+          "alloc_next_suggested": [
+            {
+              "ticker": "^GSPC",
+              "weight": 0.216612
+            },
+            {
+              "ticker": "AAPL",
+              "weight": 0.324918
+            },
+            {
+              "ticker": "GOOGL",
+              "weight": 0.205517
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.252953
+            }
+          ],
+          "dca_in_turn": 0.0,
+          "invested_so_far": 50000.0,
+          "pnl_abs": 1155.97,
+          "pnl_pct": 0.023119,
+          "cum_return_net": 0.023119,
+          "delta_vs_prev": 1155.97
+        },
+        {
+          "turn_n": 2,
+          "range": {
+            "start": "2013-04-11",
+            "end": "2013-10-10"
+          },
+          "alloc": [
+            {
+              "ticker": "^GSPC",
+              "weight": 0.2
+            },
+            {
+              "ticker": "AAPL",
+              "weight": 0.3
+            },
+            {
+              "ticker": "GOOGL",
+              "weight": 0.3
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": false,
+          "turn_return": 0.094418,
+          "turn_return_market": 0.137019,
+          "portfolio_value": 55986.0,
+          "events": [
+            {
+              "id": "sector_environment_scandal",
+              "name": "Escandalo medioambiental sectorial",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.04,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL",
+                "GOOGL"
+              ]
+            },
+            {
+              "id": "ticker_exec_departures",
+              "name": "Fuga de directivos clave",
+              "scope": "ticker",
+              "target": "^GSPC",
+              "impact_pct": -0.05,
+              "remaining_turns": 2,
+              "affected": [
+                "^GSPC"
+              ]
+            },
+            {
+              "id": "sector_rumor_neg",
+              "name": "Rumor sectorial (negativo)",
+              "scope": "sector",
+              "target": "INDEX",
+              "impact_pct": -0.043006,
+              "remaining_turns": 1,
+              "affected": [
+                "^GSPC"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "sector_environment_scandal",
+              "name": "Escandalo medioambiental sectorial",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.04,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL",
+                "GOOGL"
+              ]
+            },
+            {
+              "id": "ticker_exec_departures",
+              "name": "Fuga de directivos clave",
+              "scope": "ticker",
+              "target": "^GSPC",
+              "impact_pct": -0.05,
+              "remaining_turns": 2,
+              "affected": [
+                "^GSPC"
+              ]
+            },
+            {
+              "id": "sector_rumor_neg",
+              "name": "Rumor sectorial (negativo)",
+              "scope": "sector",
+              "target": "INDEX",
+              "impact_pct": -0.043006,
+              "remaining_turns": 1,
+              "affected": [
+                "^GSPC"
+              ]
+            }
+          ],
+          "events_new": [
+            {
+              "id": "macro_regional_debt",
+              "name": "Crisis de deuda regional",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.04,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            },
+            {
+              "id": "sector_environment_scandal",
+              "name": "Escandalo medioambiental sectorial",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.04,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            },
+            {
+              "id": "ticker_news_pos",
+              "name": "Noticia espec\u00edfica (positivo)",
+              "scope": "ticker",
+              "target": "^GSPC",
+              "impact_pct": 0.053473,
+              "remaining_turns": 1,
+              "category": "legacy",
+              "difficulty": "medium"
+            }
+          ],
+          "ret_portfolio_shift": 0.0,
+          "ret_by_ticker": {
+            "^GSPC": 0.062252,
+            "AAPL": 0.1423,
+            "GOOGL": 0.098496,
+            "UBI.PA": 0.261649
+          },
+          "ret_by_ticker_final": {
+            "^GSPC": -0.030754,
+            "AAPL": 0.1023,
+            "GOOGL": 0.058496,
+            "UBI.PA": 0.261649
+          },
+          "alloc_next_suggested": [
+            {
+              "ticker": "^GSPC",
+              "weight": 0.177125
+            },
+            {
+              "ticker": "AAPL",
+              "weight": 0.302161
+            },
+            {
+              "ticker": "GOOGL",
+              "weight": 0.290153
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.230561
+            }
+          ],
+          "ret_ticker_shift": {
+            "AAPL": -0.04,
+            "GOOGL": -0.04,
+            "^GSPC": -0.093006
+          },
+          "dca_in_turn": 0.0,
+          "invested_so_far": 50000.0,
+          "pnl_abs": 5986.0,
+          "pnl_pct": 0.11972,
+          "cum_return_net": 0.11972,
+          "delta_vs_prev": 4830.03
+        },
+        {
+          "turn_n": 3,
+          "range": {
+            "start": "2013-10-11",
+            "end": "2014-04-10"
+          },
+          "alloc": [
+            {
+              "ticker": "^GSPC",
+              "weight": 0.2
+            },
+            {
+              "ticker": "AAPL",
+              "weight": 0.3
+            },
+            {
+              "ticker": "GOOGL",
+              "weight": 0.3
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": false,
+          "turn_return": 0.059611,
+          "turn_return_market": 0.146916,
+          "portfolio_value": 59323.38,
+          "events": [
+            {
+              "id": "sector_environment_scandal",
+              "name": "Escandalo medioambiental sectorial",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.04,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "GOOGL"
+              ]
+            },
+            {
+              "id": "ticker_exec_departures",
+              "name": "Fuga de directivos clave",
+              "scope": "ticker",
+              "target": "^GSPC",
+              "impact_pct": -0.05,
+              "remaining_turns": 1,
+              "affected": [
+                "^GSPC"
+              ]
+            },
+            {
+              "id": "macro_regional_debt",
+              "name": "Crisis de deuda regional",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.04,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_environment_scandal",
+              "name": "Escandalo medioambiental sectorial",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.04,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL",
+                "GOOGL"
+              ]
+            },
+            {
+              "id": "ticker_news_pos",
+              "name": "Noticia espec\u00edfica (positivo)",
+              "scope": "ticker",
+              "target": "^GSPC",
+              "impact_pct": 0.053473,
+              "remaining_turns": 1,
+              "affected": [
+                "^GSPC"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "sector_environment_scandal",
+              "name": "Escandalo medioambiental sectorial",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.04,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "GOOGL"
+              ]
+            },
+            {
+              "id": "ticker_exec_departures",
+              "name": "Fuga de directivos clave",
+              "scope": "ticker",
+              "target": "^GSPC",
+              "impact_pct": -0.05,
+              "remaining_turns": 1,
+              "affected": [
+                "^GSPC"
+              ]
+            },
+            {
+              "id": "macro_regional_debt",
+              "name": "Crisis de deuda regional",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.04,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_environment_scandal",
+              "name": "Escandalo medioambiental sectorial",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.04,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL",
+                "GOOGL"
+              ]
+            },
+            {
+              "id": "ticker_news_pos",
+              "name": "Noticia espec\u00edfica (positivo)",
+              "scope": "ticker",
+              "target": "^GSPC",
+              "impact_pct": 0.053473,
+              "remaining_turns": 1,
+              "affected": [
+                "^GSPC"
+              ]
+            }
+          ],
+          "events_new": [
+            {
+              "id": "macro_technical_recession",
+              "name": "Recesion tecnica",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.05,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            }
+          ],
+          "ret_portfolio_shift": -0.04,
+          "ret_by_ticker": {
+            "^GSPC": 0.076256,
+            "AAPL": 0.074833,
+            "GOOGL": 0.252637,
+            "UBI.PA": 0.167121
+          },
+          "ret_by_ticker_final": {
+            "^GSPC": 0.079729,
+            "AAPL": -0.005167,
+            "GOOGL": 0.172637,
+            "UBI.PA": 0.167121
+          },
+          "alloc_next_suggested": [
+            {
+              "ticker": "^GSPC",
+              "weight": 0.196384
+            },
+            {
+              "ticker": "AAPL",
+              "weight": 0.271414
+            },
+            {
+              "ticker": "GOOGL",
+              "weight": 0.319923
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.212279
+            }
+          ],
+          "ret_ticker_shift": {
+            "AAPL": -0.08,
+            "GOOGL": -0.08,
+            "^GSPC": 0.003473
+          },
+          "dca_in_turn": 0.0,
+          "invested_so_far": 50000.0,
+          "pnl_abs": 9323.38,
+          "pnl_pct": 0.186468,
+          "cum_return_net": 0.186468,
+          "delta_vs_prev": 3337.38
+        },
+        {
+          "turn_n": 4,
+          "range": {
+            "start": "2014-04-11",
+            "end": "2014-10-10"
+          },
+          "alloc": [
+            {
+              "ticker": "^GSPC",
+              "weight": 0.2
+            },
+            {
+              "ticker": "AAPL",
+              "weight": 0.3
+            },
+            {
+              "ticker": "GOOGL",
+              "weight": 0.3
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": false,
+          "turn_return": 0.000197,
+          "turn_return_market": 0.114197,
+          "portfolio_value": 59335.08,
+          "events": [
+            {
+              "id": "macro_regional_debt",
+              "name": "Crisis de deuda regional",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.04,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_environment_scandal",
+              "name": "Escandalo medioambiental sectorial",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.04,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "GOOGL"
+              ]
+            },
+            {
+              "id": "macro_technical_recession",
+              "name": "Recesion tecnica",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.05,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "macro_regional_debt",
+              "name": "Crisis de deuda regional",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.04,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_environment_scandal",
+              "name": "Escandalo medioambiental sectorial",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.04,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "GOOGL"
+              ]
+            },
+            {
+              "id": "macro_technical_recession",
+              "name": "Recesion tecnica",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.05,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            }
+          ],
+          "events_new": [],
+          "ret_portfolio_shift": -0.09,
+          "ret_by_ticker": {
+            "^GSPC": 0.04981,
+            "AAPL": 0.371365,
+            "GOOGL": 0.032412,
+            "UBI.PA": -0.08449
+          },
+          "ret_by_ticker_final": {
+            "^GSPC": 0.04981,
+            "AAPL": 0.331365,
+            "GOOGL": -0.007588,
+            "UBI.PA": -0.08449
+          },
+          "alloc_next_suggested": [
+            {
+              "ticker": "^GSPC",
+              "weight": 0.192591
+            },
+            {
+              "ticker": "AAPL",
+              "weight": 0.366364
+            },
+            {
+              "ticker": "GOOGL",
+              "weight": 0.273092
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.167953
+            }
+          ],
+          "ret_ticker_shift": {
+            "AAPL": -0.04,
+            "GOOGL": -0.04
+          },
+          "dca_in_turn": 0.0,
+          "invested_so_far": 50000.0,
+          "pnl_abs": 9335.08,
+          "pnl_pct": 0.186702,
+          "cum_return_net": 0.186702,
+          "delta_vs_prev": 11.7
+        },
+        {
+          "turn_n": 5,
+          "range": {
+            "start": "2014-10-11",
+            "end": "2015-04-10"
+          },
+          "alloc": [
+            {
+              "ticker": "^GSPC",
+              "weight": 0.2
+            },
+            {
+              "ticker": "AAPL",
+              "weight": 0.3
+            },
+            {
+              "ticker": "GOOGL",
+              "weight": 0.3
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": false,
+          "turn_return": 0.173823,
+          "turn_return_market": 0.223823,
+          "portfolio_value": 69648.88,
+          "events": [
+            {
+              "id": "macro_technical_recession",
+              "name": "Recesion tecnica",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.05,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "macro_technical_recession",
+              "name": "Recesion tecnica",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.05,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            }
+          ],
+          "events_new": [
+            {
+              "id": "macro_monetary_tightening_fast",
+              "name": "Endurecimiento monetario mas rapido",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.045,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            },
+            {
+              "id": "sector_supply_crisis",
+              "name": "Crisis de suministros del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.05,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            }
+          ],
+          "ret_portfolio_shift": -0.05,
+          "ret_by_ticker": {
+            "^GSPC": 0.121254,
+            "AAPL": 0.283989,
+            "GOOGL": 0.006957,
+            "UBI.PA": 0.561442
+          },
+          "ret_by_ticker_final": {
+            "^GSPC": 0.121254,
+            "AAPL": 0.283989,
+            "GOOGL": 0.006957,
+            "UBI.PA": 0.561442
+          },
+          "alloc_next_suggested": [
+            {
+              "ticker": "^GSPC",
+              "weight": 0.183238
+            },
+            {
+              "ticker": "AAPL",
+              "weight": 0.314749
+            },
+            {
+              "ticker": "GOOGL",
+              "weight": 0.246839
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.255174
+            }
+          ],
+          "dca_in_turn": 0.0,
+          "invested_so_far": 50000.0,
+          "pnl_abs": 19648.88,
+          "pnl_pct": 0.392978,
+          "cum_return_net": 0.392978,
+          "delta_vs_prev": 10313.8
+        },
+        {
+          "turn_n": 6,
+          "range": {
+            "start": "2015-04-11",
+            "end": "2015-10-10"
+          },
+          "alloc": [
+            {
+              "ticker": "^GSPC",
+              "weight": 0.2
+            },
+            {
+              "ticker": "AAPL",
+              "weight": 0.3
+            },
+            {
+              "ticker": "GOOGL",
+              "weight": 0.3
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": false,
+          "turn_return": -0.013423,
+          "turn_return_market": 0.061577,
+          "portfolio_value": 68713.96,
+          "events": [
+            {
+              "id": "macro_monetary_tightening_fast",
+              "name": "Endurecimiento monetario mas rapido",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.045,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_supply_crisis",
+              "name": "Crisis de suministros del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.05,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL",
+                "GOOGL"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "macro_monetary_tightening_fast",
+              "name": "Endurecimiento monetario mas rapido",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.045,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_supply_crisis",
+              "name": "Crisis de suministros del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.05,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL",
+                "GOOGL"
+              ]
+            }
+          ],
+          "events_new": [
+            {
+              "id": "macro_monetary_tightening_fast",
+              "name": "Endurecimiento monetario mas rapido",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.045,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            },
+            {
+              "id": "sector_demand_slump",
+              "name": "Bajada de demanda del sector",
+              "scope": "sector",
+              "target": "INDEX",
+              "impact_pct": -0.04,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            },
+            {
+              "id": "ticker_news_pos",
+              "name": "Noticia espec\u00edfica (positivo)",
+              "scope": "ticker",
+              "target": "^GSPC",
+              "impact_pct": 0.043835,
+              "remaining_turns": 1,
+              "category": "legacy",
+              "difficulty": "medium"
+            }
+          ],
+          "ret_portfolio_shift": -0.045,
+          "ret_by_ticker": {
+            "^GSPC": -0.037057,
+            "AAPL": -0.108412,
+            "GOOGL": 0.223462,
+            "UBI.PA": 0.172366
+          },
+          "ret_by_ticker_final": {
+            "^GSPC": -0.037057,
+            "AAPL": -0.158412,
+            "GOOGL": 0.173462,
+            "UBI.PA": 0.172366
+          },
+          "alloc_next_suggested": [
+            {
+              "ticker": "^GSPC",
+              "weight": 0.186693
+            },
+            {
+              "ticker": "AAPL",
+              "weight": 0.244748
+            },
+            {
+              "ticker": "GOOGL",
+              "weight": 0.341263
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.227296
+            }
+          ],
+          "ret_ticker_shift": {
+            "AAPL": -0.05,
+            "GOOGL": -0.05
+          },
+          "dca_in_turn": 0.0,
+          "invested_so_far": 50000.0,
+          "pnl_abs": 18713.96,
+          "pnl_pct": 0.374279,
+          "cum_return_net": 0.374279,
+          "delta_vs_prev": -934.92
+        },
+        {
+          "turn_n": 7,
+          "range": {
+            "start": "2015-10-11",
+            "end": "2016-04-10"
+          },
+          "alloc": [
+            {
+              "ticker": "^GSPC",
+              "weight": 0.2
+            },
+            {
+              "ticker": "AAPL",
+              "weight": 0.3
+            },
+            {
+              "ticker": "GOOGL",
+              "weight": 0.3
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": false,
+          "turn_return": -0.031936,
+          "turn_return_market": 0.087297,
+          "portfolio_value": 66519.54,
+          "events": [
+            {
+              "id": "macro_monetary_tightening_fast",
+              "name": "Endurecimiento monetario mas rapido",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.045,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_supply_crisis",
+              "name": "Crisis de suministros del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.05,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "GOOGL"
+              ]
+            },
+            {
+              "id": "macro_monetary_tightening_fast",
+              "name": "Endurecimiento monetario mas rapido",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.045,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_demand_slump",
+              "name": "Bajada de demanda del sector",
+              "scope": "sector",
+              "target": "INDEX",
+              "impact_pct": -0.04,
+              "remaining_turns": 2,
+              "affected": [
+                "^GSPC"
+              ]
+            },
+            {
+              "id": "ticker_news_pos",
+              "name": "Noticia espec\u00edfica (positivo)",
+              "scope": "ticker",
+              "target": "^GSPC",
+              "impact_pct": 0.043835,
+              "remaining_turns": 1,
+              "affected": [
+                "^GSPC"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "macro_monetary_tightening_fast",
+              "name": "Endurecimiento monetario mas rapido",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.045,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_supply_crisis",
+              "name": "Crisis de suministros del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.05,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "GOOGL"
+              ]
+            },
+            {
+              "id": "macro_monetary_tightening_fast",
+              "name": "Endurecimiento monetario mas rapido",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.045,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_demand_slump",
+              "name": "Bajada de demanda del sector",
+              "scope": "sector",
+              "target": "INDEX",
+              "impact_pct": -0.04,
+              "remaining_turns": 2,
+              "affected": [
+                "^GSPC"
+              ]
+            },
+            {
+              "id": "ticker_news_pos",
+              "name": "Noticia espec\u00edfica (positivo)",
+              "scope": "ticker",
+              "target": "^GSPC",
+              "impact_pct": 0.043835,
+              "remaining_turns": 1,
+              "affected": [
+                "^GSPC"
+              ]
+            }
+          ],
+          "events_new": [],
+          "ret_portfolio_shift": -0.09,
+          "ret_by_ticker": {
+            "^GSPC": 0.01494,
+            "AAPL": -0.01687,
+            "GOOGL": 0.122762,
+            "UBI.PA": 0.26271
+          },
+          "ret_by_ticker_final": {
+            "^GSPC": 0.018775,
+            "AAPL": -0.06687,
+            "GOOGL": 0.072762,
+            "UBI.PA": 0.26271
+          },
+          "alloc_next_suggested": [
+            {
+              "ticker": "^GSPC",
+              "weight": 0.192573
+            },
+            {
+              "ticker": "AAPL",
+              "weight": 0.264577
+            },
+            {
+              "ticker": "GOOGL",
+              "weight": 0.304167
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.238683
+            }
+          ],
+          "ret_ticker_shift": {
+            "AAPL": -0.05,
+            "GOOGL": -0.05,
+            "^GSPC": 0.003835
+          },
+          "dca_in_turn": 0.0,
+          "invested_so_far": 50000.0,
+          "pnl_abs": 16519.54,
+          "pnl_pct": 0.330391,
+          "cum_return_net": 0.330391,
+          "delta_vs_prev": -2194.42
+        },
+        {
+          "turn_n": 8,
+          "range": {
+            "start": "2016-04-11",
+            "end": "2016-10-10"
+          },
+          "alloc": [
+            {
+              "ticker": "^GSPC",
+              "weight": 0.2
+            },
+            {
+              "ticker": "AAPL",
+              "weight": 0.3
+            },
+            {
+              "ticker": "GOOGL",
+              "weight": 0.3
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": false,
+          "turn_return": 0.055785,
+          "turn_return_market": 0.108785,
+          "portfolio_value": 70230.31,
+          "events": [
+            {
+              "id": "macro_monetary_tightening_fast",
+              "name": "Endurecimiento monetario mas rapido",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.045,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_demand_slump",
+              "name": "Bajada de demanda del sector",
+              "scope": "sector",
+              "target": "INDEX",
+              "impact_pct": -0.04,
+              "remaining_turns": 1,
+              "affected": [
+                "^GSPC"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "macro_monetary_tightening_fast",
+              "name": "Endurecimiento monetario mas rapido",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.045,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_demand_slump",
+              "name": "Bajada de demanda del sector",
+              "scope": "sector",
+              "target": "INDEX",
+              "impact_pct": -0.04,
+              "remaining_turns": 1,
+              "affected": [
+                "^GSPC"
+              ]
+            }
+          ],
+          "events_new": [
+            {
+              "id": "ticker_product_recall",
+              "name": "Retirada de producto por fallos",
+              "scope": "ticker",
+              "target": "GOOGL",
+              "impact_pct": -0.06,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            }
+          ],
+          "ret_portfolio_shift": -0.045,
+          "ret_by_ticker": {
+            "^GSPC": 0.059584,
+            "AAPL": 0.076766,
+            "GOOGL": 0.074755,
+            "UBI.PA": 0.257057
+          },
+          "ret_by_ticker_final": {
+            "^GSPC": 0.019584,
+            "AAPL": 0.076766,
+            "GOOGL": 0.074755,
+            "UBI.PA": 0.257057
+          },
+          "alloc_next_suggested": [
+            {
+              "ticker": "^GSPC",
+              "weight": 0.185247
+            },
+            {
+              "ticker": "AAPL",
+              "weight": 0.293454
+            },
+            {
+              "ticker": "GOOGL",
+              "weight": 0.292906
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.228393
+            }
+          ],
+          "ret_ticker_shift": {
+            "^GSPC": -0.04
+          },
+          "dca_in_turn": 0.0,
+          "invested_so_far": 50000.0,
+          "pnl_abs": 20230.31,
+          "pnl_pct": 0.404606,
+          "cum_return_net": 0.404606,
+          "delta_vs_prev": 3710.77
+        }
+      ],
+      "seed": 11956567344941200598,
+      "created_at": "2025-11-18T16:16:51.129756",
+      "closed": true,
+      "total_turns": 8,
+      "turns_total": 8,
+      "contrib_so_far": 0.0,
+      "cum_return": 0.404606,
+      "events_log": [
+        {
+          "turn_n": 1,
+          "applied": [],
+          "drawn": [
+            {
+              "id": "sector_environment_scandal",
+              "name": "Escandalo medioambiental sectorial",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.04,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            },
+            {
+              "id": "ticker_exec_departures",
+              "name": "Fuga de directivos clave",
+              "scope": "ticker",
+              "target": "^GSPC",
+              "impact_pct": -0.05,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            },
+            {
+              "id": "sector_rumor_neg",
+              "name": "Rumor sectorial (negativo)",
+              "scope": "sector",
+              "target": "INDEX",
+              "impact_pct": -0.043006,
+              "remaining_turns": 1,
+              "category": "legacy",
+              "difficulty": "medium"
+            }
+          ]
+        },
+        {
+          "turn_n": 2,
+          "applied": [
+            {
+              "id": "sector_environment_scandal",
+              "name": "Escandalo medioambiental sectorial",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.04,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL",
+                "GOOGL"
+              ]
+            },
+            {
+              "id": "ticker_exec_departures",
+              "name": "Fuga de directivos clave",
+              "scope": "ticker",
+              "target": "^GSPC",
+              "impact_pct": -0.05,
+              "remaining_turns": 2,
+              "affected": [
+                "^GSPC"
+              ]
+            },
+            {
+              "id": "sector_rumor_neg",
+              "name": "Rumor sectorial (negativo)",
+              "scope": "sector",
+              "target": "INDEX",
+              "impact_pct": -0.043006,
+              "remaining_turns": 1,
+              "affected": [
+                "^GSPC"
+              ]
+            }
+          ],
+          "drawn": [
+            {
+              "id": "macro_regional_debt",
+              "name": "Crisis de deuda regional",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.04,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            },
+            {
+              "id": "sector_environment_scandal",
+              "name": "Escandalo medioambiental sectorial",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.04,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            },
+            {
+              "id": "ticker_news_pos",
+              "name": "Noticia espec\u00edfica (positivo)",
+              "scope": "ticker",
+              "target": "^GSPC",
+              "impact_pct": 0.053473,
+              "remaining_turns": 1,
+              "category": "legacy",
+              "difficulty": "medium"
+            }
+          ]
+        },
+        {
+          "turn_n": 3,
+          "applied": [
+            {
+              "id": "sector_environment_scandal",
+              "name": "Escandalo medioambiental sectorial",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.04,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "GOOGL"
+              ]
+            },
+            {
+              "id": "ticker_exec_departures",
+              "name": "Fuga de directivos clave",
+              "scope": "ticker",
+              "target": "^GSPC",
+              "impact_pct": -0.05,
+              "remaining_turns": 1,
+              "affected": [
+                "^GSPC"
+              ]
+            },
+            {
+              "id": "macro_regional_debt",
+              "name": "Crisis de deuda regional",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.04,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_environment_scandal",
+              "name": "Escandalo medioambiental sectorial",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.04,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL",
+                "GOOGL"
+              ]
+            },
+            {
+              "id": "ticker_news_pos",
+              "name": "Noticia espec\u00edfica (positivo)",
+              "scope": "ticker",
+              "target": "^GSPC",
+              "impact_pct": 0.053473,
+              "remaining_turns": 1,
+              "affected": [
+                "^GSPC"
+              ]
+            }
+          ],
+          "drawn": [
+            {
+              "id": "macro_technical_recession",
+              "name": "Recesion tecnica",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.05,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            }
+          ]
+        },
+        {
+          "turn_n": 4,
+          "applied": [
+            {
+              "id": "macro_regional_debt",
+              "name": "Crisis de deuda regional",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.04,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_environment_scandal",
+              "name": "Escandalo medioambiental sectorial",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.04,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "GOOGL"
+              ]
+            },
+            {
+              "id": "macro_technical_recession",
+              "name": "Recesion tecnica",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.05,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            }
+          ],
+          "drawn": []
+        },
+        {
+          "turn_n": 5,
+          "applied": [
+            {
+              "id": "macro_technical_recession",
+              "name": "Recesion tecnica",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.05,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            }
+          ],
+          "drawn": [
+            {
+              "id": "macro_monetary_tightening_fast",
+              "name": "Endurecimiento monetario mas rapido",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.045,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            },
+            {
+              "id": "sector_supply_crisis",
+              "name": "Crisis de suministros del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.05,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            }
+          ]
+        },
+        {
+          "turn_n": 6,
+          "applied": [
+            {
+              "id": "macro_monetary_tightening_fast",
+              "name": "Endurecimiento monetario mas rapido",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.045,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_supply_crisis",
+              "name": "Crisis de suministros del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.05,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL",
+                "GOOGL"
+              ]
+            }
+          ],
+          "drawn": [
+            {
+              "id": "macro_monetary_tightening_fast",
+              "name": "Endurecimiento monetario mas rapido",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.045,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            },
+            {
+              "id": "sector_demand_slump",
+              "name": "Bajada de demanda del sector",
+              "scope": "sector",
+              "target": "INDEX",
+              "impact_pct": -0.04,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            },
+            {
+              "id": "ticker_news_pos",
+              "name": "Noticia espec\u00edfica (positivo)",
+              "scope": "ticker",
+              "target": "^GSPC",
+              "impact_pct": 0.043835,
+              "remaining_turns": 1,
+              "category": "legacy",
+              "difficulty": "medium"
+            }
+          ]
+        },
+        {
+          "turn_n": 7,
+          "applied": [
+            {
+              "id": "macro_monetary_tightening_fast",
+              "name": "Endurecimiento monetario mas rapido",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.045,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_supply_crisis",
+              "name": "Crisis de suministros del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.05,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL",
+                "GOOGL"
+              ]
+            },
+            {
+              "id": "macro_monetary_tightening_fast",
+              "name": "Endurecimiento monetario mas rapido",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.045,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_demand_slump",
+              "name": "Bajada de demanda del sector",
+              "scope": "sector",
+              "target": "INDEX",
+              "impact_pct": -0.04,
+              "remaining_turns": 2,
+              "affected": [
+                "^GSPC"
+              ]
+            },
+            {
+              "id": "ticker_news_pos",
+              "name": "Noticia espec\u00edfica (positivo)",
+              "scope": "ticker",
+              "target": "^GSPC",
+              "impact_pct": 0.043835,
+              "remaining_turns": 1,
+              "affected": [
+                "^GSPC"
+              ]
+            }
+          ],
+          "drawn": []
+        },
+        {
+          "turn_n": 8,
+          "applied": [
+            {
+              "id": "macro_monetary_tightening_fast",
+              "name": "Endurecimiento monetario mas rapido",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.045,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "sector_demand_slump",
+              "name": "Bajada de demanda del sector",
+              "scope": "sector",
+              "target": "INDEX",
+              "impact_pct": -0.04,
+              "remaining_turns": 1,
+              "affected": [
+                "^GSPC"
+              ]
+            }
+          ],
+          "drawn": [
+            {
+              "id": "ticker_product_recall",
+              "name": "Retirada de producto por fallos",
+              "scope": "ticker",
+              "target": "GOOGL",
+              "impact_pct": -0.06,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            }
+          ]
+        }
+      ],
+      "active_events": [
+        {
+          "id": "ticker_product_recall",
+          "name": "Retirada de producto por fallos",
+          "scope": "ticker",
+          "target": "GOOGL",
+          "impact_pct": -0.06,
+          "remaining_turns": 2,
+          "category": "negative",
+          "difficulty": "medium"
+        }
+      ],
+      "sectors_map": {
+        "^GSPC": "INDEX",
+        "AAPL": "TECH",
+        "GOOGL": "TECH"
+      },
+      "decisions": [
+        {
+          "turn_n": 1,
+          "alloc": [
+            {
+              "ticker": "^GSPC",
+              "weight": 0.2
+            },
+            {
+              "ticker": "AAPL",
+              "weight": 0.3
+            },
+            {
+              "ticker": "GOOGL",
+              "weight": 0.3
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": false
+        },
+        {
+          "turn_n": 2,
+          "alloc": [
+            {
+              "ticker": "^GSPC",
+              "weight": 0.2
+            },
+            {
+              "ticker": "AAPL",
+              "weight": 0.3
+            },
+            {
+              "ticker": "GOOGL",
+              "weight": 0.3
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": false
+        },
+        {
+          "turn_n": 3,
+          "alloc": [
+            {
+              "ticker": "^GSPC",
+              "weight": 0.2
+            },
+            {
+              "ticker": "AAPL",
+              "weight": 0.3
+            },
+            {
+              "ticker": "GOOGL",
+              "weight": 0.3
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": false
+        },
+        {
+          "turn_n": 4,
+          "alloc": [
+            {
+              "ticker": "^GSPC",
+              "weight": 0.2
+            },
+            {
+              "ticker": "AAPL",
+              "weight": 0.3
+            },
+            {
+              "ticker": "GOOGL",
+              "weight": 0.3
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": false
+        },
+        {
+          "turn_n": 5,
+          "alloc": [
+            {
+              "ticker": "^GSPC",
+              "weight": 0.2
+            },
+            {
+              "ticker": "AAPL",
+              "weight": 0.3
+            },
+            {
+              "ticker": "GOOGL",
+              "weight": 0.3
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": false
+        },
+        {
+          "turn_n": 6,
+          "alloc": [
+            {
+              "ticker": "^GSPC",
+              "weight": 0.2
+            },
+            {
+              "ticker": "AAPL",
+              "weight": 0.3
+            },
+            {
+              "ticker": "GOOGL",
+              "weight": 0.3
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": false
+        },
+        {
+          "turn_n": 7,
+          "alloc": [
+            {
+              "ticker": "^GSPC",
+              "weight": 0.2
+            },
+            {
+              "ticker": "AAPL",
+              "weight": 0.3
+            },
+            {
+              "ticker": "GOOGL",
+              "weight": 0.3
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": false
+        },
+        {
+          "turn_n": 8,
+          "alloc": [
+            {
+              "ticker": "^GSPC",
+              "weight": 0.2
+            },
+            {
+              "ticker": "AAPL",
+              "weight": 0.3
+            },
+            {
+              "ticker": "GOOGL",
+              "weight": 0.3
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": false
+        }
+      ]
     }
   }
 }
