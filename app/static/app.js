@@ -1808,7 +1808,6 @@ function buildNextAllocFromSnapshot(snapshot) {
 function handleCareerCreate() {
   const player = document.getElementById("career-player")?.value?.trim() || "";
   const difficulty = document.getElementById("career-difficulty")?.value || "intermedio";
-  const universeRaw = document.getElementById("career-universe")?.value || "";
   const capital = Number(document.getElementById("career-capital")?.value || 50000);
   const bench = document.getElementById("career-bench")?.value?.trim() || "^GSPC";
   const periodModeInput = document.querySelector('input[name="career-period-mode"]:checked');
@@ -1837,15 +1836,10 @@ function handleCareerCreate() {
     return;
   }
 
-  const universe = universeRaw
-    .split(/[,\s]+/)
-    .map((t) => t.trim().toUpperCase())
-    .filter(Boolean);
-
   const payload = {
     player,
     difficulty,
-    universe,
+    universe: [],
     capital,
     period_mode: periodMode,
   };
@@ -1900,6 +1894,14 @@ function renderCareerSession(session) {
   const seriesCard = document.getElementById("career-series-card");
   if (card) card.hidden = false;
   if (seriesCard) seriesCard.hidden = false;
+  if (careerState.charts.equity) {
+    careerState.charts.equity.destroy();
+    careerState.charts.equity = null;
+  }
+  if (careerState.charts.series) {
+    careerState.charts.series.destroy();
+    careerState.charts.series = null;
+  }
   const shareOut = document.getElementById("career-share-output");
   if (shareOut) {
     shareOut.textContent = "Genera el informe para habilitar el share.";
@@ -2417,6 +2419,9 @@ function renderCareerReportPanels(report, hasSeries) {
 
   if (hasSeries && report.portfolio_equity?.series?.length) {
     renderCareerEquityChart(report, careerState.bench);
+  } else if (hasSeries && careerState.charts.equity) {
+    careerState.charts.equity.destroy();
+    careerState.charts.equity = null;
   }
 }
 

@@ -999,6 +999,8 @@ def _max_drawdown_from_series(series: pd.Series) -> float:
 def _compute_metrics_from_base100(
     series: pd.Series,
 ) -> tuple[dict[str, float], pd.Series]:
+    series = pd.to_numeric(series, errors="coerce")
+    series = series.replace([math.inf, -math.inf], pd.NA).dropna()
     series = series.sort_index()
     if series.empty:
         empty_metrics = {
@@ -1011,28 +1013,46 @@ def _compute_metrics_from_base100(
 
     start_val = float(series.iloc[0])
     end_val = float(series.iloc[-1])
-    total_return = (end_val / start_val - 1.0) if start_val else 0.0
+    if start_val > 0 and math.isfinite(end_val):
+        total_return = (end_val / start_val - 1.0) if start_val else 0.0
+    else:
+        total_return = 0.0
 
     span_days = max((series.index[-1] - series.index[0]).days, 0)
     years = span_days / 365.25 if span_days > 0 else 0.0
-    if years > 0 and start_val > 0:
-        cagr = (end_val / start_val) ** (1 / years) - 1.0
+    if years > 0 and start_val > 0 and end_val > 0:
+        try:
+            cagr = (end_val / start_val) ** (1 / years) - 1.0
+        except (OverflowError, ZeroDivisionError, ValueError):
+            cagr = total_return
     else:
         cagr = total_return
 
     monthly = series.resample("ME").last()
-    monthly_returns = monthly.pct_change().dropna()
+    monthly_returns = (
+        monthly.pct_change(fill_method=None)
+        .replace([math.inf, -math.inf], pd.NA)
+        .dropna()
+    )
     vol_annual = (
         float(monthly_returns.std(ddof=0) * math.sqrt(12))
         if not monthly_returns.empty
         else 0.0
     )
     max_drawdown = _max_drawdown_from_series(series)
+
+    def _clean(value: float) -> float:
+        try:
+            number = float(value)
+        except (TypeError, ValueError):
+            return 0.0
+        return number if math.isfinite(number) else 0.0
+
     metrics = {
-        "total_return": round(total_return, 6),
-        "CAGR": round(cagr, 6),
-        "vol_annual": round(vol_annual, 6),
-        "max_drawdown": round(max_drawdown, 6),
+        "total_return": round(_clean(total_return), 6),
+        "CAGR": round(_clean(cagr), 6),
+        "vol_annual": round(_clean(vol_annual), 6),
+        "max_drawdown": round(_clean(max_drawdown), 6),
     }
     return metrics, monthly_returns
 
@@ -2809,9 +2829,11 @@ def session_report(session_id: str):
             start_iso,
             end_iso,
         )
-    except BadRequest as exc:
-        message = getattr(exc, "description", str(exc))
-        status_code = exc.code if hasattr(exc, "code") else 400
+    except (BadRequest, NoHistoricalDataError) as exc:
+        message = getattr(exc, "description", None) or getattr(exc, "message", str(exc))
+        status_code = (
+            exc.code if isinstance(exc, BadRequest) and hasattr(exc, "code") else 400
+        )
         return _json_error(message, status_code)
 
     report_payload["benchmark"]["ticker"] = bench_ticker
@@ -2848,9 +2870,11 @@ def ranking_submit():
         report_payload, _ = _generate_report_payload(
             session, bench_ticker, False, start_d, end_d, start_iso, end_iso
         )
-    except BadRequest as exc:
-        message = getattr(exc, "description", str(exc))
-        status_code = exc.code if hasattr(exc, "code") else 400
+    except (BadRequest, NoHistoricalDataError) as exc:
+        message = getattr(exc, "description", None) or getattr(exc, "message", str(exc))
+        status_code = (
+            exc.code if isinstance(exc, BadRequest) and hasattr(exc, "code") else 400
+        )
         return _json_error(message, status_code)
 
     try:
@@ -2958,9 +2982,11 @@ def session_export(session_id: str):
             start_iso,
             end_iso,
         )
-    except BadRequest as exc:
-        message = getattr(exc, "description", str(exc))
-        status_code = exc.code if hasattr(exc, "code") else 400
+    except (BadRequest, NoHistoricalDataError) as exc:
+        message = getattr(exc, "description", None) or getattr(exc, "message", str(exc))
+        status_code = (
+            exc.code if isinstance(exc, BadRequest) and hasattr(exc, "code") else 400
+        )
         return _json_error(message, status_code)
 
     filename = f"{session_id}_{export_type}.csv"
@@ -3099,9 +3125,11 @@ def session_benchmark(session_id: str):
         bench_series_pd, bench_metrics, bench_monthly = _compute_benchmark_package(
             bench_ticker, start_d, end_d
         )
-    except BadRequest as exc:
-        message = getattr(exc, "description", str(exc))
-        status_code = exc.code if hasattr(exc, "code") else 400
+    except (BadRequest, NoHistoricalDataError) as exc:
+        message = getattr(exc, "description", None) or getattr(exc, "message", str(exc))
+        status_code = (
+            exc.code if isinstance(exc, BadRequest) and hasattr(exc, "code") else 400
+        )
         return _json_error(message, status_code)
 
     portfolio_series_pd = _portfolio_equity_series(session, start_d, end_d)
@@ -3173,9 +3201,11 @@ def session_theoretical(session_id: str):
 
     try:
         summary = _compute_theoretical_summary(session, start_d, end_d, kmax)
-    except BadRequest as exc:
-        message = getattr(exc, "description", str(exc))
-        status_code = exc.code if hasattr(exc, "code") else 400
+    except (BadRequest, NoHistoricalDataError) as exc:
+        message = getattr(exc, "description", None) or getattr(exc, "message", str(exc))
+        status_code = (
+            exc.code if isinstance(exc, BadRequest) and hasattr(exc, "code") else 400
+        )
         return _json_error(message, status_code)
 
     response_payload = {

@@ -7,7 +7,14 @@ import uuid
 from datetime import date, datetime, timedelta
 from pathlib import Path
 
-from flask import Blueprint, Response, jsonify, render_template, request
+from flask import (
+    Blueprint,
+    Response,
+    jsonify,
+    render_template,
+    request,
+    send_from_directory,
+)
 import pandas as pd
 import yfinance as yf
 
@@ -71,6 +78,12 @@ def career_page():
 @bp.get("/health")
 def health():
     return jsonify(status="ok")
+
+
+@bp.get("/favicon.ico")
+def favicon():
+    static_dir = Path(__file__).resolve().parent / "static" / "img"
+    return send_from_directory(static_dir, "favicon.png")
 
 
 # ----------------------

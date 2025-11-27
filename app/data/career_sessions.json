@@ -13646,6 +13646,1879 @@
           "use_dca": false
         }
       ]
+    },
+    "car_e33ecb": {
+      "session_id": "car_e33ecb",
+      "player": "t",
+      "difficulty": "intermedio",
+      "universe": [],
+      "rejected_universe": [],
+      "capital_initial": 50000.0,
+      "capital_current": 50000.0,
+      "period": {
+        "start": "2016-11-24",
+        "end": "2022-11-23"
+      },
+      "turns": [
+        {
+          "n": 1,
+          "start": "2016-11-24",
+          "end": "2017-05-23",
+          "status": "pending"
+        },
+        {
+          "n": 2,
+          "start": "2017-05-24",
+          "end": "2017-11-23",
+          "status": "pending"
+        },
+        {
+          "n": 3,
+          "start": "2017-11-24",
+          "end": "2018-05-23",
+          "status": "pending"
+        },
+        {
+          "n": 4,
+          "start": "2018-05-24",
+          "end": "2018-11-23",
+          "status": "pending"
+        },
+        {
+          "n": 5,
+          "start": "2018-11-24",
+          "end": "2019-05-23",
+          "status": "pending"
+        },
+        {
+          "n": 6,
+          "start": "2019-05-24",
+          "end": "2019-11-23",
+          "status": "pending"
+        },
+        {
+          "n": 7,
+          "start": "2019-11-24",
+          "end": "2020-05-23",
+          "status": "pending"
+        },
+        {
+          "n": 8,
+          "start": "2020-05-24",
+          "end": "2020-11-23",
+          "status": "pending"
+        },
+        {
+          "n": 9,
+          "start": "2020-11-24",
+          "end": "2021-05-23",
+          "status": "pending"
+        },
+        {
+          "n": 10,
+          "start": "2021-05-24",
+          "end": "2021-11-23",
+          "status": "pending"
+        },
+        {
+          "n": 11,
+          "start": "2021-11-24",
+          "end": "2022-05-23",
+          "status": "pending"
+        },
+        {
+          "n": 12,
+          "start": "2022-05-24",
+          "end": "2022-11-23",
+          "status": "pending"
+        }
+      ],
+      "completed_turns": [],
+      "seed": 6592755662872842289,
+      "created_at": "2025-11-27T08:19:23.142862",
+      "closed": false,
+      "total_turns": 12,
+      "turns_total": 12,
+      "contrib_so_far": 0.0,
+      "cum_return": 0.0,
+      "events_log": [],
+      "active_events": [],
+      "sectors_map": {},
+      "decisions": []
+    },
+    "car_921b2e": {
+      "session_id": "car_921b2e",
+      "player": "Javier6",
+      "difficulty": "intermedio",
+      "universe": [
+        "AAPL",
+        "JNJ",
+        "KO",
+        "UBI.PA"
+      ],
+      "rejected_universe": [],
+      "capital_initial": 50000.0,
+      "capital_current": 92631.36,
+      "period": {
+        "start": "2001-09-24",
+        "end": "2005-09-23"
+      },
+      "turns": [
+        {
+          "n": 1,
+          "start": "2001-09-24",
+          "end": "2002-03-23",
+          "status": "completed",
+          "closed_at": "2025-11-27T08:44:05.569814"
+        },
+        {
+          "n": 2,
+          "start": "2002-03-24",
+          "end": "2002-09-23",
+          "status": "completed",
+          "closed_at": "2025-11-27T08:44:06.699245"
+        },
+        {
+          "n": 3,
+          "start": "2002-09-24",
+          "end": "2003-03-23",
+          "status": "completed",
+          "closed_at": "2025-11-27T08:44:07.804961"
+        },
+        {
+          "n": 4,
+          "start": "2003-03-24",
+          "end": "2003-09-23",
+          "status": "completed",
+          "closed_at": "2025-11-27T08:44:09.009259"
+        },
+        {
+          "n": 5,
+          "start": "2003-09-24",
+          "end": "2004-03-23",
+          "status": "completed",
+          "closed_at": "2025-11-27T08:44:10.116077"
+        },
+        {
+          "n": 6,
+          "start": "2004-03-24",
+          "end": "2004-09-23",
+          "status": "completed",
+          "closed_at": "2025-11-27T08:44:11.264073"
+        },
+        {
+          "n": 7,
+          "start": "2004-09-24",
+          "end": "2005-03-23",
+          "status": "completed",
+          "closed_at": "2025-11-27T08:44:12.438687"
+        },
+        {
+          "n": 8,
+          "start": "2005-03-24",
+          "end": "2005-09-23",
+          "status": "completed",
+          "closed_at": "2025-11-27T08:44:13.636529"
+        }
+      ],
+      "completed_turns": [
+        {
+          "turn_n": 1,
+          "range": {
+            "start": "2001-09-24",
+            "end": "2002-03-23"
+          },
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.2
+            },
+            {
+              "ticker": "JNJ",
+              "weight": 0.2
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.3
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.3
+            }
+          ],
+          "use_dca": false,
+          "turn_return": 0.250301,
+          "turn_return_market": 0.250301,
+          "portfolio_value": 62515.03,
+          "events": [],
+          "events_applied": [],
+          "events_new": [
+            {
+              "id": "macro_regional_debt",
+              "name": "Crisis de deuda regional",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.04,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            },
+            {
+              "id": "ticker_news_pos",
+              "name": "Noticia espec\u00edfica (positivo)",
+              "scope": "ticker",
+              "target": "KO",
+              "impact_pct": 0.033648,
+              "remaining_turns": 1,
+              "category": "legacy",
+              "difficulty": "medium"
+            }
+          ],
+          "ret_portfolio_shift": 0.0,
+          "ret_by_ticker": {
+            "AAPL": 0.46444,
+            "JNJ": 0.244941,
+            "UBI.PA": 0.285882,
+            "KO": 0.075533
+          },
+          "ret_by_ticker_final": {
+            "AAPL": 0.46444,
+            "JNJ": 0.244941,
+            "UBI.PA": 0.285882,
+            "KO": 0.075533
+          },
+          "alloc_next_suggested": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.234254
+            },
+            {
+              "ticker": "JNJ",
+              "weight": 0.199143
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.308537
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.258066
+            }
+          ],
+          "dca_in_turn": 0.0,
+          "invested_so_far": 50000.0,
+          "pnl_abs": 12515.03,
+          "pnl_pct": 0.250301,
+          "cum_return_net": 0.250301,
+          "delta_vs_prev": 12515.03
+        },
+        {
+          "turn_n": 2,
+          "range": {
+            "start": "2002-03-24",
+            "end": "2002-09-23"
+          },
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.2
+            },
+            {
+              "ticker": "JNJ",
+              "weight": 0.2
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.3
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.3
+            }
+          ],
+          "use_dca": false,
+          "turn_return": -0.371081,
+          "turn_return_market": -0.341175,
+          "portfolio_value": 39316.91,
+          "events": [
+            {
+              "id": "macro_regional_debt",
+              "name": "Crisis de deuda regional",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.04,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "ticker_news_pos",
+              "name": "Noticia espec\u00edfica (positivo)",
+              "scope": "ticker",
+              "target": "KO",
+              "impact_pct": 0.033648,
+              "remaining_turns": 1,
+              "affected": [
+                "KO"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "macro_regional_debt",
+              "name": "Crisis de deuda regional",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.04,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "ticker_news_pos",
+              "name": "Noticia espec\u00edfica (positivo)",
+              "scope": "ticker",
+              "target": "KO",
+              "impact_pct": 0.033648,
+              "remaining_turns": 1,
+              "affected": [
+                "KO"
+              ]
+            }
+          ],
+          "events_new": [],
+          "ret_portfolio_shift": -0.04,
+          "ret_by_ticker": {
+            "AAPL": -0.364024,
+            "JNJ": -0.172891,
+            "UBI.PA": -0.694486,
+            "KO": -0.084821
+          },
+          "ret_by_ticker_final": {
+            "AAPL": -0.364024,
+            "JNJ": -0.172891,
+            "UBI.PA": -0.694486,
+            "KO": -0.051173
+          },
+          "alloc_next_suggested": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.19015
+            },
+            {
+              "ticker": "JNJ",
+              "weight": 0.247297
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.137018
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.425535
+            }
+          ],
+          "ret_ticker_shift": {
+            "KO": 0.033648
+          },
+          "dca_in_turn": 0.0,
+          "invested_so_far": 50000.0,
+          "pnl_abs": -10683.09,
+          "pnl_pct": -0.213662,
+          "cum_return_net": -0.213662,
+          "delta_vs_prev": -23198.12
+        },
+        {
+          "turn_n": 3,
+          "range": {
+            "start": "2002-09-24",
+            "end": "2003-03-23"
+          },
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.2
+            },
+            {
+              "ticker": "JNJ",
+              "weight": 0.2
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.3
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.3
+            }
+          ],
+          "use_dca": false,
+          "turn_return": 0.047995,
+          "turn_return_market": 0.087995,
+          "portfolio_value": 41203.91,
+          "events": [
+            {
+              "id": "macro_regional_debt",
+              "name": "Crisis de deuda regional",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.04,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "macro_regional_debt",
+              "name": "Crisis de deuda regional",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.04,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            }
+          ],
+          "events_new": [
+            {
+              "id": "macro_monetary_tightening_fast",
+              "name": "Endurecimiento monetario mas rapido",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.045,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            },
+            {
+              "id": "ticker_contract_loss",
+              "name": "Perdida de contrato estrategico",
+              "scope": "ticker",
+              "target": "AAPL",
+              "impact_pct": -0.055,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            }
+          ],
+          "ret_portfolio_shift": -0.04,
+          "ret_by_ticker": {
+            "AAPL": 0.024588,
+            "JNJ": 0.10263,
+            "UBI.PA": 0.304107,
+            "KO": -0.095603
+          },
+          "ret_by_ticker_final": {
+            "AAPL": 0.024588,
+            "JNJ": 0.10263,
+            "UBI.PA": 0.304107,
+            "KO": -0.095603
+          },
+          "alloc_next_suggested": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.188344
+            },
+            {
+              "ticker": "JNJ",
+              "weight": 0.202691
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.35959
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.249375
+            }
+          ],
+          "dca_in_turn": 0.0,
+          "invested_so_far": 50000.0,
+          "pnl_abs": -8796.09,
+          "pnl_pct": -0.175922,
+          "cum_return_net": -0.175922,
+          "delta_vs_prev": 1887.0
+        },
+        {
+          "turn_n": 4,
+          "range": {
+            "start": "2003-03-24",
+            "end": "2003-09-23"
+          },
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.2
+            },
+            {
+              "ticker": "JNJ",
+              "weight": 0.2
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.3
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.3
+            }
+          ],
+          "use_dca": false,
+          "turn_return": 0.275217,
+          "turn_return_market": 0.331217,
+          "portfolio_value": 52543.93,
+          "events": [
+            {
+              "id": "macro_monetary_tightening_fast",
+              "name": "Endurecimiento monetario mas rapido",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.045,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "ticker_contract_loss",
+              "name": "Perdida de contrato estrategico",
+              "scope": "ticker",
+              "target": "AAPL",
+              "impact_pct": -0.055,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "macro_monetary_tightening_fast",
+              "name": "Endurecimiento monetario mas rapido",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.045,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "ticker_contract_loss",
+              "name": "Perdida de contrato estrategico",
+              "scope": "ticker",
+              "target": "AAPL",
+              "impact_pct": -0.055,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL"
+              ]
+            }
+          ],
+          "events_new": [
+            {
+              "id": "sector_environment_scandal",
+              "name": "Escandalo medioambiental sectorial",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.04,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            }
+          ],
+          "ret_portfolio_shift": -0.045,
+          "ret_by_ticker": {
+            "AAPL": 0.560893,
+            "JNJ": -0.110573,
+            "UBI.PA": 0.73221,
+            "KO": 0.071634
+          },
+          "ret_by_ticker_final": {
+            "AAPL": 0.505893,
+            "JNJ": -0.110573,
+            "UBI.PA": 0.73221,
+            "KO": 0.071634
+          },
+          "alloc_next_suggested": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.228128
+            },
+            {
+              "ticker": "JNJ",
+              "weight": 0.13474
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.393619
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.243513
+            }
+          ],
+          "ret_ticker_shift": {
+            "AAPL": -0.055
+          },
+          "dca_in_turn": 0.0,
+          "invested_so_far": 50000.0,
+          "pnl_abs": 2543.93,
+          "pnl_pct": 0.050879,
+          "cum_return_net": 0.050879,
+          "delta_vs_prev": 11340.02
+        },
+        {
+          "turn_n": 5,
+          "range": {
+            "start": "2003-09-24",
+            "end": "2004-03-23"
+          },
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.2
+            },
+            {
+              "ticker": "JNJ",
+              "weight": 0.2
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.3
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.3
+            }
+          ],
+          "use_dca": false,
+          "turn_return": 0.013161,
+          "turn_return_market": 0.077161,
+          "portfolio_value": 53235.44,
+          "events": [
+            {
+              "id": "macro_monetary_tightening_fast",
+              "name": "Endurecimiento monetario mas rapido",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.045,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "ticker_contract_loss",
+              "name": "Perdida de contrato estrategico",
+              "scope": "ticker",
+              "target": "AAPL",
+              "impact_pct": -0.055,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL"
+              ]
+            },
+            {
+              "id": "sector_environment_scandal",
+              "name": "Escandalo medioambiental sectorial",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.04,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "macro_monetary_tightening_fast",
+              "name": "Endurecimiento monetario mas rapido",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.045,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "ticker_contract_loss",
+              "name": "Perdida de contrato estrategico",
+              "scope": "ticker",
+              "target": "AAPL",
+              "impact_pct": -0.055,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL"
+              ]
+            },
+            {
+              "id": "sector_environment_scandal",
+              "name": "Escandalo medioambiental sectorial",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.04,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL"
+              ]
+            }
+          ],
+          "events_new": [
+            {
+              "id": "sector_regulator_inspections",
+              "name": "Entrada del regulador con inspecciones",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.045,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            },
+            {
+              "id": "ticker_exec_departures",
+              "name": "Fuga de directivos clave",
+              "scope": "ticker",
+              "target": "UBI.PA",
+              "impact_pct": -0.05,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            },
+            {
+              "id": "ticker_news_pos",
+              "name": "Noticia espec\u00edfica (positivo)",
+              "scope": "ticker",
+              "target": "JNJ",
+              "impact_pct": 0.022987,
+              "remaining_turns": 1,
+              "category": "legacy",
+              "difficulty": "medium"
+            }
+          ],
+          "ret_portfolio_shift": -0.045,
+          "ret_by_ticker": {
+            "AAPL": 0.18621,
+            "JNJ": 0.013304,
+            "UBI.PA": -0.006349,
+            "KO": 0.130541
+          },
+          "ret_by_ticker_final": {
+            "AAPL": 0.09121,
+            "JNJ": 0.013304,
+            "UBI.PA": -0.006349,
+            "KO": 0.130541
+          },
+          "alloc_next_suggested": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.206246
+            },
+            {
+              "ticker": "JNJ",
+              "weight": 0.191522
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.281711
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.320521
+            }
+          ],
+          "ret_ticker_shift": {
+            "AAPL": -0.095
+          },
+          "dca_in_turn": 0.0,
+          "invested_so_far": 50000.0,
+          "pnl_abs": 3235.44,
+          "pnl_pct": 0.064709,
+          "cum_return_net": 0.064709,
+          "delta_vs_prev": 691.51
+        },
+        {
+          "turn_n": 6,
+          "range": {
+            "start": "2004-03-24",
+            "end": "2004-09-23"
+          },
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.2
+            },
+            {
+              "ticker": "JNJ",
+              "weight": 0.2
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.3
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.3
+            }
+          ],
+          "use_dca": false,
+          "turn_return": -0.003472,
+          "turn_return_market": 0.023931,
+          "portfolio_value": 53050.63,
+          "events": [
+            {
+              "id": "sector_environment_scandal",
+              "name": "Escandalo medioambiental sectorial",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.04,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL"
+              ]
+            },
+            {
+              "id": "sector_regulator_inspections",
+              "name": "Entrada del regulador con inspecciones",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.045,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL"
+              ]
+            },
+            {
+              "id": "ticker_exec_departures",
+              "name": "Fuga de directivos clave",
+              "scope": "ticker",
+              "target": "UBI.PA",
+              "impact_pct": -0.05,
+              "remaining_turns": 2,
+              "affected": [
+                "UBI.PA"
+              ]
+            },
+            {
+              "id": "ticker_news_pos",
+              "name": "Noticia espec\u00edfica (positivo)",
+              "scope": "ticker",
+              "target": "JNJ",
+              "impact_pct": 0.022987,
+              "remaining_turns": 1,
+              "affected": [
+                "JNJ"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "sector_environment_scandal",
+              "name": "Escandalo medioambiental sectorial",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.04,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL"
+              ]
+            },
+            {
+              "id": "sector_regulator_inspections",
+              "name": "Entrada del regulador con inspecciones",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.045,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL"
+              ]
+            },
+            {
+              "id": "ticker_exec_departures",
+              "name": "Fuga de directivos clave",
+              "scope": "ticker",
+              "target": "UBI.PA",
+              "impact_pct": -0.05,
+              "remaining_turns": 2,
+              "affected": [
+                "UBI.PA"
+              ]
+            },
+            {
+              "id": "ticker_news_pos",
+              "name": "Noticia espec\u00edfica (positivo)",
+              "scope": "ticker",
+              "target": "JNJ",
+              "impact_pct": 0.022987,
+              "remaining_turns": 1,
+              "affected": [
+                "JNJ"
+              ]
+            }
+          ],
+          "events_new": [
+            {
+              "id": "ticker_contract_loss",
+              "name": "Perdida de contrato estrategico",
+              "scope": "ticker",
+              "target": "JNJ",
+              "impact_pct": -0.055,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            },
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.025259,
+              "remaining_turns": 1,
+              "category": "legacy",
+              "difficulty": "medium"
+            }
+          ],
+          "ret_portfolio_shift": 0.0,
+          "ret_by_ticker": {
+            "AAPL": 0.46157,
+            "JNJ": 0.150941,
+            "UBI.PA": -0.162766,
+            "KO": -0.165805
+          },
+          "ret_by_ticker_final": {
+            "AAPL": 0.37657,
+            "JNJ": 0.173928,
+            "UBI.PA": -0.212766,
+            "KO": -0.165805
+          },
+          "alloc_next_suggested": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.276273
+            },
+            {
+              "ticker": "JNJ",
+              "weight": 0.235604
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.236993
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.25113
+            }
+          ],
+          "ret_ticker_shift": {
+            "AAPL": -0.085,
+            "UBI.PA": -0.05,
+            "JNJ": 0.022987
+          },
+          "dca_in_turn": 0.0,
+          "invested_so_far": 50000.0,
+          "pnl_abs": 3050.63,
+          "pnl_pct": 0.061013,
+          "cum_return_net": 0.061013,
+          "delta_vs_prev": -184.81
+        },
+        {
+          "turn_n": 7,
+          "range": {
+            "start": "2004-09-24",
+            "end": "2005-03-23"
+          },
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.2
+            },
+            {
+              "ticker": "JNJ",
+              "weight": 0.2
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.3
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.3
+            }
+          ],
+          "use_dca": false,
+          "turn_return": 0.52626,
+          "turn_return_market": 0.586519,
+          "portfolio_value": 80969.06,
+          "events": [
+            {
+              "id": "sector_regulator_inspections",
+              "name": "Entrada del regulador con inspecciones",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.045,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL"
+              ]
+            },
+            {
+              "id": "ticker_exec_departures",
+              "name": "Fuga de directivos clave",
+              "scope": "ticker",
+              "target": "UBI.PA",
+              "impact_pct": -0.05,
+              "remaining_turns": 1,
+              "affected": [
+                "UBI.PA"
+              ]
+            },
+            {
+              "id": "ticker_contract_loss",
+              "name": "Perdida de contrato estrategico",
+              "scope": "ticker",
+              "target": "JNJ",
+              "impact_pct": -0.055,
+              "remaining_turns": 2,
+              "affected": [
+                "JNJ"
+              ]
+            },
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.025259,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "sector_regulator_inspections",
+              "name": "Entrada del regulador con inspecciones",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.045,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL"
+              ]
+            },
+            {
+              "id": "ticker_exec_departures",
+              "name": "Fuga de directivos clave",
+              "scope": "ticker",
+              "target": "UBI.PA",
+              "impact_pct": -0.05,
+              "remaining_turns": 1,
+              "affected": [
+                "UBI.PA"
+              ]
+            },
+            {
+              "id": "ticker_contract_loss",
+              "name": "Perdida de contrato estrategico",
+              "scope": "ticker",
+              "target": "JNJ",
+              "impact_pct": -0.055,
+              "remaining_turns": 2,
+              "affected": [
+                "JNJ"
+              ]
+            },
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.025259,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            }
+          ],
+          "events_new": [
+            {
+              "id": "sector_supply_crisis",
+              "name": "Crisis de suministros del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.05,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            }
+          ],
+          "ret_portfolio_shift": -0.025259,
+          "ret_by_ticker": {
+            "AAPL": 1.282113,
+            "JNJ": 0.216956,
+            "UBI.PA": 0.912647,
+            "KO": 0.043038
+          },
+          "ret_by_ticker_final": {
+            "AAPL": 1.237113,
+            "JNJ": 0.161956,
+            "UBI.PA": 0.862647,
+            "KO": 0.043038
+          },
+          "alloc_next_suggested": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.288377
+            },
+            {
+              "ticker": "JNJ",
+              "weight": 0.149783
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.360159
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.201681
+            }
+          ],
+          "ret_ticker_shift": {
+            "AAPL": -0.045,
+            "UBI.PA": -0.05,
+            "JNJ": -0.055
+          },
+          "dca_in_turn": 0.0,
+          "invested_so_far": 50000.0,
+          "pnl_abs": 30969.06,
+          "pnl_pct": 0.619381,
+          "cum_return_net": 0.619381,
+          "delta_vs_prev": 27918.43
+        },
+        {
+          "turn_n": 8,
+          "range": {
+            "start": "2005-03-24",
+            "end": "2005-09-23"
+          },
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.2
+            },
+            {
+              "ticker": "JNJ",
+              "weight": 0.2
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.3
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.3
+            }
+          ],
+          "use_dca": false,
+          "turn_return": 0.144034,
+          "turn_return_market": 0.165034,
+          "portfolio_value": 92631.36,
+          "events": [
+            {
+              "id": "ticker_contract_loss",
+              "name": "Perdida de contrato estrategico",
+              "scope": "ticker",
+              "target": "JNJ",
+              "impact_pct": -0.055,
+              "remaining_turns": 1,
+              "affected": [
+                "JNJ"
+              ]
+            },
+            {
+              "id": "sector_supply_crisis",
+              "name": "Crisis de suministros del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.05,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "ticker_contract_loss",
+              "name": "Perdida de contrato estrategico",
+              "scope": "ticker",
+              "target": "JNJ",
+              "impact_pct": -0.055,
+              "remaining_turns": 1,
+              "affected": [
+                "JNJ"
+              ]
+            },
+            {
+              "id": "sector_supply_crisis",
+              "name": "Crisis de suministros del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.05,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL"
+              ]
+            }
+          ],
+          "events_new": [
+            {
+              "id": "macro_technical_recession",
+              "name": "Recesion tecnica",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.05,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            }
+          ],
+          "ret_portfolio_shift": 0.0,
+          "ret_by_ticker": {
+            "AAPL": 0.251765,
+            "JNJ": -0.050732,
+            "UBI.PA": 0.375,
+            "KO": 0.041091
+          },
+          "ret_by_ticker_final": {
+            "AAPL": 0.201765,
+            "JNJ": -0.105732,
+            "UBI.PA": 0.375,
+            "KO": 0.041091
+          },
+          "alloc_next_suggested": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.210093
+            },
+            {
+              "ticker": "JNJ",
+              "weight": 0.156336
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.360566
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.273005
+            }
+          ],
+          "ret_ticker_shift": {
+            "JNJ": -0.055,
+            "AAPL": -0.05
+          },
+          "dca_in_turn": 0.0,
+          "invested_so_far": 50000.0,
+          "pnl_abs": 42631.36,
+          "pnl_pct": 0.852627,
+          "cum_return_net": 0.852627,
+          "delta_vs_prev": 11662.3
+        }
+      ],
+      "seed": 11264909264309138491,
+      "created_at": "2025-11-27T08:42:35.681358",
+      "closed": true,
+      "total_turns": 8,
+      "turns_total": 8,
+      "contrib_so_far": 0.0,
+      "cum_return": 0.852627,
+      "events_log": [
+        {
+          "turn_n": 1,
+          "applied": [],
+          "drawn": [
+            {
+              "id": "macro_regional_debt",
+              "name": "Crisis de deuda regional",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.04,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            },
+            {
+              "id": "ticker_news_pos",
+              "name": "Noticia espec\u00edfica (positivo)",
+              "scope": "ticker",
+              "target": "KO",
+              "impact_pct": 0.033648,
+              "remaining_turns": 1,
+              "category": "legacy",
+              "difficulty": "medium"
+            }
+          ]
+        },
+        {
+          "turn_n": 2,
+          "applied": [
+            {
+              "id": "macro_regional_debt",
+              "name": "Crisis de deuda regional",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.04,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "ticker_news_pos",
+              "name": "Noticia espec\u00edfica (positivo)",
+              "scope": "ticker",
+              "target": "KO",
+              "impact_pct": 0.033648,
+              "remaining_turns": 1,
+              "affected": [
+                "KO"
+              ]
+            }
+          ],
+          "drawn": []
+        },
+        {
+          "turn_n": 3,
+          "applied": [
+            {
+              "id": "macro_regional_debt",
+              "name": "Crisis de deuda regional",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.04,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            }
+          ],
+          "drawn": [
+            {
+              "id": "macro_monetary_tightening_fast",
+              "name": "Endurecimiento monetario mas rapido",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.045,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            },
+            {
+              "id": "ticker_contract_loss",
+              "name": "Perdida de contrato estrategico",
+              "scope": "ticker",
+              "target": "AAPL",
+              "impact_pct": -0.055,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            }
+          ]
+        },
+        {
+          "turn_n": 4,
+          "applied": [
+            {
+              "id": "macro_monetary_tightening_fast",
+              "name": "Endurecimiento monetario mas rapido",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.045,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "ticker_contract_loss",
+              "name": "Perdida de contrato estrategico",
+              "scope": "ticker",
+              "target": "AAPL",
+              "impact_pct": -0.055,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL"
+              ]
+            }
+          ],
+          "drawn": [
+            {
+              "id": "sector_environment_scandal",
+              "name": "Escandalo medioambiental sectorial",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.04,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            }
+          ]
+        },
+        {
+          "turn_n": 5,
+          "applied": [
+            {
+              "id": "macro_monetary_tightening_fast",
+              "name": "Endurecimiento monetario mas rapido",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.045,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "ticker_contract_loss",
+              "name": "Perdida de contrato estrategico",
+              "scope": "ticker",
+              "target": "AAPL",
+              "impact_pct": -0.055,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL"
+              ]
+            },
+            {
+              "id": "sector_environment_scandal",
+              "name": "Escandalo medioambiental sectorial",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.04,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL"
+              ]
+            }
+          ],
+          "drawn": [
+            {
+              "id": "sector_regulator_inspections",
+              "name": "Entrada del regulador con inspecciones",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.045,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            },
+            {
+              "id": "ticker_exec_departures",
+              "name": "Fuga de directivos clave",
+              "scope": "ticker",
+              "target": "UBI.PA",
+              "impact_pct": -0.05,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            },
+            {
+              "id": "ticker_news_pos",
+              "name": "Noticia espec\u00edfica (positivo)",
+              "scope": "ticker",
+              "target": "JNJ",
+              "impact_pct": 0.022987,
+              "remaining_turns": 1,
+              "category": "legacy",
+              "difficulty": "medium"
+            }
+          ]
+        },
+        {
+          "turn_n": 6,
+          "applied": [
+            {
+              "id": "sector_environment_scandal",
+              "name": "Escandalo medioambiental sectorial",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.04,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL"
+              ]
+            },
+            {
+              "id": "sector_regulator_inspections",
+              "name": "Entrada del regulador con inspecciones",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.045,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL"
+              ]
+            },
+            {
+              "id": "ticker_exec_departures",
+              "name": "Fuga de directivos clave",
+              "scope": "ticker",
+              "target": "UBI.PA",
+              "impact_pct": -0.05,
+              "remaining_turns": 2,
+              "affected": [
+                "UBI.PA"
+              ]
+            },
+            {
+              "id": "ticker_news_pos",
+              "name": "Noticia espec\u00edfica (positivo)",
+              "scope": "ticker",
+              "target": "JNJ",
+              "impact_pct": 0.022987,
+              "remaining_turns": 1,
+              "affected": [
+                "JNJ"
+              ]
+            }
+          ],
+          "drawn": [
+            {
+              "id": "ticker_contract_loss",
+              "name": "Perdida de contrato estrategico",
+              "scope": "ticker",
+              "target": "JNJ",
+              "impact_pct": -0.055,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            },
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.025259,
+              "remaining_turns": 1,
+              "category": "legacy",
+              "difficulty": "medium"
+            }
+          ]
+        },
+        {
+          "turn_n": 7,
+          "applied": [
+            {
+              "id": "sector_regulator_inspections",
+              "name": "Entrada del regulador con inspecciones",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.045,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL"
+              ]
+            },
+            {
+              "id": "ticker_exec_departures",
+              "name": "Fuga de directivos clave",
+              "scope": "ticker",
+              "target": "UBI.PA",
+              "impact_pct": -0.05,
+              "remaining_turns": 1,
+              "affected": [
+                "UBI.PA"
+              ]
+            },
+            {
+              "id": "ticker_contract_loss",
+              "name": "Perdida de contrato estrategico",
+              "scope": "ticker",
+              "target": "JNJ",
+              "impact_pct": -0.055,
+              "remaining_turns": 2,
+              "affected": [
+                "JNJ"
+              ]
+            },
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.025259,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            }
+          ],
+          "drawn": [
+            {
+              "id": "sector_supply_crisis",
+              "name": "Crisis de suministros del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.05,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            }
+          ]
+        },
+        {
+          "turn_n": 8,
+          "applied": [
+            {
+              "id": "ticker_contract_loss",
+              "name": "Perdida de contrato estrategico",
+              "scope": "ticker",
+              "target": "JNJ",
+              "impact_pct": -0.055,
+              "remaining_turns": 1,
+              "affected": [
+                "JNJ"
+              ]
+            },
+            {
+              "id": "sector_supply_crisis",
+              "name": "Crisis de suministros del sector",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.05,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL"
+              ]
+            }
+          ],
+          "drawn": [
+            {
+              "id": "macro_technical_recession",
+              "name": "Recesion tecnica",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.05,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            }
+          ]
+        }
+      ],
+      "active_events": [
+        {
+          "id": "sector_supply_crisis",
+          "name": "Crisis de suministros del sector",
+          "scope": "sector",
+          "target": "TECH",
+          "impact_pct": -0.05,
+          "remaining_turns": 1,
+          "category": "negative",
+          "difficulty": "medium"
+        },
+        {
+          "id": "macro_technical_recession",
+          "name": "Recesion tecnica",
+          "scope": "portfolio",
+          "target": null,
+          "impact_pct": -0.05,
+          "remaining_turns": 2,
+          "category": "negative",
+          "difficulty": "medium"
+        }
+      ],
+      "sectors_map": {
+        "AAPL": "TECH"
+      },
+      "decisions": [
+        {
+          "turn_n": 1,
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.2
+            },
+            {
+              "ticker": "JNJ",
+              "weight": 0.2
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.3
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.3
+            }
+          ],
+          "use_dca": false
+        },
+        {
+          "turn_n": 2,
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.2
+            },
+            {
+              "ticker": "JNJ",
+              "weight": 0.2
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.3
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.3
+            }
+          ],
+          "use_dca": false
+        },
+        {
+          "turn_n": 3,
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.2
+            },
+            {
+              "ticker": "JNJ",
+              "weight": 0.2
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.3
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.3
+            }
+          ],
+          "use_dca": false
+        },
+        {
+          "turn_n": 4,
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.2
+            },
+            {
+              "ticker": "JNJ",
+              "weight": 0.2
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.3
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.3
+            }
+          ],
+          "use_dca": false
+        },
+        {
+          "turn_n": 5,
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.2
+            },
+            {
+              "ticker": "JNJ",
+              "weight": 0.2
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.3
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.3
+            }
+          ],
+          "use_dca": false
+        },
+        {
+          "turn_n": 6,
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.2
+            },
+            {
+              "ticker": "JNJ",
+              "weight": 0.2
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.3
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.3
+            }
+          ],
+          "use_dca": false
+        },
+        {
+          "turn_n": 7,
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.2
+            },
+            {
+              "ticker": "JNJ",
+              "weight": 0.2
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.3
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.3
+            }
+          ],
+          "use_dca": false
+        },
+        {
+          "turn_n": 8,
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.2
+            },
+            {
+              "ticker": "JNJ",
+              "weight": 0.2
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.3
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.3
+            }
+          ],
+          "use_dca": false
+        }
+      ]
     }
   }
 }
