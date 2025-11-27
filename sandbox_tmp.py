@@ -1,8 +1,20 @@
-import sys, types, pandas as pd
+import copy
+import sys
+import types
+
+import pandas as pd
+
+import app.career as c
 
 
 def dummy_download(
-    ticker, start, end, interval="1d", auto_adjust=False, actions=True, progress=False
+    ticker,
+    start,
+    end,
+    interval="1d",
+    auto_adjust=False,
+    actions=True,
+    progress=False,
 ):
     idx = pd.date_range(start=start, end=end, freq="B")
     data = {
@@ -19,14 +31,12 @@ class DummyTicker:
 
 
 module = types.SimpleNamespace(
-    download=dummy_download, Ticker=DummyTicker, utils=types.SimpleNamespace()
+    download=dummy_download,
+    Ticker=DummyTicker,
+    utils=types.SimpleNamespace(),
 )
 sys.modules["yfinance"] = module
 sys.modules["yfinance.utils"] = module.utils
-
-import app.career as c
-from datetime import date
-import copy
 
 # Build dummy session
 session = {
@@ -67,7 +77,13 @@ session = {
 start_d, end_d, start_iso, end_iso = c._session_analysis_range(copy.deepcopy(session))
 try:
     report, _ = c._generate_report_payload(
-        copy.deepcopy(session), "^GSPC", True, start_d, end_d, start_iso, end_iso
+        copy.deepcopy(session),
+        "^GSPC",
+        True,
+        start_d,
+        end_d,
+        start_iso,
+        end_iso,
     )
     print("OK", report["portfolio_equity"]["metrics"])
 except Exception as exc:
