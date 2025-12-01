@@ -1,307 +1,1451 @@
 [
   {
+    "id": 1,
     "ticker": "AAPL",
     "nombre": "Apple",
-    "sector": "Tecnología"
+    "sector": "Tecnología",
+    "ingresos": "$321.5B",
+    "empleados": 18112,
+    "fundacion": 1994
   },
   {
+    "id": 2,
     "ticker": "MSFT",
     "nombre": "Microsoft",
-    "sector": "Tecnología"
+    "sector": "Tecnología",
+    "ingresos": "$141.1B",
+    "empleados": 122026,
+    "fundacion": 1917
   },
   {
+    "id": 3,
     "ticker": "GOOGL",
     "nombre": "Alphabet",
-    "sector": "Tecnología"
+    "sector": "Tecnología",
+    "ingresos": "$369.6B",
+    "empleados": 290929,
+    "fundacion": 1911
   },
   {
+    "id": 4,
     "ticker": "AMZN",
     "nombre": "Amazon",
-    "sector": "Consumo discrecional"
+    "sector": "Consumo discrecional",
+    "ingresos": "$297.3B",
+    "empleados": 21663,
+    "fundacion": 1903
   },
   {
+    "id": 5,
     "ticker": "META",
     "nombre": "Meta Platforms",
-    "sector": "Servicios de comunicación"
+    "sector": "Servicios de comunicación",
+    "ingresos": "$51.4B",
+    "empleados": 126981,
+    "fundacion": 1964
   },
   {
+    "id": 6,
     "ticker": "NVDA",
     "nombre": "NVIDIA",
-    "sector": "Tecnología"
+    "sector": "Tecnología",
+    "ingresos": "$303.0B",
+    "empleados": 299254,
+    "fundacion": 1925
   },
   {
+    "id": 7,
     "ticker": "TSLA",
     "nombre": "Tesla",
-    "sector": "Automoción"
+    "sector": "Automoción",
+    "ingresos": "$359.4B",
+    "empleados": 290706,
+    "fundacion": 1953
   },
   {
+    "id": 8,
     "ticker": "BRK-B",
     "nombre": "Berkshire Hathaway",
-    "sector": "Finanzas"
+    "sector": "Finanzas",
+    "ingresos": "$114.1B",
+    "empleados": 150852,
+    "fundacion": 2003
   },
   {
+    "id": 9,
     "ticker": "V",
     "nombre": "Visa",
-    "sector": "Finanzas"
+    "sector": "Finanzas",
+    "ingresos": "$435.3B",
+    "empleados": 88707,
+    "fundacion": 1989
   },
   {
+    "id": 10,
     "ticker": "MA",
     "nombre": "Mastercard",
-    "sector": "Finanzas"
+    "sector": "Finanzas",
+    "ingresos": "$214.2B",
+    "empleados": 150684,
+    "fundacion": 1919
   },
   {
+    "id": 11,
     "ticker": "JPM",
     "nombre": "JPMorgan Chase",
-    "sector": "Finanzas"
+    "sector": "Finanzas",
+    "ingresos": "$111.6B",
+    "empleados": 181472,
+    "fundacion": 1913
   },
   {
+    "id": 12,
     "ticker": "JNJ",
     "nombre": "Johnson & Johnson",
-    "sector": "Salud"
+    "sector": "Salud",
+    "ingresos": "$50.9B",
+    "empleados": 55707,
+    "fundacion": 1945
   },
   {
+    "id": 13,
     "ticker": "PG",
     "nombre": "Procter & Gamble",
-    "sector": "Consumo básico"
+    "sector": "Consumo básico",
+    "ingresos": "$424.5B",
+    "empleados": 143685,
+    "fundacion": 2003
   },
   {
+    "id": 14,
     "ticker": "XOM",
     "nombre": "ExxonMobil",
-    "sector": "Energía"
+    "sector": "Energía",
+    "ingresos": "$26.5B",
+    "empleados": 245870,
+    "fundacion": 1968
   },
   {
+    "id": 15,
     "ticker": "CVX",
     "nombre": "Chevron",
-    "sector": "Energía"
+    "sector": "Energía",
+    "ingresos": "$66.8B",
+    "empleados": 203461,
+    "fundacion": 1910
   },
   {
+    "id": 16,
     "ticker": "PEP",
     "nombre": "PepsiCo",
-    "sector": "Consumo básico"
+    "sector": "Consumo básico",
+    "ingresos": "$278.3B",
+    "empleados": 194600,
+    "fundacion": 1973
   },
   {
+    "id": 17,
     "ticker": "KO",
     "nombre": "Coca-Cola",
-    "sector": "Consumo básico"
+    "sector": "Consumo básico",
+    "ingresos": "$100.2B",
+    "empleados": 41466,
+    "fundacion": 1905
   },
   {
+    "id": 18,
     "ticker": "AVGO",
     "nombre": "Broadcom",
-    "sector": "Tecnología"
+    "sector": "Tecnología",
+    "ingresos": "$332.3B",
+    "empleados": 156722,
+    "fundacion": 1910
   },
   {
+    "id": 19,
     "ticker": "ORCL",
     "nombre": "Oracle",
-    "sector": "Tecnología"
+    "sector": "Tecnología",
+    "ingresos": "$428.4B",
+    "empleados": 57953,
+    "fundacion": 1948
   },
   {
+    "id": 20,
     "ticker": "CSCO",
     "nombre": "Cisco Systems",
-    "sector": "Tecnología"
+    "sector": "Tecnología",
+    "ingresos": "$142.6B",
+    "empleados": 196277,
+    "fundacion": 1920
   },
   {
+    "id": 21,
     "ticker": "ADBE",
     "nombre": "Adobe",
-    "sector": "Tecnología"
+    "sector": "Tecnología",
+    "ingresos": "$188.2B",
+    "empleados": 114842,
+    "fundacion": 1985
   },
   {
+    "id": 22,
     "ticker": "COST",
     "nombre": "Costco",
-    "sector": "Consumo defensivo"
+    "sector": "Consumo defensivo",
+    "ingresos": "$137.2B",
+    "empleados": 42435,
+    "fundacion": 1977
   },
   {
+    "id": 23,
     "ticker": "TSM",
     "nombre": "Taiwan Semiconductor",
-    "sector": "Tecnología"
+    "sector": "Tecnología",
+    "ingresos": "$319.3B",
+    "empleados": 285043,
+    "fundacion": 1993
   },
   {
+    "id": 24,
     "ticker": "TMO",
     "nombre": "Thermo Fisher Scientific",
-    "sector": "Salud"
+    "sector": "Salud",
+    "ingresos": "$126.2B",
+    "empleados": 247357,
+    "fundacion": 1948
   },
   {
+    "id": 25,
     "ticker": "MRK",
     "nombre": "Merck & Co.",
-    "sector": "Salud"
+    "sector": "Salud",
+    "ingresos": "$138.6B",
+    "empleados": 297002,
+    "fundacion": 1928
   },
   {
+    "id": 26,
     "ticker": "WMT",
     "nombre": "Walmart",
-    "sector": "Consumo defensivo"
+    "sector": "Consumo defensivo",
+    "ingresos": "$343.9B",
+    "empleados": 34327,
+    "fundacion": 1929
   },
   {
+    "id": 27,
     "ticker": "PFE",
     "nombre": "Pfizer",
-    "sector": "Salud"
+    "sector": "Salud",
+    "ingresos": "$411.8B",
+    "empleados": 170388,
+    "fundacion": 1951
   },
   {
+    "id": 28,
     "ticker": "NKE",
     "nombre": "Nike",
-    "sector": "Consumo discrecional"
+    "sector": "Consumo discrecional",
+    "ingresos": "$137.5B",
+    "empleados": 115615,
+    "fundacion": 2016
   },
   {
+    "id": 29,
     "ticker": "MCD",
     "nombre": "McDonald's",
-    "sector": "Consumo discrecional"
+    "sector": "Consumo discrecional",
+    "ingresos": "$471.7B",
+    "empleados": 169981,
+    "fundacion": 1927
   },
   {
+    "id": 30,
     "ticker": "ABT",
     "nombre": "Abbott Laboratories",
-    "sector": "Salud"
+    "sector": "Salud",
+    "ingresos": "$329.4B",
+    "empleados": 212425,
+    "fundacion": 2013
   },
   {
+    "id": 31,
     "ticker": "LLY",
     "nombre": "Eli Lilly",
-    "sector": "Salud"
+    "sector": "Salud",
+    "ingresos": "$457.7B",
+    "empleados": 245570,
+    "fundacion": 1918
   },
   {
+    "id": 32,
     "ticker": "INTU",
     "nombre": "Intuit",
-    "sector": "Tecnología"
+    "sector": "Tecnología",
+    "ingresos": "$136.1B",
+    "empleados": 134303,
+    "fundacion": 1995
   },
   {
+    "id": 33,
     "ticker": "IBM",
     "nombre": "IBM",
-    "sector": "Tecnología"
+    "sector": "Tecnología",
+    "ingresos": "$282.9B",
+    "empleados": 142752,
+    "fundacion": 1995
   },
   {
+    "id": 34,
     "ticker": "AMD",
     "nombre": "Advanced Micro Devices",
-    "sector": "Tecnología"
+    "sector": "Tecnología",
+    "ingresos": "$294.4B",
+    "empleados": 214400,
+    "fundacion": 1946
   },
   {
+    "id": 35,
     "ticker": "TXN",
     "nombre": "Texas Instruments",
-    "sector": "Tecnología"
+    "sector": "Tecnología",
+    "ingresos": "$113.6B",
+    "empleados": 77525,
+    "fundacion": 1965
   },
   {
+    "id": 36,
     "ticker": "CRM",
     "nombre": "Salesforce",
-    "sector": "Tecnología"
+    "sector": "Tecnología",
+    "ingresos": "$249.3B",
+    "empleados": 29702,
+    "fundacion": 2010
   },
   {
+    "id": 37,
     "ticker": "NFLX",
     "nombre": "Netflix",
-    "sector": "Servicios de comunicación"
+    "sector": "Servicios de comunicación",
+    "ingresos": "$59.3B",
+    "empleados": 88876,
+    "fundacion": 2001
   },
   {
+    "id": 38,
     "ticker": "DIS",
     "nombre": "Walt Disney",
-    "sector": "Servicios de comunicación"
+    "sector": "Servicios de comunicación",
+    "ingresos": "$341.8B",
+    "empleados": 38306,
+    "fundacion": 1949
   },
   {
+    "id": 39,
     "ticker": "LIN",
     "nombre": "Linde",
-    "sector": "Materiales"
+    "sector": "Materiales",
+    "ingresos": "$193.9B",
+    "empleados": 250392,
+    "fundacion": 1967
   },
   {
+    "id": 40,
     "ticker": "UPS",
     "nombre": "UPS",
-    "sector": "Transporte"
+    "sector": "Transporte",
+    "ingresos": "$129.4B",
+    "empleados": 295049,
+    "fundacion": 2010
   },
   {
+    "id": 41,
     "ticker": "UNH",
     "nombre": "UnitedHealth Group",
-    "sector": "Salud"
+    "sector": "Salud",
+    "ingresos": "$471.5B",
+    "empleados": 65058,
+    "fundacion": 1987
   },
   {
+    "id": 42,
     "ticker": "BAC",
     "nombre": "Bank of America",
-    "sector": "Finanzas"
+    "sector": "Finanzas",
+    "ingresos": "$443.0B",
+    "empleados": 144893,
+    "fundacion": 1998
   },
   {
+    "id": 43,
     "ticker": "HON",
     "nombre": "Honeywell",
-    "sector": "Industria"
+    "sector": "Industria",
+    "ingresos": "$322.3B",
+    "empleados": 63485,
+    "fundacion": 1937
   },
   {
+    "id": 44,
     "ticker": "CAT",
     "nombre": "Caterpillar",
-    "sector": "Industria"
+    "sector": "Industria",
+    "ingresos": "$220.2B",
+    "empleados": 242881,
+    "fundacion": 1900
   },
   {
+    "id": 45,
     "ticker": "AMAT",
     "nombre": "Applied Materials",
-    "sector": "Tecnología"
+    "sector": "Tecnología",
+    "ingresos": "$477.1B",
+    "empleados": 143091,
+    "fundacion": 1964
   },
   {
+    "id": 46,
     "ticker": "BKNG",
     "nombre": "Booking Holdings",
-    "sector": "Consumo discrecional"
+    "sector": "Consumo discrecional",
+    "ingresos": "$382.2B",
+    "empleados": 271171,
+    "fundacion": 2016
   },
   {
+    "id": 47,
     "ticker": "QCOM",
     "nombre": "Qualcomm",
-    "sector": "Tecnología"
+    "sector": "Tecnología",
+    "ingresos": "$57.7B",
+    "empleados": 161471,
+    "fundacion": 2007
   },
   {
+    "id": 48,
     "ticker": "SBUX",
     "nombre": "Starbucks",
-    "sector": "Consumo discrecional"
+    "sector": "Consumo discrecional",
+    "ingresos": "$321.3B",
+    "empleados": 109286,
+    "fundacion": 1919
   },
   {
+    "id": 49,
     "ticker": "GE",
     "nombre": "General Electric",
-    "sector": "Industria"
+    "sector": "Industria",
+    "ingresos": "$190.1B",
+    "empleados": 89698,
+    "fundacion": 1969
   },
   {
+    "id": 50,
     "ticker": "BABA",
     "nombre": "Alibaba",
-    "sector": "Tecnología"
+    "sector": "Tecnología",
+    "ingresos": "$477.0B",
+    "empleados": 283058,
+    "fundacion": 2017
   },
   {
+    "id": 51,
     "ticker": "SAP",
     "nombre": "SAP",
-    "sector": "Tecnología"
+    "sector": "Tecnología",
+    "ingresos": "$5.3B",
+    "empleados": 174951,
+    "fundacion": 1962
   },
   {
+    "id": 52,
     "ticker": "ASML",
     "nombre": "ASML Holding",
-    "sector": "Tecnología"
+    "sector": "Tecnología",
+    "ingresos": "$14.6B",
+    "empleados": 195306,
+    "fundacion": 2012
   },
   {
+    "id": 53,
     "ticker": "SONY",
     "nombre": "Sony",
-    "sector": "Tecnología"
+    "sector": "Tecnología",
+    "ingresos": "$492.7B",
+    "empleados": 166225,
+    "fundacion": 1930
   },
   {
+    "id": 54,
     "ticker": "RIO",
     "nombre": "Rio Tinto",
-    "sector": "Materiales"
+    "sector": "Materiales",
+    "ingresos": "$33.7B",
+    "empleados": 46291,
+    "fundacion": 1910
   },
   {
+    "id": 55,
     "ticker": "BHP",
     "nombre": "BHP",
-    "sector": "Materiales"
+    "sector": "Materiales",
+    "ingresos": "$367.3B",
+    "empleados": 41287,
+    "fundacion": 1997
   },
   {
+    "id": 56,
     "ticker": "BP",
     "nombre": "BP",
-    "sector": "Energía"
+    "sector": "Energía",
+    "ingresos": "$268.7B",
+    "empleados": 70934,
+    "fundacion": 1916
   },
   {
+    "id": 57,
     "ticker": "TTE",
     "nombre": "TotalEnergies",
-    "sector": "Energía"
+    "sector": "Energía",
+    "ingresos": "$331.6B",
+    "empleados": 293255,
+    "fundacion": 1921
   },
   {
+    "id": 58,
     "ticker": "ENB",
     "nombre": "Enbridge",
-    "sector": "Energía"
+    "sector": "Energía",
+    "ingresos": "$136.2B",
+    "empleados": 226846,
+    "fundacion": 1927
   },
   {
+    "id": 59,
     "ticker": "TD",
     "nombre": "Toronto-Dominion Bank",
-    "sector": "Finanzas"
+    "sector": "Finanzas",
+    "ingresos": "$464.8B",
+    "empleados": 110461,
+    "fundacion": 1991
   },
   {
+    "id": 60,
     "ticker": "LULU",
     "nombre": "Lululemon Athletica",
-    "sector": "Consumo discrecional"
+    "sector": "Consumo discrecional",
+    "ingresos": "$159.3B",
+    "empleados": 200779,
+    "fundacion": 1956
   },
   {
+    "id": 61,
     "ticker": "DE",
     "nombre": "Deere & Co.",
-    "sector": "Industria"
+    "sector": "Industria",
+    "ingresos": "$450.3B",
+    "empleados": 241708,
+    "fundacion": 1915
+  },
+  {
+    "id": 62,
+    "ticker": "SYN001",
+    "nombre": "Summit Dynamics",
+    "sector": "Salud",
+    "ingresos": "$154.1B",
+    "empleados": 155021,
+    "fundacion": 2020
+  },
+  {
+    "id": 63,
+    "ticker": "SYN002",
+    "nombre": "Summit Analytics",
+    "sector": "Energía",
+    "ingresos": "$6.2B",
+    "empleados": 186356,
+    "fundacion": 1957
+  },
+  {
+    "id": 64,
+    "ticker": "SYN003",
+    "nombre": "Summit Finance",
+    "sector": "Tecnología",
+    "ingresos": "$387.3B",
+    "empleados": 19374,
+    "fundacion": 2015
+  },
+  {
+    "id": 65,
+    "ticker": "SYN004",
+    "nombre": "Summit Foods",
+    "sector": "Transporte",
+    "ingresos": "$98.8B",
+    "empleados": 35484,
+    "fundacion": 2010
+  },
+  {
+    "id": 66,
+    "ticker": "SYN005",
+    "nombre": "Summit Resources",
+    "sector": "Industria",
+    "ingresos": "$88.1B",
+    "empleados": 26209,
+    "fundacion": 2005
+  },
+  {
+    "id": 67,
+    "ticker": "SYN006",
+    "nombre": "Crest Partners",
+    "sector": "Industria",
+    "ingresos": "$211.8B",
+    "empleados": 191922,
+    "fundacion": 1956
+  },
+  {
+    "id": 68,
+    "ticker": "SYN007",
+    "nombre": "Lumen Health",
+    "sector": "Industria",
+    "ingresos": "$328.5B",
+    "empleados": 29444,
+    "fundacion": 1981
+  },
+  {
+    "id": 69,
+    "ticker": "SYN008",
+    "nombre": "Pioneer Systems",
+    "sector": "Transporte",
+    "ingresos": "$65.7B",
+    "empleados": 48900,
+    "fundacion": 1985
+  },
+  {
+    "id": 70,
+    "ticker": "SYN009",
+    "nombre": "Fusion Dynamics",
+    "sector": "Salud",
+    "ingresos": "$201.1B",
+    "empleados": 145064,
+    "fundacion": 1962
+  },
+  {
+    "id": 71,
+    "ticker": "SYN010",
+    "nombre": "Astra Networks",
+    "sector": "Tecnología",
+    "ingresos": "$436.1B",
+    "empleados": 198342,
+    "fundacion": 1980
+  },
+  {
+    "id": 72,
+    "ticker": "SYN011",
+    "nombre": "Orion Partners",
+    "sector": "Transporte",
+    "ingresos": "$218.2B",
+    "empleados": 105930,
+    "fundacion": 1957
+  },
+  {
+    "id": 73,
+    "ticker": "SYN012",
+    "nombre": "Orion Labs",
+    "sector": "Tecnología",
+    "ingresos": "$443.4B",
+    "empleados": 70321,
+    "fundacion": 2008
+  },
+  {
+    "id": 74,
+    "ticker": "SYN013",
+    "nombre": "Quantum Partners",
+    "sector": "Transporte",
+    "ingresos": "$72.2B",
+    "empleados": 78580,
+    "fundacion": 1977
+  },
+  {
+    "id": 75,
+    "ticker": "SYN014",
+    "nombre": "Astra Analytics",
+    "sector": "Tecnología",
+    "ingresos": "$337.3B",
+    "empleados": 15785,
+    "fundacion": 1956
+  },
+  {
+    "id": 76,
+    "ticker": "SYN015",
+    "nombre": "Aurora Resources",
+    "sector": "Finanzas",
+    "ingresos": "$28.4B",
+    "empleados": 133924,
+    "fundacion": 1960
+  },
+  {
+    "id": 77,
+    "ticker": "SYN016",
+    "nombre": "Orion Finance",
+    "sector": "Salud",
+    "ingresos": "$304.8B",
+    "empleados": 62457,
+    "fundacion": 2001
+  },
+  {
+    "id": 78,
+    "ticker": "SYN017",
+    "nombre": "Lumen Analytics",
+    "sector": "Energía",
+    "ingresos": "$261.8B",
+    "empleados": 11218,
+    "fundacion": 1960
+  },
+  {
+    "id": 79,
+    "ticker": "SYN018",
+    "nombre": "Polar Analytics",
+    "sector": "Consumo discrecional",
+    "ingresos": "$420.8B",
+    "empleados": 54345,
+    "fundacion": 1990
+  },
+  {
+    "id": 80,
+    "ticker": "SYN019",
+    "nombre": "Summit Foods",
+    "sector": "Industria",
+    "ingresos": "$61.5B",
+    "empleados": 170014,
+    "fundacion": 1988
+  },
+  {
+    "id": 81,
+    "ticker": "SYN020",
+    "nombre": "Fusion Industries",
+    "sector": "Salud",
+    "ingresos": "$7.2B",
+    "empleados": 163633,
+    "fundacion": 2022
+  },
+  {
+    "id": 82,
+    "ticker": "SYN021",
+    "nombre": "Lumen Finance",
+    "sector": "Energía",
+    "ingresos": "$229.1B",
+    "empleados": 35522,
+    "fundacion": 1994
+  },
+  {
+    "id": 83,
+    "ticker": "SYN022",
+    "nombre": "Vertex Dynamics",
+    "sector": "Consumo discrecional",
+    "ingresos": "$130.4B",
+    "empleados": 115667,
+    "fundacion": 2019
+  },
+  {
+    "id": 84,
+    "ticker": "SYN023",
+    "nombre": "Quantum Motors",
+    "sector": "Tecnología",
+    "ingresos": "$301.5B",
+    "empleados": 146185,
+    "fundacion": 1988
+  },
+  {
+    "id": 85,
+    "ticker": "SYN024",
+    "nombre": "Lumen Retail",
+    "sector": "Retail",
+    "ingresos": "$54.6B",
+    "empleados": 28858,
+    "fundacion": 2020
+  },
+  {
+    "id": 86,
+    "ticker": "SYN025",
+    "nombre": "Atlas Foods",
+    "sector": "Retail",
+    "ingresos": "$273.4B",
+    "empleados": 188917,
+    "fundacion": 1993
+  },
+  {
+    "id": 87,
+    "ticker": "SYN026",
+    "nombre": "Pioneer Foods",
+    "sector": "Transporte",
+    "ingresos": "$115.3B",
+    "empleados": 14116,
+    "fundacion": 1961
+  },
+  {
+    "id": 88,
+    "ticker": "SYN027",
+    "nombre": "Polar Foods",
+    "sector": "Tecnología",
+    "ingresos": "$4.6B",
+    "empleados": 35093,
+    "fundacion": 1983
+  },
+  {
+    "id": 89,
+    "ticker": "SYN028",
+    "nombre": "Orion Global",
+    "sector": "Industria",
+    "ingresos": "$253.7B",
+    "empleados": 30127,
+    "fundacion": 1959
+  },
+  {
+    "id": 90,
+    "ticker": "SYN029",
+    "nombre": "Atlas Networks",
+    "sector": "Tecnología",
+    "ingresos": "$376.1B",
+    "empleados": 153501,
+    "fundacion": 2020
+  },
+  {
+    "id": 91,
+    "ticker": "SYN030",
+    "nombre": "Atlas Partners",
+    "sector": "Finanzas",
+    "ingresos": "$21.7B",
+    "empleados": 96391,
+    "fundacion": 1955
+  },
+  {
+    "id": 92,
+    "ticker": "SYN031",
+    "nombre": "Crest Systems",
+    "sector": "Energía",
+    "ingresos": "$301.1B",
+    "empleados": 93514,
+    "fundacion": 2021
+  },
+  {
+    "id": 93,
+    "ticker": "SYN032",
+    "nombre": "Polar Motors",
+    "sector": "Finanzas",
+    "ingresos": "$416.8B",
+    "empleados": 62859,
+    "fundacion": 1970
+  },
+  {
+    "id": 94,
+    "ticker": "SYN033",
+    "nombre": "Orion Partners",
+    "sector": "Tecnología",
+    "ingresos": "$83.2B",
+    "empleados": 87880,
+    "fundacion": 2002
+  },
+  {
+    "id": 95,
+    "ticker": "SYN034",
+    "nombre": "Summit Foods",
+    "sector": "Finanzas",
+    "ingresos": "$355.0B",
+    "empleados": 29136,
+    "fundacion": 1998
+  },
+  {
+    "id": 96,
+    "ticker": "SYN035",
+    "nombre": "Astra Resources",
+    "sector": "Energía",
+    "ingresos": "$92.2B",
+    "empleados": 121465,
+    "fundacion": 1994
+  },
+  {
+    "id": 97,
+    "ticker": "SYN036",
+    "nombre": "Quantum Dynamics",
+    "sector": "Energía",
+    "ingresos": "$13.6B",
+    "empleados": 51427,
+    "fundacion": 2001
+  },
+  {
+    "id": 98,
+    "ticker": "SYN037",
+    "nombre": "Horizon Foods",
+    "sector": "Salud",
+    "ingresos": "$435.2B",
+    "empleados": 73970,
+    "fundacion": 1994
+  },
+  {
+    "id": 99,
+    "ticker": "SYN038",
+    "nombre": "Helix Labs",
+    "sector": "Consumo discrecional",
+    "ingresos": "$422.8B",
+    "empleados": 31036,
+    "fundacion": 1983
+  },
+  {
+    "id": 100,
+    "ticker": "SYN039",
+    "nombre": "Orion Analytics",
+    "sector": "Retail",
+    "ingresos": "$20.1B",
+    "empleados": 157187,
+    "fundacion": 2005
+  },
+  {
+    "id": 101,
+    "ticker": "SYN040",
+    "nombre": "Crest Industries",
+    "sector": "Industria",
+    "ingresos": "$274.0B",
+    "empleados": 134866,
+    "fundacion": 1964
+  },
+  {
+    "id": 102,
+    "ticker": "SYN041",
+    "nombre": "Terra Analytics",
+    "sector": "Energía",
+    "ingresos": "$116.9B",
+    "empleados": 186603,
+    "fundacion": 2005
+  },
+  {
+    "id": 103,
+    "ticker": "SYN042",
+    "nombre": "Nova Ventures",
+    "sector": "Energía",
+    "ingresos": "$165.8B",
+    "empleados": 19143,
+    "fundacion": 1992
+  },
+  {
+    "id": 104,
+    "ticker": "SYN043",
+    "nombre": "Solstice Industries",
+    "sector": "Salud",
+    "ingresos": "$324.7B",
+    "empleados": 79527,
+    "fundacion": 2014
+  },
+  {
+    "id": 105,
+    "ticker": "SYN044",
+    "nombre": "Quantum Partners",
+    "sector": "Consumo discrecional",
+    "ingresos": "$182.9B",
+    "empleados": 78304,
+    "fundacion": 2020
+  },
+  {
+    "id": 106,
+    "ticker": "SYN045",
+    "nombre": "Atlas Systems",
+    "sector": "Industria",
+    "ingresos": "$300.2B",
+    "empleados": 100190,
+    "fundacion": 1972
+  },
+  {
+    "id": 107,
+    "ticker": "SYN046",
+    "nombre": "Solstice Analytics",
+    "sector": "Retail",
+    "ingresos": "$184.5B",
+    "empleados": 906,
+    "fundacion": 1988
+  },
+  {
+    "id": 108,
+    "ticker": "SYN047",
+    "nombre": "Quantum Systems",
+    "sector": "Industria",
+    "ingresos": "$354.2B",
+    "empleados": 159832,
+    "fundacion": 1991
+  },
+  {
+    "id": 109,
+    "ticker": "SYN048",
+    "nombre": "Fusion Global",
+    "sector": "Transporte",
+    "ingresos": "$305.0B",
+    "empleados": 134801,
+    "fundacion": 2010
+  },
+  {
+    "id": 110,
+    "ticker": "SYN049",
+    "nombre": "Orion Finance",
+    "sector": "Retail",
+    "ingresos": "$233.4B",
+    "empleados": 166721,
+    "fundacion": 1992
+  },
+  {
+    "id": 111,
+    "ticker": "SYN050",
+    "nombre": "Vertex Dynamics",
+    "sector": "Retail",
+    "ingresos": "$103.4B",
+    "empleados": 53000,
+    "fundacion": 1968
+  },
+  {
+    "id": 112,
+    "ticker": "SYN051",
+    "nombre": "Nova Health",
+    "sector": "Energía",
+    "ingresos": "$442.8B",
+    "empleados": 161041,
+    "fundacion": 1959
+  },
+  {
+    "id": 113,
+    "ticker": "SYN052",
+    "nombre": "Fusion Partners",
+    "sector": "Energía",
+    "ingresos": "$324.1B",
+    "empleados": 101457,
+    "fundacion": 2013
+  },
+  {
+    "id": 114,
+    "ticker": "SYN053",
+    "nombre": "Terra Dynamics",
+    "sector": "Finanzas",
+    "ingresos": "$296.3B",
+    "empleados": 2253,
+    "fundacion": 1963
+  },
+  {
+    "id": 115,
+    "ticker": "SYN054",
+    "nombre": "Polar Dynamics",
+    "sector": "Finanzas",
+    "ingresos": "$362.4B",
+    "empleados": 183229,
+    "fundacion": 2016
+  },
+  {
+    "id": 116,
+    "ticker": "SYN055",
+    "nombre": "Fusion Health",
+    "sector": "Energía",
+    "ingresos": "$413.1B",
+    "empleados": 32613,
+    "fundacion": 2008
+  },
+  {
+    "id": 117,
+    "ticker": "SYN056",
+    "nombre": "Atlas Global",
+    "sector": "Consumo discrecional",
+    "ingresos": "$427.7B",
+    "empleados": 116817,
+    "fundacion": 2014
+  },
+  {
+    "id": 118,
+    "ticker": "SYN057",
+    "nombre": "Polar Networks",
+    "sector": "Transporte",
+    "ingresos": "$404.1B",
+    "empleados": 195744,
+    "fundacion": 2010
+  },
+  {
+    "id": 119,
+    "ticker": "SYN058",
+    "nombre": "Fusion Foods",
+    "sector": "Energía",
+    "ingresos": "$378.4B",
+    "empleados": 73495,
+    "fundacion": 2016
+  },
+  {
+    "id": 120,
+    "ticker": "SYN059",
+    "nombre": "Nimbus Dynamics",
+    "sector": "Retail",
+    "ingresos": "$199.6B",
+    "empleados": 187851,
+    "fundacion": 1986
+  },
+  {
+    "id": 121,
+    "ticker": "SYN060",
+    "nombre": "Summit Foods",
+    "sector": "Consumo discrecional",
+    "ingresos": "$145.9B",
+    "empleados": 142397,
+    "fundacion": 1960
+  },
+  {
+    "id": 122,
+    "ticker": "SYN061",
+    "nombre": "Atlas Retail",
+    "sector": "Energía",
+    "ingresos": "$174.2B",
+    "empleados": 40856,
+    "fundacion": 1977
+  },
+  {
+    "id": 123,
+    "ticker": "SYN062",
+    "nombre": "Vertex Partners",
+    "sector": "Industria",
+    "ingresos": "$150.9B",
+    "empleados": 122939,
+    "fundacion": 2003
+  },
+  {
+    "id": 124,
+    "ticker": "SYN063",
+    "nombre": "Astra Systems",
+    "sector": "Industria",
+    "ingresos": "$177.1B",
+    "empleados": 153912,
+    "fundacion": 1952
+  },
+  {
+    "id": 125,
+    "ticker": "SYN064",
+    "nombre": "Aurora Labs",
+    "sector": "Transporte",
+    "ingresos": "$5.6B",
+    "empleados": 93011,
+    "fundacion": 1988
+  },
+  {
+    "id": 126,
+    "ticker": "SYN065",
+    "nombre": "Terra Partners",
+    "sector": "Energía",
+    "ingresos": "$221.2B",
+    "empleados": 72348,
+    "fundacion": 2005
+  },
+  {
+    "id": 127,
+    "ticker": "SYN066",
+    "nombre": "Nimbus Tech",
+    "sector": "Industria",
+    "ingresos": "$153.2B",
+    "empleados": 178832,
+    "fundacion": 2001
+  },
+  {
+    "id": 128,
+    "ticker": "SYN067",
+    "nombre": "Orion Global",
+    "sector": "Finanzas",
+    "ingresos": "$441.4B",
+    "empleados": 140817,
+    "fundacion": 1953
+  },
+  {
+    "id": 129,
+    "ticker": "SYN068",
+    "nombre": "Terra Analytics",
+    "sector": "Tecnología",
+    "ingresos": "$40.5B",
+    "empleados": 113158,
+    "fundacion": 1967
+  },
+  {
+    "id": 130,
+    "ticker": "SYN069",
+    "nombre": "Fusion Logistics",
+    "sector": "Tecnología",
+    "ingresos": "$119.3B",
+    "empleados": 86613,
+    "fundacion": 1977
+  },
+  {
+    "id": 131,
+    "ticker": "SYN070",
+    "nombre": "Fusion Industries",
+    "sector": "Consumo discrecional",
+    "ingresos": "$343.3B",
+    "empleados": 100185,
+    "fundacion": 1985
+  },
+  {
+    "id": 132,
+    "ticker": "SYN071",
+    "nombre": "Polar Foods",
+    "sector": "Salud",
+    "ingresos": "$213.2B",
+    "empleados": 197152,
+    "fundacion": 2019
+  },
+  {
+    "id": 133,
+    "ticker": "SYN072",
+    "nombre": "Astra Holdings",
+    "sector": "Energía",
+    "ingresos": "$293.6B",
+    "empleados": 171653,
+    "fundacion": 1955
+  },
+  {
+    "id": 134,
+    "ticker": "SYN073",
+    "nombre": "Nova Dynamics",
+    "sector": "Energía",
+    "ingresos": "$378.1B",
+    "empleados": 163679,
+    "fundacion": 1969
+  },
+  {
+    "id": 135,
+    "ticker": "SYN074",
+    "nombre": "Summit Retail",
+    "sector": "Transporte",
+    "ingresos": "$302.2B",
+    "empleados": 148641,
+    "fundacion": 1977
+  },
+  {
+    "id": 136,
+    "ticker": "SYN075",
+    "nombre": "Fusion Foods",
+    "sector": "Consumo discrecional",
+    "ingresos": "$78.0B",
+    "empleados": 159986,
+    "fundacion": 1964
+  },
+  {
+    "id": 137,
+    "ticker": "SYN076",
+    "nombre": "Orion Capital",
+    "sector": "Salud",
+    "ingresos": "$261.7B",
+    "empleados": 82577,
+    "fundacion": 1998
+  },
+  {
+    "id": 138,
+    "ticker": "SYN077",
+    "nombre": "Terra Systems",
+    "sector": "Salud",
+    "ingresos": "$267.7B",
+    "empleados": 165227,
+    "fundacion": 1981
+  },
+  {
+    "id": 139,
+    "ticker": "SYN078",
+    "nombre": "Lumen Capital",
+    "sector": "Salud",
+    "ingresos": "$358.9B",
+    "empleados": 149155,
+    "fundacion": 1955
+  },
+  {
+    "id": 140,
+    "ticker": "SYN079",
+    "nombre": "Crest Networks",
+    "sector": "Industria",
+    "ingresos": "$298.7B",
+    "empleados": 18876,
+    "fundacion": 2014
+  },
+  {
+    "id": 141,
+    "ticker": "SYN080",
+    "nombre": "Horizon Tech",
+    "sector": "Industria",
+    "ingresos": "$370.6B",
+    "empleados": 28466,
+    "fundacion": 2005
+  },
+  {
+    "id": 142,
+    "ticker": "SYN081",
+    "nombre": "Crest Global",
+    "sector": "Finanzas",
+    "ingresos": "$197.7B",
+    "empleados": 193160,
+    "fundacion": 2016
+  },
+  {
+    "id": 143,
+    "ticker": "SYN082",
+    "nombre": "Prime Motors",
+    "sector": "Transporte",
+    "ingresos": "$210.8B",
+    "empleados": 192434,
+    "fundacion": 1984
+  },
+  {
+    "id": 144,
+    "ticker": "SYN083",
+    "nombre": "Horizon Dynamics",
+    "sector": "Salud",
+    "ingresos": "$127.7B",
+    "empleados": 118975,
+    "fundacion": 1981
+  },
+  {
+    "id": 145,
+    "ticker": "SYN084",
+    "nombre": "Fusion Analytics",
+    "sector": "Industria",
+    "ingresos": "$153.4B",
+    "empleados": 130379,
+    "fundacion": 1991
+  },
+  {
+    "id": 146,
+    "ticker": "SYN085",
+    "nombre": "Orion Resources",
+    "sector": "Energía",
+    "ingresos": "$161.6B",
+    "empleados": 68525,
+    "fundacion": 1993
+  },
+  {
+    "id": 147,
+    "ticker": "SYN086",
+    "nombre": "Prime Motors",
+    "sector": "Retail",
+    "ingresos": "$251.4B",
+    "empleados": 136230,
+    "fundacion": 1974
+  },
+  {
+    "id": 148,
+    "ticker": "SYN087",
+    "nombre": "Vertex Dynamics",
+    "sector": "Industria",
+    "ingresos": "$221.4B",
+    "empleados": 199548,
+    "fundacion": 1980
+  },
+  {
+    "id": 149,
+    "ticker": "SYN088",
+    "nombre": "Nimbus Resources",
+    "sector": "Transporte",
+    "ingresos": "$357.4B",
+    "empleados": 25193,
+    "fundacion": 1987
+  },
+  {
+    "id": 150,
+    "ticker": "SYN089",
+    "nombre": "Summit Labs",
+    "sector": "Energía",
+    "ingresos": "$139.9B",
+    "empleados": 153251,
+    "fundacion": 1997
+  },
+  {
+    "id": 151,
+    "ticker": "SYN090",
+    "nombre": "Nimbus Networks",
+    "sector": "Consumo discrecional",
+    "ingresos": "$193.2B",
+    "empleados": 196342,
+    "fundacion": 2020
+  },
+  {
+    "id": 152,
+    "ticker": "SYN091",
+    "nombre": "Horizon Holdings",
+    "sector": "Transporte",
+    "ingresos": "$124.1B",
+    "empleados": 66703,
+    "fundacion": 1979
+  },
+  {
+    "id": 153,
+    "ticker": "SYN092",
+    "nombre": "Lumen Systems",
+    "sector": "Consumo discrecional",
+    "ingresos": "$56.4B",
+    "empleados": 141273,
+    "fundacion": 1973
+  },
+  {
+    "id": 154,
+    "ticker": "SYN093",
+    "nombre": "Pioneer Systems",
+    "sector": "Transporte",
+    "ingresos": "$126.6B",
+    "empleados": 155356,
+    "fundacion": 2017
+  },
+  {
+    "id": 155,
+    "ticker": "SYN094",
+    "nombre": "Solstice Capital",
+    "sector": "Salud",
+    "ingresos": "$375.2B",
+    "empleados": 78459,
+    "fundacion": 1979
+  },
+  {
+    "id": 156,
+    "ticker": "SYN095",
+    "nombre": "Crest Logistics",
+    "sector": "Retail",
+    "ingresos": "$9.3B",
+    "empleados": 140820,
+    "fundacion": 1966
+  },
+  {
+    "id": 157,
+    "ticker": "SYN096",
+    "nombre": "Prime Health",
+    "sector": "Tecnología",
+    "ingresos": "$250.4B",
+    "empleados": 183623,
+    "fundacion": 1966
+  },
+  {
+    "id": 158,
+    "ticker": "SYN097",
+    "nombre": "Nimbus Energy",
+    "sector": "Tecnología",
+    "ingresos": "$259.6B",
+    "empleados": 123849,
+    "fundacion": 2011
+  },
+  {
+    "id": 159,
+    "ticker": "SYN098",
+    "nombre": "Fusion Industries",
+    "sector": "Finanzas",
+    "ingresos": "$434.6B",
+    "empleados": 66985,
+    "fundacion": 2011
+  },
+  {
+    "id": 160,
+    "ticker": "SYN099",
+    "nombre": "Lumen Finance",
+    "sector": "Industria",
+    "ingresos": "$222.8B",
+    "empleados": 152062,
+    "fundacion": 1956
+  },
+  {
+    "id": 161,
+    "ticker": "SYN100",
+    "nombre": "Atlas Retail",
+    "sector": "Retail",
+    "ingresos": "$41.1B",
+    "empleados": 65861,
+    "fundacion": 1965
   }
 ]
