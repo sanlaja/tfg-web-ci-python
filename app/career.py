@@ -689,14 +689,17 @@ def _load_sessions_store() -> dict[str, Any]:
     if not SESSIONS_FILE.exists():
         return {"sessions": {}}
     try:
-        return json.loads(SESSIONS_FILE.read_text(encoding="utf-8"))
+        # Read as UTF-8 so Windows default codepages do not break the JSON content.
+        payload = SESSIONS_FILE.read_text(encoding="utf-8")
+        return json.loads(payload)
     except json.JSONDecodeError:
         return {"sessions": {}}
 
 
 def _save_sessions_store(store: dict[str, Any]) -> None:
     DATA_DIR.mkdir(parents=True, exist_ok=True)
-    SESSIONS_FILE.write_text(json.dumps(store, indent=2), encoding="utf-8")
+    payload = json.dumps(store, indent=2)
+    SESSIONS_FILE.write_text(payload, encoding="utf-8")
 
 
 def _load_ranking_store() -> dict[str, Any]:

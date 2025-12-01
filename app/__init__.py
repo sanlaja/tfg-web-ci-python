@@ -1,5 +1,6 @@
 import matplotlib
 
+# Force a headless backend so Matplotlib never opens GUI windows on the server.
 matplotlib.use("Agg")
 
 from flask import Flask
