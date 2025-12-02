@@ -12,7 +12,7 @@
 const $ = (sel) => document.querySelector(sel);
 
 /**
- * Formatea una fecha ISO a YYYY-MM-DD (o cadena vacÃ­a si no hay valor).
+ * Formatea una fecha ISO a YYYY-MM-DD (o cadena vacía si no hay valor).
  * @param {string} iso
  * @returns {string}
  */
@@ -386,7 +386,7 @@ async function jsonPost(url, body) {
       body: JSON.stringify(body),
     });
 
-    // Intenta parsear JSON; si falla, usa objeto vacÃ­o
+    // Intenta parsear JSON; si falla, usa objeto vacío
     const data = await res.json().catch(() => ({}));
 
     if (!res.ok) {
@@ -406,7 +406,7 @@ async function jsonPost(url, body) {
   }
 }
 
-// --- Utilidad: ordenar arrays de objetos por clave y direcciÃ³n ---
+// --- Utilidad: ordenar arrays de objetos por clave y dirección ---
 function sortItems(items, key, dir = "asc") {
   const d = dir === "desc" ? -1 : 1;
   const toNum = (v) => (v === null || v === undefined || v === "" ? NaN : Number(v));
@@ -425,7 +425,7 @@ function sortItems(items, key, dir = "asc") {
       return 0;
     }
 
-    // NÃºmeros
+    // Números
     if (isNumericKey(key, a) || isNumericKey(key, b)) {
       const na = toNum(va), nb = toNum(vb);
       if (isNaN(na) && isNaN(nb)) return 0;
@@ -436,7 +436,7 @@ function sortItems(items, key, dir = "asc") {
       return 0;
     }
 
-    // Texto (localeCompare insensible a mayÃºsculas)
+    // Texto (localeCompare insensible a mayúsculas)
     const sa = String(va ?? "").toLocaleLowerCase();
     const sb = String(vb ?? "").toLocaleLowerCase();
     return sa.localeCompare(sb) * d;
@@ -449,7 +449,7 @@ async function copyCurrentUrl() {
     await navigator.clipboard.writeText(location.href);
     alert("URL copiada al portapapeles ✅");
   } catch {
-    // Fallback clÃ¡sico
+    // Fallback clásico
     const ta = document.createElement("textarea");
     ta.value = location.href;
     document.body.appendChild(ta);
@@ -469,7 +469,7 @@ function highlight(text, needle) {
 }
 
 /* ============================================================================
- * Estado (filtros/paginaciÃ³n/orden)
+ * Estado (filtros/paginación/orden)
  * ==========================================================================*/
 
 const state = {
@@ -483,7 +483,7 @@ const state = {
  * ==========================================================================*/
 
 /**
- * Carga empresas desde /empresas con filtros/paginaciÃ³n de state.emp
+ * Carga empresas desde /empresas con filtros/paginación de state.emp
  * y pinta la tabla (usa #emp-tbody).
  */
 async function loadEmpresas() {
@@ -512,7 +512,7 @@ async function loadEmpresas() {
   const total = arrayMode ? (items || []).length : data.total;
   const hasNext = arrayMode ? false : data.has_next;
 
-  // OrdenaciÃ³n cliente (sobre la pÃ¡gina actual)
+  // Ordenación cliente (sobre la página actual)
   const itemsSorted = sortItems(items || [], state.emp.sort, state.emp.dir);
   const needle = state.emp.q || "";
 
@@ -531,10 +531,10 @@ async function loadEmpresas() {
               </tr>`;
           })
           .join("")
-      : `<tr><td colspan="3"><div class="empty">No hay resultados para tu bÃºsqueda.</div></td></tr>`;
+      : `<tr><td colspan="3"><div class="empty">No hay resultados para tu búsqueda.</div></td></tr>`;
   }
 
-  // Info de paginaciÃ³n
+  // Info de paginación
   const infoEl = $("#emp-info");
   if (arrayMode) {
     infoEl.textContent = `${total} resultados`;
@@ -553,7 +553,7 @@ async function loadEmpresas() {
 }
 
 /**
- * Enlaza eventos de bÃºsqueda, paginado y "compartir" en Ejemplos de empresas.
+ * Enlaza eventos de búsqueda, paginado y "compartir" en Ejemplos de empresas.
  */
 function bindEmpresas() {
   // Buscar
@@ -565,7 +565,7 @@ function bindEmpresas() {
     loadEmpresas().catch((e) => alert(e.message));
   });
 
-  // Por pÃ¡gina
+  // Por página
   const perSel = $("#emp-per-page");
   perSel.addEventListener("change", () => {
     state.emp.per_page = Number(perSel.value) || 10;
@@ -600,11 +600,11 @@ function bindEmpresas() {
 }
 
 /* ============================================================================
- * AnÃ¡lisis (formulario + envÃ­o)
+ * Análisis (formulario + envío)
  * ==========================================================================*/
 
 /**
- * Construye el payload de anÃ¡lisis a partir de los inputs del formulario.
+ * Construye el payload de análisis a partir de los inputs del formulario.
  * @returns {object}
  */
 function campoNumericoNullable(sel) {
@@ -679,7 +679,7 @@ function validarPropuesta(p) {
 function traducirPayloadLegacy(p) {
   const justificacion =
     (p.justificacion && p.justificacion.trim()) ||
-    "Propuesta sin justificaci\u00f3n detallada.";
+    "Propuesta sin justificación detallada.";
   const legacyJust = justificacion.length >= 20
     ? justificacion
     : `${justificacion} ${".".repeat(20 - justificacion.length)}`;
@@ -781,7 +781,7 @@ function bindPrecheckModal() {
 }
 
 /**
- * Enlaza el formulario de anÃ¡lisis: validaciÃ³n, envÃ­o y render de resultado.
+ * Enlaza el formulario de análisis: validación, envío y render de resultado.
  */
 function bindAnalisisForm() {
   const btn = document.getElementById("btn-enviar-propuesta");
@@ -1056,7 +1056,7 @@ function bindHistorial() {
 }
 
 /* ============================================================================
- * ValidaciÃ³n de formulario de anÃ¡lisis
+ * Validación de formulario de análisis
  * ==========================================================================*/
 
 /**
@@ -1068,8 +1068,8 @@ function bindHistorial() {
  * ==========================================================================*/
 
 /**
- * Lee parÃ¡metros desde la URL.
- * (Si quieres restaurar desde localStorage 24h, avÃ­same y lo reaÃ±adimos aquÃ­.)
+ * Lee parámetros desde la URL.
+ * (Si quieres restaurar desde localStorage 24h, avísame y lo reañadimos aquí.)
  */
 function readParams() {
   const p = new URLSearchParams(location.search);
@@ -1145,7 +1145,7 @@ function renderObsChips(list) {
   );
 }
 
-// GestiÃ³n de foco para accesibilidad
+// Gestión de foco para accesibilidad
 let _lastFocused = null;
 
 /**
@@ -1188,7 +1188,7 @@ function closeObservacionesModal() {
 }
 
 /* ============================================================================
- * OrdenaciÃ³n (click en encabezados)
+ * Ordenación (click en encabezados)
  * ==========================================================================*/
 
 function bindSorting() {
@@ -1247,7 +1247,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
   if (hasAnalisis) {
     bindAnalisisForm();
-    // ðŸ‘‡ Mostrar y enlazar el popup de Yahoo Finance
+    // 👇 Mostrar y enlazar el popup de Yahoo Finance
     bindPrecheckModal();
   }
   if (hasHistorial) {
@@ -2685,7 +2685,7 @@ function careerSetLoading(button, stateFlag) {
  * ==========================================================================*/
 
 /**
- * Carga sectores en el <select id="emp-sector"> manteniendo la opciÃ³n "Todos".
+ * Carga sectores en el <select id="emp-sector"> manteniendo la opción "Todos".
  */
 async function loadSectores() {
   const sectores = await jsonGet("/empresas/sectores");
