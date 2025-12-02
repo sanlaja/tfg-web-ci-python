@@ -359,7 +359,12 @@ async function jsonGet(url) {
   pushGlobalLoading();
   try {
     const res = await fetch(url);
-    if (!res.ok) throw new Error(`GET ${url} → ${res.status}`);
+    if (!res.ok) {
+      const error = new Error(`GET ${url} -> ${res.status}`);
+      error.status = res.status;
+      error.url = url;
+      throw error;
+    }
     return await res.json();
   } finally {
     popGlobalLoading();
@@ -1548,7 +1553,14 @@ function initCareerPage() {
   const storedSessionId = prefs.lastSessionId;
   if (storedSessionId) {
     handleCareerLoadSession(storedSessionId, { silent: true }).catch((err) => {
-      console.warn("No se pudo recuperar la sesión previa:", err);
+      console.warn("No se pudo recuperar la sesion previa:", err);
+      const notFound =
+        err?.status === 404 || (typeof err?.message === "string" && err.message.includes("404"));
+      if (notFound) {
+        saveCareerPrefs({ lastSessionId: undefined });
+        if (loadLastBtn) loadLastBtn.disabled = true;
+        mostrarToastError("Tu sesion guardada ya no existe en el servidor. Crea una nueva para continuar.");
+      }
     });
   }
 }
