@@ -12,7 +12,7 @@ def test_career_report_survives_extreme_losses(monkeypatch, tmp_path):
     monkeypatch.setattr(career, "DATA_DIR", tmp_path)
     monkeypatch.setattr(career, "SESSIONS_FILE", tmp_sessions)
     monkeypatch.setattr(career, "RANKING_FILE", tmp_ranking)
-    career.SERIES_CACHE.clear()
+    career._adj_close_series.cache_clear()
 
     def fake_validate(universe, start, end):
         normalized = [str(t).strip().upper() for t in universe if str(t).strip()]
@@ -88,7 +88,7 @@ def test_career_report_handles_missing_history(monkeypatch, tmp_path):
     monkeypatch.setattr(career, "DATA_DIR", tmp_path)
     monkeypatch.setattr(career, "SESSIONS_FILE", tmp_sessions)
     monkeypatch.setattr(career, "RANKING_FILE", tmp_ranking)
-    career.SERIES_CACHE.clear()
+    career._adj_close_series.cache_clear()
 
     def fail_map(tickers, start, end):
         raise career.NoHistoricalDataError(tickers)
@@ -104,7 +104,7 @@ def test_career_report_handles_missing_history(monkeypatch, tmp_path):
         "capital": 10000,
         "period_mode": "manual",
         "period_start": "2016-01-01",
-        "period_end": "2020-12-31",
+        "period_end": "2018-12-31",
     }
     res = client.post("/api/career/session", json=payload)
     assert res.status_code == 200

@@ -8,6 +8,7 @@ import secrets
 import csv
 import math
 from copy import deepcopy
+from functools import lru_cache
 from datetime import date, datetime, timedelta
 from io import StringIO
 from itertools import combinations
@@ -85,7 +86,6 @@ RANKING_FILE = DATA_DIR / "career_ranking.json"
 BASE_START_DATE = date(2000, 1, 3)
 MAX_ASSETS = 10
 PORTFOLIO_SCOPE = "portfolio"
-SERIES_CACHE: dict[tuple[str, str, str], pd.Series] = {}
 CASH_TICKERS = {"CASH", "CASH:USD"}
 
 
@@ -158,13 +158,13 @@ def _exception_indicates_no_history(exc: Exception) -> bool:
 
 DIFFICULTY_CONFIG = {
     "principiante": {
-        "years": (10, 15),
+        "years": (3, 5),
         "turn_months": 12,
         "shock_probability": 0.12,
         "shock_range": (-0.03, -0.012),
     },
     "intermedio": {
-        "years": (3, 7),
+        "years": (2, 4),
         "turn_months": 6,
         "shock_probability": 0.22,
         "shock_range": (-0.045, -0.018),
@@ -814,11 +814,9 @@ def _generate_period(
     return start_d, end_d, turns
 
 
+@lru_cache(maxsize=32)
 def _adj_close_series(ticker: str, start: date, end: date) -> pd.Series:
     ticker_norm = (ticker or "").strip().upper()
-    cache_key = (ticker_norm, start.isoformat(), end.isoformat())
-    if cache_key in SERIES_CACHE:
-        return SERIES_CACHE[cache_key]
     try:
         df = _download_history_df(
             ticker, start, end, include_actions=False
@@ -841,10 +839,10 @@ def _adj_close_series(ticker: str, start: date, end: date) -> pd.Series:
         raise
     normalized = _series_with_date_index(series)  # REUSE: normaliza indice de fechas
     if normalized.empty:
-        SERIES_CACHE[cache_key] = normalized
         return normalized
     filtered = normalized[(normalized.index >= start) & (normalized.index <= end)]
-    SERIES_CACHE[cache_key] = filtered
+    if not filtered.empty:
+        filtered = filtered.astype("float32")
     return filtered
 
 

@@ -15519,6 +15519,887 @@
           "use_dca": false
         }
       ]
+    },
+    "car_7ad333": {
+      "session_id": "car_7ad333",
+      "player": "Javier6",
+      "difficulty": "intermedio",
+      "universe": [
+        "AAPL",
+        "JNJ",
+        "KO",
+        "UBI.PA"
+      ],
+      "rejected_universe": [],
+      "capital_initial": 50000.0,
+      "capital_current": 61551.1,
+      "period": {
+        "start": "2011-10-20",
+        "end": "2013-10-19"
+      },
+      "turns": [
+        {
+          "n": 1,
+          "start": "2011-10-20",
+          "end": "2012-04-19",
+          "status": "completed",
+          "closed_at": "2025-12-06T15:55:03.685164"
+        },
+        {
+          "n": 2,
+          "start": "2012-04-20",
+          "end": "2012-10-19",
+          "status": "completed",
+          "closed_at": "2025-12-06T15:55:04.893236"
+        },
+        {
+          "n": 3,
+          "start": "2012-10-20",
+          "end": "2013-04-19",
+          "status": "completed",
+          "closed_at": "2025-12-06T15:55:05.983603"
+        },
+        {
+          "n": 4,
+          "start": "2013-04-20",
+          "end": "2013-10-19",
+          "status": "completed",
+          "closed_at": "2025-12-06T15:55:07.291446"
+        }
+      ],
+      "completed_turns": [
+        {
+          "turn_n": 1,
+          "range": {
+            "start": "2011-10-20",
+            "end": "2012-04-19"
+          },
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.2
+            },
+            {
+              "ticker": "JNJ",
+              "weight": 0.2
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.2
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": false,
+          "turn_return": 0.178805,
+          "turn_return_market": 0.178805,
+          "portfolio_value": 58940.27,
+          "events": [],
+          "events_applied": [],
+          "events_new": [
+            {
+              "id": "sector_rumor_neg",
+              "name": "Rumor sectorial (negativo)",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.057602,
+              "remaining_turns": 2,
+              "category": "legacy",
+              "difficulty": "medium"
+            }
+          ],
+          "ret_portfolio_shift": 0.0,
+          "ret_by_ticker": {
+            "AAPL": 0.486023,
+            "JNJ": 0.026337,
+            "KO": 0.115924,
+            "UBI.PA": 0.265743
+          },
+          "ret_by_ticker_final": {
+            "AAPL": 0.486023,
+            "JNJ": 0.026337,
+            "KO": 0.115924,
+            "UBI.PA": 0.265743
+          },
+          "alloc_next_suggested": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.30364
+            },
+            {
+              "ticker": "JNJ",
+              "weight": 0.209712
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.228018
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.25863
+            }
+          ],
+          "dca_in_turn": 0.0,
+          "invested_so_far": 50000.0,
+          "pnl_abs": 8940.27,
+          "pnl_pct": 0.178805,
+          "cum_return_net": 0.178805,
+          "delta_vs_prev": 8940.27
+        },
+        {
+          "turn_n": 2,
+          "range": {
+            "start": "2012-04-20",
+            "end": "2012-10-19"
+          },
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.2
+            },
+            {
+              "ticker": "JNJ",
+              "weight": 0.2
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.2
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": false,
+          "turn_return": 0.099201,
+          "turn_return_market": 0.110722,
+          "portfolio_value": 64787.22,
+          "events": [
+            {
+              "id": "sector_rumor_neg",
+              "name": "Rumor sectorial (negativo)",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.057602,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "sector_rumor_neg",
+              "name": "Rumor sectorial (negativo)",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.057602,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL"
+              ]
+            }
+          ],
+          "events_new": [
+            {
+              "id": "sector_regulator_inspections",
+              "name": "Entrada del regulador con inspecciones",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.045,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            },
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.069796,
+              "remaining_turns": 2,
+              "category": "legacy",
+              "difficulty": "medium"
+            },
+            {
+              "id": "ticker_news_pos",
+              "name": "Noticia espec\u00edfica (positivo)",
+              "scope": "ticker",
+              "target": "AAPL",
+              "impact_pct": 0.055299,
+              "remaining_turns": 1,
+              "category": "legacy",
+              "difficulty": "medium"
+            }
+          ],
+          "ret_portfolio_shift": 0.0,
+          "ret_by_ticker": {
+            "AAPL": 0.0689,
+            "JNJ": 0.149253,
+            "KO": 0.022833,
+            "UBI.PA": 0.312621
+          },
+          "ret_by_ticker_final": {
+            "AAPL": 0.011298,
+            "JNJ": 0.149253,
+            "KO": 0.022833,
+            "UBI.PA": 0.312621
+          },
+          "alloc_next_suggested": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.224933
+            },
+            {
+              "ticker": "JNJ",
+              "weight": 0.255616
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.227498
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.291953
+            }
+          ],
+          "ret_ticker_shift": {
+            "AAPL": -0.057602
+          },
+          "dca_in_turn": 0.0,
+          "invested_so_far": 50000.0,
+          "pnl_abs": 14787.22,
+          "pnl_pct": 0.295744,
+          "cum_return_net": 0.295744,
+          "delta_vs_prev": 5846.95
+        },
+        {
+          "turn_n": 3,
+          "range": {
+            "start": "2012-10-20",
+            "end": "2013-04-19"
+          },
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.2
+            },
+            {
+              "ticker": "JNJ",
+              "weight": 0.2
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.2
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": false,
+          "turn_return": -0.050707,
+          "turn_return_market": 0.028549,
+          "portfolio_value": 61502.02,
+          "events": [
+            {
+              "id": "sector_rumor_neg",
+              "name": "Rumor sectorial (negativo)",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.057602,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL"
+              ]
+            },
+            {
+              "id": "sector_regulator_inspections",
+              "name": "Entrada del regulador con inspecciones",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.045,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL"
+              ]
+            },
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.069796,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "ticker_news_pos",
+              "name": "Noticia espec\u00edfica (positivo)",
+              "scope": "ticker",
+              "target": "AAPL",
+              "impact_pct": 0.055299,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "sector_rumor_neg",
+              "name": "Rumor sectorial (negativo)",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.057602,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL"
+              ]
+            },
+            {
+              "id": "sector_regulator_inspections",
+              "name": "Entrada del regulador con inspecciones",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.045,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL"
+              ]
+            },
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.069796,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "ticker_news_pos",
+              "name": "Noticia espec\u00edfica (positivo)",
+              "scope": "ticker",
+              "target": "AAPL",
+              "impact_pct": 0.055299,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL"
+              ]
+            }
+          ],
+          "events_new": [
+            {
+              "id": "ticker_product_recall",
+              "name": "Retirada de producto por fallos",
+              "scope": "ticker",
+              "target": "KO",
+              "impact_pct": -0.06,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            }
+          ],
+          "ret_portfolio_shift": -0.069796,
+          "ret_by_ticker": {
+            "AAPL": -0.377632,
+            "JNJ": 0.196977,
+            "KO": 0.162064,
+            "UBI.PA": 0.161337
+          },
+          "ret_by_ticker_final": {
+            "AAPL": -0.424935,
+            "JNJ": 0.196977,
+            "KO": 0.162064,
+            "UBI.PA": 0.161337
+          },
+          "alloc_next_suggested": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.140416
+            },
+            {
+              "ticker": "JNJ",
+              "weight": 0.29227
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.283746
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.283568
+            }
+          ],
+          "ret_ticker_shift": {
+            "AAPL": -0.047303
+          },
+          "dca_in_turn": 0.0,
+          "invested_so_far": 50000.0,
+          "pnl_abs": 11502.02,
+          "pnl_pct": 0.23004,
+          "cum_return_net": 0.23004,
+          "delta_vs_prev": -3285.2
+        },
+        {
+          "turn_n": 4,
+          "range": {
+            "start": "2013-04-20",
+            "end": "2013-10-19"
+          },
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.2
+            },
+            {
+              "ticker": "JNJ",
+              "weight": 0.2
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.2
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": false,
+          "turn_return": 0.000798,
+          "turn_return_market": 0.091594,
+          "portfolio_value": 61551.1,
+          "events": [
+            {
+              "id": "sector_regulator_inspections",
+              "name": "Entrada del regulador con inspecciones",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.045,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL"
+              ]
+            },
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.069796,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "ticker_product_recall",
+              "name": "Retirada de producto por fallos",
+              "scope": "ticker",
+              "target": "KO",
+              "impact_pct": -0.06,
+              "remaining_turns": 2,
+              "affected": [
+                "KO"
+              ]
+            }
+          ],
+          "events_applied": [
+            {
+              "id": "sector_regulator_inspections",
+              "name": "Entrada del regulador con inspecciones",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.045,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL"
+              ]
+            },
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.069796,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "ticker_product_recall",
+              "name": "Retirada de producto por fallos",
+              "scope": "ticker",
+              "target": "KO",
+              "impact_pct": -0.06,
+              "remaining_turns": 2,
+              "affected": [
+                "KO"
+              ]
+            }
+          ],
+          "events_new": [
+            {
+              "id": "macro_monetary_tightening_fast",
+              "name": "Endurecimiento monetario mas rapido",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.045,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            }
+          ],
+          "ret_portfolio_shift": -0.069796,
+          "ret_by_ticker": {
+            "AAPL": 0.293402,
+            "JNJ": 0.096479,
+            "KO": -0.079307,
+            "UBI.PA": 0.147395
+          },
+          "ret_by_ticker_final": {
+            "AAPL": 0.248402,
+            "JNJ": 0.096479,
+            "KO": -0.139307,
+            "UBI.PA": 0.147395
+          },
+          "alloc_next_suggested": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.286793
+            },
+            {
+              "ticker": "JNJ",
+              "weight": 0.251892
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.197726
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.263589
+            }
+          ],
+          "ret_ticker_shift": {
+            "AAPL": -0.045,
+            "KO": -0.06
+          },
+          "dca_in_turn": 0.0,
+          "invested_so_far": 50000.0,
+          "pnl_abs": 11551.1,
+          "pnl_pct": 0.231022,
+          "cum_return_net": 0.231022,
+          "delta_vs_prev": 49.08
+        }
+      ],
+      "seed": 12995982819354783630,
+      "created_at": "2025-12-06T15:54:35.258331",
+      "closed": true,
+      "total_turns": 4,
+      "turns_total": 4,
+      "contrib_so_far": 0.0,
+      "cum_return": 0.231022,
+      "events_log": [
+        {
+          "turn_n": 1,
+          "applied": [],
+          "drawn": [
+            {
+              "id": "sector_rumor_neg",
+              "name": "Rumor sectorial (negativo)",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.057602,
+              "remaining_turns": 2,
+              "category": "legacy",
+              "difficulty": "medium"
+            }
+          ]
+        },
+        {
+          "turn_n": 2,
+          "applied": [
+            {
+              "id": "sector_rumor_neg",
+              "name": "Rumor sectorial (negativo)",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.057602,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL"
+              ]
+            }
+          ],
+          "drawn": [
+            {
+              "id": "sector_regulator_inspections",
+              "name": "Entrada del regulador con inspecciones",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.045,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            },
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.069796,
+              "remaining_turns": 2,
+              "category": "legacy",
+              "difficulty": "medium"
+            },
+            {
+              "id": "ticker_news_pos",
+              "name": "Noticia espec\u00edfica (positivo)",
+              "scope": "ticker",
+              "target": "AAPL",
+              "impact_pct": 0.055299,
+              "remaining_turns": 1,
+              "category": "legacy",
+              "difficulty": "medium"
+            }
+          ]
+        },
+        {
+          "turn_n": 3,
+          "applied": [
+            {
+              "id": "sector_rumor_neg",
+              "name": "Rumor sectorial (negativo)",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.057602,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL"
+              ]
+            },
+            {
+              "id": "sector_regulator_inspections",
+              "name": "Entrada del regulador con inspecciones",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.045,
+              "remaining_turns": 2,
+              "affected": [
+                "AAPL"
+              ]
+            },
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.069796,
+              "remaining_turns": 2,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "ticker_news_pos",
+              "name": "Noticia espec\u00edfica (positivo)",
+              "scope": "ticker",
+              "target": "AAPL",
+              "impact_pct": 0.055299,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL"
+              ]
+            }
+          ],
+          "drawn": [
+            {
+              "id": "ticker_product_recall",
+              "name": "Retirada de producto por fallos",
+              "scope": "ticker",
+              "target": "KO",
+              "impact_pct": -0.06,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            }
+          ]
+        },
+        {
+          "turn_n": 4,
+          "applied": [
+            {
+              "id": "sector_regulator_inspections",
+              "name": "Entrada del regulador con inspecciones",
+              "scope": "sector",
+              "target": "TECH",
+              "impact_pct": -0.045,
+              "remaining_turns": 1,
+              "affected": [
+                "AAPL"
+              ]
+            },
+            {
+              "id": "macro_shock_neg",
+              "name": "Shock macro (negativo)",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.069796,
+              "remaining_turns": 1,
+              "affected": [
+                "PORTFOLIO"
+              ]
+            },
+            {
+              "id": "ticker_product_recall",
+              "name": "Retirada de producto por fallos",
+              "scope": "ticker",
+              "target": "KO",
+              "impact_pct": -0.06,
+              "remaining_turns": 2,
+              "affected": [
+                "KO"
+              ]
+            }
+          ],
+          "drawn": [
+            {
+              "id": "macro_monetary_tightening_fast",
+              "name": "Endurecimiento monetario mas rapido",
+              "scope": "portfolio",
+              "target": null,
+              "impact_pct": -0.045,
+              "remaining_turns": 2,
+              "category": "negative",
+              "difficulty": "medium"
+            }
+          ]
+        }
+      ],
+      "active_events": [
+        {
+          "id": "ticker_product_recall",
+          "name": "Retirada de producto por fallos",
+          "scope": "ticker",
+          "target": "KO",
+          "impact_pct": -0.06,
+          "remaining_turns": 1,
+          "category": "negative",
+          "difficulty": "medium"
+        },
+        {
+          "id": "macro_monetary_tightening_fast",
+          "name": "Endurecimiento monetario mas rapido",
+          "scope": "portfolio",
+          "target": null,
+          "impact_pct": -0.045,
+          "remaining_turns": 2,
+          "category": "negative",
+          "difficulty": "medium"
+        }
+      ],
+      "sectors_map": {
+        "AAPL": "TECH"
+      },
+      "decisions": [
+        {
+          "turn_n": 1,
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.2
+            },
+            {
+              "ticker": "JNJ",
+              "weight": 0.2
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.2
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": false
+        },
+        {
+          "turn_n": 2,
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.2
+            },
+            {
+              "ticker": "JNJ",
+              "weight": 0.2
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.2
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": false
+        },
+        {
+          "turn_n": 3,
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.2
+            },
+            {
+              "ticker": "JNJ",
+              "weight": 0.2
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.2
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": false
+        },
+        {
+          "turn_n": 4,
+          "alloc": [
+            {
+              "ticker": "AAPL",
+              "weight": 0.2
+            },
+            {
+              "ticker": "JNJ",
+              "weight": 0.2
+            },
+            {
+              "ticker": "KO",
+              "weight": 0.2
+            },
+            {
+              "ticker": "UBI.PA",
+              "weight": 0.2
+            }
+          ],
+          "use_dca": false
+        }
+      ]
     }
   }
 }
