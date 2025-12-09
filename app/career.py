@@ -1440,7 +1440,7 @@ def _compute_theoretical_summary(
         reverse=True,
     )
 
-    limit = 30
+    limit = 15
     use_greedy = original_count > limit
     if len(ranked_by_cagr) > limit:
         ranked_by_cagr = ranked_by_cagr[:limit]
