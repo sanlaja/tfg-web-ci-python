@@ -164,7 +164,7 @@ DIFFICULTY_CONFIG = {
         "shock_range": (-0.03, -0.012),
     },
     "intermedio": {
-        "years": (4, 6),
+        "years": (3, 6),
         "turn_months": 6,
         "shock_probability": 0.22,
         "shock_range": (-0.045, -0.018),
