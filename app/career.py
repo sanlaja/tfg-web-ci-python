@@ -158,13 +158,13 @@ def _exception_indicates_no_history(exc: Exception) -> bool:
 
 DIFFICULTY_CONFIG = {
     "principiante": {
-        "years": (5, 8),
+        "years": (3, 5),
         "turn_months": 12,
         "shock_probability": 0.12,
         "shock_range": (-0.03, -0.012),
     },
     "intermedio": {
-        "years": (3, 6),
+        "years": (2, 4),
         "turn_months": 6,
         "shock_probability": 0.22,
         "shock_range": (-0.045, -0.018),
