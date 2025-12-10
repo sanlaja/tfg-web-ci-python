@@ -892,6 +892,8 @@ def _build_normalized_series_map(
         if data and anchor_dates is None:
             anchor_dates = _extract_dates_from_series(data)
         series_map[ticker] = _normalize_base100(data)
+        # Fuerza limpieza de RAM tras cada empresa
+        gc.collect()
 
     if anchor_dates:
         anchor_dates = [d for d in anchor_dates if start <= d <= end]
@@ -1440,7 +1442,7 @@ def _compute_theoretical_summary(
         reverse=True,
     )
 
-    limit = 15
+    limit = 5
     use_greedy = original_count > limit
     if len(ranked_by_cagr) > limit:
         ranked_by_cagr = ranked_by_cagr[:limit]
