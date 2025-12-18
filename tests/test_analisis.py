@@ -40,7 +40,7 @@ def test_analisis_falla_validacion_campos_obligatorios():
             "roe_pct": 5,
             "deuda_sobre_activos_pct": 80,  # alta
         },
-        "justificacion": "Breve",
+        "justificacion": "Mini",
     }
     res = client.post("/analisis", json=payload)
     assert res.status_code == 400
@@ -51,7 +51,9 @@ def test_analisis_falla_validacion_campos_obligatorios():
     assert any("horizonte" in m.lower() for m in data["errores"])  # horizonte mínimo
     assert any("margen" in m.lower() for m in data["errores"])  # fuera de rango
     assert any("crecimiento" in m.lower() for m in data["errores"])  # irrealista
-    assert any("justificacion" in m.lower() for m in data["errores"])  # demasiado corta
+    assert any(
+        "justificacion" in m.lower() for m in data["errores"]
+    )  # demasiado corta (<5)
 
 
 def test_analisis_horizonte_minimo_permitido():

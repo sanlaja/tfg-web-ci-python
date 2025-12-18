@@ -206,8 +206,8 @@ def _validar_payload(p):
     just = p.get("justificacion")
     if just is not None and not isinstance(just, str):
         errores.append("'justificacion' debe ser texto.")
-    elif isinstance(just, str) and len(just.strip()) < 20:
-        errores.append("La 'justificacion' debe tener al menos 20 caracteres.")
+    elif isinstance(just, str) and len(just.strip()) < 5:
+        errores.append("La 'justificacion' debe tener al menos 5 caracteres.")
 
     modo = p.get("modo") or "SIN_DCA"
     if modo not in {"DCA", "SIN_DCA"}:
@@ -801,8 +801,16 @@ class BacktestError(Exception):
 def _download_history_df(
     ticker: str, start_d: date, end_d: date, include_actions: bool = True
 ) -> pd.DataFrame:
+    ticker_clean = (ticker or "").strip()
+    not_found_msg = (
+        f"No se encontraron datos para el ticker '{ticker_clean}'. "
+        "Asegúrate de usar el símbolo bursátil (ej: AAPL) y no el nombre de la empresa."
+    )
+    if not ticker_clean:
+        raise BacktestError(not_found_msg, 404)
+
     df = yf.download(
-        ticker,
+        ticker_clean,
         start=str(start_d),
         end=str(end_d + timedelta(days=1)),
         interval="1d",
@@ -810,7 +818,10 @@ def _download_history_df(
         actions=include_actions,
         progress=False,
     )
-    return _normalize_price_df(df)
+    df = _normalize_price_df(df)
+    if df is None or df.empty:
+        raise BacktestError(not_found_msg, 404)
+    return df
 
 
 def _compute_price_summary(
